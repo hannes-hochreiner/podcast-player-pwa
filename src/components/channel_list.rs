@@ -113,7 +113,7 @@ impl Component for ChannelList {
     fn view(&self) -> Html {
         html! {
             <>
-                <nav class="navbar" role="navigation">
+                <nav class="navbar is-primary" role="navigation">
                     <div class="navbar-brand"><div class="navbar-item title">{"Podcast Player"}</div></div>
                 </nav>
                 { self.view_fetching() }
