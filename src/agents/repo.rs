@@ -43,7 +43,7 @@ impl Repo {
         // let idb_open_request: web_sys::IdbOpenDbRequest = idb_factory.open_with_idb_open_db_options("more-podcasts", &idb_options).unwrap();
 
         let idb_open_request: web_sys::IdbOpenDbRequest =
-            idb_factory.open_with_u32("more-podcasts", 1).unwrap();
+            idb_factory.open_with_u32("podcast-player", 1).unwrap();
         let callback_update = self.link.callback(Msg::OpenDbUpdate);
         let callback_success = self.link.callback(Msg::OpenDbSuccess);
         // let callback = wasm_bindgen::closure::Closure::wrap(Box::new(move |e| {
