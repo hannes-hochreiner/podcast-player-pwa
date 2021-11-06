@@ -24,9 +24,19 @@ impl ChannelList {
     fn view_channel_list(&self) -> Html {
         match &self.channels {
             Some(c) => {
-                html! {<ul>
-                    { c.iter().map(|i| html! { <li><img src={i.image.clone()} width="50" height="50"/>{&i.title}</li> }).collect::<Html>() }
-                </ul>}
+                html! {<div>
+                    <section class="section">
+                        <div class="columns"><div class="column">
+                            { c.iter().map(|i| html! { <div class="card">
+                                <div class="card-content">
+                                    <div class="media">
+                                        <div class="media-left"><figure class="image is-64x64"><img src={i.image.clone()}/></figure></div>
+                                        <div class="media-content"><p class="title">{&i.title}</p></div>
+                                    </div>
+                                </div>
+                            </div> }).collect::<Html>() }
+                    </div></div></section>
+                </div>}
             }
             None => html! { <p> {"no channels available"} </p> },
         }
@@ -103,6 +113,9 @@ impl Component for ChannelList {
     fn view(&self) -> Html {
         html! {
             <>
+                <nav class="navbar" role="navigation">
+                    <div class="navbar-brand"><div class="navbar-item title">{"Podcast Player"}</div></div>
+                </nav>
                 { self.view_fetching() }
                 { self.view_channel_list() }
                 { self.view_error() }
