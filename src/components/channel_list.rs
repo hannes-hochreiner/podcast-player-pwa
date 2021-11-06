@@ -31,7 +31,7 @@ impl ChannelList {
                                 <div class="card-content">
                                     <div class="media">
                                         <div class="media-left"><figure class="image is-64x64"><img src={i.image.clone()}/></figure></div>
-                                        <div class="media-content"><p class="title">{&i.title}</p></div>
+                                        <div class="media-content"><p class="title">{&i.title}</p><p class="subtitle">{&i.description}</p></div>
                                     </div>
                                 </div>
                             </div> }).collect::<Html>() }
