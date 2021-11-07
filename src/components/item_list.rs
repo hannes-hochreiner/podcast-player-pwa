@@ -1,47 +1,48 @@
-use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest};
-use crate::objects::channel::Channel;
+use crate::objects::item::Item;
 use anyhow::Error;
+use uuid::Uuid;
 use yew::{
     agent::Dispatcher,
     format::{Json, Nothing},
     prelude::*,
     services::fetch::{FetchService, FetchTask, Request, Response},
 };
-use yew_router::prelude::RouterAnchor;
 
-pub struct ChannelList {
+pub struct ItemList {
     _link: ComponentLink<Self>,
     fetch_task: Option<FetchTask>,
-    channels: Option<Vec<Channel>>,
+    items: Option<Vec<Item>>,
     error: Option<Error>,
     _repo: Dispatcher<Repo>,
 }
 
 pub enum Msg {
-    ReceiveChannels(Result<Vec<Channel>, anyhow::Error>),
+    ReceiveItems(Result<Vec<Item>, anyhow::Error>),
 }
 
-impl ChannelList {
-    fn view_channel_list(&self) -> Html {
-        match &self.channels {
-            Some(c) => {
+#[derive(Properties, Clone, PartialEq)]
+pub struct Props {
+    pub channel_id: Uuid,
+}
+
+impl ItemList {
+    fn view_item_list(&self) -> Html {
+        match &self.items {
+            Some(items) => {
                 html! {
                     <section class="section">
                         <div class="columns"><div class="column">
-                            { c.iter().map(|i| html! { <RouterAnchor<AppRoute> classes={"navbar-item, card"} route={AppRoute::ItemsPage{channel_id: i.id}}>
+                            { items.iter().map(|i| html! { <div class="card">
                                 <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-left"><figure class="image is-64x64"><img src={i.image.clone()}/></figure></div>
-                                        <div class="media-content"><p class="title">{&i.title}</p><p class="subtitle">{&i.description}</p></div>
-                                    </div>
+                                    <p class="title">{&i.title}</p>
                                 </div>
-                            </RouterAnchor<AppRoute>> }).collect::<Html>() }
+                            </div> }).collect::<Html>() }
                         </div></div>
                     </section>
                 }
             }
-            None => html! { <p> {"no channels available"} </p> },
+            None => html! { <p> {"no items available"} </p> },
         }
     }
 
@@ -61,19 +62,19 @@ impl ChannelList {
     }
 }
 
-impl Component for ChannelList {
+impl Component for ItemList {
     type Message = Msg;
-    type Properties = ();
+    type Properties = Props;
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let request = Request::get("/api/channels")
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        let request = Request::get(format!("/api/channels/{}/items", props.channel_id))
             .body(Nothing)
             .expect("Could not build request.");
         // 2. construct a callback
         let callback = link.callback(
-            |response: Response<Json<Result<Vec<Channel>, anyhow::Error>>>| {
+            |response: Response<Json<Result<Vec<Item>, anyhow::Error>>>| {
                 let Json(data) = response.into_body();
-                Msg::ReceiveChannels(data)
+                Msg::ReceiveItems(data)
             },
         );
         // 3. pass the request and callback to the fetch service
@@ -85,7 +86,7 @@ impl Component for ChannelList {
         Self {
             _link: link,
             fetch_task: Some(task),
-            channels: None,
+            items: None,
             error: None,
             _repo: disp,
         }
@@ -93,10 +94,10 @@ impl Component for ChannelList {
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Msg::ReceiveChannels(res) => {
+            Msg::ReceiveItems(res) => {
                 match res {
                     Ok(c) => {
-                        self.channels = Some(c);
+                        self.items = Some(c);
                     }
                     Err(e) => {
                         self.error = Some(e);
@@ -117,7 +118,7 @@ impl Component for ChannelList {
         html! {
             <>
                 { self.view_fetching() }
-                { self.view_channel_list() }
+                { self.view_item_list() }
                 { self.view_error() }
             </>
         }

@@ -23,7 +23,7 @@ impl Component for NavBar {
                 <div class="navbar-menu">
                     <div class="navbar-start">
                         <RouterAnchor<AppRoute> classes={"navbar-item"} route={AppRoute::Home}>{"Home"}</RouterAnchor<AppRoute>>
-                        <RouterAnchor<AppRoute> classes={"navbar-item"} route={AppRoute::ChannelList}>{"Channels"}</RouterAnchor<AppRoute>>
+                        <RouterAnchor<AppRoute> classes={"navbar-item"} route={AppRoute::ChannelsPage}>{"Channels"}</RouterAnchor<AppRoute>>
                     </div>
                     <div class="navbar-end">
                     </div>
