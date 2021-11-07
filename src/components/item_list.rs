@@ -36,6 +36,7 @@ impl ItemList {
                             { items.iter().map(|i| html! { <div class="card">
                                 <div class="card-content">
                                     <p class="title">{&i.title}</p>
+                                    <p class="subtitle">{&i.date}</p>
                                 </div>
                             </div> }).collect::<Html>() }
                         </div></div>
