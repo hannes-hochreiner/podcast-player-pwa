@@ -9,11 +9,11 @@ use yew::{
 };
 
 pub struct ChannelList {
-    link: ComponentLink<Self>,
+    _link: ComponentLink<Self>,
     fetch_task: Option<FetchTask>,
     channels: Option<Vec<Channel>>,
     error: Option<Error>,
-    repo: Dispatcher<Repo>,
+    _repo: Dispatcher<Repo>,
 }
 
 pub enum Msg {
@@ -24,7 +24,7 @@ impl ChannelList {
     fn view_channel_list(&self) -> Html {
         match &self.channels {
             Some(c) => {
-                html! {<div>
+                html! {
                     <section class="section">
                         <div class="columns"><div class="column">
                             { c.iter().map(|i| html! { <div class="card">
@@ -35,8 +35,9 @@ impl ChannelList {
                                     </div>
                                 </div>
                             </div> }).collect::<Html>() }
-                    </div></div></section>
-                </div>}
+                        </div></div>
+                    </section>
+                }
             }
             None => html! { <p> {"no channels available"} </p> },
         }
@@ -80,11 +81,11 @@ impl Component for ChannelList {
         disp.send(RepoRequest::GetChannels);
 
         Self {
-            link,
+            _link: link,
             fetch_task: Some(task),
             channels: None,
             error: None,
-            repo: disp,
+            _repo: disp,
         }
     }
 
@@ -113,9 +114,6 @@ impl Component for ChannelList {
     fn view(&self) -> Html {
         html! {
             <>
-                <nav class="navbar is-primary" role="navigation">
-                    <div class="navbar-brand"><div class="navbar-item title">{"Podcast Player"}</div></div>
-                </nav>
                 { self.view_fetching() }
                 { self.view_channel_list() }
                 { self.view_error() }
