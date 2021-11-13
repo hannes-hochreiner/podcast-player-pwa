@@ -1,14 +1,18 @@
 use crate::objects::channel::Channel;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
+use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::IdbDatabase;
+use web_sys::{IdbDatabase, IdbTransactionMode};
+use yew::format::Nothing;
+use yew::services::fetch;
 use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
     GetChannels,
+    DownloadEnclosure(Uuid),
 }
 
 pub enum Response {
@@ -19,11 +23,14 @@ pub struct Repo {
     link: AgentLink<Repo>,
     subscribers: HashSet<HandlerId>,
     open_request: Option<OpenDb>,
+    download_task: Option<fetch::FetchTask>,
+    db: Option<IdbDatabase>,
 }
 
 pub enum Msg {
     OpenDbUpdate(web_sys::Event),
     OpenDbSuccess(web_sys::Event),
+    ReceiveDownload(Uuid, Vec<u8>),
 }
 
 pub struct OpenDb {
@@ -91,6 +98,8 @@ impl Agent for Repo {
             link,
             subscribers: HashSet::new(),
             open_request: None,
+            download_task: None,
+            db: None,
         }
     }
 
@@ -109,10 +118,44 @@ impl Agent for Repo {
                 log::info!("db: {:?}", idb_db);
                 let idb_object_store = idb_db.create_object_store("channels");
                 log::info!("object store: {:?}", idb_object_store);
+                match idb_db.create_object_store("enclosures") {
+                    Ok(_) => log::info!("created object store \"enclosures\""),
+                    Err(e) => log::error!("failed to create object store \"enclosures\": {:?}", e),
+                }
             }
             Msg::OpenDbSuccess(e) => {
                 log::info!("success {:?}", e);
+                self.db = Some(
+                    self.open_request
+                        .as_ref()
+                        .unwrap()
+                        .request
+                        .result()
+                        .unwrap()
+                        .into(),
+                );
                 self.open_request = None;
+            }
+            Msg::ReceiveDownload(id, data) => {
+                log::info!("received data {}", data.len());
+                log::info!("{:?}", self.db);
+                match &self.db {
+                    Some(db) => {
+                        let trans = db
+                            .transaction_with_str_and_mode(
+                                "enclosures",
+                                IdbTransactionMode::Readwrite,
+                            )
+                            .unwrap();
+                        let os = trans.object_store("enclosures").unwrap();
+                        os.put_with_key(
+                            &serde_wasm_bindgen::to_value(&data).unwrap(),
+                            &serde_wasm_bindgen::to_value(&id).unwrap(),
+                        )
+                        .unwrap();
+                    }
+                    None => log::error!("could not find database"),
+                }
             }
         }
     }
@@ -125,6 +168,21 @@ impl Agent for Repo {
                 for sub in self.subscribers.iter() {
                     // self.link.respond(*sub, s.clone());
                 }
+            }
+            Request::DownloadEnclosure(id) => {
+                log::info!("requested download of {}", id);
+                let request = fetch::Request::get(format!("/api/items/{}/stream", id))
+                    .body(Nothing)
+                    .expect("Could not build request.");
+                let callback = self.link.callback(
+                    move |response: fetch::Response<Result<Vec<u8>, anyhow::Error>>| {
+                        Msg::ReceiveDownload(id, response.into_body().unwrap())
+                    },
+                );
+                let task = fetch::FetchService::fetch_binary(request, callback)
+                    .expect("failed to start request");
+
+                self.download_task = Some(task);
             }
         }
     }

@@ -1,3 +1,5 @@
+use std::convert::identity;
+
 use crate::agents::repo::{Repo, Request as RepoRequest};
 use crate::objects::item::Item;
 use anyhow::Error;
@@ -19,6 +21,7 @@ pub struct ItemList {
 
 pub enum Msg {
     ReceiveItems(Result<Vec<Item>, anyhow::Error>),
+    Download(Uuid),
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -33,12 +36,15 @@ impl ItemList {
                 html! {
                     <section class="section">
                         <div class="columns"><div class="column">
-                            { items.iter().map(|i| html! { <div class="card">
+                            { items.iter().map(|i| {
+                                let id = i.id;
+                                html! { <div class="card">
                                 <div class="card-content">
                                     <p class="title">{&i.title}</p>
                                     <p class="subtitle">{&i.date}</p>
+                                    <button class="button" onclick={self._link.callback(move |_| Msg::Download(id))}>{"download"}</button>
                                 </div>
-                            </div> }).collect::<Html>() }
+                            </div> }}).collect::<Html>() }
                         </div></div>
                     </section>
                 }
@@ -107,6 +113,10 @@ impl Component for ItemList {
 
                 self.fetch_task = None;
                 true
+            }
+            Msg::Download(id) => {
+                self._repo.send(RepoRequest::DownloadEnclosure(id));
+                false
             }
         }
     }
