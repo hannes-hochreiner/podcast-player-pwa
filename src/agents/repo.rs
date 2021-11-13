@@ -13,10 +13,12 @@ use yew::worker::*;
 pub enum Request {
     GetChannels,
     DownloadEnclosure(Uuid),
+    GetEnclosure(Uuid),
 }
 
 pub enum Response {
     Channels(Vec<Channel>),
+    Enclosure(Vec<u8>),
 }
 
 pub struct Repo {
@@ -25,11 +27,14 @@ pub struct Repo {
     open_request: Option<OpenDb>,
     download_task: Option<fetch::FetchTask>,
     db: Option<IdbDatabase>,
+    idb_request: Option<IdbReq>,
 }
 
 pub enum Msg {
     OpenDbUpdate(web_sys::Event),
     OpenDbSuccess(web_sys::Event),
+    IdbRequestSuccess(web_sys::Event),
+    IdbRequestError(web_sys::Event),
     ReceiveDownload(Uuid, Vec<u8>),
 }
 
@@ -39,8 +44,14 @@ pub struct OpenDb {
     request: web_sys::IdbOpenDbRequest,
 }
 
+pub struct IdbReq {
+    _closure_error: Closure<dyn Fn(web_sys::Event)>,
+    _closure_success: Closure<dyn Fn(web_sys::Event)>,
+    request: web_sys::IdbRequest,
+}
+
 impl Repo {
-    fn start_task(&mut self, req: Request) {
+    fn init(&mut self) {
         let window: web_sys::Window = web_sys::window().expect("window not available");
         let idb_factory: web_sys::IdbFactory = window.indexed_db().unwrap().unwrap();
         // let mut idb_options = web_sys::IdbOpenDbOptions::new();
@@ -94,13 +105,18 @@ impl Agent for Repo {
     type Output = Response;
 
     fn create(link: AgentLink<Self>) -> Self {
-        Self {
+        let mut obj = Self {
             link,
             subscribers: HashSet::new(),
             open_request: None,
             download_task: None,
             db: None,
-        }
+            idb_request: None,
+        };
+
+        obj.init();
+
+        obj
     }
 
     fn update(&mut self, msg: Self::Message) {
@@ -157,14 +173,24 @@ impl Agent for Repo {
                     None => log::error!("could not find database"),
                 }
             }
+            Msg::IdbRequestError(e) => {}
+            Msg::IdbRequestSuccess(e) => {
+                log::info!("idb request success {:?}", e);
+                let res: Vec<u8> = serde_wasm_bindgen::from_value(
+                    self.idb_request.as_ref().unwrap().request.result().unwrap(),
+                )
+                .unwrap();
+
+                for sub in self.subscribers.iter() {
+                    self.link.respond(*sub, Response::Enclosure(res.clone()));
+                }
+            }
         }
     }
 
     fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
         match msg {
             Request::GetChannels => {
-                log::info!("starting task");
-                self.start_task(msg);
                 for sub in self.subscribers.iter() {
                     // self.link.respond(*sub, s.clone());
                 }
@@ -183,6 +209,35 @@ impl Agent for Repo {
                     .expect("failed to start request");
 
                 self.download_task = Some(task);
+            }
+            Request::GetEnclosure(id) => {
+                log::info!("get enclosure db {:?}", self.db);
+                let trans = self
+                    .db
+                    .as_ref()
+                    .unwrap()
+                    .transaction_with_str_and_mode("enclosures", IdbTransactionMode::Readwrite)
+                    .unwrap();
+                let os = trans.object_store("enclosures").unwrap();
+                let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
+                let callback_error = self.link.callback(Msg::IdbRequestError);
+                let callback_success = self.link.callback(Msg::IdbRequestSuccess);
+                let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
+                    callback_success.emit(event)
+                }) as Box<dyn Fn(_)>);
+                req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
+                let closure_error =
+                    Closure::wrap(
+                        Box::new(move |event: web_sys::Event| callback_error.emit(event))
+                            as Box<dyn Fn(_)>,
+                    );
+                req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
+
+                self.idb_request = Some(IdbReq {
+                    _closure_error: closure_error,
+                    _closure_success: closure_success,
+                    request: req,
+                });
             }
         }
     }

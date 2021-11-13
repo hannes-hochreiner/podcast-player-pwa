@@ -1,4 +1,4 @@
-use crate::components::nav_bar::NavBar;
+use crate::components::{nav_bar::NavBar, player::Player};
 use yew::{prelude::*, virtual_dom::VNode};
 
 pub struct HomePage {}
@@ -12,6 +12,7 @@ impl Component for HomePage {
         html! {
             <>
                 <NavBar/>
+                <Player/>
             </>
         }
     }
