@@ -186,7 +186,10 @@ impl Agent for Repo {
                 log::info!("requested download of {}", id);
 
                 self.link.send_future(async move {
-                    Msg::ReceiveDownload(id, fetch_enclosure(id).await)
+                    Msg::ReceiveDownload(
+                        id,
+                        fetch_binary(&format!("/api/items/{}/stream", id)).await,
+                    )
                 });
             }
             Request::GetEnclosure(id) => {
@@ -231,13 +234,12 @@ impl Agent for Repo {
 }
 
 // https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
-async fn fetch_enclosure(id: Uuid) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
+async fn fetch_binary(url: &str) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
     let mut opts = web_sys::RequestInit::new();
     opts.method("GET");
     // opts.mode(web_sys::RequestMode::Cors);
 
-    let request =
-        web_sys::Request::new_with_str_and_init(&format!("/api/items/{}/stream", id), &opts)?;
+    let request = web_sys::Request::new_with_str_and_init(url, &opts)?;
 
     let window = yew::utils::window();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
