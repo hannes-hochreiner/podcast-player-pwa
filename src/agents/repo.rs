@@ -1,5 +1,5 @@
 use crate::objects::channel::Channel;
-use js_sys::{Array, ArrayBuffer};
+use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use uuid::Uuid;
@@ -7,8 +7,6 @@ use wasm_bindgen::closure::Closure;
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{IdbDatabase, IdbTransactionMode};
-use yew::format::Nothing;
-use yew::services::fetch;
 use yew::worker::*;
 use yewtil::future::LinkFuture;
 
@@ -28,7 +26,6 @@ pub struct Repo {
     link: AgentLink<Repo>,
     subscribers: HashSet<HandlerId>,
     open_request: Option<OpenDb>,
-    download_task: Option<fetch::FetchTask>,
     db: Option<IdbDatabase>,
     idb_request: Option<IdbReq>,
 }
@@ -112,7 +109,6 @@ impl Agent for Repo {
             link,
             subscribers: HashSet::new(),
             open_request: None,
-            download_task: None,
             db: None,
             idb_request: None,
         };
@@ -176,7 +172,9 @@ impl Agent for Repo {
                     None => log::error!("could not find database"),
                 }
             }
-            Msg::IdbRequestError(e) => {}
+            Msg::IdbRequestError(e) => {
+                log::error!("{:?}", e);
+            }
             Msg::IdbRequestSuccess(e) => {
                 log::info!("idb request success {:?}", e);
                 // let res: Vec<u8> = serde_wasm_bindgen::from_value(

@@ -1,8 +1,7 @@
 use crate::agents::repo::{Repo, Request, Response};
-use js_sys::Uint8Array;
+use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use wasm_bindgen::{closure::Closure, JsValue};
-use web_sys::{AudioBuffer, AudioBufferSourceNode, AudioContext};
+use web_sys::{MediaSource, Url};
 use yew::{agent::Dispatcher, prelude::*, virtual_dom::VNode};
 
 pub struct Player {
@@ -10,24 +9,15 @@ pub struct Player {
     _producer: Box<dyn Bridge<Repo>>,
     link: ComponentLink<Self>,
     source: String,
-    decode_task: Option<DecodeTask>,
-    pipeline: Option<Pipeline>,
+    update_closure: Option<Closure<dyn Fn(web_sys::Event)>>,
+    media_source: Option<MediaSource>,
+    audio_ref: NodeRef,
 }
 pub enum Message {
     NewMessage(Response),
     Play,
-    DecodeError(Event),
-    DecodeSuccess(Event),
-}
-
-struct Pipeline {
-    buffer: AudioBuffer,
-    source_node: AudioBufferSourceNode,
-}
-
-struct DecodeTask {
-    _closure_error: Closure<dyn Fn(web_sys::Event)>,
-    _closure_success: Closure<dyn Fn(web_sys::Event)>,
+    Info,
+    Update(Event),
 }
 
 impl Component for Player {
@@ -37,22 +27,25 @@ impl Component for Player {
     fn view(&self) -> VNode {
         html! {
             <>
-                <audio controls={true} src={self.source.clone()}/>
+                <audio controls={true} src={self.source.clone()} ref=self.audio_ref.clone()/>
                 <button class="button" onclick={self.link.callback(move |_| Message::Play)}>{"set source"}</button>
+                <button class="button" onclick={self.link.callback(move |_| Message::Info)}>{"info"}</button>
             </>
         }
     }
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let cb = link.callback(Message::NewMessage);
+        let ms = MediaSource::new().unwrap();
 
         Self {
             link,
             _repo: Repo::dispatcher(),
             _producer: Repo::bridge(cb),
-            source: String::new(),
-            decode_task: None,
-            pipeline: None,
+            source: Url::create_object_url_with_source(&ms).unwrap(),
+            media_source: Some(ms),
+            audio_ref: NodeRef::default(),
+            update_closure: None,
         }
     }
 
@@ -61,27 +54,32 @@ impl Component for Player {
             Message::NewMessage(response) => match response {
                 Response::Channels(_) => true,
                 Response::Enclosure(data) => {
-                    let ac = AudioContext::new().unwrap();
-                    let callback_error = self.link.callback(move |e| Message::DecodeError(e));
-                    let callback_success = self.link.callback(move |e| Message::DecodeSuccess(e));
-                    let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
-                        callback_success.emit(event)
-                    }) as Box<dyn Fn(_)>);
-                    let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
-                        callback_error.emit(event)
-                    }) as Box<dyn Fn(_)>);
-                    let _ = ac
-                        .decode_audio_data_with_success_callback_and_error_callback(
-                            &data,
-                            closure_success.as_ref().unchecked_ref(),
-                            closure_error.as_ref().unchecked_ref(),
-                        )
-                        .unwrap();
-                    self.decode_task = Some(DecodeTask {
-                        _closure_error: closure_error,
-                        _closure_success: closure_success,
-                    });
+                    match &self.media_source {
+                        Some(ms) => {
+                            let sb = ms.add_source_buffer("audio/mpeg").unwrap();
+                            let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
+                            ae.set_playback_rate(2.0);
+                            ae.set_preload("metadata");
+                            sb.append_buffer_with_array_buffer(&data).unwrap();
 
+                            let callback_update = self.link.callback(move |e| Message::Update(e));
+                            let closure_update =
+                                Closure::wrap(Box::new(move |event: web_sys::Event| {
+                                    callback_update.emit(event)
+                                }) as Box<dyn Fn(_)>);
+
+                            sb.set_onupdate(Some(closure_update.as_ref().unchecked_ref()));
+                            self.update_closure = Some(closure_update);
+
+                            log::info!(
+                                "duration: {} ms: {}, time: {}",
+                                ae.preload(),
+                                ms.duration(),
+                                ae.current_time()
+                            );
+                        }
+                        None => log::error!("no media source set"),
+                    }
                     true
                 }
             },
@@ -91,22 +89,30 @@ impl Component for Player {
                 ));
                 false
             }
-            Message::DecodeSuccess(e) => {
-                log::info!("decode success: {:?}", e);
-                let ab = AudioBuffer::from(JsValue::from(e));
-                let ac = AudioContext::new().unwrap();
-                let absn = AudioBufferSourceNode::new(&ac).unwrap();
-                absn.set_buffer(Some(&ab));
-                absn.connect_with_audio_node(&ac.destination()).unwrap();
-                absn.start().unwrap();
-                self.pipeline = Some(Pipeline {
-                    buffer: ab,
-                    source_node: absn,
-                });
-                true
+            Message::Info => {
+                match &self.media_source {
+                    Some(ms) => {
+                        let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
+
+                        log::info!(
+                            "preload: {} ms: {}, time: {}, ae state: {}, ms state: {:?}",
+                            ae.preload(),
+                            ms.duration(),
+                            ae.current_time(),
+                            ae.ready_state(),
+                            ms.ready_state()
+                        );
+                    }
+                    None => log::error!("no media source set"),
+                }
+                false
             }
-            Message::DecodeError(e) => {
-                log::error!("decode error: {:?}", e);
+            Message::Update(e) => {
+                log::info!("update: {:?}", e);
+
+                if let Some(ms) = &self.media_source {
+                    ms.end_of_stream().unwrap();
+                }
                 false
             }
         }

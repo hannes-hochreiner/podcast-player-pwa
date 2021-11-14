@@ -1,5 +1,3 @@
-use std::convert::identity;
-
 use crate::agents::repo::{Repo, Request as RepoRequest};
 use crate::objects::item::Item;
 use anyhow::Error;
