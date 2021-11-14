@@ -54,26 +54,10 @@ impl Repo {
     fn init(&mut self) {
         let window: web_sys::Window = web_sys::window().expect("window not available");
         let idb_factory: web_sys::IdbFactory = window.indexed_db().unwrap().unwrap();
-        // let mut idb_options = web_sys::IdbOpenDbOptions::new();
-
-        // idb_options.version(1f64);
-        // idb_options.storage(web_sys::StorageType::Persistent);
-        // let idb_open_request: web_sys::IdbOpenDbRequest = idb_factory.open_with_idb_open_db_options("more-podcasts", &idb_options).unwrap();
-
         let idb_open_request: web_sys::IdbOpenDbRequest =
             idb_factory.open_with_u32("podcast-player", 1).unwrap();
         let callback_update = self.link.callback(Msg::OpenDbUpdate);
         let callback_success = self.link.callback(Msg::OpenDbSuccess);
-        // let callback = wasm_bindgen::closure::Closure::wrap(Box::new(move |e| {
-        //     &self.callback(e);
-        // }) as Box<dyn FnMut(web_sys::Event)>);
-
-        // idb_open_request.set_onupgradeneeded(Some(callback.as_ref().unchecked_ref()));
-
-        // idb_open_request.set_onupgradeneeded(Some(wasm_bindgen::closure::Closure::once_into_js(move |event: web_sys::Event| {
-        //     callback.emit(event)
-        // }).unchecked_ref()));
-
         let closure_update =
             Closure::wrap(
                 Box::new(move |event: web_sys::Event| callback_update.emit(event))
@@ -92,9 +76,6 @@ impl Repo {
             _closure_success: closure_success,
             request: idb_open_request,
         });
-
-        // let
-        // window.alert_with_message("hello from wasm!").expect("alert failed");
     }
 }
 
@@ -177,11 +158,6 @@ impl Agent for Repo {
             }
             Msg::IdbRequestSuccess(e) => {
                 log::info!("idb request success {:?}", e);
-                // let res: Vec<u8> = serde_wasm_bindgen::from_value(
-                //     self.idb_request.as_ref().unwrap().request.result().unwrap(),
-                // )
-                // .unwrap();
-
                 let res: ArrayBuffer = self
                     .idb_request
                     .as_ref()
@@ -212,19 +188,6 @@ impl Agent for Repo {
                 self.link.send_future(async move {
                     Msg::ReceiveDownload(id, fetch_enclosure(id).await)
                 });
-
-                // let request = fetch::Request::get(format!("/api/items/{}/stream", id))
-                //     .body(Nothing)
-                //     .expect("Could not build request.");
-                // let callback = self.link.callback(
-                //     move |response: fetch::Response<Result<Vec<u8>, anyhow::Error>>| {
-                //         Msg::ReceiveDownload(id, response.into_body().unwrap())
-                //     },
-                // );
-                // let task = fetch::FetchService::fetch_binary(request, callback)
-                //     .expect("failed to start request");
-
-                // self.download_task = Some(task);
             }
             Request::GetEnclosure(id) => {
                 log::info!("get enclosure db {:?}", self.db);

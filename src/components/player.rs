@@ -9,8 +9,8 @@ pub struct Player {
     _producer: Box<dyn Bridge<Repo>>,
     link: ComponentLink<Self>,
     source: String,
-    update_closure: Option<Closure<dyn Fn(web_sys::Event)>>,
-    media_source: Option<MediaSource>,
+    update_closure: Closure<dyn Fn(web_sys::Event)>,
+    media_source: MediaSource,
     audio_ref: NodeRef,
 }
 pub enum Message {
@@ -37,15 +37,21 @@ impl Component for Player {
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let cb = link.callback(Message::NewMessage);
         let ms = MediaSource::new().unwrap();
+        let callback_update = link.callback(move |e| Message::Update(e));
+        let closure_update =
+            Closure::wrap(
+                Box::new(move |event: web_sys::Event| callback_update.emit(event))
+                    as Box<dyn Fn(_)>,
+            );
 
         Self {
             link,
             _repo: Repo::dispatcher(),
             _producer: Repo::bridge(cb),
             source: Url::create_object_url_with_source(&ms).unwrap(),
-            media_source: Some(ms),
+            media_source: ms,
             audio_ref: NodeRef::default(),
-            update_closure: None,
+            update_closure: closure_update,
         }
     }
 
@@ -54,32 +60,12 @@ impl Component for Player {
             Message::NewMessage(response) => match response {
                 Response::Channels(_) => true,
                 Response::Enclosure(data) => {
-                    match &self.media_source {
-                        Some(ms) => {
-                            let sb = ms.add_source_buffer("audio/mpeg").unwrap();
-                            let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
-                            ae.set_playback_rate(2.0);
-                            ae.set_preload("metadata");
-                            sb.append_buffer_with_array_buffer(&data).unwrap();
-
-                            let callback_update = self.link.callback(move |e| Message::Update(e));
-                            let closure_update =
-                                Closure::wrap(Box::new(move |event: web_sys::Event| {
-                                    callback_update.emit(event)
-                                }) as Box<dyn Fn(_)>);
-
-                            sb.set_onupdate(Some(closure_update.as_ref().unchecked_ref()));
-                            self.update_closure = Some(closure_update);
-
-                            log::info!(
-                                "duration: {} ms: {}, time: {}",
-                                ae.preload(),
-                                ms.duration(),
-                                ae.current_time()
-                            );
-                        }
-                        None => log::error!("no media source set"),
-                    }
+                    let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
+                    let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
+                    ae.set_playback_rate(2.0);
+                    ae.set_preload("metadata");
+                    sb.append_buffer_with_array_buffer(&data).unwrap();
+                    sb.set_onupdate(Some(self.update_closure.as_ref().unchecked_ref()));
                     true
                 }
             },
@@ -90,29 +76,22 @@ impl Component for Player {
                 false
             }
             Message::Info => {
-                match &self.media_source {
-                    Some(ms) => {
-                        let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
+                let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
 
-                        log::info!(
-                            "preload: {} ms: {}, time: {}, ae state: {}, ms state: {:?}",
-                            ae.preload(),
-                            ms.duration(),
-                            ae.current_time(),
-                            ae.ready_state(),
-                            ms.ready_state()
-                        );
-                    }
-                    None => log::error!("no media source set"),
-                }
+                log::info!(
+                    "preload: {} ms: {}, time: {}, ae state: {}, ms state: {:?}",
+                    ae.preload(),
+                    self.media_source.duration(),
+                    ae.current_time(),
+                    ae.ready_state(),
+                    self.media_source.ready_state()
+                );
                 false
             }
             Message::Update(e) => {
                 log::info!("update: {:?}", e);
 
-                if let Some(ms) = &self.media_source {
-                    ms.end_of_stream().unwrap();
-                }
+                self.media_source.end_of_stream().unwrap();
                 false
             }
         }
