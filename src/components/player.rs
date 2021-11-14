@@ -62,9 +62,6 @@ impl Component for Player {
                 Response::Channels(_) => true,
                 Response::Enclosure(data) => {
                     let ac = AudioContext::new().unwrap();
-                    let buf = Uint8Array::new_with_length(data.len() as u32);
-                    buf.copy_from(&data);
-
                     let callback_error = self.link.callback(move |e| Message::DecodeError(e));
                     let callback_success = self.link.callback(move |e| Message::DecodeSuccess(e));
                     let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
@@ -75,7 +72,7 @@ impl Component for Player {
                     }) as Box<dyn Fn(_)>);
                     let _ = ac
                         .decode_audio_data_with_success_callback_and_error_callback(
-                            &buf.buffer(),
+                            &data,
                             closure_success.as_ref().unchecked_ref(),
                             closure_error.as_ref().unchecked_ref(),
                         )
@@ -84,14 +81,7 @@ impl Component for Player {
                         _closure_error: closure_error,
                         _closure_success: closure_success,
                     });
-                    // self.blob = Some(
-                    //     Blob::new_with_u8_array_sequence(
-                    //         &serde_wasm_bindgen::to_value(&data).unwrap(),
-                    //     )
-                    //     .unwrap(),
-                    // );
-                    // self.source =
-                    //     Url::create_object_url_with_blob(self.blob.as_ref().unwrap()).unwrap();
+
                     true
                 }
             },

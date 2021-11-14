@@ -1,13 +1,16 @@
 use crate::objects::channel::Channel;
+use js_sys::{Array, ArrayBuffer};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
-use wasm_bindgen::JsCast;
+use wasm_bindgen::{JsCast, JsValue};
+use wasm_bindgen_futures::JsFuture;
 use web_sys::{IdbDatabase, IdbTransactionMode};
 use yew::format::Nothing;
 use yew::services::fetch;
 use yew::worker::*;
+use yewtil::future::LinkFuture;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
@@ -18,7 +21,7 @@ pub enum Request {
 
 pub enum Response {
     Channels(Vec<Channel>),
-    Enclosure(Vec<u8>),
+    Enclosure(ArrayBuffer),
 }
 
 pub struct Repo {
@@ -35,7 +38,7 @@ pub enum Msg {
     OpenDbSuccess(web_sys::Event),
     IdbRequestSuccess(web_sys::Event),
     IdbRequestError(web_sys::Event),
-    ReceiveDownload(Uuid, Vec<u8>),
+    ReceiveDownload(Uuid, Result<ArrayBuffer, JsValue>),
 }
 
 pub struct OpenDb {
@@ -153,7 +156,7 @@ impl Agent for Repo {
                 self.open_request = None;
             }
             Msg::ReceiveDownload(id, data) => {
-                log::info!("received data {}", data.len());
+                log::info!("received data {:?}", data);
                 log::info!("{:?}", self.db);
                 match &self.db {
                     Some(db) => {
@@ -165,7 +168,7 @@ impl Agent for Repo {
                             .unwrap();
                         let os = trans.object_store("enclosures").unwrap();
                         os.put_with_key(
-                            &serde_wasm_bindgen::to_value(&data).unwrap(),
+                            &data.unwrap(),
                             &serde_wasm_bindgen::to_value(&id).unwrap(),
                         )
                         .unwrap();
@@ -176,10 +179,20 @@ impl Agent for Repo {
             Msg::IdbRequestError(e) => {}
             Msg::IdbRequestSuccess(e) => {
                 log::info!("idb request success {:?}", e);
-                let res: Vec<u8> = serde_wasm_bindgen::from_value(
-                    self.idb_request.as_ref().unwrap().request.result().unwrap(),
-                )
-                .unwrap();
+                // let res: Vec<u8> = serde_wasm_bindgen::from_value(
+                //     self.idb_request.as_ref().unwrap().request.result().unwrap(),
+                // )
+                // .unwrap();
+
+                let res: ArrayBuffer = self
+                    .idb_request
+                    .as_ref()
+                    .unwrap()
+                    .request
+                    .result()
+                    .unwrap()
+                    .dyn_into()
+                    .unwrap();
 
                 for sub in self.subscribers.iter() {
                     self.link.respond(*sub, Response::Enclosure(res.clone()));
@@ -197,18 +210,23 @@ impl Agent for Repo {
             }
             Request::DownloadEnclosure(id) => {
                 log::info!("requested download of {}", id);
-                let request = fetch::Request::get(format!("/api/items/{}/stream", id))
-                    .body(Nothing)
-                    .expect("Could not build request.");
-                let callback = self.link.callback(
-                    move |response: fetch::Response<Result<Vec<u8>, anyhow::Error>>| {
-                        Msg::ReceiveDownload(id, response.into_body().unwrap())
-                    },
-                );
-                let task = fetch::FetchService::fetch_binary(request, callback)
-                    .expect("failed to start request");
 
-                self.download_task = Some(task);
+                self.link.send_future(async move {
+                    Msg::ReceiveDownload(id, fetch_enclosure(id).await)
+                });
+
+                // let request = fetch::Request::get(format!("/api/items/{}/stream", id))
+                //     .body(Nothing)
+                //     .expect("Could not build request.");
+                // let callback = self.link.callback(
+                //     move |response: fetch::Response<Result<Vec<u8>, anyhow::Error>>| {
+                //         Msg::ReceiveDownload(id, response.into_body().unwrap())
+                //     },
+                // );
+                // let task = fetch::FetchService::fetch_binary(request, callback)
+                //     .expect("failed to start request");
+
+                // self.download_task = Some(task);
             }
             Request::GetEnclosure(id) => {
                 log::info!("get enclosure db {:?}", self.db);
@@ -249,4 +267,25 @@ impl Agent for Repo {
     fn disconnected(&mut self, id: HandlerId) {
         self.subscribers.remove(&id);
     }
+}
+
+// https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
+async fn fetch_enclosure(id: Uuid) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
+    let mut opts = web_sys::RequestInit::new();
+    opts.method("GET");
+    // opts.mode(web_sys::RequestMode::Cors);
+
+    let request =
+        web_sys::Request::new_with_str_and_init(&format!("/api/items/{}/stream", id), &opts)?;
+
+    let window = yew::utils::window();
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
+    let resp: web_sys::Response = resp_value.dyn_into().unwrap();
+
+    log::info!("fetch enclosure: {:?}", resp);
+
+    let buffer = JsFuture::from(resp.array_buffer()?).await?;
+
+    log::info!("buffer: {:?}", buffer);
+    Ok(ArrayBuffer::from(buffer))
 }
