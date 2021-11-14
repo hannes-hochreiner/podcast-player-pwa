@@ -68,6 +68,7 @@ impl Component for Player {
                     sb.set_onupdate(Some(self.update_closure.as_ref().unchecked_ref()));
                     true
                 }
+                _ => false,
             },
             Message::Play => {
                 self._repo.send(Request::GetEnclosure(

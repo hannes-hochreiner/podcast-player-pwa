@@ -28,6 +28,7 @@ pub struct Repo {
     open_request: Option<OpenDb>,
     db: Option<IdbDatabase>,
     idb_request: Option<IdbReq>,
+    tasks: Vec<Task>,
 }
 
 pub enum Msg {
@@ -48,6 +49,11 @@ pub struct IdbReq {
     _closure_error: Closure<dyn Fn(web_sys::Event)>,
     _closure_success: Closure<dyn Fn(web_sys::Event)>,
     request: web_sys::IdbRequest,
+}
+
+struct Task {
+    request: Request,
+    handler_id: HandlerId,
 }
 
 impl Repo {
@@ -92,6 +98,7 @@ impl Agent for Repo {
             open_request: None,
             db: None,
             idb_request: None,
+            tasks: Vec::new(),
         };
 
         obj.init();
@@ -158,15 +165,8 @@ impl Agent for Repo {
             }
             Msg::IdbRequestSuccess(e) => {
                 log::info!("idb request success {:?}", e);
-                let res: ArrayBuffer = self
-                    .idb_request
-                    .as_ref()
-                    .unwrap()
-                    .request
-                    .result()
-                    .unwrap()
-                    .dyn_into()
-                    .unwrap();
+                let req = self.idb_request.as_ref().unwrap();
+                let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
 
                 for sub in self.subscribers.iter() {
                     self.link.respond(*sub, Response::Enclosure(res.clone()));
@@ -175,56 +175,73 @@ impl Agent for Repo {
         }
     }
 
-    fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
-        match msg {
-            Request::GetChannels => {
-                for sub in self.subscribers.iter() {
-                    // self.link.respond(*sub, s.clone());
+    fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
+        log::info!("received task: handler id {:?}", id);
+        self.tasks.push(Task {
+            request: msg,
+            handler_id: id,
+        });
+
+        if let Some(db) = &self.db {
+            while self.tasks.len() > 0 {
+                let task = self.tasks.pop().unwrap();
+
+                match task.request {
+                    Request::GetChannels => {
+                        for sub in self.subscribers.iter() {
+                            // self.link.respond(*sub, s.clone());
+                        }
+                    }
+                    Request::DownloadEnclosure(id) => {
+                        log::info!("requested download of {}", id);
+
+                        self.link.send_future(async move {
+                            Msg::ReceiveDownload(
+                                id,
+                                fetch_binary(&format!("/api/items/{}/stream", id)).await,
+                            )
+                        });
+                    }
+                    Request::GetEnclosure(id) => {
+                        let trans = db
+                            .transaction_with_str_and_mode(
+                                "enclosures",
+                                IdbTransactionMode::Readwrite,
+                            )
+                            .unwrap();
+                        let os = trans.object_store("enclosures").unwrap();
+                        let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
+                        let callback_error = self.link.callback(Msg::IdbRequestError);
+                        let callback_success = self.link.callback(Msg::IdbRequestSuccess);
+                        let closure_success =
+                            Closure::wrap(Box::new(move |event: web_sys::Event| {
+                                callback_success.emit(event)
+                            }) as Box<dyn Fn(_)>);
+                        req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
+                        let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
+                            callback_error.emit(event)
+                        })
+                            as Box<dyn Fn(_)>);
+                        req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
+
+                        log::info!(
+                            "get enclosure: handler id: {:?} {}",
+                            task.handler_id,
+                            task.handler_id.is_respondable()
+                        );
+                        self.idb_request = Some(IdbReq {
+                            _closure_error: closure_error,
+                            _closure_success: closure_success,
+                            request: req,
+                        });
+                    }
                 }
-            }
-            Request::DownloadEnclosure(id) => {
-                log::info!("requested download of {}", id);
-
-                self.link.send_future(async move {
-                    Msg::ReceiveDownload(
-                        id,
-                        fetch_binary(&format!("/api/items/{}/stream", id)).await,
-                    )
-                });
-            }
-            Request::GetEnclosure(id) => {
-                log::info!("get enclosure db {:?}", self.db);
-                let trans = self
-                    .db
-                    .as_ref()
-                    .unwrap()
-                    .transaction_with_str_and_mode("enclosures", IdbTransactionMode::Readwrite)
-                    .unwrap();
-                let os = trans.object_store("enclosures").unwrap();
-                let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
-                let callback_error = self.link.callback(Msg::IdbRequestError);
-                let callback_success = self.link.callback(Msg::IdbRequestSuccess);
-                let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
-                    callback_success.emit(event)
-                }) as Box<dyn Fn(_)>);
-                req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
-                let closure_error =
-                    Closure::wrap(
-                        Box::new(move |event: web_sys::Event| callback_error.emit(event))
-                            as Box<dyn Fn(_)>,
-                    );
-                req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
-
-                self.idb_request = Some(IdbReq {
-                    _closure_error: closure_error,
-                    _closure_success: closure_success,
-                    request: req,
-                });
             }
         }
     }
 
     fn connected(&mut self, id: HandlerId) {
+        log::info!("connected: handler id: {:?}", id);
         self.subscribers.insert(id);
     }
 
