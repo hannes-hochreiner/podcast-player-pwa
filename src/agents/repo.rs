@@ -83,6 +83,71 @@ impl Repo {
             request: idb_open_request,
         });
     }
+
+    fn process_tasks(&mut self) {
+        match &self.db {
+            Some(db) => {
+                while self.tasks.len() > 0 {
+                    let task = self.tasks.pop().unwrap();
+
+                    match task.request {
+                        Request::GetChannels => {
+                            log::info!(
+                                "handle input: send channels: handler id: {:?}",
+                                task.handler_id
+                            );
+                            self.link
+                                .respond(task.handler_id, Response::Channels(Vec::new()));
+                        }
+                        Request::DownloadEnclosure(id) => {
+                            log::info!("requested download of {}", id);
+
+                            self.link.send_future(async move {
+                                Msg::ReceiveDownload(
+                                    id,
+                                    fetch_binary(&format!("/api/items/{}/stream", id)).await,
+                                )
+                            });
+                        }
+                        Request::GetEnclosure(id) => {
+                            let trans = db
+                                .transaction_with_str_and_mode(
+                                    "enclosures",
+                                    IdbTransactionMode::Readwrite,
+                                )
+                                .unwrap();
+                            let os = trans.object_store("enclosures").unwrap();
+                            let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
+                            let callback_error = self.link.callback(Msg::IdbRequestError);
+                            let callback_success = self.link.callback(Msg::IdbRequestSuccess);
+                            let closure_success =
+                                Closure::wrap(Box::new(move |event: web_sys::Event| {
+                                    callback_success.emit(event)
+                                }) as Box<dyn Fn(_)>);
+                            req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
+                            let closure_error =
+                                Closure::wrap(Box::new(move |event: web_sys::Event| {
+                                    callback_error.emit(event)
+                                }) as Box<dyn Fn(_)>);
+                            req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
+
+                            log::info!(
+                                "get enclosure: handler id: {:?} {}",
+                                task.handler_id,
+                                task.handler_id.is_respondable()
+                            );
+                            self.idb_request = Some(IdbReq {
+                                _closure_error: closure_error,
+                                _closure_success: closure_success,
+                                request: req,
+                            });
+                        }
+                    }
+                }
+            }
+            None => log::error!("no database available"),
+        }
+    }
 }
 
 impl Agent for Repo {
@@ -138,6 +203,7 @@ impl Agent for Repo {
                         .into(),
                 );
                 self.open_request = None;
+                self.process_tasks();
             }
             Msg::ReceiveDownload(id, data) => {
                 log::info!("received data {:?}", data);
@@ -177,66 +243,15 @@ impl Agent for Repo {
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
         log::info!("received task: handler id {:?}", id);
+
         self.tasks.push(Task {
             request: msg,
             handler_id: id,
         });
 
-        if let Some(db) = &self.db {
-            while self.tasks.len() > 0 {
-                let task = self.tasks.pop().unwrap();
-
-                match task.request {
-                    Request::GetChannels => {
-                        for sub in self.subscribers.iter() {
-                            // self.link.respond(*sub, s.clone());
-                        }
-                    }
-                    Request::DownloadEnclosure(id) => {
-                        log::info!("requested download of {}", id);
-
-                        self.link.send_future(async move {
-                            Msg::ReceiveDownload(
-                                id,
-                                fetch_binary(&format!("/api/items/{}/stream", id)).await,
-                            )
-                        });
-                    }
-                    Request::GetEnclosure(id) => {
-                        let trans = db
-                            .transaction_with_str_and_mode(
-                                "enclosures",
-                                IdbTransactionMode::Readwrite,
-                            )
-                            .unwrap();
-                        let os = trans.object_store("enclosures").unwrap();
-                        let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
-                        let callback_error = self.link.callback(Msg::IdbRequestError);
-                        let callback_success = self.link.callback(Msg::IdbRequestSuccess);
-                        let closure_success =
-                            Closure::wrap(Box::new(move |event: web_sys::Event| {
-                                callback_success.emit(event)
-                            }) as Box<dyn Fn(_)>);
-                        req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
-                        let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
-                            callback_error.emit(event)
-                        })
-                            as Box<dyn Fn(_)>);
-                        req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
-
-                        log::info!(
-                            "get enclosure: handler id: {:?} {}",
-                            task.handler_id,
-                            task.handler_id.is_respondable()
-                        );
-                        self.idb_request = Some(IdbReq {
-                            _closure_error: closure_error,
-                            _closure_success: closure_success,
-                            request: req,
-                        });
-                    }
-                }
-            }
+        match &self.db {
+            Some(_) => self.process_tasks(),
+            None => log::warn!("database not available; postponing task"),
         }
     }
 

@@ -1,5 +1,5 @@
 use super::router::AppRoute;
-use crate::agents::repo::{Repo, Request as RepoRequest};
+use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::channel::Channel;
 use anyhow::Error;
 use yew::{
@@ -15,11 +15,12 @@ pub struct ChannelList {
     fetch_task: Option<FetchTask>,
     channels: Option<Vec<Channel>>,
     error: Option<Error>,
-    _repo: Dispatcher<Repo>,
+    repo: Box<dyn Bridge<Repo>>,
 }
 
 pub enum Msg {
     ReceiveChannels(Result<Vec<Channel>, anyhow::Error>),
+    RepoMessage(RepoResponse),
 }
 
 impl ChannelList {
@@ -78,16 +79,17 @@ impl Component for ChannelList {
         );
         // 3. pass the request and callback to the fetch service
         let task = FetchService::fetch(request, callback).expect("failed to start request");
-        let mut disp = Repo::dispatcher();
+        let cb = link.callback(Msg::RepoMessage);
+        let mut repo = Repo::bridge(cb);
 
-        disp.send(RepoRequest::GetChannels);
+        repo.send(RepoRequest::GetChannels);
 
         Self {
             _link: link,
             fetch_task: Some(task),
             channels: None,
             error: None,
-            _repo: disp,
+            repo,
         }
     }
 
@@ -106,6 +108,13 @@ impl Component for ChannelList {
                 self.fetch_task = None;
                 true
             }
+            Msg::RepoMessage(response) => match response {
+                RepoResponse::Channels(channels) => {
+                    log::info!("channel list: repo message {:?}", channels);
+                    true
+                }
+                _ => false,
+            },
         }
     }
 
