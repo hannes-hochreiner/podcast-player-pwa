@@ -2,24 +2,17 @@ use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::channel::Channel;
 use anyhow::Error;
-use yew::{
-    agent::Dispatcher,
-    format::{Json, Nothing},
-    prelude::*,
-    services::fetch::{FetchService, FetchTask, Request, Response},
-};
+use yew::prelude::*;
 use yew_router::prelude::RouterAnchor;
 
 pub struct ChannelList {
     _link: ComponentLink<Self>,
-    fetch_task: Option<FetchTask>,
     channels: Option<Vec<Channel>>,
     error: Option<Error>,
-    repo: Box<dyn Bridge<Repo>>,
+    _repo: Box<dyn Bridge<Repo>>,
 }
 
 pub enum Msg {
-    ReceiveChannels(Result<Vec<Channel>, anyhow::Error>),
     RepoMessage(RepoResponse),
 }
 
@@ -47,11 +40,11 @@ impl ChannelList {
     }
 
     fn view_fetching(&self) -> Html {
-        if self.fetch_task.is_some() {
-            html! { <p>{ "Fetching data..." }</p> }
-        } else {
-            html! {}
-        }
+        // if self.fetch_task.is_some() {
+        //     html! { <p>{ "Fetching data..." }</p> }
+        // } else {
+        html! {}
+        // }
     }
 
     fn view_error(&self) -> Html {
@@ -67,18 +60,6 @@ impl Component for ChannelList {
     type Properties = ();
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let request = Request::get("/api/channels")
-            .body(Nothing)
-            .expect("Could not build request.");
-        // 2. construct a callback
-        let callback = link.callback(
-            |response: Response<Json<Result<Vec<Channel>, anyhow::Error>>>| {
-                let Json(data) = response.into_body();
-                Msg::ReceiveChannels(data)
-            },
-        );
-        // 3. pass the request and callback to the fetch service
-        let task = FetchService::fetch(request, callback).expect("failed to start request");
         let cb = link.callback(Msg::RepoMessage);
         let mut repo = Repo::bridge(cb);
 
@@ -86,31 +67,17 @@ impl Component for ChannelList {
 
         Self {
             _link: link,
-            fetch_task: Some(task),
             channels: None,
             error: None,
-            repo,
+            _repo: repo,
         }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Msg::ReceiveChannels(res) => {
-                match res {
-                    Ok(c) => {
-                        self.channels = Some(c);
-                    }
-                    Err(e) => {
-                        self.error = Some(e);
-                    }
-                }
-
-                self.fetch_task = None;
-                true
-            }
             Msg::RepoMessage(response) => match response {
                 RepoResponse::Channels(channels) => {
-                    log::info!("channel list: repo message {:?}", channels);
+                    self.channels = Some(channels);
                     true
                 }
                 _ => false,

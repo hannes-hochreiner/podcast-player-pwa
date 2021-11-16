@@ -1,4 +1,5 @@
 use crate::objects::channel::Channel;
+use anyhow::Context as AnyhowContext;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -37,6 +38,7 @@ pub enum Msg {
     IdbRequestSuccess(web_sys::Event),
     IdbRequestError(web_sys::Event),
     ReceiveDownload(Uuid, Result<ArrayBuffer, JsValue>),
+    ReceiveChannels(HandlerId, anyhow::Result<Vec<Channel>>),
 }
 
 pub struct OpenDb {
@@ -96,8 +98,18 @@ impl Repo {
                                 "handle input: send channels: handler id: {:?}",
                                 task.handler_id
                             );
-                            self.link
-                                .respond(task.handler_id, Response::Channels(Vec::new()));
+                            self.link.send_future(async move {
+                                match fetch_text(&format!("/api/channels")).await {
+                                    Ok(s) => Msg::ReceiveChannels(
+                                        task.handler_id,
+                                        serde_json::from_str(&s)
+                                            .context("conversion to vector of channels failed"),
+                                    ),
+                                    Err(e) => Msg::ReceiveChannels(task.handler_id, Err(e)),
+                                }
+                            });
+                            // self.link
+                            //     .respond(task.handler_id, Response::Channels(Vec::new()));
                         }
                         Request::DownloadEnclosure(id) => {
                             log::info!("requested download of {}", id);
@@ -238,6 +250,11 @@ impl Agent for Repo {
                     self.link.respond(*sub, Response::Enclosure(res.clone()));
                 }
             }
+            Msg::ReceiveChannels(handler_id, res) => {
+                if let Ok(channels) = res {
+                    self.link.respond(handler_id, Response::Channels(channels));
+                }
+            }
         }
     }
 
@@ -265,8 +282,7 @@ impl Agent for Repo {
     }
 }
 
-// https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
-async fn fetch_binary(url: &str) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
+async fn fetch(url: &str) -> Result<web_sys::Response, wasm_bindgen::JsValue> {
     let mut opts = web_sys::RequestInit::new();
     opts.method("GET");
     // opts.mode(web_sys::RequestMode::Cors);
@@ -279,8 +295,27 @@ async fn fetch_binary(url: &str) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
 
     log::info!("fetch enclosure: {:?}", resp);
 
-    let buffer = JsFuture::from(resp.array_buffer()?).await?;
+    Ok(resp)
+}
 
-    log::info!("buffer: {:?}", buffer);
-    Ok(ArrayBuffer::from(buffer))
+// https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
+async fn fetch_binary(url: &str) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
+    Ok(ArrayBuffer::from(
+        JsFuture::from(fetch(url).await?.array_buffer()?).await?,
+    ))
+}
+
+async fn fetch_text(url: &str) -> anyhow::Result<String> {
+    //let Json(data) = response.into_body();
+    JsFuture::from(
+        fetch(url)
+            .await
+            .map_err(|_| anyhow::anyhow!("fetch failed"))?
+            .text()
+            .map_err(|_| anyhow::anyhow!("retrieving text failed"))?,
+    )
+    .await
+    .map_err(|_| anyhow::anyhow!("creating future failed"))?
+    .as_string()
+    .ok_or(anyhow::anyhow!("could not convert response into string"))
 }

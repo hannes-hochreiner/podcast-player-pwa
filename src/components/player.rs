@@ -58,7 +58,6 @@ impl Component for Player {
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Message::NewMessage(response) => match response {
-                Response::Channels(_) => true,
                 Response::Enclosure(data) => {
                     let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
                     let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
