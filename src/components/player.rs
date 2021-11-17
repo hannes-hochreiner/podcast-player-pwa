@@ -58,13 +58,15 @@ impl Component for Player {
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Message::NewMessage(response) => match response {
-                Response::Enclosure(data) => {
-                    let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
-                    let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
-                    ae.set_playback_rate(2.0);
-                    ae.set_preload("metadata");
-                    sb.append_buffer_with_array_buffer(&data).unwrap();
-                    sb.set_onupdate(Some(self.update_closure.as_ref().unchecked_ref()));
+                Response::Enclosure(res) => {
+                    if let Ok(data) = res {
+                        let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
+                        let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
+                        ae.set_playback_rate(2.0);
+                        ae.set_preload("metadata");
+                        sb.append_buffer_with_array_buffer(&data).unwrap();
+                        sb.set_onupdate(Some(self.update_closure.as_ref().unchecked_ref()));
+                    }
                     true
                 }
                 _ => false,

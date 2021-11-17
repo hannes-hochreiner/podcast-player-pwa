@@ -1,15 +1,14 @@
+use super::fetcher;
 use crate::objects::channel::Channel;
 use anyhow::Context as AnyhowContext;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
-use wasm_bindgen::{JsCast, JsValue};
-use wasm_bindgen_futures::JsFuture;
+use wasm_bindgen::JsCast;
 use web_sys::{IdbDatabase, IdbTransactionMode};
 use yew::worker::*;
-use yewtil::future::LinkFuture;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
@@ -19,8 +18,8 @@ pub enum Request {
 }
 
 pub enum Response {
-    Channels(Vec<Channel>),
-    Enclosure(ArrayBuffer),
+    Channels(anyhow::Result<Vec<Channel>>),
+    Enclosure(anyhow::Result<ArrayBuffer>),
 }
 
 pub struct Repo {
@@ -29,7 +28,9 @@ pub struct Repo {
     open_request: Option<OpenDb>,
     db: Option<IdbDatabase>,
     idb_request: Option<IdbReq>,
-    tasks: Vec<Task>,
+    pending_tasks: Vec<Task>,
+    fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
+    active_tasks: HashMap<Uuid, Task>,
 }
 
 pub enum Msg {
@@ -37,8 +38,7 @@ pub enum Msg {
     OpenDbSuccess(web_sys::Event),
     IdbRequestSuccess(web_sys::Event),
     IdbRequestError(web_sys::Event),
-    ReceiveDownload(Uuid, Result<ArrayBuffer, JsValue>),
-    ReceiveChannels(HandlerId, anyhow::Result<Vec<Channel>>),
+    FetcherMessage(fetcher::Response),
 }
 
 pub struct OpenDb {
@@ -89,8 +89,8 @@ impl Repo {
     fn process_tasks(&mut self) {
         match &self.db {
             Some(db) => {
-                while self.tasks.len() > 0 {
-                    let task = self.tasks.pop().unwrap();
+                while self.pending_tasks.len() > 0 {
+                    let task = self.pending_tasks.pop().unwrap();
 
                     match task.request {
                         Request::GetChannels => {
@@ -98,28 +98,34 @@ impl Repo {
                                 "handle input: send channels: handler id: {:?}",
                                 task.handler_id
                             );
-                            self.link.send_future(async move {
-                                match fetch_text(&format!("/api/channels")).await {
-                                    Ok(s) => Msg::ReceiveChannels(
-                                        task.handler_id,
-                                        serde_json::from_str(&s)
-                                            .context("conversion to vector of channels failed"),
-                                    ),
-                                    Err(e) => Msg::ReceiveChannels(task.handler_id, Err(e)),
-                                }
-                            });
+                            let task_id = Uuid::new_v4();
+                            self.active_tasks.insert(task_id, task);
+                            self.fetcher.send(fetcher::Request::FetchText(
+                                task_id,
+                                format!("/api/channels"),
+                            ));
+                            // self.link.send_future(async move {
+                            //     match fetch_text(&format!("/api/channels")).await {
+                            //         Ok(s) => Msg::ReceiveChannels(
+                            //             task.handler_id,
+                            //             serde_json::from_str(&s)
+                            //                 .context("conversion to vector of channels failed"),
+                            //         ),
+                            //         Err(e) => Msg::ReceiveChannels(task.handler_id, Err(e)),
+                            //     }
+                            // });
                             // self.link
                             //     .respond(task.handler_id, Response::Channels(Vec::new()));
                         }
                         Request::DownloadEnclosure(id) => {
                             log::info!("requested download of {}", id);
 
-                            self.link.send_future(async move {
-                                Msg::ReceiveDownload(
-                                    id,
-                                    fetch_binary(&format!("/api/items/{}/stream", id)).await,
-                                )
-                            });
+                            let task_id = Uuid::new_v4();
+                            self.active_tasks.insert(task_id, task);
+                            self.fetcher.send(fetcher::Request::FetchBinary(
+                                task_id,
+                                format!("/api/items/{}/stream", id),
+                            ));
                         }
                         Request::GetEnclosure(id) => {
                             let trans = db
@@ -169,13 +175,16 @@ impl Agent for Repo {
     type Output = Response;
 
     fn create(link: AgentLink<Self>) -> Self {
+        let fetcher_cb = link.callback(Msg::FetcherMessage);
         let mut obj = Self {
             link,
             subscribers: HashSet::new(),
             open_request: None,
             db: None,
             idb_request: None,
-            tasks: Vec::new(),
+            pending_tasks: Vec::new(),
+            fetcher: fetcher::Fetcher::bridge(fetcher_cb),
+            active_tasks: HashMap::new(),
         };
 
         obj.init();
@@ -185,6 +194,45 @@ impl Agent for Repo {
 
     fn update(&mut self, msg: Self::Message) {
         match msg {
+            Msg::FetcherMessage(resp) => match resp {
+                fetcher::Response::Binary(uuid, res) => {
+                    let task = self.active_tasks.remove(&uuid).unwrap();
+
+                    match task.request {
+                        Request::DownloadEnclosure(id) => match (&self.db, res) {
+                            (Some(db), Ok(data)) => {
+                                let trans = db
+                                    .transaction_with_str_and_mode(
+                                        "enclosures",
+                                        IdbTransactionMode::Readwrite,
+                                    )
+                                    .unwrap();
+                                let os = trans.object_store("enclosures").unwrap();
+                                os.put_with_key(&data, &serde_wasm_bindgen::to_value(&id).unwrap())
+                                    .unwrap();
+                            }
+                            (None, _) => log::error!("could not find database"),
+                            (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
+                        },
+                        _ => {}
+                    }
+                }
+                fetcher::Response::Text(uuid, res) => {
+                    let task = self.active_tasks.remove(&uuid).unwrap();
+
+                    match task.request {
+                        Request::GetChannels => self.link.respond(
+                            task.handler_id,
+                            Response::Channels(match res {
+                                Ok(s) => serde_json::from_str(&s)
+                                    .context("conversion to vector of channels failed"),
+                                Err(e) => Err(e),
+                            }),
+                        ),
+                        _ => {}
+                    }
+                }
+            },
             Msg::OpenDbUpdate(e) => {
                 log::info!("update {:?}", e);
                 let idb_db = IdbDatabase::from(
@@ -217,27 +265,6 @@ impl Agent for Repo {
                 self.open_request = None;
                 self.process_tasks();
             }
-            Msg::ReceiveDownload(id, data) => {
-                log::info!("received data {:?}", data);
-                log::info!("{:?}", self.db);
-                match &self.db {
-                    Some(db) => {
-                        let trans = db
-                            .transaction_with_str_and_mode(
-                                "enclosures",
-                                IdbTransactionMode::Readwrite,
-                            )
-                            .unwrap();
-                        let os = trans.object_store("enclosures").unwrap();
-                        os.put_with_key(
-                            &data.unwrap(),
-                            &serde_wasm_bindgen::to_value(&id).unwrap(),
-                        )
-                        .unwrap();
-                    }
-                    None => log::error!("could not find database"),
-                }
-            }
             Msg::IdbRequestError(e) => {
                 log::error!("{:?}", e);
             }
@@ -247,12 +274,8 @@ impl Agent for Repo {
                 let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
 
                 for sub in self.subscribers.iter() {
-                    self.link.respond(*sub, Response::Enclosure(res.clone()));
-                }
-            }
-            Msg::ReceiveChannels(handler_id, res) => {
-                if let Ok(channels) = res {
-                    self.link.respond(handler_id, Response::Channels(channels));
+                    self.link
+                        .respond(*sub, Response::Enclosure(Ok(res.clone())));
                 }
             }
         }
@@ -261,7 +284,7 @@ impl Agent for Repo {
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
         log::info!("received task: handler id {:?}", id);
 
-        self.tasks.push(Task {
+        self.pending_tasks.push(Task {
             request: msg,
             handler_id: id,
         });
@@ -280,42 +303,4 @@ impl Agent for Repo {
     fn disconnected(&mut self, id: HandlerId) {
         self.subscribers.remove(&id);
     }
-}
-
-async fn fetch(url: &str) -> Result<web_sys::Response, wasm_bindgen::JsValue> {
-    let mut opts = web_sys::RequestInit::new();
-    opts.method("GET");
-    // opts.mode(web_sys::RequestMode::Cors);
-
-    let request = web_sys::Request::new_with_str_and_init(url, &opts)?;
-
-    let window = yew::utils::window();
-    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
-    let resp: web_sys::Response = resp_value.dyn_into().unwrap();
-
-    log::info!("fetch enclosure: {:?}", resp);
-
-    Ok(resp)
-}
-
-// https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
-async fn fetch_binary(url: &str) -> Result<ArrayBuffer, wasm_bindgen::JsValue> {
-    Ok(ArrayBuffer::from(
-        JsFuture::from(fetch(url).await?.array_buffer()?).await?,
-    ))
-}
-
-async fn fetch_text(url: &str) -> anyhow::Result<String> {
-    //let Json(data) = response.into_body();
-    JsFuture::from(
-        fetch(url)
-            .await
-            .map_err(|_| anyhow::anyhow!("fetch failed"))?
-            .text()
-            .map_err(|_| anyhow::anyhow!("retrieving text failed"))?,
-    )
-    .await
-    .map_err(|_| anyhow::anyhow!("creating future failed"))?
-    .as_string()
-    .ok_or(anyhow::anyhow!("could not convert response into string"))
 }

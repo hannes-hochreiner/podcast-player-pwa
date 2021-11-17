@@ -76,8 +76,13 @@ impl Component for ChannelList {
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Msg::RepoMessage(response) => match response {
-                RepoResponse::Channels(channels) => {
-                    self.channels = Some(channels);
+                RepoResponse::Channels(res) => {
+                    match res {
+                        Ok(channels) => {
+                            self.channels = Some(channels);
+                        }
+                        Err(e) => self.error = Some(e),
+                    }
                     true
                 }
                 _ => false,
