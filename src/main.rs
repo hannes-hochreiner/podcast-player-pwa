@@ -3,7 +3,7 @@ mod components;
 mod objects;
 mod pages;
 
-use components::router::Router;
+use components::top::Top;
 #[allow(unused_imports)]
 use wasm_bindgen::prelude::*;
 #[allow(unused_imports)]
@@ -11,5 +11,5 @@ use yew::prelude::*;
 
 fn main() {
     wasm_logger::init(wasm_logger::Config::default());
-    yew::start_app::<Router>();
+    yew::start_app::<Top>();
 }
