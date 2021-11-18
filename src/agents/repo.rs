@@ -104,18 +104,6 @@ impl Repo {
                                 task_id,
                                 format!("/api/channels"),
                             ));
-                            // self.link.send_future(async move {
-                            //     match fetch_text(&format!("/api/channels")).await {
-                            //         Ok(s) => Msg::ReceiveChannels(
-                            //             task.handler_id,
-                            //             serde_json::from_str(&s)
-                            //                 .context("conversion to vector of channels failed"),
-                            //         ),
-                            //         Err(e) => Msg::ReceiveChannels(task.handler_id, Err(e)),
-                            //     }
-                            // });
-                            // self.link
-                            //     .respond(task.handler_id, Response::Channels(Vec::new()));
                         }
                         Request::DownloadEnclosure(id) => {
                             log::info!("requested download of {}", id);
