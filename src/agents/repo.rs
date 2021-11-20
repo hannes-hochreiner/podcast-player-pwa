@@ -7,7 +7,7 @@ use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{IdbDatabase, IdbTransactionMode};
+use web_sys::{IdbDatabase, IdbRequest, IdbTransactionMode};
 use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -28,17 +28,16 @@ pub struct Repo {
     subscribers: HashSet<HandlerId>,
     open_request: Option<OpenDb>,
     db: Option<IdbDatabase>,
-    idb_request: Option<IdbReq>,
     pending_tasks: Vec<Task>,
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     active_tasks: HashMap<Uuid, Task>,
+    active_idb_tasks: HashMap<Uuid, IdbReq>,
 }
 
 pub enum Msg {
     OpenDbUpdate(web_sys::Event),
     OpenDbSuccess(web_sys::Event),
-    IdbRequestSuccess(web_sys::Event),
-    IdbRequestError(web_sys::Event),
+    IdbRequest((Uuid, Result<web_sys::Event, web_sys::Event>)),
     FetcherMessage(fetcher::Response),
 }
 
@@ -49,9 +48,10 @@ pub struct OpenDb {
 }
 
 pub struct IdbReq {
+    request: web_sys::IdbRequest,
     _closure_error: Closure<dyn Fn(web_sys::Event)>,
     _closure_success: Closure<dyn Fn(web_sys::Event)>,
-    request: web_sys::IdbRequest,
+    task: Task,
 }
 
 struct Task {
@@ -95,16 +95,16 @@ impl Repo {
 
                     match task.request {
                         Request::GetChannels => {
-                            log::info!(
-                                "handle input: send channels: handler id: {:?}",
-                                task.handler_id
-                            );
-                            let task_id = Uuid::new_v4();
-                            self.active_tasks.insert(task_id, task);
-                            self.fetcher.send(fetcher::Request::FetchText(
-                                task_id,
-                                format!("/api/channels"),
-                            ));
+                            let trans = db
+                                .transaction_with_str_and_mode(
+                                    "channels",
+                                    IdbTransactionMode::Readwrite,
+                                )
+                                .unwrap();
+                            let os = trans.object_store("channels").unwrap();
+                            let req = os.get_all().unwrap();
+
+                            wrap_idb_request(&self.link, &mut self.active_idb_tasks, task, req);
                         }
                         Request::AddChannels(channels) => match &self.db {
                             Some(db) => {
@@ -145,29 +145,8 @@ impl Repo {
                                 .unwrap();
                             let os = trans.object_store("enclosures").unwrap();
                             let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
-                            let callback_error = self.link.callback(Msg::IdbRequestError);
-                            let callback_success = self.link.callback(Msg::IdbRequestSuccess);
-                            let closure_success =
-                                Closure::wrap(Box::new(move |event: web_sys::Event| {
-                                    callback_success.emit(event)
-                                }) as Box<dyn Fn(_)>);
-                            req.set_onsuccess(Some(closure_success.as_ref().unchecked_ref()));
-                            let closure_error =
-                                Closure::wrap(Box::new(move |event: web_sys::Event| {
-                                    callback_error.emit(event)
-                                }) as Box<dyn Fn(_)>);
-                            req.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
 
-                            log::info!(
-                                "get enclosure: handler id: {:?} {}",
-                                task.handler_id,
-                                task.handler_id.is_respondable()
-                            );
-                            self.idb_request = Some(IdbReq {
-                                _closure_error: closure_error,
-                                _closure_success: closure_success,
-                                request: req,
-                            });
+                            wrap_idb_request(&self.link, &mut self.active_idb_tasks, task, req);
                         }
                     }
                 }
@@ -175,6 +154,34 @@ impl Repo {
             None => log::error!("no database available"),
         }
     }
+}
+
+fn wrap_idb_request(
+    link: &AgentLink<Repo>,
+    active_idb_tasks: &mut HashMap<Uuid, IdbReq>,
+    task: Task,
+    request: IdbRequest,
+) {
+    let task_id = Uuid::new_v4();
+    let callback_success = link.callback(Msg::IdbRequest);
+    let callback_error = link.callback(Msg::IdbRequest);
+    let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
+        callback_success.emit((task_id, Ok(event)))
+    }) as Box<dyn Fn(_)>);
+    let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
+        callback_error.emit((task_id, Err(event)))
+    }) as Box<dyn Fn(_)>);
+    request.set_onsuccess(Some(closure_error.as_ref().unchecked_ref()));
+    request.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
+    active_idb_tasks.insert(
+        task_id,
+        IdbReq {
+            request,
+            _closure_error: closure_error,
+            _closure_success: closure_success,
+            task,
+        },
+    );
 }
 
 impl Agent for Repo {
@@ -185,15 +192,16 @@ impl Agent for Repo {
 
     fn create(link: AgentLink<Self>) -> Self {
         let fetcher_cb = link.callback(Msg::FetcherMessage);
+
         let mut obj = Self {
             link,
             subscribers: HashSet::new(),
             open_request: None,
             db: None,
-            idb_request: None,
             pending_tasks: Vec::new(),
             fetcher: fetcher::Fetcher::bridge(fetcher_cb),
             active_tasks: HashMap::new(),
+            active_idb_tasks: HashMap::new(),
         };
 
         obj.init();
@@ -274,17 +282,23 @@ impl Agent for Repo {
                 self.open_request = None;
                 self.process_tasks();
             }
-            Msg::IdbRequestError(e) => {
-                log::error!("{:?}", e);
-            }
-            Msg::IdbRequestSuccess(e) => {
-                log::info!("idb request success {:?}", e);
-                let req = self.idb_request.as_ref().unwrap();
-                let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
+            Msg::IdbRequest(res) => {
+                let req = self.active_idb_tasks.remove(&res.0).unwrap();
 
-                for sub in self.subscribers.iter() {
-                    self.link
-                        .respond(*sub, Response::Enclosure(Ok(res.clone())));
+                match req.task.request {
+                    Request::GetEnclosure(orig_uuid) => {
+                        let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
+
+                        self.link
+                            .respond(req.task.handler_id, Response::Enclosure(Ok(res)));
+                    }
+                    Request::GetChannels => {
+                        let channels: Vec<Channel> =
+                            serde_wasm_bindgen::from_value(req.request.result().unwrap()).unwrap();
+                        self.link
+                            .respond(req.task.handler_id, Response::Channels(Ok(channels)));
+                    }
+                    _ => {}
                 }
             }
         }
