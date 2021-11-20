@@ -1,9 +1,16 @@
 // use anyhow::Result;
-use std::collections::HashSet;
-// use uuid::Uuid;
+use std::collections::{HashMap, HashSet};
+use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::worker::*;
+
+use crate::objects::channel::Channel;
+
+use super::{
+    fetcher::{self},
+    repo::{self},
+};
 
 pub enum Request {}
 
@@ -11,12 +18,21 @@ pub enum Response {}
 
 pub enum Message {
     Interval(web_sys::Event),
+    FetcherMessage(fetcher::Response),
+    RepoMessage(repo::Response),
 }
 
 pub struct Updater {
     _link: AgentLink<Self>,
     subscribers: HashSet<HandlerId>,
     _closure_interval: Closure<dyn Fn(web_sys::Event)>,
+    _repo: Box<dyn Bridge<repo::Repo>>,
+    _fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
+    pending_tasks: HashMap<Uuid, Task>,
+}
+
+enum Task {
+    GetChannels,
 }
 
 impl Agent for Updater {
@@ -27,6 +43,8 @@ impl Agent for Updater {
 
     fn create(link: AgentLink<Self>) -> Self {
         let window = web_sys::window().unwrap();
+        let callback_repo = link.callback(Message::RepoMessage);
+        let callback_fetcher = link.callback(Message::FetcherMessage);
         let callback_interval = link.callback(Message::Interval);
         let closure_interval =
             Closure::wrap(
@@ -36,7 +54,7 @@ impl Agent for Updater {
         window
             .set_interval_with_callback_and_timeout_and_arguments(
                 closure_interval.as_ref().unchecked_ref(),
-                5_000,
+                10_000,
                 &js_sys::Array::new(),
             )
             .unwrap();
@@ -45,14 +63,38 @@ impl Agent for Updater {
             _link: link,
             subscribers: HashSet::new(),
             _closure_interval: closure_interval,
+            _repo: repo::Repo::bridge(callback_repo),
+            _fetcher: fetcher::Fetcher::bridge(callback_fetcher),
+            pending_tasks: HashMap::new(),
         }
     }
 
     fn update(&mut self, msg: Self::Message) {
         match msg {
             Message::Interval(_ev) => {
-                log::info!("timer elapsed")
+                let task_id = Uuid::new_v4();
+
+                self.pending_tasks.insert(task_id, Task::GetChannels);
+                self._fetcher
+                    .send(fetcher::Request::FetchText(task_id, "/api/channels".into()))
             }
+            Message::RepoMessage(_) => {}
+            Message::FetcherMessage(fm) => match fm {
+                fetcher::Response::Text(task_id, res) => {
+                    let task = self.pending_tasks.remove(&task_id).unwrap();
+
+                    match res {
+                        Ok(s) => match task {
+                            Task::GetChannels => {
+                                let channels: Vec<Channel> = serde_json::from_str(&s).unwrap();
+                                self._repo.send(repo::Request::AddChannels(channels));
+                            }
+                        },
+                        Err(_) => todo!("implement error handling"),
+                    }
+                }
+                _ => {}
+            },
         }
     }
 

@@ -85,8 +85,6 @@ async fn fetch(url: &str) -> Result<web_sys::Response, wasm_bindgen::JsValue> {
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
     let resp: web_sys::Response = resp_value.dyn_into().unwrap();
 
-    log::info!("fetch enclosure: {:?}", resp);
-
     Ok(resp)
 }
 

@@ -13,6 +13,7 @@ use yew::worker::*;
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
     GetChannels,
+    AddChannels(Vec<Channel>),
     DownloadEnclosure(Uuid),
     GetEnclosure(Uuid),
 }
@@ -105,6 +106,26 @@ impl Repo {
                                 format!("/api/channels"),
                             ));
                         }
+                        Request::AddChannels(channels) => match &self.db {
+                            Some(db) => {
+                                let trans = db
+                                    .transaction_with_str_and_mode(
+                                        "channels",
+                                        IdbTransactionMode::Readwrite,
+                                    )
+                                    .unwrap();
+                                let os = trans.object_store("channels").unwrap();
+
+                                for channel in channels {
+                                    os.put_with_key(
+                                        &serde_wasm_bindgen::to_value(&channel).unwrap(),
+                                        &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
+                                    )
+                                    .unwrap();
+                                }
+                            }
+                            None => todo!("implement error handling"),
+                        },
                         Request::DownloadEnclosure(id) => {
                             log::info!("requested download of {}", id);
 
