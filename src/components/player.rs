@@ -2,11 +2,10 @@ use crate::agents::repo::{Repo, Request, Response};
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{MediaSource, Url};
-use yew::{agent::Dispatcher, prelude::*, virtual_dom::VNode};
+use yew::{prelude::*, virtual_dom::VNode};
 
 pub struct Player {
-    _repo: Dispatcher<Repo>,
-    _producer: Box<dyn Bridge<Repo>>,
+    _repo: Box<dyn Bridge<Repo>>,
     link: ComponentLink<Self>,
     source: String,
     update_closure: Closure<dyn Fn(web_sys::Event)>,
@@ -46,8 +45,7 @@ impl Component for Player {
 
         Self {
             link,
-            _repo: Repo::dispatcher(),
-            _producer: Repo::bridge(cb),
+            _repo: Repo::bridge(cb),
             source: Url::create_object_url_with_source(&ms).unwrap(),
             media_source: ms,
             audio_ref: NodeRef::default(),

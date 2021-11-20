@@ -286,7 +286,7 @@ impl Agent for Repo {
                 let req = self.active_idb_tasks.remove(&res.0).unwrap();
 
                 match req.task.request {
-                    Request::GetEnclosure(orig_uuid) => {
+                    Request::GetEnclosure(_) => {
                         let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
 
                         self.link
