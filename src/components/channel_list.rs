@@ -79,7 +79,7 @@ impl Component for ChannelList {
                 RepoResponse::Channels(res) => {
                     match res {
                         Ok(channels) => {
-                            self.channels = Some(channels);
+                            self.channels = Some(channels.0);
                         }
                         Err(e) => self.error = Some(e),
                     }

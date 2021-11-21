@@ -2,10 +2,7 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct Channel {
+pub struct ChannelMeta {
     pub id: Uuid,
-    pub title: String,
-    pub description: String,
-    pub image: String,
-    pub feed_id: Uuid,
+    pub active: bool,
 }

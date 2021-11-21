@@ -1,13 +1,15 @@
 use super::fetcher;
-use crate::objects::channel::Channel;
-use anyhow::Context as AnyhowContext;
+use crate::objects::{
+    channel::{self, Channel},
+    channel_meta::{self, ChannelMeta},
+};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{IdbDatabase, IdbRequest, IdbTransactionMode};
+use web_sys::{IdbDatabase, IdbRequest, IdbTransaction, IdbTransactionMode};
 use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -19,7 +21,7 @@ pub enum Request {
 }
 
 pub enum Response {
-    Channels(anyhow::Result<Vec<Channel>>),
+    Channels(anyhow::Result<(Vec<Channel>, Vec<ChannelMeta>)>),
     Enclosure(anyhow::Result<ArrayBuffer>),
 }
 
@@ -28,10 +30,10 @@ pub struct Repo {
     subscribers: HashSet<HandlerId>,
     open_request: Option<OpenDb>,
     db: Option<IdbDatabase>,
-    pending_tasks: Vec<Task>,
+    pending_tasks: Vec<InternalTask>,
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
-    active_tasks: HashMap<Uuid, Task>,
-    active_idb_tasks: HashMap<Uuid, IdbReq>,
+    idb_tasks: HashMap<Uuid, IdbResponse>,
+    fetcher_tasks: HashMap<Uuid, InternalTask>,
 }
 
 pub enum Msg {
@@ -47,16 +49,40 @@ pub struct OpenDb {
     request: web_sys::IdbOpenDbRequest,
 }
 
-pub struct IdbReq {
+pub struct IdbResponse {
     request: web_sys::IdbRequest,
     _closure_error: Closure<dyn Fn(web_sys::Event)>,
     _closure_success: Closure<dyn Fn(web_sys::Event)>,
-    task: Task,
+    task: InternalTask,
 }
 
-struct Task {
-    request: Request,
+enum InternalTask {
+    GetChannelsTask(GetChannelsTask),
+    AddChannelsTask(AddChannelsTask),
+    DownloadEnclosureTask(DownloadEnclosureTask),
+    GetEnclosureTask(GetEnclosureTask),
+}
+
+struct GetChannelsTask {
+    metas: Option<Vec<channel_meta::ChannelMeta>>,
+    channels: Option<Vec<channel::Channel>>,
+    transaction: Option<IdbTransaction>,
     handler_id: HandlerId,
+}
+
+struct AddChannelsTask {
+    // handler_id: HandlerId,
+    channels: Vec<Channel>,
+}
+
+struct DownloadEnclosureTask {
+    // handler_id: HandlerId,
+    uuid: Uuid,
+}
+
+struct GetEnclosureTask {
+    handler_id: HandlerId,
+    uuid: Uuid,
 }
 
 impl Repo {
@@ -93,8 +119,58 @@ impl Repo {
                 while self.pending_tasks.len() > 0 {
                     let task = self.pending_tasks.pop().unwrap();
 
-                    match task.request {
-                        Request::GetChannels => {
+                    match task {
+                        InternalTask::GetChannelsTask(mut task) => {
+                            if task.transaction.is_none() {
+                                task.transaction = Some(
+                                    db.transaction_with_str_sequence_and_mode(
+                                        &serde_wasm_bindgen::to_value(&vec![
+                                            "channels",
+                                            "channels-meta",
+                                        ])
+                                        .unwrap(),
+                                        IdbTransactionMode::Readonly,
+                                    )
+                                    .unwrap(),
+                                );
+                            }
+
+                            match (&task.metas, &task.channels, &task.transaction) {
+                                (None, None, Some(trans)) => {
+                                    let os = trans.object_store("channels-meta").unwrap();
+                                    let req = os.get_all().unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::GetChannelsTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(_), None, Some(trans)) => {
+                                    let os = trans.object_store("channels").unwrap();
+                                    let req = os.get_all().unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::GetChannelsTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(metas), Some(channels), _) => self.link.respond(
+                                    task.handler_id,
+                                    Response::Channels(Ok(((*channels).clone(), (*metas).clone()))),
+                                ),
+                                _ => self.link.respond(
+                                    task.handler_id,
+                                    Response::Channels(Err(anyhow::anyhow!(
+                                        "could not get channels"
+                                    ))),
+                                ),
+                            }
+                        }
+                        InternalTask::AddChannelsTask(task) => {
                             let trans = db
                                 .transaction_with_str_and_mode(
                                     "channels",
@@ -102,41 +178,25 @@ impl Repo {
                                 )
                                 .unwrap();
                             let os = trans.object_store("channels").unwrap();
-                            let req = os.get_all().unwrap();
 
-                            wrap_idb_request(&self.link, &mut self.active_idb_tasks, task, req);
-                        }
-                        Request::AddChannels(channels) => match &self.db {
-                            Some(db) => {
-                                let trans = db
-                                    .transaction_with_str_and_mode(
-                                        "channels",
-                                        IdbTransactionMode::Readwrite,
-                                    )
-                                    .unwrap();
-                                let os = trans.object_store("channels").unwrap();
-
-                                for channel in channels {
-                                    os.put_with_key(
-                                        &serde_wasm_bindgen::to_value(&channel).unwrap(),
-                                        &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
-                                    )
-                                    .unwrap();
-                                }
+                            for channel in task.channels {
+                                os.put_with_key(
+                                    &serde_wasm_bindgen::to_value(&channel).unwrap(),
+                                    &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
+                                )
+                                .unwrap();
                             }
-                            None => todo!("implement error handling"),
-                        },
-                        Request::DownloadEnclosure(id) => {
-                            log::info!("requested download of {}", id);
-
+                        }
+                        InternalTask::DownloadEnclosureTask(task) => {
                             let task_id = Uuid::new_v4();
-                            self.active_tasks.insert(task_id, task);
                             self.fetcher.send(fetcher::Request::FetchBinary(
                                 task_id,
-                                format!("/api/items/{}/stream", id),
+                                format!("/api/items/{}/stream", task.uuid),
                             ));
+                            self.fetcher_tasks
+                                .insert(task_id, InternalTask::DownloadEnclosureTask(task));
                         }
-                        Request::GetEnclosure(id) => {
+                        InternalTask::GetEnclosureTask(task) => {
                             let trans = db
                                 .transaction_with_str_and_mode(
                                     "enclosures",
@@ -144,9 +204,16 @@ impl Repo {
                                 )
                                 .unwrap();
                             let os = trans.object_store("enclosures").unwrap();
-                            let req = os.get(&serde_wasm_bindgen::to_value(&id).unwrap()).unwrap();
+                            let req = os
+                                .get(&serde_wasm_bindgen::to_value(&task.uuid).unwrap())
+                                .unwrap();
 
-                            wrap_idb_request(&self.link, &mut self.active_idb_tasks, task, req);
+                            wrap_idb_request(
+                                &self.link,
+                                &mut self.idb_tasks,
+                                InternalTask::GetEnclosureTask(task),
+                                req,
+                            );
                         }
                     }
                 }
@@ -158,8 +225,8 @@ impl Repo {
 
 fn wrap_idb_request(
     link: &AgentLink<Repo>,
-    active_idb_tasks: &mut HashMap<Uuid, IdbReq>,
-    task: Task,
+    active_idb_tasks: &mut HashMap<Uuid, IdbResponse>,
+    task: InternalTask,
     request: IdbRequest,
 ) {
     let task_id = Uuid::new_v4();
@@ -175,7 +242,7 @@ fn wrap_idb_request(
     request.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
     active_idb_tasks.insert(
         task_id,
-        IdbReq {
+        IdbResponse {
             request,
             _closure_error: closure_error,
             _closure_success: closure_success,
@@ -200,8 +267,8 @@ impl Agent for Repo {
             db: None,
             pending_tasks: Vec::new(),
             fetcher: fetcher::Fetcher::bridge(fetcher_cb),
-            active_tasks: HashMap::new(),
-            active_idb_tasks: HashMap::new(),
+            fetcher_tasks: HashMap::new(),
+            idb_tasks: HashMap::new(),
         };
 
         obj.init();
@@ -213,10 +280,10 @@ impl Agent for Repo {
         match msg {
             Msg::FetcherMessage(resp) => match resp {
                 fetcher::Response::Binary(uuid, res) => {
-                    let task = self.active_tasks.remove(&uuid).unwrap();
+                    let task = self.fetcher_tasks.remove(&uuid).unwrap();
 
-                    match task.request {
-                        Request::DownloadEnclosure(id) => match (&self.db, res) {
+                    match task {
+                        InternalTask::DownloadEnclosureTask(task) => match (&self.db, res) {
                             (Some(db), Ok(data)) => {
                                 let trans = db
                                     .transaction_with_str_and_mode(
@@ -225,8 +292,11 @@ impl Agent for Repo {
                                     )
                                     .unwrap();
                                 let os = trans.object_store("enclosures").unwrap();
-                                os.put_with_key(&data, &serde_wasm_bindgen::to_value(&id).unwrap())
-                                    .unwrap();
+                                os.put_with_key(
+                                    &data,
+                                    &serde_wasm_bindgen::to_value(&task.uuid).unwrap(),
+                                )
+                                .unwrap();
                             }
                             (None, _) => log::error!("could not find database"),
                             (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
@@ -234,24 +304,15 @@ impl Agent for Repo {
                         _ => {}
                     }
                 }
-                fetcher::Response::Text(uuid, res) => {
-                    let task = self.active_tasks.remove(&uuid).unwrap();
+                fetcher::Response::Text(uuid, _res) => {
+                    let task = self.fetcher_tasks.remove(&uuid).unwrap();
 
-                    match task.request {
-                        Request::GetChannels => self.link.respond(
-                            task.handler_id,
-                            Response::Channels(match res {
-                                Ok(s) => serde_json::from_str(&s)
-                                    .context("conversion to vector of channels failed"),
-                                Err(e) => Err(e),
-                            }),
-                        ),
+                    match task {
                         _ => {}
                     }
                 }
             },
-            Msg::OpenDbUpdate(e) => {
-                log::info!("update {:?}", e);
+            Msg::OpenDbUpdate(_e) => {
                 let idb_db = IdbDatabase::from(
                     self.open_request
                         .as_ref()
@@ -260,16 +321,31 @@ impl Agent for Repo {
                         .result()
                         .unwrap(),
                 );
-                log::info!("db: {:?}", idb_db);
-                let idb_object_store = idb_db.create_object_store("channels");
-                log::info!("object store: {:?}", idb_object_store);
-                match idb_db.create_object_store("enclosures") {
-                    Ok(_) => log::info!("created object store \"enclosures\""),
-                    Err(e) => log::error!("failed to create object store \"enclosures\": {:?}", e),
+                let object_stores = vec![
+                    "channels",
+                    "channels-meta",
+                    "items",
+                    "items-meta",
+                    "enclosures",
+                    "enclosures-meta",
+                    "images",
+                    "images-meta",
+                ];
+
+                for object_store in object_stores {
+                    match idb_db.create_object_store(object_store) {
+                        Ok(_) => log::info!("created object store \"{}\"", object_store),
+                        Err(e) => {
+                            log::error!(
+                                "failed to create object store \"{}\": {:?}",
+                                object_store,
+                                e
+                            )
+                        }
+                    }
                 }
             }
-            Msg::OpenDbSuccess(e) => {
-                log::info!("success {:?}", e);
+            Msg::OpenDbSuccess(_e) => {
                 self.db = Some(
                     self.open_request
                         .as_ref()
@@ -283,20 +359,38 @@ impl Agent for Repo {
                 self.process_tasks();
             }
             Msg::IdbRequest(res) => {
-                let req = self.active_idb_tasks.remove(&res.0).unwrap();
+                let req = self.idb_tasks.remove(&res.0).unwrap();
 
-                match req.task.request {
-                    Request::GetEnclosure(_) => {
+                match req.task {
+                    InternalTask::GetEnclosureTask(task) => {
                         let res: ArrayBuffer = req.request.result().unwrap().dyn_into().unwrap();
 
                         self.link
-                            .respond(req.task.handler_id, Response::Enclosure(Ok(res)));
+                            .respond(task.handler_id, Response::Enclosure(Ok(res)));
                     }
-                    Request::GetChannels => {
-                        let channels: Vec<Channel> =
-                            serde_wasm_bindgen::from_value(req.request.result().unwrap()).unwrap();
-                        self.link
-                            .respond(req.task.handler_id, Response::Channels(Ok(channels)));
+                    InternalTask::GetChannelsTask(mut task) => {
+                        match (&task.metas, &task.channels) {
+                            (None, None) => {
+                                task.metas = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            (Some(_), None) => {
+                                task.channels = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            _ => self.link.respond(
+                                task.handler_id,
+                                Response::Channels(Err(anyhow::anyhow!(
+                                    "could not fetch channels"
+                                ))),
+                            ),
+                        }
+                        self.pending_tasks.push(InternalTask::GetChannelsTask(task));
+                        self.process_tasks();
                     }
                     _ => {}
                 }
@@ -305,9 +399,27 @@ impl Agent for Repo {
     }
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
-        self.pending_tasks.push(Task {
-            request: msg,
-            handler_id: id,
+        self.pending_tasks.push(match msg {
+            Request::AddChannels(channels) => InternalTask::AddChannelsTask(AddChannelsTask {
+                channels,
+                // handler_id: id,
+            }),
+            Request::DownloadEnclosure(uuid) => {
+                InternalTask::DownloadEnclosureTask(DownloadEnclosureTask {
+                    // handler_id: id,
+                    uuid,
+                })
+            }
+            Request::GetChannels => InternalTask::GetChannelsTask(GetChannelsTask {
+                handler_id: id,
+                metas: None,
+                transaction: None,
+                channels: None,
+            }),
+            Request::GetEnclosure(uuid) => InternalTask::GetEnclosureTask(GetEnclosureTask {
+                handler_id: id,
+                uuid,
+            }),
         });
 
         match &self.db {
@@ -317,7 +429,6 @@ impl Agent for Repo {
     }
 
     fn connected(&mut self, id: HandlerId) {
-        log::info!("connected: handler id: {:?}", id);
         self.subscribers.insert(id);
     }
 
