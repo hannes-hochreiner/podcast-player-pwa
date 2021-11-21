@@ -23,6 +23,7 @@ pub enum Request {
 pub enum Response {
     Channels(anyhow::Result<(Vec<Channel>, Vec<ChannelMeta>)>),
     Enclosure(anyhow::Result<ArrayBuffer>),
+    AddChannels(anyhow::Result<()>),
 }
 
 pub struct Repo {
@@ -71,7 +72,9 @@ struct GetChannelsTask {
 }
 
 struct AddChannelsTask {
-    // handler_id: HandlerId,
+    handler_id: HandlerId,
+    metas: Option<Vec<channel_meta::ChannelMeta>>,
+    transaction: Option<IdbTransaction>,
     channels: Vec<Channel>,
 }
 
@@ -170,21 +173,67 @@ impl Repo {
                                 ),
                             }
                         }
-                        InternalTask::AddChannelsTask(task) => {
-                            let trans = db
-                                .transaction_with_str_and_mode(
-                                    "channels",
-                                    IdbTransactionMode::Readwrite,
-                                )
-                                .unwrap();
-                            let os = trans.object_store("channels").unwrap();
+                        InternalTask::AddChannelsTask(mut task) => {
+                            if task.transaction.is_none() {
+                                task.transaction = Some(
+                                    db.transaction_with_str_sequence_and_mode(
+                                        &serde_wasm_bindgen::to_value(&vec![
+                                            "channels",
+                                            "channels-meta",
+                                        ])
+                                        .unwrap(),
+                                        IdbTransactionMode::Readwrite,
+                                    )
+                                    .unwrap(),
+                                );
+                            }
 
-                            for channel in task.channels {
-                                os.put_with_key(
-                                    &serde_wasm_bindgen::to_value(&channel).unwrap(),
-                                    &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
-                                )
-                                .unwrap();
+                            match (&task.metas, &task.transaction) {
+                                (None, Some(trans)) => {
+                                    let os = trans.object_store("channels-meta").unwrap();
+                                    let req = os.get_all().unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::AddChannelsTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(metas), Some(trans)) => {
+                                    let channel_os = trans.object_store("channels").unwrap();
+                                    let channel_meta_os =
+                                        trans.object_store("channels-meta").unwrap();
+                                    let metas: Vec<Uuid> = metas.iter().map(|e| e.id).collect();
+
+                                    for channel in task.channels {
+                                        channel_os
+                                            .put_with_key(
+                                                &serde_wasm_bindgen::to_value(&channel).unwrap(),
+                                                &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
+                                            )
+                                            .unwrap();
+                                        if !metas.contains(&channel.id) {
+                                            channel_meta_os
+                                                .put_with_key(
+                                                    &serde_wasm_bindgen::to_value(&ChannelMeta {
+                                                        active: false,
+                                                        id: channel.id,
+                                                    })
+                                                    .unwrap(),
+                                                    &serde_wasm_bindgen::to_value(&channel.id)
+                                                        .unwrap(),
+                                                )
+                                                .unwrap();
+                                        }
+                                    }
+                                }
+                                _ => self.link.respond(
+                                    task.handler_id,
+                                    Response::AddChannels(Err(anyhow::anyhow!(
+                                        "error adding channels"
+                                    ))),
+                                ),
                             }
                         }
                         InternalTask::DownloadEnclosureTask(task) => {
@@ -392,6 +441,24 @@ impl Agent for Repo {
                         self.pending_tasks.push(InternalTask::GetChannelsTask(task));
                         self.process_tasks();
                     }
+                    InternalTask::AddChannelsTask(mut task) => {
+                        match &task.metas {
+                            None => {
+                                task.metas = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            _ => self.link.respond(
+                                task.handler_id,
+                                Response::AddChannels(Err(anyhow::anyhow!(
+                                    "could not fetch channel meta information"
+                                ))),
+                            ),
+                        }
+                        self.pending_tasks.push(InternalTask::AddChannelsTask(task));
+                        self.process_tasks();
+                    }
                     _ => {}
                 }
             }
@@ -402,7 +469,9 @@ impl Agent for Repo {
         self.pending_tasks.push(match msg {
             Request::AddChannels(channels) => InternalTask::AddChannelsTask(AddChannelsTask {
                 channels,
-                // handler_id: id,
+                handler_id: id,
+                metas: None,
+                transaction: None,
             }),
             Request::DownloadEnclosure(uuid) => {
                 InternalTask::DownloadEnclosureTask(DownloadEnclosureTask {
