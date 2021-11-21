@@ -18,6 +18,7 @@ pub enum Request {
     AddChannels(Vec<Channel>),
     DownloadEnclosure(Uuid),
     GetEnclosure(Uuid),
+    SetChannelMeta(ChannelMeta),
 }
 
 pub enum Response {
@@ -62,6 +63,12 @@ enum InternalTask {
     AddChannelsTask(AddChannelsTask),
     DownloadEnclosureTask(DownloadEnclosureTask),
     GetEnclosureTask(GetEnclosureTask),
+    SetChannelMetaTask(SetChannelMetaTask),
+}
+
+struct SetChannelMetaTask {
+    meta: ChannelMeta,
+    handler_id: HandlerId,
 }
 
 struct GetChannelsTask {
@@ -123,6 +130,34 @@ impl Repo {
                     let task = self.pending_tasks.pop().unwrap();
 
                     match task {
+                        InternalTask::SetChannelMetaTask(task) => {
+                            let transaction = db
+                                .transaction_with_str_sequence_and_mode(
+                                    &serde_wasm_bindgen::to_value(&vec![
+                                        "channels",
+                                        "channels-meta",
+                                    ])
+                                    .unwrap(),
+                                    IdbTransactionMode::Readwrite,
+                                )
+                                .unwrap();
+                            let channel_meta_os =
+                                transaction.object_store("channels-meta").unwrap();
+                            channel_meta_os
+                                .put_with_key(
+                                    &serde_wasm_bindgen::to_value(&task.meta).unwrap(),
+                                    &serde_wasm_bindgen::to_value(&task.meta.id).unwrap(),
+                                )
+                                .unwrap();
+                            self.pending_tasks.push(InternalTask::GetChannelsTask(
+                                GetChannelsTask {
+                                    channels: None,
+                                    handler_id: task.handler_id,
+                                    metas: None,
+                                    transaction: Some(transaction),
+                                },
+                            ));
+                        }
                         InternalTask::GetChannelsTask(mut task) => {
                             if task.transaction.is_none() {
                                 task.transaction = Some(
@@ -488,6 +523,10 @@ impl Agent for Repo {
             Request::GetEnclosure(uuid) => InternalTask::GetEnclosureTask(GetEnclosureTask {
                 handler_id: id,
                 uuid,
+            }),
+            Request::SetChannelMeta(meta) => InternalTask::SetChannelMetaTask(SetChannelMetaTask {
+                handler_id: id,
+                meta,
             }),
         });
 
