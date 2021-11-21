@@ -305,8 +305,6 @@ impl Agent for Repo {
     }
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
-        log::info!("received task: handler id {:?}", id);
-
         self.pending_tasks.push(Task {
             request: msg,
             handler_id: id,
