@@ -5,7 +5,7 @@ use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::worker::*;
 
-use crate::objects::channel::Channel;
+use crate::objects::{channel::Channel, item::Item};
 
 use super::{
     fetcher::{self},
@@ -26,13 +26,14 @@ pub struct Updater {
     _link: AgentLink<Self>,
     subscribers: HashSet<HandlerId>,
     _closure_interval: Closure<dyn Fn(web_sys::Event)>,
-    _repo: Box<dyn Bridge<repo::Repo>>,
-    _fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
+    repo: Box<dyn Bridge<repo::Repo>>,
+    fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     pending_tasks: HashMap<Uuid, Task>,
 }
 
 enum Task {
     GetChannels,
+    GetItems(Uuid),
 }
 
 impl Agent for Updater {
@@ -63,8 +64,8 @@ impl Agent for Updater {
             _link: link,
             subscribers: HashSet::new(),
             _closure_interval: closure_interval,
-            _repo: repo::Repo::bridge(callback_repo),
-            _fetcher: fetcher::Fetcher::bridge(callback_fetcher),
+            repo: repo::Repo::bridge(callback_repo),
+            fetcher: fetcher::Fetcher::bridge(callback_fetcher),
             pending_tasks: HashMap::new(),
         }
     }
@@ -75,8 +76,8 @@ impl Agent for Updater {
                 let task_id = Uuid::new_v4();
 
                 self.pending_tasks.insert(task_id, Task::GetChannels);
-                self._fetcher
-                    .send(fetcher::Request::FetchText(task_id, "/api/channels".into()))
+                self.fetcher
+                    .send(fetcher::Request::FetchText(task_id, "/api/channels".into()));
             }
             Message::RepoMessage(_) => {}
             Message::FetcherMessage(fm) => match fm {
@@ -87,7 +88,22 @@ impl Agent for Updater {
                         Ok(s) => match task {
                             Task::GetChannels => {
                                 let channels: Vec<Channel> = serde_json::from_str(&s).unwrap();
-                                self._repo.send(repo::Request::AddChannels(channels));
+
+                                for channel in &channels {
+                                    let task_id = Uuid::new_v4();
+
+                                    self.pending_tasks
+                                        .insert(task_id, Task::GetItems(channel.id.clone()));
+                                    self.fetcher.send(fetcher::Request::FetchText(
+                                        task_id,
+                                        format!("/api/channels/{}/items", channel.id).into(),
+                                    ));
+                                }
+                                self.repo.send(repo::Request::AddChannels(channels));
+                            }
+                            Task::GetItems(_) => {
+                                let items: Vec<Item> = serde_json::from_str(&s).unwrap();
+                                self.repo.send(repo::Request::AddItems(items));
                             }
                         },
                         Err(_) => todo!("implement error handling"),

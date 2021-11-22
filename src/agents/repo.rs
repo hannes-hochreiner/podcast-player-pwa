@@ -2,6 +2,8 @@ use super::fetcher;
 use crate::objects::{
     channel::{self, Channel},
     channel_meta::{self, ChannelMeta},
+    item::Item,
+    item_meta::{self, ItemMeta},
 };
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
@@ -9,13 +11,14 @@ use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{IdbDatabase, IdbRequest, IdbTransaction, IdbTransactionMode};
+use web_sys::{IdbDatabase, IdbIndexParameters, IdbRequest, IdbTransaction, IdbTransactionMode};
 use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
     GetChannels,
     AddChannels(Vec<Channel>),
+    AddItems(Vec<Item>),
     DownloadEnclosure(Uuid),
     GetEnclosure(Uuid),
     SetChannelMeta(ChannelMeta),
@@ -25,6 +28,7 @@ pub enum Response {
     Channels(anyhow::Result<(Vec<Channel>, Vec<ChannelMeta>)>),
     Enclosure(anyhow::Result<ArrayBuffer>),
     AddChannels(anyhow::Result<()>),
+    AddItems(anyhow::Result<()>),
 }
 
 pub struct Repo {
@@ -64,6 +68,7 @@ enum InternalTask {
     DownloadEnclosureTask(DownloadEnclosureTask),
     GetEnclosureTask(GetEnclosureTask),
     SetChannelMetaTask(SetChannelMetaTask),
+    AddItemsTask(AddItemsTask),
 }
 
 struct SetChannelMetaTask {
@@ -83,6 +88,13 @@ struct AddChannelsTask {
     metas: Option<Vec<channel_meta::ChannelMeta>>,
     transaction: Option<IdbTransaction>,
     channels: Vec<Channel>,
+}
+
+struct AddItemsTask {
+    handler_id: HandlerId,
+    metas: Option<Vec<item_meta::ItemMeta>>,
+    transaction: Option<IdbTransaction>,
+    items: Vec<Item>,
 }
 
 struct DownloadEnclosureTask {
@@ -271,6 +283,64 @@ impl Repo {
                                 ),
                             }
                         }
+                        InternalTask::AddItemsTask(mut task) => {
+                            if task.transaction.is_none() {
+                                task.transaction = Some(
+                                    db.transaction_with_str_sequence_and_mode(
+                                        &serde_wasm_bindgen::to_value(&vec!["items", "items-meta"])
+                                            .unwrap(),
+                                        IdbTransactionMode::Readwrite,
+                                    )
+                                    .unwrap(),
+                                );
+                            }
+
+                            match (&task.metas, &task.transaction) {
+                                (None, Some(trans)) => {
+                                    let os = trans.object_store("items-meta").unwrap();
+                                    let req = os.get_all().unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::AddItemsTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(metas), Some(trans)) => {
+                                    let item_os = trans.object_store("items").unwrap();
+                                    let item_meta_os = trans.object_store("items-meta").unwrap();
+                                    let metas: Vec<Uuid> = metas.iter().map(|e| e.id).collect();
+
+                                    for item in task.items {
+                                        item_os
+                                            .put_with_key(
+                                                &serde_wasm_bindgen::to_value(&item).unwrap(),
+                                                &serde_wasm_bindgen::to_value(&item.id).unwrap(),
+                                            )
+                                            .unwrap();
+                                        if !metas.contains(&item.id) {
+                                            item_meta_os
+                                                .put_with_key(
+                                                    &serde_wasm_bindgen::to_value(&ItemMeta {
+                                                        download: false,
+                                                        id: item.id,
+                                                        new: true,
+                                                    })
+                                                    .unwrap(),
+                                                    &serde_wasm_bindgen::to_value(&item.id)
+                                                        .unwrap(),
+                                                )
+                                                .unwrap();
+                                        }
+                                    }
+                                }
+                                _ => self.link.respond(
+                                    task.handler_id,
+                                    Response::AddItems(Err(anyhow::anyhow!("error adding items"))),
+                                ),
+                            }
+                        }
                         InternalTask::DownloadEnclosureTask(task) => {
                             let task_id = Uuid::new_v4();
                             self.fetcher.send(fetcher::Request::FetchBinary(
@@ -418,13 +488,25 @@ impl Agent for Repo {
 
                 for object_store in object_stores {
                     match idb_db.create_object_store(object_store) {
-                        Ok(_) => log::info!("created object store \"{}\"", object_store),
+                        Ok(os) => {
+                            log::info!("created object store \"{}\"", object_store);
+                            if object_store == "items" {
+                                match os.create_index_with_str_sequence_and_optional_parameters(
+                                    "channel_id",
+                                    &serde_wasm_bindgen::to_value("channel_id").unwrap(),
+                                    &IdbIndexParameters::new(),
+                                ) {
+                                    Ok(_) => log::info!("created index"),
+                                    Err(e) => log::error!("failed to create index: {:?}", e),
+                                }
+                            }
+                        }
                         Err(e) => {
                             log::error!(
                                 "failed to create object store \"{}\": {:?}",
                                 object_store,
                                 e
-                            )
+                            );
                         }
                     }
                 }
@@ -494,6 +576,24 @@ impl Agent for Repo {
                         self.pending_tasks.push(InternalTask::AddChannelsTask(task));
                         self.process_tasks();
                     }
+                    InternalTask::AddItemsTask(mut task) => {
+                        match &task.metas {
+                            None => {
+                                task.metas = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            _ => self.link.respond(
+                                task.handler_id,
+                                Response::AddItems(Err(anyhow::anyhow!(
+                                    "could not fetch item meta information"
+                                ))),
+                            ),
+                        }
+                        self.pending_tasks.push(InternalTask::AddItemsTask(task));
+                        self.process_tasks();
+                    }
                     _ => {}
                 }
             }
@@ -504,6 +604,12 @@ impl Agent for Repo {
         self.pending_tasks.push(match msg {
             Request::AddChannels(channels) => InternalTask::AddChannelsTask(AddChannelsTask {
                 channels,
+                handler_id: id,
+                metas: None,
+                transaction: None,
+            }),
+            Request::AddItems(items) => InternalTask::AddItemsTask(AddItemsTask {
+                items,
                 handler_id: id,
                 metas: None,
                 transaction: None,
