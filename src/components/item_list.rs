@@ -92,7 +92,9 @@ impl Component for ItemList {
             Message::RepoMessage(resp) => match resp {
                 RepoResponse::Items(res) => {
                     match res {
-                        Ok(c) => {
+                        Ok(mut c) => {
+                            c.sort_by(|a, b| b.val.date.partial_cmp(&a.val.date).unwrap());
+
                             self.items = Some(c);
                         }
                         Err(e) => {
