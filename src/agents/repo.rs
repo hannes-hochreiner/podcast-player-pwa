@@ -13,6 +13,7 @@ use yew::worker::*;
 pub enum Request {
     GetChannels,
     GetItems,
+    GetItemsByChannelIdYearMonth(Uuid, String),
     AddChannels(Vec<ChannelVal>),
     AddItems(Vec<ItemVal>),
     DownloadEnclosure(Uuid),
@@ -67,6 +68,7 @@ enum InternalTask {
     UpdateChannelTask(UpdateChannelTask),
     AddItemValsTask(AddItemValsTask),
     GetItemsTask(GetItemsTask),
+    GetItemsByChannelIdYearMonthTask(GetItemsByChannelIdYearMonthTask),
 }
 
 struct UpdateChannelTask {
@@ -98,6 +100,14 @@ struct GetItemsTask {
     items: Option<Vec<Item>>,
     transaction: Option<IdbTransaction>,
     handler_id: HandlerId,
+}
+
+struct GetItemsByChannelIdYearMonthTask {
+    items: Option<Vec<Item>>,
+    transaction: Option<IdbTransaction>,
+    handler_id: HandlerId,
+    channel_id: Uuid,
+    year_month: String,
 }
 
 struct DownloadEnclosureTask {
@@ -235,6 +245,49 @@ impl Repo {
                                 ),
                             }
                         }
+                        InternalTask::GetItemsByChannelIdYearMonthTask(mut task) => {
+                            if task.transaction.is_none() {
+                                task.transaction = Some(
+                                    db.transaction_with_str_sequence_and_mode(
+                                        &serde_wasm_bindgen::to_value(&vec!["items"]).unwrap(),
+                                        IdbTransactionMode::Readonly,
+                                    )
+                                    .unwrap(),
+                                );
+                            }
+
+                            match (&task.items, &task.transaction) {
+                                (None, Some(trans)) => {
+                                    let os = trans.object_store("items").unwrap();
+                                    let req = os
+                                        .index("channel_id_year_month")
+                                        .unwrap()
+                                        .get_all_with_key(
+                                            &serde_wasm_bindgen::to_value(&vec![
+                                                task.channel_id.to_string(),
+                                                task.year_month.clone(),
+                                            ])
+                                            .unwrap(),
+                                        )
+                                        .unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::GetItemsByChannelIdYearMonthTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(items), Some(_trans)) => self.link.respond(
+                                    task.handler_id,
+                                    Response::Items(Ok((*items).clone())),
+                                ),
+                                _ => self.link.respond(
+                                    task.handler_id,
+                                    Response::Items(Err(anyhow::anyhow!("could not get items"))),
+                                ),
+                            }
+                        }
                         InternalTask::AddChannelValsTask(mut task) => {
                             if task.transaction.is_none() {
                                 task.transaction = Some(
@@ -330,18 +383,20 @@ impl Repo {
                                     for item in task.item_vals {
                                         let item_new = match item_map.get(&item.id) {
                                             Some(&i) => Item {
-                                                val: item,
+                                                val: item.clone(),
                                                 meta: i.meta.clone(),
+                                                keys: item.into(),
                                             },
                                             None => {
                                                 let item_id = item.id;
                                                 Item {
-                                                    val: item,
+                                                    val: item.clone(),
                                                     meta: ItemMeta {
                                                         download: false,
                                                         id: item_id,
                                                         new: true,
                                                     },
+                                                    keys: item.into(),
                                                 }
                                             }
                                         };
@@ -501,6 +556,7 @@ impl Agent for Repo {
                     "enclosures-meta",
                     "images",
                     "images-meta",
+                    "configuration",
                 ];
 
                 for object_store in object_stores {
@@ -509,8 +565,12 @@ impl Agent for Repo {
                             log::info!("created object store \"{}\"", object_store);
                             if object_store == "items" {
                                 match os.create_index_with_str_sequence_and_optional_parameters(
-                                    "channel_id",
-                                    &serde_wasm_bindgen::to_value("channel_id").unwrap(),
+                                    "channel_id_year_month",
+                                    &serde_wasm_bindgen::to_value(&vec![
+                                        "val.channel_id",
+                                        "keys.year_month",
+                                    ])
+                                    .unwrap(),
                                     &IdbIndexParameters::new(),
                                 ) {
                                     Ok(_) => log::info!("created index"),
@@ -622,6 +682,23 @@ impl Agent for Repo {
                         self.pending_tasks.push(InternalTask::AddItemValsTask(task));
                         self.process_tasks();
                     }
+                    InternalTask::GetItemsByChannelIdYearMonthTask(mut task) => {
+                        match &task.items {
+                            None => {
+                                task.items = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            _ => self.link.respond(
+                                task.handler_id,
+                                Response::Items(Err(anyhow::anyhow!("could not fetch item"))),
+                            ),
+                        }
+                        self.pending_tasks
+                            .push(InternalTask::GetItemsByChannelIdYearMonthTask(task));
+                        self.process_tasks();
+                    }
                     _ => {}
                 }
             }
@@ -668,6 +745,15 @@ impl Agent for Repo {
                 items: None,
                 transaction: None,
             }),
+            Request::GetItemsByChannelIdYearMonth(channel_id, year_month) => {
+                InternalTask::GetItemsByChannelIdYearMonthTask(GetItemsByChannelIdYearMonthTask {
+                    channel_id,
+                    handler_id: id,
+                    items: None,
+                    transaction: None,
+                    year_month,
+                })
+            }
         });
 
         match &self.db {

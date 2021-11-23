@@ -65,11 +65,15 @@ impl Component for ItemList {
     type Message = Message;
     type Properties = Props;
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let cb = link.callback(Message::RepoMessage);
         let mut repo = Repo::bridge(cb);
 
-        repo.send(RepoRequest::GetItems);
+        // repo.send(RepoRequest::GetItems);
+        repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+            props.channel_id,
+            "2021-10".to_string(),
+        ));
 
         Self {
             _link: link,
