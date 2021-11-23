@@ -1,24 +1,18 @@
-use crate::agents::repo::{Repo, Request as RepoRequest};
+use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::item::Item;
 use anyhow::Error;
 use uuid::Uuid;
-use yew::{
-    agent::Dispatcher,
-    format::{Json, Nothing},
-    prelude::*,
-    services::fetch::{FetchService, FetchTask, Request, Response},
-};
+use yew::prelude::*;
 
 pub struct ItemList {
     _link: ComponentLink<Self>,
-    fetch_task: Option<FetchTask>,
     items: Option<Vec<Item>>,
     error: Option<Error>,
-    _repo: Dispatcher<Repo>,
+    repo: Box<dyn Bridge<Repo>>,
 }
 
-pub enum Msg {
-    ReceiveItems(Result<Vec<Item>, anyhow::Error>),
+pub enum Message {
+    RepoMessage(RepoResponse),
     Download(Uuid),
 }
 
@@ -35,12 +29,12 @@ impl ItemList {
                     <section class="section">
                         <div class="columns"><div class="column">
                             { items.iter().map(|i| {
-                                let id = i.id;
+                                let id = i.val.id;
                                 html! { <div class="card">
                                 <div class="card-content">
-                                    <p class="title">{&i.title}</p>
-                                    <p class="subtitle">{&i.date}</p>
-                                    <button class="button" onclick={self._link.callback(move |_| Msg::Download(id))}>{"download"}</button>
+                                    <p class="title">{&i.val.title}</p>
+                                    <p class="subtitle">{&i.val.date}</p>
+                                    <button class="button" onclick={self._link.callback(move |_| Message::Download(id))}>{"download"}</button>
                                 </div>
                             </div> }}).collect::<Html>() }
                         </div></div>
@@ -52,7 +46,7 @@ impl ItemList {
     }
 
     fn view_fetching(&self) -> Html {
-        if self.fetch_task.is_some() {
+        if self.items.is_none() {
             html! { <p>{ "Fetching data..." }</p> }
         } else {
             html! {}
@@ -68,54 +62,43 @@ impl ItemList {
 }
 
 impl Component for ItemList {
-    type Message = Msg;
+    type Message = Message;
     type Properties = Props;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let request = Request::get(format!("/api/channels/{}/items", props.channel_id))
-            .body(Nothing)
-            .expect("Could not build request.");
-        // 2. construct a callback
-        let callback = link.callback(
-            |response: Response<Json<Result<Vec<Item>, anyhow::Error>>>| {
-                let Json(data) = response.into_body();
-                Msg::ReceiveItems(data)
-            },
-        );
-        // 3. pass the request and callback to the fetch service
-        let task = FetchService::fetch(request, callback).expect("failed to start request");
-        let mut disp = Repo::dispatcher();
+    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
+        let cb = link.callback(Message::RepoMessage);
+        let mut repo = Repo::bridge(cb);
 
-        disp.send(RepoRequest::GetChannels);
+        repo.send(RepoRequest::GetItems);
 
         Self {
             _link: link,
-            fetch_task: Some(task),
             items: None,
             error: None,
-            _repo: disp,
+            repo,
         }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Msg::ReceiveItems(res) => {
-                match res {
-                    Ok(c) => {
-                        self.items = Some(c);
-                    }
-                    Err(e) => {
-                        self.error = Some(e);
-                    }
-                }
-
-                self.fetch_task = None;
-                true
-            }
-            Msg::Download(id) => {
-                self._repo.send(RepoRequest::DownloadEnclosure(id));
+            Message::Download(id) => {
+                self.repo.send(RepoRequest::DownloadEnclosure(id));
                 false
             }
+            Message::RepoMessage(resp) => match resp {
+                RepoResponse::Items(res) => {
+                    match res {
+                        Ok(c) => {
+                            self.items = Some(c);
+                        }
+                        Err(e) => {
+                            self.error = Some(e);
+                        }
+                    }
+                    true
+                }
+                _ => false,
+            },
         }
     }
 

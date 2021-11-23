@@ -1,9 +1,6 @@
-use std::collections::HashMap;
-
 use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::channel::Channel;
-use crate::objects::channel_meta::ChannelMeta;
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;
@@ -12,7 +9,6 @@ use yew_router::prelude::RouterAnchor;
 pub struct ChannelList {
     link: ComponentLink<Self>,
     channels: Option<Vec<Channel>>,
-    channels_meta: Option<Vec<ChannelMeta>>,
     error: Option<Error>,
     repo: Box<dyn Bridge<Repo>>,
     show_all: bool,
@@ -26,24 +22,11 @@ pub enum Message {
 
 impl ChannelList {
     fn view_channel_list(&self) -> Html {
-        match (&self.channels, &self.channels_meta) {
-            (Some(channels), Some(channels_meta)) => {
-                let meta_map: HashMap<Uuid, &ChannelMeta> =
-                    channels_meta.iter().map(|e| (e.id, e)).collect();
-                let channels: Vec<(&Channel, &ChannelMeta)> = match self.show_all {
-                    true => channels.iter().map(|e| (e, meta_map[&e.id])).collect(),
-                    false => {
-                        let selected: Vec<Uuid> = channels_meta
-                            .iter()
-                            .filter(|e| e.active)
-                            .map(|e| e.id)
-                            .collect();
-                        channels
-                            .iter()
-                            .filter(|&e| selected.contains(&e.id))
-                            .map(|e| (e, meta_map[&e.id]))
-                            .collect()
-                    }
+        match &self.channels {
+            Some(channels) => {
+                let channels: Vec<&Channel> = match self.show_all {
+                    true => channels.iter().collect(),
+                    false => channels.iter().filter(|&e| e.meta.active).collect(),
                 };
 
                 html! {
@@ -72,8 +55,8 @@ impl ChannelList {
                         </div>
                         <div class="columns"><div class="column">
                             { channels.iter().map(|channel| match self.show_all {
-                                true => self.view_show_all_channel(channel.0, channel.1),
-                                false => self.view_show_selected_channel(channel.0, channel.1)
+                                true => self.view_show_all_channel(channel),
+                                false => self.view_show_selected_channel(channel)
                             }).collect::<Html>() }
                         </div></div>
                     </section>
@@ -83,26 +66,26 @@ impl ChannelList {
         }
     }
 
-    fn view_show_selected_channel(&self, channel: &Channel, _channel_meta: &ChannelMeta) -> Html {
-        html! { <RouterAnchor<AppRoute> classes={"navbar-item, card"} route={AppRoute::ItemsPage{channel_id: channel.id}}>
+    fn view_show_selected_channel(&self, channel: &Channel) -> Html {
+        html! { <RouterAnchor<AppRoute> classes={"navbar-item, card"} route={AppRoute::ItemsPage{channel_id: channel.val.id}}>
             <div class="card-content">
                 <div class="media">
-                    <div class="media-left"><figure class="image is-64x64"><img src={channel.image.clone()}/></figure></div>
-                    <div class="media-content"><p class="title">{&channel.title}</p><p class="subtitle">{&channel.description}</p></div>
+                    <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
+                    <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
                 </div>
             </div>
         </RouterAnchor<AppRoute>> }
     }
 
-    fn view_show_all_channel(&self, channel: &Channel, channel_meta: &ChannelMeta) -> Html {
-        let state = channel_meta.active;
-        let channel_id = channel.id.clone();
+    fn view_show_all_channel(&self, channel: &Channel) -> Html {
+        let state = channel.meta.active;
+        let channel_id = channel.val.id.clone();
 
         html! {
             <div class="card-content">
                 <div class="media">
-                    <div class="media-left"><figure class="image is-64x64"><img src={channel.image.clone()}/></figure></div>
-                    <div class="media-content"><p class="title">{&channel.title}</p><p class="subtitle">{&channel.description}</p></div>
+                    <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
+                    <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
                     <label class="checkbox">
                         <input type="checkbox" checked={state} oninput={self.link.callback(move |_| Message::SetActive(channel_id, !state))}/>
                     </label>
@@ -140,7 +123,6 @@ impl Component for ChannelList {
         Self {
             link: link,
             channels: None,
-            channels_meta: None,
             error: None,
             repo,
             show_all: false,
@@ -153,8 +135,7 @@ impl Component for ChannelList {
                 RepoResponse::Channels(res) => {
                     match res {
                         Ok(channels) => {
-                            self.channels = Some(channels.0);
-                            self.channels_meta = Some(channels.1);
+                            self.channels = Some(channels);
                         }
                         Err(e) => self.error = Some(e),
                     }
@@ -167,16 +148,16 @@ impl Component for ChannelList {
                 true
             }
             Message::SetActive(id, state) => {
-                let mut meta = self
-                    .channels_meta
+                let mut channel = self
+                    .channels
                     .as_ref()
                     .unwrap()
                     .iter()
-                    .find(|e| e.id == id)
+                    .find(|e| e.val.id == id)
                     .unwrap()
                     .clone();
-                meta.active = state;
-                self.repo.send(RepoRequest::SetChannelMeta(meta));
+                channel.meta.active = state;
+                self.repo.send(RepoRequest::UpdateChannel(channel));
                 false
             }
         }

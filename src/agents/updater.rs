@@ -5,7 +5,7 @@ use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::worker::*;
 
-use crate::objects::{channel::Channel, item::Item};
+use crate::objects::{channel::ChannelVal, item::ItemVal};
 
 use super::{
     fetcher::{self},
@@ -87,7 +87,7 @@ impl Agent for Updater {
                     match res {
                         Ok(s) => match task {
                             Task::GetChannels => {
-                                let channels: Vec<Channel> = serde_json::from_str(&s).unwrap();
+                                let channels: Vec<ChannelVal> = serde_json::from_str(&s).unwrap();
 
                                 for channel in &channels {
                                     let task_id = Uuid::new_v4();
@@ -102,7 +102,7 @@ impl Agent for Updater {
                                 self.repo.send(repo::Request::AddChannels(channels));
                             }
                             Task::GetItems(_) => {
-                                let items: Vec<Item> = serde_json::from_str(&s).unwrap();
+                                let items: Vec<ItemVal> = serde_json::from_str(&s).unwrap();
                                 self.repo.send(repo::Request::AddItems(items));
                             }
                         },

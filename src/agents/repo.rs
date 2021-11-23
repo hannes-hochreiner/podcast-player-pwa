@@ -1,10 +1,5 @@
 use super::fetcher;
-use crate::objects::{
-    channel::{self, Channel},
-    channel_meta::{self, ChannelMeta},
-    item::Item,
-    item_meta::{self, ItemMeta},
-};
+use crate::objects::{channel::*, item::*};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -17,18 +12,20 @@ use yew::worker::*;
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
     GetChannels,
-    AddChannels(Vec<Channel>),
-    AddItems(Vec<Item>),
+    GetItems,
+    AddChannels(Vec<ChannelVal>),
+    AddItems(Vec<ItemVal>),
     DownloadEnclosure(Uuid),
     GetEnclosure(Uuid),
-    SetChannelMeta(ChannelMeta),
+    UpdateChannel(Channel),
 }
 
 pub enum Response {
-    Channels(anyhow::Result<(Vec<Channel>, Vec<ChannelMeta>)>),
+    Channels(anyhow::Result<Vec<Channel>>),
     Enclosure(anyhow::Result<ArrayBuffer>),
     AddChannels(anyhow::Result<()>),
     AddItems(anyhow::Result<()>),
+    Items(anyhow::Result<Vec<Item>>),
 }
 
 pub struct Repo {
@@ -64,37 +61,43 @@ pub struct IdbResponse {
 
 enum InternalTask {
     GetChannelsTask(GetChannelsTask),
-    AddChannelsTask(AddChannelsTask),
+    AddChannelValsTask(AddChannelValsTask),
     DownloadEnclosureTask(DownloadEnclosureTask),
     GetEnclosureTask(GetEnclosureTask),
-    SetChannelMetaTask(SetChannelMetaTask),
-    AddItemsTask(AddItemsTask),
+    UpdateChannelTask(UpdateChannelTask),
+    AddItemValsTask(AddItemValsTask),
+    GetItemsTask(GetItemsTask),
 }
 
-struct SetChannelMetaTask {
-    meta: ChannelMeta,
+struct UpdateChannelTask {
+    channel: Channel,
     handler_id: HandlerId,
 }
 
 struct GetChannelsTask {
-    metas: Option<Vec<channel_meta::ChannelMeta>>,
-    channels: Option<Vec<channel::Channel>>,
+    channels: Option<Vec<Channel>>,
     transaction: Option<IdbTransaction>,
     handler_id: HandlerId,
 }
 
-struct AddChannelsTask {
+struct AddChannelValsTask {
     handler_id: HandlerId,
-    metas: Option<Vec<channel_meta::ChannelMeta>>,
+    channel_vals: Vec<ChannelVal>,
     transaction: Option<IdbTransaction>,
-    channels: Vec<Channel>,
+    channels: Option<Vec<Channel>>,
 }
 
-struct AddItemsTask {
+struct AddItemValsTask {
     handler_id: HandlerId,
-    metas: Option<Vec<item_meta::ItemMeta>>,
+    item_vals: Vec<ItemVal>,
     transaction: Option<IdbTransaction>,
-    items: Vec<Item>,
+    items: Option<Vec<Item>>,
+}
+
+struct GetItemsTask {
+    items: Option<Vec<Item>>,
+    transaction: Option<IdbTransaction>,
+    handler_id: HandlerId,
 }
 
 struct DownloadEnclosureTask {
@@ -142,30 +145,24 @@ impl Repo {
                     let task = self.pending_tasks.pop().unwrap();
 
                     match task {
-                        InternalTask::SetChannelMetaTask(task) => {
+                        InternalTask::UpdateChannelTask(task) => {
                             let transaction = db
                                 .transaction_with_str_sequence_and_mode(
-                                    &serde_wasm_bindgen::to_value(&vec![
-                                        "channels",
-                                        "channels-meta",
-                                    ])
-                                    .unwrap(),
+                                    &serde_wasm_bindgen::to_value(&vec!["channels"]).unwrap(),
                                     IdbTransactionMode::Readwrite,
                                 )
                                 .unwrap();
-                            let channel_meta_os =
-                                transaction.object_store("channels-meta").unwrap();
-                            channel_meta_os
+                            let channel_os = transaction.object_store("channels").unwrap();
+                            channel_os
                                 .put_with_key(
-                                    &serde_wasm_bindgen::to_value(&task.meta).unwrap(),
-                                    &serde_wasm_bindgen::to_value(&task.meta.id).unwrap(),
+                                    &serde_wasm_bindgen::to_value(&task.channel).unwrap(),
+                                    &serde_wasm_bindgen::to_value(&task.channel.val.id).unwrap(),
                                 )
                                 .unwrap();
                             self.pending_tasks.push(InternalTask::GetChannelsTask(
                                 GetChannelsTask {
                                     channels: None,
                                     handler_id: task.handler_id,
-                                    metas: None,
                                     transaction: Some(transaction),
                                 },
                             ));
@@ -174,30 +171,15 @@ impl Repo {
                             if task.transaction.is_none() {
                                 task.transaction = Some(
                                     db.transaction_with_str_sequence_and_mode(
-                                        &serde_wasm_bindgen::to_value(&vec![
-                                            "channels",
-                                            "channels-meta",
-                                        ])
-                                        .unwrap(),
+                                        &serde_wasm_bindgen::to_value(&vec!["channels"]).unwrap(),
                                         IdbTransactionMode::Readonly,
                                     )
                                     .unwrap(),
                                 );
                             }
 
-                            match (&task.metas, &task.channels, &task.transaction) {
-                                (None, None, Some(trans)) => {
-                                    let os = trans.object_store("channels-meta").unwrap();
-                                    let req = os.get_all().unwrap();
-
-                                    wrap_idb_request(
-                                        &self.link,
-                                        &mut self.idb_tasks,
-                                        InternalTask::GetChannelsTask(task),
-                                        req,
-                                    );
-                                }
-                                (Some(_), None, Some(trans)) => {
+                            match (&task.channels, &task.transaction) {
+                                (None, Some(trans)) => {
                                     let os = trans.object_store("channels").unwrap();
                                     let req = os.get_all().unwrap();
 
@@ -208,9 +190,9 @@ impl Repo {
                                         req,
                                     );
                                 }
-                                (Some(metas), Some(channels), _) => self.link.respond(
+                                (Some(channels), Some(_trans)) => self.link.respond(
                                     task.handler_id,
-                                    Response::Channels(Ok(((*channels).clone(), (*metas).clone()))),
+                                    Response::Channels(Ok((*channels).clone())),
                                 ),
                                 _ => self.link.respond(
                                     task.handler_id,
@@ -220,59 +202,93 @@ impl Repo {
                                 ),
                             }
                         }
-                        InternalTask::AddChannelsTask(mut task) => {
+                        InternalTask::GetItemsTask(mut task) => {
                             if task.transaction.is_none() {
                                 task.transaction = Some(
                                     db.transaction_with_str_sequence_and_mode(
-                                        &serde_wasm_bindgen::to_value(&vec![
-                                            "channels",
-                                            "channels-meta",
-                                        ])
-                                        .unwrap(),
+                                        &serde_wasm_bindgen::to_value(&vec!["items"]).unwrap(),
+                                        IdbTransactionMode::Readonly,
+                                    )
+                                    .unwrap(),
+                                );
+                            }
+
+                            match (&task.items, &task.transaction) {
+                                (None, Some(trans)) => {
+                                    let os = trans.object_store("items").unwrap();
+                                    let req = os.get_all().unwrap();
+
+                                    wrap_idb_request(
+                                        &self.link,
+                                        &mut self.idb_tasks,
+                                        InternalTask::GetItemsTask(task),
+                                        req,
+                                    );
+                                }
+                                (Some(items), Some(_trans)) => self.link.respond(
+                                    task.handler_id,
+                                    Response::Items(Ok((*items).clone())),
+                                ),
+                                _ => self.link.respond(
+                                    task.handler_id,
+                                    Response::Items(Err(anyhow::anyhow!("could not get items"))),
+                                ),
+                            }
+                        }
+                        InternalTask::AddChannelValsTask(mut task) => {
+                            if task.transaction.is_none() {
+                                task.transaction = Some(
+                                    db.transaction_with_str_sequence_and_mode(
+                                        &serde_wasm_bindgen::to_value(&vec!["channels"]).unwrap(),
                                         IdbTransactionMode::Readwrite,
                                     )
                                     .unwrap(),
                                 );
                             }
 
-                            match (&task.metas, &task.transaction) {
+                            match (&task.channels, &task.transaction) {
                                 (None, Some(trans)) => {
-                                    let os = trans.object_store("channels-meta").unwrap();
+                                    let os = trans.object_store("channels").unwrap();
                                     let req = os.get_all().unwrap();
 
                                     wrap_idb_request(
                                         &self.link,
                                         &mut self.idb_tasks,
-                                        InternalTask::AddChannelsTask(task),
+                                        InternalTask::AddChannelValsTask(task),
                                         req,
                                     );
                                 }
-                                (Some(metas), Some(trans)) => {
+                                (Some(channels), Some(trans)) => {
                                     let channel_os = trans.object_store("channels").unwrap();
-                                    let channel_meta_os =
-                                        trans.object_store("channels-meta").unwrap();
-                                    let metas: Vec<Uuid> = metas.iter().map(|e| e.id).collect();
+                                    let channel_map: HashMap<Uuid, &Channel> =
+                                        channels.iter().map(|e| (e.val.id, e)).collect();
 
-                                    for channel in task.channels {
+                                    for channel in task.channel_vals {
+                                        let channel_new = match channel_map.get(&channel.id) {
+                                            Some(&c) => Channel {
+                                                val: channel,
+                                                meta: c.meta.clone(),
+                                            },
+                                            None => {
+                                                let channel_id = channel.id;
+
+                                                Channel {
+                                                    val: channel,
+                                                    meta: ChannelMeta {
+                                                        id: channel_id,
+                                                        active: false,
+                                                    },
+                                                }
+                                            }
+                                        };
                                         channel_os
                                             .put_with_key(
-                                                &serde_wasm_bindgen::to_value(&channel).unwrap(),
-                                                &serde_wasm_bindgen::to_value(&channel.id).unwrap(),
+                                                &serde_wasm_bindgen::to_value(&channel_new)
+                                                    .unwrap(),
+                                                &serde_wasm_bindgen::to_value(&channel_new.val.id)
+                                                    .unwrap(),
                                             )
                                             .unwrap();
-                                        if !metas.contains(&channel.id) {
-                                            channel_meta_os
-                                                .put_with_key(
-                                                    &serde_wasm_bindgen::to_value(&ChannelMeta {
-                                                        active: false,
-                                                        id: channel.id,
-                                                    })
-                                                    .unwrap(),
-                                                    &serde_wasm_bindgen::to_value(&channel.id)
-                                                        .unwrap(),
-                                                )
-                                                .unwrap();
-                                        }
                                     }
                                 }
                                 _ => self.link.respond(
@@ -283,56 +299,59 @@ impl Repo {
                                 ),
                             }
                         }
-                        InternalTask::AddItemsTask(mut task) => {
+                        InternalTask::AddItemValsTask(mut task) => {
                             if task.transaction.is_none() {
                                 task.transaction = Some(
                                     db.transaction_with_str_sequence_and_mode(
-                                        &serde_wasm_bindgen::to_value(&vec!["items", "items-meta"])
-                                            .unwrap(),
+                                        &serde_wasm_bindgen::to_value(&vec!["items"]).unwrap(),
                                         IdbTransactionMode::Readwrite,
                                     )
                                     .unwrap(),
                                 );
                             }
 
-                            match (&task.metas, &task.transaction) {
+                            match (&task.items, &task.transaction) {
                                 (None, Some(trans)) => {
-                                    let os = trans.object_store("items-meta").unwrap();
+                                    let os = trans.object_store("items").unwrap();
                                     let req = os.get_all().unwrap();
 
                                     wrap_idb_request(
                                         &self.link,
                                         &mut self.idb_tasks,
-                                        InternalTask::AddItemsTask(task),
+                                        InternalTask::AddItemValsTask(task),
                                         req,
                                     );
                                 }
-                                (Some(metas), Some(trans)) => {
+                                (Some(items), Some(trans)) => {
                                     let item_os = trans.object_store("items").unwrap();
-                                    let item_meta_os = trans.object_store("items-meta").unwrap();
-                                    let metas: Vec<Uuid> = metas.iter().map(|e| e.id).collect();
+                                    let item_map: HashMap<Uuid, &Item> =
+                                        items.iter().map(|e| (e.val.id, e)).collect();
 
-                                    for item in task.items {
+                                    for item in task.item_vals {
+                                        let item_new = match item_map.get(&item.id) {
+                                            Some(&i) => Item {
+                                                val: item,
+                                                meta: i.meta.clone(),
+                                            },
+                                            None => {
+                                                let item_id = item.id;
+                                                Item {
+                                                    val: item,
+                                                    meta: ItemMeta {
+                                                        download: false,
+                                                        id: item_id,
+                                                        new: true,
+                                                    },
+                                                }
+                                            }
+                                        };
                                         item_os
                                             .put_with_key(
-                                                &serde_wasm_bindgen::to_value(&item).unwrap(),
-                                                &serde_wasm_bindgen::to_value(&item.id).unwrap(),
+                                                &serde_wasm_bindgen::to_value(&item_new).unwrap(),
+                                                &serde_wasm_bindgen::to_value(&item_new.val.id)
+                                                    .unwrap(),
                                             )
                                             .unwrap();
-                                        if !metas.contains(&item.id) {
-                                            item_meta_os
-                                                .put_with_key(
-                                                    &serde_wasm_bindgen::to_value(&ItemMeta {
-                                                        download: false,
-                                                        id: item.id,
-                                                        new: true,
-                                                    })
-                                                    .unwrap(),
-                                                    &serde_wasm_bindgen::to_value(&item.id)
-                                                        .unwrap(),
-                                                )
-                                                .unwrap();
-                                        }
                                     }
                                 }
                                 _ => self.link.respond(
@@ -477,9 +496,7 @@ impl Agent for Repo {
                 );
                 let object_stores = vec![
                     "channels",
-                    "channels-meta",
                     "items",
-                    "items-meta",
                     "enclosures",
                     "enclosures-meta",
                     "images",
@@ -535,14 +552,8 @@ impl Agent for Repo {
                             .respond(task.handler_id, Response::Enclosure(Ok(res)));
                     }
                     InternalTask::GetChannelsTask(mut task) => {
-                        match (&task.metas, &task.channels) {
-                            (None, None) => {
-                                task.metas = Some(
-                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
-                                        .unwrap(),
-                                )
-                            }
-                            (Some(_), None) => {
+                        match &task.channels {
+                            None => {
                                 task.channels = Some(
                                     serde_wasm_bindgen::from_value(req.request.result().unwrap())
                                         .unwrap(),
@@ -558,10 +569,26 @@ impl Agent for Repo {
                         self.pending_tasks.push(InternalTask::GetChannelsTask(task));
                         self.process_tasks();
                     }
-                    InternalTask::AddChannelsTask(mut task) => {
-                        match &task.metas {
+                    InternalTask::GetItemsTask(mut task) => {
+                        match &task.items {
                             None => {
-                                task.metas = Some(
+                                task.items = Some(
+                                    serde_wasm_bindgen::from_value(req.request.result().unwrap())
+                                        .unwrap(),
+                                )
+                            }
+                            _ => self.link.respond(
+                                task.handler_id,
+                                Response::Items(Err(anyhow::anyhow!("could not fetch item"))),
+                            ),
+                        }
+                        self.pending_tasks.push(InternalTask::GetItemsTask(task));
+                        self.process_tasks();
+                    }
+                    InternalTask::AddChannelValsTask(mut task) => {
+                        match &task.channels {
+                            None => {
+                                task.channels = Some(
                                     serde_wasm_bindgen::from_value(req.request.result().unwrap())
                                         .unwrap(),
                                 )
@@ -573,13 +600,14 @@ impl Agent for Repo {
                                 ))),
                             ),
                         }
-                        self.pending_tasks.push(InternalTask::AddChannelsTask(task));
+                        self.pending_tasks
+                            .push(InternalTask::AddChannelValsTask(task));
                         self.process_tasks();
                     }
-                    InternalTask::AddItemsTask(mut task) => {
-                        match &task.metas {
+                    InternalTask::AddItemValsTask(mut task) => {
+                        match &task.items {
                             None => {
-                                task.metas = Some(
+                                task.items = Some(
                                     serde_wasm_bindgen::from_value(req.request.result().unwrap())
                                         .unwrap(),
                                 )
@@ -591,7 +619,7 @@ impl Agent for Repo {
                                 ))),
                             ),
                         }
-                        self.pending_tasks.push(InternalTask::AddItemsTask(task));
+                        self.pending_tasks.push(InternalTask::AddItemValsTask(task));
                         self.process_tasks();
                     }
                     _ => {}
@@ -602,16 +630,18 @@ impl Agent for Repo {
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
         self.pending_tasks.push(match msg {
-            Request::AddChannels(channels) => InternalTask::AddChannelsTask(AddChannelsTask {
-                channels,
+            Request::AddChannels(channels) => {
+                InternalTask::AddChannelValsTask(AddChannelValsTask {
+                    channel_vals: channels,
+                    handler_id: id,
+                    channels: None,
+                    transaction: None,
+                })
+            }
+            Request::AddItems(items) => InternalTask::AddItemValsTask(AddItemValsTask {
+                item_vals: items,
                 handler_id: id,
-                metas: None,
-                transaction: None,
-            }),
-            Request::AddItems(items) => InternalTask::AddItemsTask(AddItemsTask {
-                items,
-                handler_id: id,
-                metas: None,
+                items: None,
                 transaction: None,
             }),
             Request::DownloadEnclosure(uuid) => {
@@ -622,17 +652,21 @@ impl Agent for Repo {
             }
             Request::GetChannels => InternalTask::GetChannelsTask(GetChannelsTask {
                 handler_id: id,
-                metas: None,
-                transaction: None,
                 channels: None,
+                transaction: None,
             }),
             Request::GetEnclosure(uuid) => InternalTask::GetEnclosureTask(GetEnclosureTask {
                 handler_id: id,
                 uuid,
             }),
-            Request::SetChannelMeta(meta) => InternalTask::SetChannelMetaTask(SetChannelMetaTask {
+            Request::UpdateChannel(channel) => InternalTask::UpdateChannelTask(UpdateChannelTask {
                 handler_id: id,
-                meta,
+                channel,
+            }),
+            Request::GetItems => InternalTask::GetItemsTask(GetItemsTask {
+                handler_id: id,
+                items: None,
+                transaction: None,
             }),
         });
 
