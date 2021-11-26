@@ -3,13 +3,10 @@ use super::fetcher;
 use crate::objects::{channel::*, item::*};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
-use std::{
-    collections::{HashMap, HashSet},
-    sync::Mutex,
-};
+use std::collections::{HashMap, HashSet};
 use tasks::{
     add_channel_vals::*, add_item_vals::*, get_channels::*, get_items_by_channel_id_year_month::*,
-    update_channel::*,
+    update_channel::*, update_item::*,
 };
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
@@ -29,6 +26,7 @@ pub enum Request {
     // DownloadEnclosure(Uuid),
     // GetEnclosure(Uuid),
     UpdateChannel(Channel),
+    UpdateItem(Item),
 }
 
 pub enum Response {
@@ -38,6 +36,7 @@ pub enum Response {
     AddChannelVals(anyhow::Result<()>),
     AddItemVals(anyhow::Result<()>),
     Items(Vec<Item>),
+    Item(Item),
 }
 
 pub struct Repo {
@@ -329,6 +328,7 @@ impl Agent for Repo {
                         channel_id, year_month,
                     ),
                 ),
+                Request::UpdateItem(item) => Box::new(UpdateItemTask::new_with_item(item)),
             },
         ));
 

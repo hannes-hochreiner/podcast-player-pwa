@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::{channel::Channel, item::Item};
 use anyhow::Error;
@@ -19,6 +21,7 @@ pub enum Message {
     RepoMessage(RepoResponse),
     Download(Uuid),
     UpdateCurrentIndex(usize),
+    ToggleNew(Uuid),
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -39,8 +42,13 @@ impl ItemList {
                                 <div class="card-content">
                                     <p class="title">{&i.val.title}</p>
                                     <p class="subtitle">{&i.val.date}</p>
-                                    <p>{ if i.meta.new { html!(<span class="tag is-info is-light is-large">{"new"}</span>) } else { html!() }}</p>
-                                    <button class="button" onclick={self.link.callback(move |_| Message::Download(id))}>{"download"}</button>
+                                    <p class="buttons">
+                                        {match i.meta.new {
+                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
+                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star-outline"/></span><span>{"new"}</span></button>),
+                                        }}
+                                        <button class="button" onclick={self.link.callback(move |_| Message::Download(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{"download"}</span></button>
+                                    </p>
                                 </div>
                             </div> }}).collect::<Html>() }
                         </div></div>
@@ -159,6 +167,16 @@ impl Component for ItemList {
                 ));
                 false
             }
+            Message::ToggleNew(id) => match &self.items {
+                Some(items) => {
+                    let mut item = items.iter().find(|i| i.val.id == id).unwrap().clone();
+
+                    item.meta.new = !item.meta.new;
+                    self.repo.send(RepoRequest::UpdateItem(item));
+                    false
+                }
+                None => false,
+            },
             Message::Download(id) => {
                 // self.repo.send(RepoRequest::DownloadEnclosure(id));
                 false
@@ -198,6 +216,19 @@ impl Component for ItemList {
                     self.error = Some(e);
                     true
                 }
+                RepoResponse::Item(item) => match &mut self.items {
+                    Some(items) => {
+                        let index = items
+                            .iter()
+                            .enumerate()
+                            .find(|(_index, iter_item)| iter_item.val.id == item.val.id)
+                            .unwrap()
+                            .0;
+                        items[index] = item;
+                        true
+                    }
+                    None => false,
+                },
                 _ => false,
             },
         }

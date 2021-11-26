@@ -85,10 +85,13 @@ impl ChannelList {
             <div class="card-content">
                 <div class="media">
                     <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
-                    <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
-                    <label class="checkbox">
-                        <input type="checkbox" checked={state} oninput={self.link.callback(move |_| Message::SetActive(channel_id, !state))}/>
-                    </label>
+                    <div class="media-content">
+                        <p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p>
+                        {match state {
+                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::SetActive(channel_id, false))}><ion-icon size="large" name="checkmark" /></button>),
+                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::SetActive(channel_id, true))}><ion-icon size="large" name="checkmark" /></button>)
+                        }}
+                    </div>
                 </div>
             </div>
         }
