@@ -70,9 +70,9 @@ impl Component for Player {
                 _ => false,
             },
             Message::Play => {
-                self._repo.send(Request::GetEnclosure(
-                    uuid::Uuid::parse_str("200541bb-662b-40b9-a2d8-7d38444216f6").unwrap(),
-                ));
+                // self._repo.send(Request::GetEnclosure(
+                //     uuid::Uuid::parse_str("200541bb-662b-40b9-a2d8-7d38444216f6").unwrap(),
+                // ));
                 false
             }
             Message::Info => {

@@ -99,11 +99,11 @@ impl Agent for Updater {
                                         format!("/api/channels/{}/items", channel.id).into(),
                                     ));
                                 }
-                                self.repo.send(repo::Request::AddChannels(channels));
+                                self.repo.send(repo::Request::AddChannelVals(channels));
                             }
                             Task::GetItems(_) => {
                                 let items: Vec<ItemVal> = serde_json::from_str(&s).unwrap();
-                                self.repo.send(repo::Request::AddItems(items));
+                                self.repo.send(repo::Request::AddItemVals(items));
                             }
                         },
                         Err(_) => todo!("implement error handling"),

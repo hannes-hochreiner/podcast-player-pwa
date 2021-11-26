@@ -32,8 +32,8 @@ pub struct ItemKeys {
     pub year_month: String,
 }
 
-impl From<ItemVal> for ItemKeys {
-    fn from(val: ItemVal) -> Self {
+impl From<&ItemVal> for ItemKeys {
+    fn from(val: &ItemVal) -> Self {
         Self {
             id: val.id,
             year_month: val.date.to_rfc3339()[0..7].to_string(),

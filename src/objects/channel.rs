@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -5,6 +7,7 @@ use uuid::Uuid;
 pub struct Channel {
     pub val: ChannelVal,
     pub meta: ChannelMeta,
+    pub keys: ChannelKeys,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -20,4 +23,10 @@ pub struct ChannelVal {
 pub struct ChannelMeta {
     pub id: Uuid,
     pub active: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ChannelKeys {
+    pub id: Uuid,
+    pub year_month_keys: HashSet<String>,
 }

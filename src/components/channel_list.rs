@@ -133,13 +133,12 @@ impl Component for ChannelList {
         match msg {
             Message::RepoMessage(response) => match response {
                 RepoResponse::Channels(res) => {
-                    match res {
-                        Ok(channels) => {
-                            self.channels = Some(channels);
-                        }
-                        Err(e) => self.error = Some(e),
-                    }
+                    self.channels = Some(res);
                     true
+                }
+                RepoResponse::Error(e) => {
+                    log::info!("channel list error: {}", e);
+                    false
                 }
                 _ => false,
             },
