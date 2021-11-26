@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::{channel::Channel, item::Item};
 use anyhow::Error;
@@ -41,7 +39,7 @@ impl ItemList {
                                 html! { <div class="card">
                                 <div class="card-content">
                                     <p class="title">{&i.val.title}</p>
-                                    <p class="subtitle">{&i.val.date}</p>
+                                    <p class="subtitle">{&i.val.date.format("%Y-%m-%d")}</p>
                                     <p class="buttons">
                                         {match i.meta.new {
                                             true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
