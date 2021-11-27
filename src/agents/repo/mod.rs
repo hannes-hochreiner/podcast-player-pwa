@@ -8,9 +8,9 @@ use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use tasks::{
-    add_channel_vals::*, add_enclosure::*, add_item_vals::*, get_channels::*,
-    get_items_by_channel_id_year_month::*, get_items_by_download_required::*, update_channel::*,
-    update_item::*,
+    add_channel_vals::*, add_enclosure::*, add_item_vals::*, get_channels::*, get_enclosure::*,
+    get_items_by_channel_id_year_month::*, get_items_by_download_ok::*,
+    get_items_by_download_required::*, update_channel::*, update_item::*,
 };
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
@@ -26,10 +26,11 @@ pub enum Request {
     // GetItems,
     GetItemsByChannelIdYearMonth(Uuid, String),
     GetItemsByDownloadRequired,
+    GetItemsByDownloadOk,
     AddChannelVals(Vec<ChannelVal>),
     AddItemVals(Vec<ItemVal>),
     DownloadEnclosure(Uuid),
-    // GetEnclosure(Uuid),
+    GetEnclosure(Uuid),
     UpdateChannel(Channel),
     UpdateItem(Item),
 }
@@ -37,7 +38,7 @@ pub enum Request {
 pub enum Response {
     Error(anyhow::Error),
     Channels(Vec<Channel>),
-    Enclosure(anyhow::Result<ArrayBuffer>),
+    Enclosure(ArrayBuffer),
     AddChannelVals(anyhow::Result<()>),
     AddItemVals(anyhow::Result<()>),
     Items(Vec<Item>),
@@ -252,37 +253,37 @@ impl Agent for Repo {
                     "channels",
                     "items",
                     "enclosures",
-                    "enclosures-meta",
                     "images",
                     "images-meta",
                     "configuration",
                 ];
+                let mut indices = HashMap::new();
+                indices.insert(
+                    "items",
+                    vec![
+                        (
+                            "channel_id_year_month",
+                            vec!["val.channel_id", "keys.year_month"],
+                        ),
+                        ("download_required", vec!["keys.download_required"]),
+                        ("download_ok", vec!["keys.download_ok"]),
+                    ],
+                );
 
                 for object_store in object_stores {
                     match idb_db.create_object_store(object_store) {
                         Ok(os) => {
-                            if object_store == "items" {
-                                match os.create_index_with_str_sequence_and_optional_parameters(
-                                    "channel_id_year_month",
-                                    &serde_wasm_bindgen::to_value(&vec![
-                                        "val.channel_id",
-                                        "keys.year_month",
-                                    ])
-                                    .unwrap(),
-                                    &IdbIndexParameters::new(),
-                                ) {
-                                    Ok(_) => log::info!("created index"),
-                                    Err(e) => log::error!("failed to create index: {:?}", e),
-                                };
-                                match os.create_index_with_str_sequence_and_optional_parameters(
-                                    "download_required",
-                                    &serde_wasm_bindgen::to_value(&vec!["keys.download_required"])
-                                        .unwrap(),
-                                    &IdbIndexParameters::new(),
-                                ) {
-                                    Ok(_) => log::info!("created index"),
-                                    Err(e) => log::error!("failed to create index: {:?}", e),
-                                };
+                            if indices.contains_key(object_store) {
+                                for (name, key_paths) in &indices[object_store] {
+                                    match os.create_index_with_str_sequence_and_optional_parameters(
+                                        name,
+                                        &serde_wasm_bindgen::to_value(key_paths).unwrap(),
+                                        &IdbIndexParameters::new(),
+                                    ) {
+                                        Ok(_) => log::info!("created index {}", name),
+                                        Err(e) => log::error!("failed to create index: {:?}", e),
+                                    };
+                                }
                             }
                         }
                         Err(e) => {
@@ -345,6 +346,9 @@ impl Agent for Repo {
             Request::GetChannels => self
                 .pending_tasks
                 .push((handler_id, Box::new(GetChannelsTask::new()))),
+            Request::GetEnclosure(id) => self
+                .pending_tasks
+                .push((handler_id, Box::new(GetEnclosureTask::new_with_id(id)))),
             Request::UpdateChannel(channel) => self.pending_tasks.push((
                 handler_id,
                 Box::new(UpdateChannelTask::new_with_channel(channel)),
@@ -365,6 +369,9 @@ impl Agent for Repo {
             Request::GetItemsByDownloadRequired => self
                 .pending_tasks
                 .push((handler_id, Box::new(GetItemsByDownloadRequiredTask::new()))),
+            Request::GetItemsByDownloadOk => self
+                .pending_tasks
+                .push((handler_id, Box::new(GetItemsByDownloadOkTask::new()))),
             Request::DownloadEnclosure(item_id) => {
                 let task_id = Uuid::new_v4();
 
