@@ -1,5 +1,5 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
-use crate::objects::{channel::Channel, item::Item};
+use crate::objects::{channel::Channel, item::DownloadStatus, item::Item};
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;
@@ -17,7 +17,7 @@ pub struct ItemList {
 
 pub enum Message {
     RepoMessage(RepoResponse),
-    Download(Uuid),
+    ToggleDownload(Uuid),
     UpdateCurrentIndex(usize),
     ToggleNew(Uuid),
 }
@@ -39,13 +39,22 @@ impl ItemList {
                                 html! { <div class="card">
                                 <div class="card-content">
                                     <p class="title">{&i.get_title()}</p>
-                                    <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}</p>
+                                    <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}{&i.get_id()}</p>
                                     <p class="buttons">
                                         {match i.get_new() {
                                             true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
                                             false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star-outline"/></span><span>{"new"}</span></button>),
                                         }}
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Download(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{"download"}</span></button>
+                                        {match i.get_download() {
+                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{match &i.get_download_status() {
+                                                DownloadStatus::Pending => "download pending",
+                                                DownloadStatus::Ok(_) => "download ok",
+                                                DownloadStatus::InProgress => "downloading",
+                                                DownloadStatus::Error => "download error",
+                                                _ => "download"
+                                            }}</span></button>),
+                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{"download"}</span></button>)
+                                        }}
                                     </p>
                                 </div>
                             </div> }}).collect::<Html>() }
@@ -175,10 +184,16 @@ impl Component for ItemList {
                 }
                 None => false,
             },
-            Message::Download(id) => {
-                // self.repo.send(RepoRequest::DownloadEnclosure(id));
-                false
-            }
+            Message::ToggleDownload(id) => match &self.items {
+                Some(items) => {
+                    let mut item = items.iter().find(|i| i.get_id() == id).unwrap().clone();
+
+                    item.set_download(!item.get_download());
+                    self.repo.send(RepoRequest::UpdateItem(item));
+                    false
+                }
+                None => false,
+            },
             Message::RepoMessage(resp) => match resp {
                 RepoResponse::Channels(res) => {
                     let channel = res

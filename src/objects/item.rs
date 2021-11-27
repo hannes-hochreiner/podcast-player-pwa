@@ -32,16 +32,44 @@ impl Item {
 
     pub fn set_val(&mut self, val: &ItemVal) {
         self.val = val.clone();
-        self.keys = ItemKeys::new_from_val_meta(&self.val, &self.meta);
+        self.regenerate_keys();
+    }
+
+    pub fn get_download(&self) -> bool {
+        self.meta.download
+    }
+
+    pub fn set_download(&mut self, download: bool) {
+        self.meta.download = download;
+        self.meta.new = false;
+
+        match (&self.meta.download, &self.meta.download_status) {
+            (true, DownloadStatus::NotRequested) => {
+                self.meta.download_status = DownloadStatus::Pending
+            }
+            (false, DownloadStatus::Pending) => {
+                self.meta.download_status = DownloadStatus::NotRequested
+            }
+            (_, _) => {}
+        }
+        self.regenerate_keys();
+    }
+
+    pub fn get_download_status(&self) -> DownloadStatus {
+        self.meta.download_status.clone()
     }
 
     pub fn set_download_status(&mut self, download_status: DownloadStatus) {
         self.meta.download_status = download_status;
-        self.keys = ItemKeys::new_from_val_meta(&self.val, &self.meta);
+        self.regenerate_keys();
     }
 
     pub fn get_year_month_key(&self) -> String {
         self.keys.year_month.clone()
+    }
+
+    fn regenerate_keys(&mut self) {
+        self.keys = ItemKeys::new_from_val_meta(&self.val, &self.meta);
     }
 }
 
@@ -50,6 +78,7 @@ impl From<&ItemVal> for Item {
         let meta = ItemMeta {
             id: val.id,
             new: true,
+            download: false,
             download_status: DownloadStatus::NotRequested,
         };
         let keys = ItemKeys::new_from_val_meta(&val, &meta);
@@ -76,6 +105,7 @@ pub struct ItemVal {
 pub struct ItemMeta {
     id: Uuid,
     new: bool,
+    download: bool,
     download_status: DownloadStatus,
 }
 
@@ -83,6 +113,7 @@ pub struct ItemMeta {
 pub enum DownloadStatus {
     NotRequested,
     Pending,
+    InProgress,
     Ok(u32),
     Error,
 }
@@ -91,24 +122,20 @@ pub enum DownloadStatus {
 pub struct ItemKeys {
     pub id: Uuid,
     pub year_month: String,
-    pub download: bool,
-    pub downloaded: bool,
+    pub download_required: String,
 }
 
 impl ItemKeys {
     pub fn new_from_val_meta(val: &ItemVal, meta: &ItemMeta) -> Self {
-        let (download, downloaded) = match meta.download_status {
-            DownloadStatus::NotRequested => (false, false),
-            DownloadStatus::Ok(_) => (true, true),
-            DownloadStatus::Error => (true, true),
-            DownloadStatus::Pending => (true, false),
+        let download_required = match (&meta.download, &meta.download_status) {
+            (true, DownloadStatus::Pending) => String::from("true"),
+            _ => String::from("false"),
         };
 
         Self {
             id: val.id,
             year_month: val.date.to_rfc3339()[0..7].to_string(),
-            download,
-            downloaded,
+            download_required,
         }
     }
 }

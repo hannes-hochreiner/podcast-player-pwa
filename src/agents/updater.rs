@@ -5,7 +5,7 @@ use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use yew::worker::*;
 
-use crate::objects::{channel::ChannelVal, item::ItemVal};
+use crate::objects::{channel::ChannelVal, item::DownloadStatus, item::ItemVal};
 
 use super::{
     fetcher::{self},
@@ -34,6 +34,7 @@ pub struct Updater {
 enum Task {
     GetChannels,
     GetItems(Uuid),
+    GetEnclosure(Uuid),
 }
 
 impl Agent for Updater {
@@ -79,7 +80,23 @@ impl Agent for Updater {
                 self.fetcher
                     .send(fetcher::Request::FetchText(task_id, "/api/channels".into()));
             }
-            Message::RepoMessage(_) => {}
+            Message::RepoMessage(msg) => match msg {
+                repo::Response::AddChannelVals(_) => {
+                    self.repo.send(repo::Request::GetItemsByDownloadRequired);
+                }
+                repo::Response::Items(items) => {
+                    if items.len() > 0 {
+                        let mut item = items[0].clone();
+
+                        item.set_download_status(DownloadStatus::InProgress);
+
+                        self.repo
+                            .send(repo::Request::DownloadEnclosure(item.get_id()));
+                        self.repo.send(repo::Request::UpdateItem(item));
+                    }
+                }
+                _ => {}
+            },
             Message::FetcherMessage(fm) => match fm {
                 fetcher::Response::Text(task_id, res) => {
                     let task = self.pending_tasks.remove(&task_id).unwrap();
@@ -105,6 +122,18 @@ impl Agent for Updater {
                                 let items: Vec<ItemVal> = serde_json::from_str(&s).unwrap();
                                 self.repo.send(repo::Request::AddItemVals(items));
                             }
+                            _ => {}
+                        },
+                        Err(_) => todo!("implement error handling"),
+                    }
+                }
+                fetcher::Response::Binary(task_id, res) => {
+                    let task = self.pending_tasks.remove(&task_id).unwrap();
+
+                    match res {
+                        Ok(s) => match task {
+                            Task::GetEnclosure(id) => {}
+                            _ => {}
                         },
                         Err(_) => todo!("implement error handling"),
                     }

@@ -1,12 +1,16 @@
 mod tasks;
 use super::fetcher;
-use crate::objects::{channel::*, item::*};
+use crate::{
+    agents::repo::tasks::download_enclosure::DownloadEnclosureTask,
+    objects::{channel::*, item::*},
+};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use tasks::{
-    add_channel_vals::*, add_item_vals::*, get_channels::*, get_items_by_channel_id_year_month::*,
-    update_channel::*, update_item::*,
+    add_channel_vals::*, add_enclosure::*, add_item_vals::*, get_channels::*,
+    get_items_by_channel_id_year_month::*, get_items_by_download_required::*, update_channel::*,
+    update_item::*,
 };
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
@@ -21,9 +25,10 @@ pub enum Request {
     GetChannels,
     // GetItems,
     GetItemsByChannelIdYearMonth(Uuid, String),
+    GetItemsByDownloadRequired,
     AddChannelVals(Vec<ChannelVal>),
     AddItemVals(Vec<ItemVal>),
-    // DownloadEnclosure(Uuid),
+    DownloadEnclosure(Uuid),
     // GetEnclosure(Uuid),
     UpdateChannel(Channel),
     UpdateItem(Item),
@@ -48,7 +53,11 @@ pub struct Repo {
     in_progress_tasks: HashMap<Uuid, (HandlerId, Box<dyn RepositoryTask>)>,
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     idb_tasks: HashMap<Uuid, IdbResponse>,
-    fetcher_tasks: HashMap<Uuid, Box<dyn RepositoryTask>>,
+    fetcher_tasks: HashMap<Uuid, FetcherTask>,
+}
+
+enum FetcherTask {
+    DownloadEnclosure(Uuid, HandlerId),
 }
 
 pub enum Msg {
@@ -205,30 +214,21 @@ impl Agent for Repo {
                     let task = self.fetcher_tasks.remove(&uuid).unwrap();
 
                     match task {
-                        // self.fetcher.send(fetcher::Request::FetchBinary(
-                        //     task_id,
-                        //     format!("/api/items/{}/stream", task.uuid),
-                        // ));
-
-                        // InternalTask::DownloadEnclosureTask(task) => match (&self.db, res) {
-                        //     (Some(db), Ok(data)) => {
-                        //         let trans = db
-                        //             .transaction_with_str_and_mode(
-                        //                 "enclosures",
-                        //                 IdbTransactionMode::Readwrite,
-                        //             )
-                        //             .unwrap();
-                        //         let os = trans.object_store("enclosures").unwrap();
-                        //         os.put_with_key(
-                        //             &data,
-                        //             &serde_wasm_bindgen::to_value(&task.uuid).unwrap(),
-                        //         )
-                        //         .unwrap();
-                        //     }
-                        //     (None, _) => log::error!("could not find database"),
-                        //     (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
-                        // },
-                        _ => {}
+                        FetcherTask::DownloadEnclosure(item_id, handler_id) => {
+                            match (&self.db, res) {
+                                (Some(_db), Ok(data)) => {
+                                    self.pending_tasks.push((
+                                        handler_id,
+                                        Box::new(AddEnclosureTask::new_with_item_id_data(
+                                            item_id, data,
+                                        )),
+                                    ));
+                                    self.process_tasks();
+                                }
+                                (None, _) => log::error!("could not find database"),
+                                (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
+                            }
+                        }
                     }
                 }
                 fetcher::Response::Text(uuid, _res) => {
@@ -273,7 +273,16 @@ impl Agent for Repo {
                                 ) {
                                     Ok(_) => log::info!("created index"),
                                     Err(e) => log::error!("failed to create index: {:?}", e),
-                                }
+                                };
+                                match os.create_index_with_str_sequence_and_optional_parameters(
+                                    "download_required",
+                                    &serde_wasm_bindgen::to_value(&vec!["keys.download_required"])
+                                        .unwrap(),
+                                    &IdbIndexParameters::new(),
+                                ) {
+                                    Ok(_) => log::info!("created index"),
+                                    Err(e) => log::error!("failed to create index: {:?}", e),
+                                };
                             }
                         }
                         Err(e) => {
@@ -305,7 +314,14 @@ impl Agent for Repo {
                 let (handler_id, mut task) = self.in_progress_tasks.remove(&req.task_id).unwrap();
 
                 match task.set_response(req.request.result()) {
-                    Ok(Some(resp)) => self.link.respond(handler_id, resp),
+                    Ok(Some(resp)) => match resp {
+                        Response::Item(item) => {
+                            for sub in &self.subscribers {
+                                self.link.respond(*sub, Response::Item(item.clone()));
+                            }
+                        }
+                        _ => self.link.respond(handler_id, resp),
+                    },
                     Ok(None) => {
                         self.in_progress_tasks
                             .insert(req.task_id, (handler_id, task));
@@ -317,25 +333,49 @@ impl Agent for Repo {
     }
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
-        self.pending_tasks.push((
-            handler_id,
-            match msg {
-                Request::AddChannelVals(channels) => {
-                    Box::new(AddChannelValsTask::new_with_channel_vals(channels))
-                }
-                Request::AddItemVals(items) => Box::new(AddItemValsTask::new_with_item_vals(items)),
-                Request::GetChannels => Box::new(GetChannelsTask::new()),
-                Request::UpdateChannel(channel) => {
-                    Box::new(UpdateChannelTask::new_with_channel(channel))
-                }
-                Request::GetItemsByChannelIdYearMonth(channel_id, year_month) => Box::new(
-                    GetItemsByChannelIdYearMonthTask::new_with_channel_id_year_month(
-                        channel_id, year_month,
+        match msg {
+            Request::AddChannelVals(channels) => self.pending_tasks.push((
+                handler_id,
+                Box::new(AddChannelValsTask::new_with_channel_vals(channels)),
+            )),
+            Request::AddItemVals(items) => self.pending_tasks.push((
+                handler_id,
+                Box::new(AddItemValsTask::new_with_item_vals(items)),
+            )),
+            Request::GetChannels => self
+                .pending_tasks
+                .push((handler_id, Box::new(GetChannelsTask::new()))),
+            Request::UpdateChannel(channel) => self.pending_tasks.push((
+                handler_id,
+                Box::new(UpdateChannelTask::new_with_channel(channel)),
+            )),
+            Request::GetItemsByChannelIdYearMonth(channel_id, year_month) => {
+                self.pending_tasks.push((
+                    handler_id,
+                    Box::new(
+                        GetItemsByChannelIdYearMonthTask::new_with_channel_id_year_month(
+                            channel_id, year_month,
+                        ),
                     ),
-                ),
-                Request::UpdateItem(item) => Box::new(UpdateItemTask::new_with_item(item)),
-            },
-        ));
+                ))
+            }
+            Request::UpdateItem(item) => self
+                .pending_tasks
+                .push((handler_id, Box::new(UpdateItemTask::new_with_item(item)))),
+            Request::GetItemsByDownloadRequired => self
+                .pending_tasks
+                .push((handler_id, Box::new(GetItemsByDownloadRequiredTask::new()))),
+            Request::DownloadEnclosure(item_id) => {
+                let task_id = Uuid::new_v4();
+
+                self.fetcher_tasks
+                    .insert(task_id, FetcherTask::DownloadEnclosure(item_id, handler_id));
+                self.fetcher.send(fetcher::Request::FetchBinary(
+                    task_id,
+                    format!("/api/items/{}/stream", item_id),
+                ));
+            }
+        }
 
         match &self.db {
             Some(_) => self.process_tasks(),
