@@ -205,6 +205,11 @@ impl Agent for Repo {
                     let task = self.fetcher_tasks.remove(&uuid).unwrap();
 
                     match task {
+                        // self.fetcher.send(fetcher::Request::FetchBinary(
+                        //     task_id,
+                        //     format!("/api/items/{}/stream", task.uuid),
+                        // ));
+
                         // InternalTask::DownloadEnclosureTask(task) => match (&self.db, res) {
                         //     (Some(db), Ok(data)) => {
                         //         let trans = db

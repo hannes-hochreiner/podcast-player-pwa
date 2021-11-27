@@ -25,11 +25,11 @@ impl repo::RepositoryTask for UpdateItemTask {
         item_os
             .put_with_key(
                 &serde_wasm_bindgen::to_value(&self.item).unwrap(),
-                &serde_wasm_bindgen::to_value(&self.item.val.id).unwrap(),
+                &serde_wasm_bindgen::to_value(&self.item.get_id()).unwrap(),
             )
             .unwrap();
         Ok(vec![item_os
-            .get(&serde_wasm_bindgen::to_value(&self.item.val.id).unwrap())
+            .get(&serde_wasm_bindgen::to_value(&self.item.get_id()).unwrap())
             .unwrap()])
     }
 

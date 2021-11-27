@@ -35,13 +35,13 @@ impl ItemList {
                     <section class="section">
                         <div class="columns"><div class="column">
                             { items.iter().map(|i| {
-                                let id = i.val.id;
+                                let id = i.get_id();
                                 html! { <div class="card">
                                 <div class="card-content">
-                                    <p class="title">{&i.val.title}</p>
-                                    <p class="subtitle">{&i.val.date.format("%Y-%m-%d")}</p>
+                                    <p class="title">{&i.get_title()}</p>
+                                    <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}</p>
                                     <p class="buttons">
-                                        {match i.meta.new {
+                                        {match i.get_new() {
                                             true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
                                             false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star-outline"/></span><span>{"new"}</span></button>),
                                         }}
@@ -167,9 +167,9 @@ impl Component for ItemList {
             }
             Message::ToggleNew(id) => match &self.items {
                 Some(items) => {
-                    let mut item = items.iter().find(|i| i.val.id == id).unwrap().clone();
+                    let mut item = items.iter().find(|i| i.get_id() == id).unwrap().clone();
 
-                    item.meta.new = !item.meta.new;
+                    item.set_new(!item.get_new());
                     self.repo.send(RepoRequest::UpdateItem(item));
                     false
                 }
@@ -205,7 +205,7 @@ impl Component for ItemList {
                     false
                 }
                 RepoResponse::Items(mut res) => {
-                    res.sort_by(|a, b| b.val.date.partial_cmp(&a.val.date).unwrap());
+                    res.sort_by(|a, b| b.get_date().partial_cmp(&a.get_date()).unwrap());
 
                     self.items = Some(res);
                     true
@@ -219,7 +219,7 @@ impl Component for ItemList {
                         let index = items
                             .iter()
                             .enumerate()
-                            .find(|(_index, iter_item)| iter_item.val.id == item.val.id)
+                            .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
                             .unwrap()
                             .0;
                         items[index] = item;

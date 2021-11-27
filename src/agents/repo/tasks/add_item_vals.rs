@@ -1,6 +1,6 @@
 use crate::agents::repo;
 use crate::objects::channel::Channel;
-use crate::objects::item::{Item, ItemKeys, ItemMeta, ItemVal};
+use crate::objects::item::{Item, ItemVal};
 use anyhow::{anyhow, Result};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
@@ -72,44 +72,30 @@ impl repo::RepositoryTask for AddItemValsTask {
                 .map_err(|_e| anyhow!("error converting item result"))?;
 
                 let item_os = trans.object_store("items").unwrap();
-                let item_map: HashMap<Uuid, &Item> = items.iter().map(|e| (e.val.id, e)).collect();
+                let item_map: HashMap<Uuid, &Item> =
+                    items.iter().map(|e| (e.get_id(), e)).collect();
 
                 for item in &self.item_vals {
                     let item_new = match item_map.get(&item.id) {
                         Some(&i) => {
-                            let item_keys: ItemKeys = item.into();
+                            let mut tmp_item = i.clone();
 
+                            tmp_item.set_val(item);
                             channels
                                 .get_mut(&item.channel_id)
                                 .unwrap()
                                 .keys
                                 .year_month_keys
-                                .insert(item_keys.year_month);
+                                .insert(tmp_item.get_year_month_key());
                             updated_channels.insert(item.channel_id);
-                            Item {
-                                val: item.clone(),
-                                meta: i.meta.clone(),
-                                keys: item.into(),
-                            }
+                            tmp_item
                         }
-                        None => {
-                            let item_id = item.id;
-
-                            Item {
-                                val: item.clone(),
-                                meta: ItemMeta {
-                                    id: item_id,
-                                    download: false,
-                                    new: true,
-                                },
-                                keys: item.into(),
-                            }
-                        }
+                        None => item.into(),
                     };
                     item_os
                         .put_with_key(
                             &serde_wasm_bindgen::to_value(&item_new).unwrap(),
-                            &serde_wasm_bindgen::to_value(&item_new.val.id).unwrap(),
+                            &serde_wasm_bindgen::to_value(&item_new.get_id()).unwrap(),
                         )
                         .unwrap();
                 }
