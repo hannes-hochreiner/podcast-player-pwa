@@ -1,27 +1,24 @@
-use crate::{agents::repo, objects::item::Item};
+use crate::{
+    agents::{player, repo},
+    objects::item::Item,
+};
 use uuid::Uuid;
-use wasm_bindgen::closure::Closure;
-use wasm_bindgen::JsCast;
-use web_sys::{MediaSource, Url};
 use yew::{prelude::*, virtual_dom::VNode};
 
 pub struct Player {
-    repo: Box<dyn Bridge<repo::Repo>>,
+    _repo: Box<dyn Bridge<repo::Repo>>,
+    player: Box<dyn Bridge<player::Player>>,
     link: ComponentLink<Self>,
-    update_closure: Closure<dyn Fn(web_sys::Event)>,
-    mediasource_opened_closure: Closure<dyn Fn(web_sys::Event)>,
-    media_source: MediaSource,
-    audio_ref: NodeRef,
     items: Option<Vec<Item>>,
-    played_item_id: Option<Uuid>,
+    playing: Option<Item>,
+    current_time: Option<f64>,
+    duration: Option<f64>,
 }
 pub enum Message {
     NewMessage(repo::Response),
-    Play,
-    Info,
-    Update(Event),
-    SetSource(Uuid),
-    SourceOpened(Event),
+    PlayerMessage(player::Response),
+    Play(Uuid),
+    Pause,
 }
 
 impl Player {
@@ -33,18 +30,22 @@ impl Player {
                         { items.iter().map(|i| {
                             let id = i.get_id();
                             html! { <div class="card">
-                            <div class="card-content">
-                                <p class="title">{&i.get_title()}</p>
-                                <p class="buttons">
-                                    <button class="button is-primary" onclick={self.link.callback(move |_| Message::SetSource(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"play"}</span></button>
-                                </p>
-                            </div>
+                            <header class="card-header">
+                                <p class="card-header-title">{&i.get_title()}</p>
+                                <button class="card-header-icon" aria-label="play" onclick={self.link.callback(move |_| Message::Play(id))}>
+                                    <span class="icon"><ion-icon size="large" name="play"/></span>
+                                </button>
+                            </header>
                         </div> }}).collect::<Html>() }
                     </div></div>
                 </section>
             }),
             None => html!(),
         }
+    }
+
+    fn format_time(&self, time: f64) -> String {
+        format!("{}:{:02}", (time / 60.0) as u64, (time % 60.0) as u64)
     }
 }
 
@@ -55,103 +56,96 @@ impl Component for Player {
     fn view(&self) -> VNode {
         html! {
             <>
-                <audio controls={true} ref=self.audio_ref.clone()/>
-                <button class="button" onclick={self.link.callback(move |_| Message::Play)}>{"set source"}</button>
-                <button class="button" onclick={self.link.callback(move |_| Message::Info)}>{"info"}</button>
-                {self.view_item_list()}
+            <section class="section">
+            <div class="card">
+                <header class="card-header">
+                </header>
+                <div class="card-content">
+                {match &self.playing {
+                    Some(item) => html!(<>
+                        <p class="title">{item.get_title()}</p>
+                        {match (self.current_time, self.duration) {
+                            (Some(current_time), Some(duration)) => html!(<div>
+                                <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
+                                    <span class="icon"><ion-icon size="large" name="pause"/></span>
+                                </button>
+                                {self.format_time(current_time)} {"/"} {self.format_time(duration)}
+                                <progress class="progress" value=current_time.to_string() max=duration.to_string()>{"."}</progress>
+                            </div>),
+                            (_,_) => html!(<progress class="progress" max="100">{"."}</progress>)
+                        }}
+                    </>),
+                    None => html!()
+                }}
+                </div>
+            </div>
+            </section>
+            {self.view_item_list()}
             </>
         }
     }
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
         let cb = link.callback(Message::NewMessage);
-        let ms = MediaSource::new().unwrap();
-        let callback_update = link.callback(move |e| Message::Update(e));
-        let update_closure =
-            Closure::wrap(
-                Box::new(move |event: web_sys::Event| callback_update.emit(event))
-                    as Box<dyn Fn(_)>,
-            );
-        let callback_mediasource_opened = link.callback(move |e| Message::SourceOpened(e));
-        let mediasource_opened_closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
-            callback_mediasource_opened.emit(event)
-        }) as Box<dyn Fn(_)>);
-
         let mut repo = repo::Repo::bridge(cb);
 
         repo.send(repo::Request::GetItemsByDownloadOk);
 
+        let player = player::Player::bridge(link.callback(Message::PlayerMessage));
+
         Self {
             link,
-            repo,
-            media_source: ms,
-            audio_ref: NodeRef::default(),
-            update_closure,
-            mediasource_opened_closure,
+            _repo: repo,
             items: None,
-            played_item_id: None,
+            playing: None,
+            player,
+            current_time: None,
+            duration: None,
         }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
             Message::NewMessage(response) => match response {
-                repo::Response::Enclosure(data) => {
-                    let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
-                    let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
-                    ae.set_playback_rate(1.5);
-                    ae.set_preload("metadata");
-                    sb.append_buffer_with_array_buffer(&data).unwrap();
-                    sb.set_onupdate(Some(self.update_closure.as_ref().unchecked_ref()));
-                    true
-                }
                 repo::Response::Items(items) => {
                     self.items = Some(items);
                     true
                 }
                 _ => false,
             },
-            Message::SetSource(id) => {
-                let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
-                ae.pause().unwrap();
-                self.played_item_id = Some(id);
-                self.media_source = MediaSource::new().unwrap();
-                ae.set_src(&Url::create_object_url_with_source(&self.media_source).unwrap());
-                self.media_source.set_onsourceopen(Some(
-                    self.mediasource_opened_closure.as_ref().unchecked_ref(),
-                ));
+            Message::Pause => {
+                self.player.send(player::Request::Pause);
                 false
             }
-            Message::SourceOpened(_ev) => match self.played_item_id {
-                Some(id) => {
-                    self.repo.send(repo::Request::GetEnclosure(id));
-                    false
-                }
-                None => false,
-            },
-            Message::Play => {
-                // self._repo.send(Request::GetEnclosure(
-                //     uuid::Uuid::parse_str("200541bb-662b-40b9-a2d8-7d38444216f6").unwrap(),
-                // ));
-                false
-            }
-            Message::Info => {
-                let ae = self.audio_ref.cast::<web_sys::HtmlAudioElement>().unwrap();
-
-                log::info!(
-                    "preload: {} ms: {}, time: {}, ae state: {}, ms state: {:?}",
-                    ae.preload(),
-                    self.media_source.duration(),
-                    ae.current_time(),
-                    ae.ready_state(),
-                    self.media_source.ready_state()
+            Message::Play(id) => {
+                self.playing = Some(
+                    self.items
+                        .as_ref()
+                        .unwrap()
+                        .iter()
+                        .find(|i| i.get_id() == id)
+                        .unwrap()
+                        .clone(),
                 );
+                self.player.send(player::Request::Play {
+                    id,
+                    speed: 1.5,
+                    volume: 1.0,
+                    seconds: 0,
+                });
                 false
             }
-            Message::Update(_e) => {
-                self.media_source.end_of_stream().unwrap();
-                false
-            }
+            Message::PlayerMessage(player_message) => match player_message {
+                player::Response::Playing {
+                    current_time,
+                    id,
+                    duration,
+                } => {
+                    self.duration = Some(duration);
+                    self.current_time = Some(current_time);
+                    true
+                }
+            },
         }
     }
 
