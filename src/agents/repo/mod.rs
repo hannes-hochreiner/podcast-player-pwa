@@ -1,9 +1,6 @@
 mod tasks;
 use super::fetcher;
-use crate::{
-    agents::repo::tasks::download_enclosure::DownloadEnclosureTask,
-    objects::{channel::*, item::*},
-};
+use crate::objects::{channel::*, item::*};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
@@ -15,9 +12,7 @@ use tasks::{
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{
-    IdbDatabase, IdbIndexParameters, IdbObjectStore, IdbRequest, IdbTransaction, IdbTransactionMode,
-};
+use web_sys::{IdbDatabase, IdbIndexParameters, IdbRequest, IdbTransaction, IdbTransactionMode};
 use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]

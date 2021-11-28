@@ -34,7 +34,6 @@ pub struct Updater {
 enum Task {
     GetChannels,
     GetItems(Uuid),
-    GetEnclosure(Uuid),
 }
 
 impl Agent for Updater {
@@ -122,7 +121,6 @@ impl Agent for Updater {
                                 let items: Vec<ItemVal> = serde_json::from_str(&s).unwrap();
                                 self.repo.send(repo::Request::AddItemVals(items));
                             }
-                            _ => {}
                         },
                         Err(_) => todo!("implement error handling"),
                     }
@@ -131,14 +129,12 @@ impl Agent for Updater {
                     let task = self.pending_tasks.remove(&task_id).unwrap();
 
                     match res {
-                        Ok(s) => match task {
-                            Task::GetEnclosure(id) => {}
+                        Ok(_ab) => match task {
                             _ => {}
                         },
                         Err(_) => todo!("implement error handling"),
                     }
                 }
-                _ => {}
             },
         }
     }
