@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use crate::{
     agents::{player, repo},
     objects::item::Item,
@@ -6,16 +8,16 @@ use uuid::Uuid;
 use yew::{prelude::*, virtual_dom::VNode};
 
 pub struct Player {
-    _repo: Box<dyn Bridge<repo::Repo>>,
+    repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
     link: ComponentLink<Self>,
-    items: Option<Vec<Item>>,
-    playing: Option<Item>,
+    items: Option<HashMap<Uuid, Item>>,
+    playing: Option<Uuid>,
     current_time: Option<f64>,
     duration: Option<f64>,
 }
 pub enum Message {
-    NewMessage(repo::Response),
+    RepoMessage(repo::Response),
     PlayerMessage(player::Response),
     Play(Uuid),
     Pause,
@@ -27,7 +29,7 @@ impl Player {
             Some(items) => html!(html! {
                 <section class="section">
                     <div class="columns"><div class="column">
-                        { items.iter().map(|i| {
+                        { items.iter().map(|(_, i)| {
                             let id = i.get_id();
                             html! { <div class="card">
                             <header class="card-header">
@@ -61,8 +63,10 @@ impl Component for Player {
                 <header class="card-header">
                 </header>
                 <div class="card-content">
-                {match &self.playing {
-                    Some(item) => html!(<>
+                {match (&self.playing, &self.items) {
+                    (Some(item), Some(items)) => {
+                        let item = &items[item];
+                        html!(<>
                         <p class="title">{item.get_title()}</p>
                         {match (self.current_time, self.duration) {
                             (Some(current_time), Some(duration)) => html!(<div>
@@ -74,8 +78,8 @@ impl Component for Player {
                             </div>),
                             (_,_) => html!(<progress class="progress" max="100">{"."}</progress>)
                         }}
-                    </>),
-                    None => html!()
+                    </>)},
+                    (_, _) => html!()
                 }}
                 </div>
             </div>
@@ -86,7 +90,7 @@ impl Component for Player {
     }
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let cb = link.callback(Message::NewMessage);
+        let cb = link.callback(Message::RepoMessage);
         let mut repo = repo::Repo::bridge(cb);
 
         repo.send(repo::Request::GetItemsByDownloadOk);
@@ -95,7 +99,7 @@ impl Component for Player {
 
         Self {
             link,
-            _repo: repo,
+            repo,
             items: None,
             playing: None,
             player,
@@ -106,9 +110,13 @@ impl Component for Player {
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg {
-            Message::NewMessage(response) => match response {
+            Message::RepoMessage(response) => match response {
                 repo::Response::Items(items) => {
-                    self.items = Some(items);
+                    self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
+                    true
+                }
+                repo::Response::Item(item) => {
+                    self.items.as_mut().unwrap().insert(item.get_id(), item);
                     true
                 }
                 _ => false,
@@ -118,20 +126,18 @@ impl Component for Player {
                 false
             }
             Message::Play(id) => {
-                self.playing = Some(
-                    self.items
-                        .as_ref()
-                        .unwrap()
-                        .iter()
-                        .find(|i| i.get_id() == id)
-                        .unwrap()
-                        .clone(),
-                );
+                let item = &self.items.as_ref().unwrap()[&id];
+                let current_time = match item.get_current_time() {
+                    Some(ct) => ct,
+                    None => 0.0,
+                };
+
+                self.playing = Some(item.get_id());
                 self.player.send(player::Request::Play {
                     id,
-                    speed: 1.5,
+                    playback_rate: 1.5,
                     volume: 1.0,
-                    seconds: 0,
+                    current_time,
                 });
                 false
             }
@@ -143,6 +149,13 @@ impl Component for Player {
                 } => {
                     self.duration = Some(duration);
                     self.current_time = Some(current_time);
+                    self.playing = Some(id);
+
+                    let mut item = self.items.as_ref().unwrap()[&id].clone();
+
+                    item.set_current_time(Some(current_time));
+                    self.repo.send(repo::Request::UpdateItem(item.clone()));
+
                     true
                 }
             },

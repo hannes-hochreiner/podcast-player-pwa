@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{self, window, Event, MediaSource, Url};
+use web_sys::{self, Event, MediaSource, Url};
 use yew::worker::*;
 
 use super::repo;
@@ -10,9 +10,9 @@ use super::repo;
 pub enum Request {
     Play {
         id: Uuid,
-        seconds: u32,
-        volume: f32,
-        speed: f32,
+        current_time: f64,
+        volume: f64,
+        playback_rate: f64,
     },
     Pause,
 }
@@ -131,8 +131,22 @@ impl Agent for Player {
                     (Some(task), Some(id)) => match task {
                         Task::Play {
                             handler_id,
-                            request: _,
+                            request,
                         } => {
+                            match request {
+                                &Request::Play {
+                                    current_time,
+                                    playback_rate: speed,
+                                    volume,
+                                    id: _,
+                                } => {
+                                    self.audio_element.set_playback_rate(speed);
+                                    self.audio_element.set_volume(volume);
+                                    self.audio_element.set_current_time(current_time);
+                                }
+                                _ => {}
+                            }
+
                             self.link.respond(
                                 handler_id.clone(),
                                 Response::Playing {
@@ -164,9 +178,9 @@ impl Agent for Player {
         match msg {
             Request::Play {
                 id,
-                seconds,
-                volume,
-                speed,
+                current_time: _,
+                volume: _,
+                playback_rate: _,
             } => {
                 self.active_id = Some(id);
                 self.active_task = Some(Task::Play {
@@ -181,7 +195,7 @@ impl Agent for Player {
                 ));
             }
             Request::Pause => {
-                self.audio_element.pause();
+                self.audio_element.pause().unwrap();
 
                 if let Some(interval_handle) = self.interval_handle {
                     let window = web_sys::window().unwrap();

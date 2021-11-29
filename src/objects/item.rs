@@ -68,6 +68,14 @@ impl Item {
         self.keys.year_month.clone()
     }
 
+    pub fn set_current_time(&mut self, time: Option<f64>) {
+        self.meta.current_time = time;
+    }
+
+    pub fn get_current_time(&self) -> Option<f64> {
+        self.meta.current_time.clone()
+    }
+
     fn regenerate_keys(&mut self) {
         self.keys = ItemKeys::new_from_val_meta(&self.val, &self.meta);
     }
@@ -80,6 +88,7 @@ impl From<&ItemVal> for Item {
             new: true,
             download: false,
             download_status: DownloadStatus::NotRequested,
+            current_time: None,
         };
         let keys = ItemKeys::new_from_val_meta(&val, &meta);
 
@@ -107,6 +116,7 @@ pub struct ItemMeta {
     new: bool,
     download: bool,
     download_status: DownloadStatus,
+    current_time: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
