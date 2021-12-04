@@ -11,69 +11,57 @@ pub struct ChannelList {
     channels: Option<Vec<Channel>>,
     error: Option<Error>,
     repo: Box<dyn Bridge<Repo>>,
-    show_all: bool,
+    filter: Filter,
 }
 
 pub enum Message {
     RepoMessage(RepoResponse),
-    SetShowAll(bool),
     SetActive(Uuid, bool),
+    FilterChange(Filter),
+}
+
+pub enum Filter {
+    Selected,
+    All,
 }
 
 impl ChannelList {
     fn view_channel_list(&self) -> Html {
         match &self.channels {
             Some(channels) => {
-                let channels: Vec<&Channel> = match self.show_all {
-                    true => channels.iter().collect(),
-                    false => channels.iter().filter(|&e| e.meta.active).collect(),
-                };
-
-                html! {
-                    <section class="section">
-                        <div class="tabs is-toggle is-fullwidth">
-                            <ul>
-                                {match self.show_all {
-                                    false => {
-                                        html! {
-                                            <>
-                                                <li class="is-active"><a><span>{"Active"}</span></a></li>
-                                                <li><a onclick={self.link.callback(move |_| Message::SetShowAll(true))}><span>{"All"}</span></a></li>
-                                            </>
-                                        }
-                                    },
-                                    true => {
-                                        html! {
-                                            <>
-                                                <li><a onclick={self.link.callback(move |_| Message::SetShowAll(false))}><span>{"Active"}</span></a></li>
-                                                <li class="is-active"><a><span>{"All"}</span></a></li>
-                                            </>
-                                        }
-                                    },
-                                }}
-                            </ul>
-                        </div>
-                        <div class="columns"><div class="column">
-                            { channels.iter().map(|channel| match self.show_all {
-                                true => self.view_show_all_channel(channel),
-                                false => self.view_show_selected_channel(channel)
-                            }).collect::<Html>() }
-                        </div></div>
-                    </section>
-                }
+                html! {<>
+                    <ion-segment value="selected">
+                        <ion-segment-button value="selected" onclick={self.link.callback(move |_| Message::FilterChange(Filter::Selected))}><ion-label>{"Selected"}</ion-label></ion-segment-button>
+                        <ion-segment-button value="all" onclick={self.link.callback(move |_| Message::FilterChange(Filter::All))}><ion-label>{"All"}</ion-label></ion-segment-button>
+                    </ion-segment>
+                    <ion-list>
+                        {match self.filter {
+                            Filter::Selected => {
+                                channels.iter().filter(|&e| e.meta.active).map(|channel|
+                                    self.view_show_selected_channel(channel)
+                                ).collect::<Html>()
+                            },
+                            Filter::All => {
+                                channels.iter().map(|channel|
+                                    self.view_show_all_channel(channel)
+                                ).collect::<Html>()
+                            }
+                        }}
+                    </ion-list>
+                </>}
             }
             _ => html! { <p> {"no channels available"} </p> },
         }
     }
 
     fn view_show_selected_channel(&self, channel: &Channel) -> Html {
-        html! { <RouterAnchor<AppRoute> classes={"navbar-item, card"} route={AppRoute::ItemsPage{channel_id: channel.val.id}}>
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
-                    <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
-                </div>
-            </div>
+        html! { <RouterAnchor<AppRoute> route={AppRoute::ItemsPage{channel_id: channel.val.id}}>
+            <ion-item>
+                <ion-thumbnail slot="start">
+                    <ion-img src={channel.val.image.clone()}></ion-img>
+                </ion-thumbnail>
+                <ion-label>{&channel.val.title}</ion-label>
+            </ion-item>
         </RouterAnchor<AppRoute>> }
     }
 
@@ -82,18 +70,18 @@ impl ChannelList {
         let channel_id = channel.val.id.clone();
 
         html! {
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
-                    <div class="media-content">
-                        <p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p>
-                        {match state {
-                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::SetActive(channel_id, false))}><ion-icon size="large" name="checkmark" /></button>),
-                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::SetActive(channel_id, true))}><ion-icon size="large" name="checkmark" /></button>)
-                        }}
-                    </div>
-                </div>
-            </div>
+            <ion-item button="true" color={match state {
+                true => "secondary",
+                false => ""
+            }} onclick={self.link.callback(move |_| Message::SetActive(channel_id, !state))}>
+                <ion-thumbnail slot="start">
+                    <ion-img src={channel.val.image.clone()}></ion-img>
+                </ion-thumbnail>
+                <ion-label>
+                    <ion-title>{&channel.val.title}</ion-title>
+                    <ion-sub-title>{&channel.val.description}</ion-sub-title>
+                </ion-label>
+            </ion-item>
         }
     }
 
@@ -128,7 +116,7 @@ impl Component for ChannelList {
             channels: None,
             error: None,
             repo,
-            show_all: false,
+            filter: Filter::Selected,
         }
     }
 
@@ -145,11 +133,8 @@ impl Component for ChannelList {
                 }
                 _ => false,
             },
-            Message::SetShowAll(show_all) => {
-                self.show_all = show_all;
-                true
-            }
             Message::SetActive(id, state) => {
+                log::info!("set active called: id: {}, state: {}", id, state);
                 let mut channel = self
                     .channels
                     .as_ref()
@@ -161,6 +146,10 @@ impl Component for ChannelList {
                 channel.meta.active = state;
                 self.repo.send(RepoRequest::UpdateChannel(channel));
                 false
+            }
+            Message::FilterChange(filter) => {
+                self.filter = filter;
+                true
             }
         }
     }

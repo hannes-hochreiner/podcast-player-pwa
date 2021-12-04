@@ -32,34 +32,30 @@ impl ItemList {
         match &self.items {
             Some(items) => {
                 html! {
-                    <section class="section">
-                        <div class="columns"><div class="column">
-                            { items.iter().map(|i| {
-                                let id = i.get_id();
-                                html! { <div class="card">
-                                <div class="card-content">
-                                    <p class="title">{&i.get_title()}</p>
-                                    <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}{&i.get_id()}</p>
-                                    <p class="buttons">
-                                        {match i.get_new() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star-outline"/></span><span>{"new"}</span></button>),
-                                        }}
-                                        {match i.get_download() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{match &i.get_download_status() {
-                                                DownloadStatus::Pending => "download pending",
-                                                DownloadStatus::Ok(_) => "download ok",
-                                                DownloadStatus::InProgress => "downloading",
-                                                DownloadStatus::Error => "download error",
-                                                _ => "download"
-                                            }}</span></button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{"download"}</span></button>)
-                                        }}
-                                    </p>
-                                </div>
-                            </div> }}).collect::<Html>() }
-                        </div></div>
-                    </section>
+                    <ion-list>
+                        { items.iter().map(|i| {
+                            let id = i.get_id();
+                            html! { <ion-item><ion-label>
+                                <ion-card-title>{&i.get_title()}</ion-card-title>
+                                <ion-card-subtitle>{&i.get_date().format("%Y-%m-%d")}</ion-card-subtitle>
+                                <ion-buttons>
+                                    {match i.get_new() {
+                                        true => html!(<ion-button color="primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><ion-icon slot="start" name="star"/>{"new"}</ion-button>),
+                                        false => html!(<ion-button onclick={self.link.callback(move |_| Message::ToggleNew(id))}><ion-icon slot="start" name="star-outline"/>{"new"}</ion-button>),
+                                    }}
+                                    {match i.get_download() {
+                                        true => html!(<ion-button color="primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><ion-icon slot="start" name="cloud-download"/>{match &i.get_download_status() {
+                                            DownloadStatus::Pending => "download pending",
+                                            DownloadStatus::Ok(_) => "download ok",
+                                            DownloadStatus::InProgress => "downloading",
+                                            DownloadStatus::Error => "download error",
+                                            _ => "download"
+                                        }}</ion-button>),
+                                        false => html!(<ion-button onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><ion-icon slot="start" name="cloud-download"/>{"download"}</ion-button>)
+                                    }}
+                                </ion-buttons>
+                        </ion-label></ion-item> }}).collect::<Html>() }
+                    </ion-list>
                 }
             }
             None => html! { <p> {"no items available"} </p> },
@@ -71,24 +67,24 @@ impl ItemList {
             (Some(keys), Some(current_index)) => {
                 let mut ellopsis_drawn = false;
 
-                html!(<nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                html!(<ion-toolbar>
                 {
                     if *current_index != 0 {
                         let new_index = current_index - 1;
-                        html!(<a class="pagination-previous" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}>{"<"}</a>)
+                        html!(<ion-button slot="start" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}><ion-icon slot="icon-only" name="chevron-back"/></ion-button>)
                     } else {
-                        html!()
+                        html!(<ion-button slot="start" disabled=true><ion-icon slot="icon-only" name="chevron-back"/></ion-button>)
                     }
                 }
                 {
                     if *current_index != keys.len()-1 {
                         let new_index = current_index + 1;
-                        html!(<a class="pagination-next" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}>{">"}</a>)
+                        html!(<ion-button slot="end" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}><ion-icon slot="icon-only" name="chevron-forward"/></ion-button>)
                     } else {
-                        html!()
+                        html!(<ion-button slot="end" disabled=true><ion-icon slot="icon-only" name="chevron-forward"/></ion-button>)
                     }
                 }
-                <ul class="pagination-list">
+                <ion-buttons>
                 { keys.iter().enumerate().map(|(idx, key)| {
                     if idx == 0 {
                         ellopsis_drawn = false;
@@ -105,13 +101,13 @@ impl ItemList {
                             true =>  html!(),
                             false => {
                                 ellopsis_drawn = true;
-                                html!(<li><span class="pagination-ellipsis">{"..."}</span></li>)
+                                html!(<ion-button disabled=true><ion-icon slot="icon-only" name="ellipsis-horizontal"/></ion-button>)
                             }
                         }
                     }
                 }).collect::<Html>()}
-                </ul>
-              </nav>)
+                </ion-buttons>
+              </ion-toolbar>)
             }
             _ => html!(),
         }
@@ -119,9 +115,9 @@ impl ItemList {
 
     fn view_pagination_element(&self, key: &String, current_key: &String, index: usize) -> Html {
         if key == current_key {
-            html!(<li><a class="pagination-link is-current">{key}</a></li>)
+            html!(<ion-button disabled=true fill="solid" color="primary">{key}</ion-button>)
         } else {
-            html!(<li><a class="pagination-link" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(index))}>{key}</a></li>)
+            html!(<ion-button onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(index))}>{key}</ion-button>)
         }
     }
 
