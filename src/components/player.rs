@@ -1,3 +1,4 @@
+use crate::components::icon::{Icon, IconStyle};
 use std::collections::HashMap;
 
 use crate::{
@@ -35,7 +36,7 @@ impl Player {
                             <header class="card-header">
                                 <p class="card-header-title">{&i.get_title()}</p>
                                 <button class="card-header-icon" aria-label="play" onclick={self.link.callback(move |_| Message::Play(id))}>
-                                    <span class="icon"><ion-icon size="large" name="play"/></span>
+                                    <Icon name="play_arrow" style={IconStyle::Outlined}/>
                                 </button>
                             </header>
                         </div> }}).collect::<Html>() }
@@ -74,7 +75,7 @@ impl Component for Player {
                                 <div class="tile is-parent">
                                     <div class="tile is-child is-1">
                                         <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="pause"/></span>
+                                            <Icon name="pause" style={IconStyle::Outlined}/>
                                         </button>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">

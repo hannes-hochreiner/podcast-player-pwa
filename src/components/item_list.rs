@@ -1,4 +1,5 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+use crate::components::icon::{Icon, IconStyle};
 use crate::objects::{channel::Channel, item::DownloadStatus, item::Item};
 use anyhow::Error;
 use uuid::Uuid;
@@ -42,18 +43,18 @@ impl ItemList {
                                     <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}{&i.get_id()}</p>
                                     <p class="buttons">
                                         {match i.get_new() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star"/></span><span>{"new"}</span></button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><span class="icon"><ion-icon size="large" name="star-outline"/></span><span>{"new"}</span></button>),
+                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
+                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
                                         }}
                                         {match i.get_download() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{match &i.get_download_status() {
-                                                DownloadStatus::Pending => "download pending",
-                                                DownloadStatus::Ok(_) => "download ok",
-                                                DownloadStatus::InProgress => "downloading",
-                                                DownloadStatus::Error => "download error",
-                                                _ => "download"
-                                            }}</span></button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><span class="icon"><ion-icon size="large" name="cloud-download"/></span><span>{"download"}</span></button>)
+                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
+                                                DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
+                                                DownloadStatus::Ok(_) => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
+                                                DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
+                                                DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
+                                                _ => html!{<span>{"download"}</span>}
+                                            }}</button>),
+                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><Icon name="cloud_download" style={IconStyle::Outlined}/><span>{"download"}</span></button>)
                                         }}
                                     </p>
                                 </div>

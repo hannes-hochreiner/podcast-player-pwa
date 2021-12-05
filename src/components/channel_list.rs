@@ -1,5 +1,6 @@
 use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+use crate::components::icon::{Icon, IconStyle};
 use crate::objects::channel::Channel;
 use anyhow::Error;
 use uuid::Uuid;
@@ -88,8 +89,8 @@ impl ChannelList {
                     <div class="media-content">
                         <p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p>
                         {match state {
-                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::SetActive(channel_id, false))}><ion-icon size="large" name="checkmark" /></button>),
-                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::SetActive(channel_id, true))}><ion-icon size="large" name="checkmark" /></button>)
+                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::SetActive(channel_id, false))}><Icon name="check" style={IconStyle::Outlined}/></button>),
+                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::SetActive(channel_id, true))}><Icon name="check" style={IconStyle::Outlined}/></button>)
                         }}
                     </div>
                 </div>
