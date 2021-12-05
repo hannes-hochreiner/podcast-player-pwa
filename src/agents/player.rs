@@ -22,6 +22,8 @@ pub enum Response {
         id: Uuid,
         duration: f64,
         current_time: f64,
+        volume: f64,
+        playback_rate: f64,
     },
 }
 
@@ -118,6 +120,8 @@ impl Agent for Player {
                                 id: id.clone(),
                                 duration: self.audio_element.duration(),
                                 current_time: self.audio_element.current_time(),
+                                playback_rate: self.audio_element.playback_rate(),
+                                volume: self.audio_element.volume(),
                             },
                         );
                     }
@@ -169,6 +173,8 @@ impl Agent for Player {
                                     id: id.clone(),
                                     duration: self.audio_element.duration(),
                                     current_time: self.audio_element.current_time(),
+                                    playback_rate: self.audio_element.playback_rate(),
+                                    volume: self.audio_element.volume(),
                                 },
                             );
                             let window = web_sys::window().unwrap();

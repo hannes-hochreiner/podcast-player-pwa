@@ -15,6 +15,8 @@ pub struct Player {
     items: Option<HashMap<Uuid, Item>>,
     playing: Option<Uuid>,
     current_time: Option<f64>,
+    current_volume: Option<f64>,
+    current_playback_rate: Option<f64>,
     duration: Option<f64>,
 }
 pub enum Message {
@@ -23,6 +25,8 @@ pub enum Message {
     Play(Uuid),
     Pause,
     TimeChange(ChangeData),
+    VolumeChange(ChangeData),
+    PlaybackRateChange(ChangeData),
 }
 
 impl Player {
@@ -70,8 +74,8 @@ impl Component for Player {
                         let item = &items[item];
                         html!(<>
                         <p class="title">{item.get_title()}</p>
-                        {match (self.current_time, self.duration) {
-                            (Some(current_time), Some(duration)) => html!(<div class="tile is-ancestor">
+                        {match (self.current_time, self.duration, self.current_volume, self.current_playback_rate) {
+                            (Some(current_time), Some(duration), Some(volume), Some(playback_rate)) => html!(<div class="tile is-ancestor">
                             <div class="tile is-vertical">
                                 <div class="tile is-parent">
                                     <div class="tile is-child is-1">
@@ -89,8 +93,30 @@ impl Component for Player {
                                         {self.format_time(duration)}
                                     </div>
                                 </div>
+                                <div class="tile is-parent">
+                                    <div class="tile is-child is-1" style="text-align: center">
+                                        <Icon name="volume_down" style={IconStyle::Outlined}/>
+                                    </div>
+                                    <div class="tile is-child">
+                                        <input type="range" min="0" step="0.05" value=volume.to_string() max="1.0" style="width: 100%" onchange={self.link.callback(|e| Message::VolumeChange(e))}/>
+                                    </div>
+                                    <div class="tile is-child is-1" style="text-align: center">
+                                        <Icon name="volume_up" style={IconStyle::Outlined}/>
+                                    </div>
+                                </div>
+                                <div class="tile is-parent">
+                                    <div class="tile is-child is-1" style="text-align: center">
+                                        <Icon name="play_arrow" style={IconStyle::Outlined}/>
+                                    </div>
+                                    <div class="tile is-child">
+                                        <input type="range" min="0.5" step="0.05" value=playback_rate.to_string() max="2.5" style="width: 100%" onchange={self.link.callback(|e| Message::PlaybackRateChange(e))}/>
+                                    </div>
+                                    <div class="tile is-child is-1" style="text-align: center">
+                                        <Icon name="fast_forward" style={IconStyle::Outlined}/>
+                                    </div>
+                                </div>
                             </div></div>),
-                            (_,_) => html!(<progress class="progress" max="100">{"."}</progress>)
+                            (_,_,_,_) => html!(<progress class="progress" max="100">{"."}</progress>)
                         }}
                     </>)},
                     (_, _) => html!()
@@ -118,6 +144,8 @@ impl Component for Player {
             playing: None,
             player,
             current_time: None,
+            current_playback_rate: None,
+            current_volume: None,
             duration: None,
         }
     }
@@ -147,6 +175,8 @@ impl Component for Player {
                 };
 
                 self.playing = Some(item.get_id());
+                self.current_volume = Some(1.0);
+                self.current_playback_rate = Some(1.5);
                 self.player.send(player::Request::Play {
                     id,
                     playback_rate: 1.5,
@@ -160,10 +190,14 @@ impl Component for Player {
                     current_time,
                     id,
                     duration,
+                    playback_rate,
+                    volume,
                 } => {
                     self.duration = Some(duration);
                     self.current_time = Some(current_time);
                     self.playing = Some(id);
+                    self.current_playback_rate = Some(playback_rate);
+                    self.current_volume = Some(volume);
 
                     let mut item = self.items.as_ref().unwrap()[&id].clone();
 
@@ -173,20 +207,81 @@ impl Component for Player {
                     true
                 }
             },
-            Message::TimeChange(cd) => match (cd, &self.playing) {
-                (ChangeData::Value(value), Some(id)) => {
+            Message::TimeChange(cd) => match (
+                cd,
+                &self.playing,
+                &self.current_volume,
+                &self.current_playback_rate,
+            ) {
+                (
+                    ChangeData::Value(value),
+                    Some(id),
+                    Some(current_volume),
+                    Some(current_playback_rate),
+                ) => {
                     let current_time = value.parse().unwrap();
                     let id = id.clone();
+                    let volume = current_volume.clone();
+                    let playback_rate = current_playback_rate.clone();
                     self.player.send(player::Request::Play {
                         id,
                         current_time,
-                        volume: 1.0,
-                        playback_rate: 1.5,
+                        volume,
+                        playback_rate,
                     });
                     false
                 }
-                (_, _) => false,
+                (_, _, _, _) => false,
             },
+            Message::VolumeChange(cd) => match (
+                cd,
+                &self.playing,
+                &self.current_time,
+                &self.current_playback_rate,
+            ) {
+                (
+                    ChangeData::Value(value),
+                    Some(id),
+                    Some(current_time),
+                    Some(current_playback_rate),
+                ) => {
+                    let volume = value.parse().unwrap();
+                    let id = id.clone();
+                    let current_time = current_time.clone();
+                    let playback_rate = current_playback_rate.clone();
+                    self.player.send(player::Request::Play {
+                        id,
+                        current_time,
+                        volume,
+                        playback_rate,
+                    });
+                    false
+                }
+                (_, _, _, _) => false,
+            },
+            Message::PlaybackRateChange(cd) => {
+                match (cd, &self.playing, &self.current_time, &self.current_volume) {
+                    (
+                        ChangeData::Value(value),
+                        Some(id),
+                        Some(current_time),
+                        Some(current_volume),
+                    ) => {
+                        let playback_rate = value.parse().unwrap();
+                        let id = id.clone();
+                        let current_time = current_time.clone();
+                        let volume = current_volume.clone();
+                        self.player.send(player::Request::Play {
+                            id,
+                            current_time,
+                            volume,
+                            playback_rate,
+                        });
+                        false
+                    }
+                    (_, _, _, _) => false,
+                }
+            }
         }
     }
 
