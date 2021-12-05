@@ -72,33 +72,19 @@ impl Component for Player {
                             (Some(current_time), Some(duration)) => html!(<div class="tile is-ancestor">
                             <div class="tile is-vertical">
                                 <div class="tile is-parent">
+                                    <div class="tile is-child is-1">
+                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
+                                            <span class="icon"><ion-icon size="large" name="pause"/></span>
+                                        </button>
+                                    </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         {self.format_time(current_time)}
                                     </div>
                                     <div class="tile is-child">
-                                        <progress class="progress" value=current_time.to_string() max=duration.to_string()>{"."}</progress>
+                                        <input type="range" min="0" value=current_time.to_string() max=duration.to_string() style="width: 100%"/>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         {self.format_time(duration)}
-                                    </div>
-                                </div>
-                                <div class="tile is-parent">
-                                    <div class="tile is-child">
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="play-skip-back"/></span>
-                                        </button>
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="play-back"/></span>
-                                        </button>
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="pause"/></span>
-                                        </button>
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="play-forward"/></span>
-                                        </button>
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
-                                            <span class="icon"><ion-icon size="large" name="play-skip-forward"/></span>
-                                        </button>
                                     </div>
                                 </div>
                             </div></div>),
