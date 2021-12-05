@@ -53,6 +53,22 @@ enum Task {
     },
 }
 
+impl Player {
+    fn start_setting_source(&mut self, id: Uuid, handler_id: HandlerId, msg: Request) {
+        self.active_id = Some(id);
+        self.active_task = Some(Task::Play {
+            handler_id,
+            request: msg,
+        });
+        self.media_source = MediaSource::new().unwrap();
+        self.audio_element
+            .set_src(&Url::create_object_url_with_source(&self.media_source).unwrap());
+        self.media_source.set_onsourceopen(Some(
+            self.mediasource_opened_closure.as_ref().unchecked_ref(),
+        ));
+    }
+}
+
 impl Agent for Player {
     type Reach = Context<Self>;
     type Message = Message;
@@ -178,22 +194,22 @@ impl Agent for Player {
         match msg {
             Request::Play {
                 id,
-                current_time: _,
-                volume: _,
-                playback_rate: _,
-            } => {
-                self.active_id = Some(id);
-                self.active_task = Some(Task::Play {
-                    handler_id,
-                    request: msg,
-                });
-                self.media_source = MediaSource::new().unwrap();
-                self.audio_element
-                    .set_src(&Url::create_object_url_with_source(&self.media_source).unwrap());
-                self.media_source.set_onsourceopen(Some(
-                    self.mediasource_opened_closure.as_ref().unchecked_ref(),
-                ));
-            }
+                current_time,
+                volume,
+                playback_rate,
+            } => match self.active_id {
+                Some(active_id) => match active_id == id {
+                    true => {
+                        self.audio_element.set_playback_rate(playback_rate);
+                        self.audio_element.set_volume(volume);
+                        self.audio_element.set_current_time(current_time);
+                    }
+                    false => self.start_setting_source(id, handler_id, msg),
+                },
+                None => {
+                    self.start_setting_source(id, handler_id, msg);
+                }
+            },
             Request::Pause => {
                 self.audio_element.pause().unwrap();
 

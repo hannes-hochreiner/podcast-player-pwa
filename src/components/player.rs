@@ -22,6 +22,7 @@ pub enum Message {
     PlayerMessage(player::Response),
     Play(Uuid),
     Pause,
+    TimeChange(ChangeData),
 }
 
 impl Player {
@@ -82,7 +83,7 @@ impl Component for Player {
                                         {self.format_time(current_time)}
                                     </div>
                                     <div class="tile is-child">
-                                        <input type="range" min="0" value=current_time.to_string() max=duration.to_string() style="width: 100%"/>
+                                        <input type="range" min="0" value=current_time.to_string() max=duration.to_string() style="width: 100%" onchange={self.link.callback(|e| Message::TimeChange(e))}/>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         {self.format_time(duration)}
@@ -171,6 +172,20 @@ impl Component for Player {
 
                     true
                 }
+            },
+            Message::TimeChange(cd) => match (cd, &self.playing) {
+                (ChangeData::Value(value), Some(id)) => {
+                    let current_time = value.parse().unwrap();
+                    let id = id.clone();
+                    self.player.send(player::Request::Play {
+                        id,
+                        current_time,
+                        volume: 1.0,
+                        playback_rate: 1.5,
+                    });
+                    false
+                }
+                (_, _) => false,
             },
         }
     }
