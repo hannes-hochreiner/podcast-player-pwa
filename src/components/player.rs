@@ -15,8 +15,8 @@ pub struct Player {
     items: Option<HashMap<Uuid, Item>>,
     playing: Option<Uuid>,
     current_time: Option<f64>,
-    current_volume: Option<f64>,
-    current_playback_rate: Option<f64>,
+    volume: Option<f64>,
+    playback_rate: Option<f64>,
     duration: Option<f64>,
 }
 pub enum Message {
@@ -74,7 +74,7 @@ impl Component for Player {
                         let item = &items[item];
                         html!(<>
                         <p class="title">{item.get_title()}</p>
-                        {match (self.current_time, self.duration, self.current_volume, self.current_playback_rate) {
+                        {match (self.current_time, self.duration, self.volume, self.playback_rate) {
                             (Some(current_time), Some(duration), Some(volume), Some(playback_rate)) => html!(<div class="tile is-ancestor">
                             <div class="tile is-vertical">
                                 <div class="tile is-parent">
@@ -144,8 +144,8 @@ impl Component for Player {
             playing: None,
             player,
             current_time: None,
-            current_playback_rate: None,
-            current_volume: None,
+            playback_rate: None,
+            volume: None,
             duration: None,
         }
     }
@@ -174,19 +174,28 @@ impl Component for Player {
                     None => 0.0,
                 };
 
+                self.current_time = Some(current_time);
                 self.playing = Some(item.get_id());
-                self.current_volume = Some(1.0);
-                self.current_playback_rate = Some(1.5);
-                self.player.send(player::Request::Play {
-                    id,
-                    playback_rate: 1.5,
-                    volume: 1.0,
-                    current_time,
-                });
+                self.volume = Some(1.0);
+                self.playback_rate = Some(1.5);
+                self.player.send(player::Request::SetSource(item.get_id()));
                 false
             }
             Message::PlayerMessage(player_message) => match player_message {
-                player::Response::Playing {
+                player::Response::SourceSet => {
+                    match (&self.volume, &self.playback_rate, &self.current_time) {
+                        (Some(volume), Some(playback_rate), Some(current_time)) => {
+                            self.player.send(player::Request::Play {
+                                playback_rate: playback_rate.clone(),
+                                volume: volume.clone(),
+                                current_time: current_time.clone(),
+                            });
+                        }
+                        (_, _, _) => {}
+                    }
+                    false
+                }
+                player::Response::Update {
                     current_time,
                     id,
                     duration,
@@ -196,8 +205,8 @@ impl Component for Player {
                     self.duration = Some(duration);
                     self.current_time = Some(current_time);
                     self.playing = Some(id);
-                    self.current_playback_rate = Some(playback_rate);
-                    self.current_volume = Some(volume);
+                    self.playback_rate = Some(playback_rate);
+                    self.volume = Some(volume);
 
                     let mut item = self.items.as_ref().unwrap()[&id].clone();
 
@@ -207,81 +216,33 @@ impl Component for Player {
                     true
                 }
             },
-            Message::TimeChange(cd) => match (
-                cd,
-                &self.playing,
-                &self.current_volume,
-                &self.current_playback_rate,
-            ) {
-                (
-                    ChangeData::Value(value),
-                    Some(id),
-                    Some(current_volume),
-                    Some(current_playback_rate),
-                ) => {
+            Message::TimeChange(cd) => match cd {
+                ChangeData::Value(value) => {
                     let current_time = value.parse().unwrap();
-                    let id = id.clone();
-                    let volume = current_volume.clone();
-                    let playback_rate = current_playback_rate.clone();
-                    self.player.send(player::Request::Play {
-                        id,
-                        current_time,
-                        volume,
-                        playback_rate,
-                    });
+
+                    self.player
+                        .send(player::Request::SetCurrentTime(current_time));
                     false
                 }
-                (_, _, _, _) => false,
+                _ => false,
             },
-            Message::VolumeChange(cd) => match (
-                cd,
-                &self.playing,
-                &self.current_time,
-                &self.current_playback_rate,
-            ) {
-                (
-                    ChangeData::Value(value),
-                    Some(id),
-                    Some(current_time),
-                    Some(current_playback_rate),
-                ) => {
+            Message::VolumeChange(cd) => match cd {
+                ChangeData::Value(value) => {
                     let volume = value.parse().unwrap();
-                    let id = id.clone();
-                    let current_time = current_time.clone();
-                    let playback_rate = current_playback_rate.clone();
-                    self.player.send(player::Request::Play {
-                        id,
-                        current_time,
-                        volume,
-                        playback_rate,
-                    });
+                    self.player.send(player::Request::SetVolume(volume));
                     false
                 }
-                (_, _, _, _) => false,
+                _ => false,
             },
-            Message::PlaybackRateChange(cd) => {
-                match (cd, &self.playing, &self.current_time, &self.current_volume) {
-                    (
-                        ChangeData::Value(value),
-                        Some(id),
-                        Some(current_time),
-                        Some(current_volume),
-                    ) => {
-                        let playback_rate = value.parse().unwrap();
-                        let id = id.clone();
-                        let current_time = current_time.clone();
-                        let volume = current_volume.clone();
-                        self.player.send(player::Request::Play {
-                            id,
-                            current_time,
-                            volume,
-                            playback_rate,
-                        });
-                        false
-                    }
-                    (_, _, _, _) => false,
+            Message::PlaybackRateChange(cd) => match cd {
+                ChangeData::Value(value) => {
+                    let playback_rate = value.parse().unwrap();
+                    self.player
+                        .send(player::Request::SetPlaybackRate(playback_rate));
+                    false
                 }
-            }
+                _ => false,
+            },
         }
     }
 

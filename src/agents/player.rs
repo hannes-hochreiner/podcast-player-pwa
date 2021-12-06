@@ -8,8 +8,11 @@ use yew::worker::*;
 use super::repo;
 
 pub enum Request {
+    SetSource(Uuid),
+    SetCurrentTime(f64),
+    SetVolume(f64),
+    SetPlaybackRate(f64),
     Play {
-        id: Uuid,
         current_time: f64,
         volume: f64,
         playback_rate: f64,
@@ -18,7 +21,8 @@ pub enum Request {
 }
 
 pub enum Response {
-    Playing {
+    SourceSet,
+    Update {
         id: Uuid,
         duration: f64,
         current_time: f64,
@@ -49,7 +53,7 @@ pub struct Player {
 }
 
 enum Task {
-    Play {
+    SetSource {
         handler_id: HandlerId,
         request: Request,
     },
@@ -58,7 +62,7 @@ enum Task {
 impl Player {
     fn start_setting_source(&mut self, id: Uuid, handler_id: HandlerId, msg: Request) {
         self.active_id = Some(id);
-        self.active_task = Some(Task::Play {
+        self.active_task = Some(Task::SetSource {
             handler_id,
             request: msg,
         });
@@ -68,6 +72,34 @@ impl Player {
         self.media_source.set_onsourceopen(Some(
             self.mediasource_opened_closure.as_ref().unchecked_ref(),
         ));
+    }
+
+    fn set_interval(&mut self) {
+        match self.interval_handle {
+            Some(_) => {}
+            None => {
+                let window = web_sys::window().unwrap();
+
+                self.interval_handle = Some(
+                    window
+                        .set_interval_with_callback_and_timeout_and_arguments(
+                            self.interval_closure.as_ref().unchecked_ref(),
+                            1_000,
+                            &js_sys::Array::new(),
+                        )
+                        .unwrap(),
+                );
+            }
+        }
+    }
+
+    fn remove_interval(&mut self) {
+        if let Some(interval_handle) = self.interval_handle {
+            let window = web_sys::window().unwrap();
+
+            window.clear_interval_with_handle(interval_handle);
+            self.interval_handle = None;
+        }
     }
 }
 
@@ -116,7 +148,7 @@ impl Agent for Player {
                     for handler_id in &self.subscribers {
                         self.link.respond(
                             *handler_id,
-                            Response::Playing {
+                            Response::Update {
                                 id: id.clone(),
                                 duration: self.audio_element.duration(),
                                 current_time: self.audio_element.current_time(),
@@ -130,7 +162,6 @@ impl Agent for Player {
             Message::RepoMessage(msg) => match msg {
                 repo::Response::Enclosure(data) => {
                     let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
-                    self.audio_element.set_playback_rate(1.5);
                     self.audio_element.set_preload("metadata");
                     sb.append_buffer_with_array_buffer(&data).unwrap();
                     sb.set_onupdate(Some(
@@ -145,52 +176,20 @@ impl Agent for Player {
             },
             Message::SourceBufferUpdate(_e) => {
                 self.media_source.end_of_stream().unwrap();
-                self.audio_element.play();
 
-                match (&self.active_task, &self.active_id) {
-                    (Some(task), Some(id)) => match task {
-                        Task::Play {
+                match &self.active_task {
+                    Some(task) => match task {
+                        Task::SetSource {
                             handler_id,
                             request,
-                        } => {
-                            match request {
-                                &Request::Play {
-                                    current_time,
-                                    playback_rate: speed,
-                                    volume,
-                                    id: _,
-                                } => {
-                                    self.audio_element.set_playback_rate(speed);
-                                    self.audio_element.set_volume(volume);
-                                    self.audio_element.set_current_time(current_time);
-                                }
-                                _ => {}
+                        } => match request {
+                            &Request::SetSource(_id) => {
+                                self.link.respond(handler_id.clone(), Response::SourceSet)
                             }
-
-                            self.link.respond(
-                                handler_id.clone(),
-                                Response::Playing {
-                                    id: id.clone(),
-                                    duration: self.audio_element.duration(),
-                                    current_time: self.audio_element.current_time(),
-                                    playback_rate: self.audio_element.playback_rate(),
-                                    volume: self.audio_element.volume(),
-                                },
-                            );
-                            let window = web_sys::window().unwrap();
-
-                            self.interval_handle = Some(
-                                window
-                                    .set_interval_with_callback_and_timeout_and_arguments(
-                                        self.interval_closure.as_ref().unchecked_ref(),
-                                        1_000,
-                                        &js_sys::Array::new(),
-                                    )
-                                    .unwrap(),
-                            );
-                        }
+                            _ => {}
+                        },
                     },
-                    (_, _) => {}
+                    _ => {}
                 }
             }
         }
@@ -198,33 +197,38 @@ impl Agent for Player {
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
         match msg {
+            Request::SetSource(id) => self.start_setting_source(id, handler_id, msg),
             Request::Play {
-                id,
                 current_time,
                 volume,
                 playback_rate,
-            } => match self.active_id {
-                Some(active_id) => match active_id == id {
-                    true => {
-                        self.audio_element.set_playback_rate(playback_rate);
-                        self.audio_element.set_volume(volume);
-                        self.audio_element.set_current_time(current_time);
-                    }
-                    false => self.start_setting_source(id, handler_id, msg),
-                },
-                None => {
-                    self.start_setting_source(id, handler_id, msg);
+            } => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_playback_rate(playback_rate);
+                    self.audio_element.set_volume(volume);
+                    self.audio_element.set_current_time(current_time);
+                    self.audio_element.play();
+                    self.set_interval();
                 }
-            },
+            }
+            Request::SetCurrentTime(current_time) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_current_time(current_time);
+                }
+            }
+            Request::SetPlaybackRate(playback_rate) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_playback_rate(playback_rate);
+                }
+            }
+            Request::SetVolume(volume) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_volume(volume);
+                }
+            }
             Request::Pause => {
                 self.audio_element.pause().unwrap();
-
-                if let Some(interval_handle) = self.interval_handle {
-                    let window = web_sys::window().unwrap();
-
-                    window.clear_interval_with_handle(interval_handle);
-                    self.interval_handle = None;
-                }
+                self.remove_interval();
             }
         }
     }
