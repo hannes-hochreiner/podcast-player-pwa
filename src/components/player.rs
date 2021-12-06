@@ -157,9 +157,9 @@ impl Component for Player {
                     self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
                     true
                 }
-                repo::Response::Item(item) => {
-                    self.items.as_mut().unwrap().insert(item.get_id(), item);
-                    true
+                repo::Response::Item(_item) => {
+                    // self.items.as_mut().unwrap().insert(item.get_id(), item);
+                    false
                 }
                 _ => false,
             },
@@ -208,10 +208,12 @@ impl Component for Player {
                     self.playback_rate = Some(playback_rate);
                     self.volume = Some(volume);
 
-                    let mut item = self.items.as_ref().unwrap()[&id].clone();
+                    let item = &mut self.items.as_mut().unwrap().get_mut(&id).unwrap();
 
+                    log::info!("update: current time: {}", current_time);
                     item.set_current_time(Some(current_time));
-                    self.repo.send(repo::Request::UpdateItem(item.clone()));
+
+                    self.repo.send(repo::Request::UpdateItem((**item).clone()));
 
                     true
                 }

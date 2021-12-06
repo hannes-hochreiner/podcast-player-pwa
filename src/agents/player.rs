@@ -7,6 +7,8 @@ use yew::worker::*;
 
 use super::repo;
 
+// TODO: implement task list to ensure serial execution of tasks (especially to avoid interrupting the set source task)
+
 pub enum Request {
     SetSource(Uuid),
     SetCurrentTime(f64),
@@ -101,6 +103,23 @@ impl Player {
             self.interval_handle = None;
         }
     }
+
+    fn send_update(&self) {
+        if let Some(id) = self.active_id {
+            for handler_id in &self.subscribers {
+                self.link.respond(
+                    *handler_id,
+                    Response::Update {
+                        id: id.clone(),
+                        duration: self.audio_element.duration(),
+                        current_time: self.audio_element.current_time(),
+                        playback_rate: self.audio_element.playback_rate(),
+                        volume: self.audio_element.volume(),
+                    },
+                );
+            }
+        }
+    }
 }
 
 impl Agent for Player {
@@ -143,22 +162,7 @@ impl Agent for Player {
 
     fn update(&mut self, msg: Self::Message) {
         match msg {
-            Message::Interval(_e) => {
-                if let Some(id) = self.active_id {
-                    for handler_id in &self.subscribers {
-                        self.link.respond(
-                            *handler_id,
-                            Response::Update {
-                                id: id.clone(),
-                                duration: self.audio_element.duration(),
-                                current_time: self.audio_element.current_time(),
-                                playback_rate: self.audio_element.playback_rate(),
-                                volume: self.audio_element.volume(),
-                            },
-                        );
-                    }
-                }
-            }
+            Message::Interval(_e) => self.send_update(),
             Message::RepoMessage(msg) => match msg {
                 repo::Response::Enclosure(data) => {
                     let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
@@ -197,7 +201,15 @@ impl Agent for Player {
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
         match msg {
-            Request::SetSource(id) => self.start_setting_source(id, handler_id, msg),
+            Request::SetSource(id) => {
+                if self.active_id.is_some() {
+                    self.audio_element.pause();
+                    self.remove_interval();
+                    self.send_update();
+                    self.active_id = None;
+                }
+                self.start_setting_source(id, handler_id, msg)
+            }
             Request::Play {
                 current_time,
                 volume,
