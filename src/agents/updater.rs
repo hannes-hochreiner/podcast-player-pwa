@@ -3,6 +3,7 @@ use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
+use web_sys::ConnectionType;
 use yew::worker::*;
 
 use crate::objects::{channel::ChannelVal, item::DownloadStatus, item::ItemVal};
@@ -73,11 +74,22 @@ impl Agent for Updater {
     fn update(&mut self, msg: Self::Message) {
         match msg {
             Message::Interval(_ev) => {
-                let task_id = Uuid::new_v4();
+                match web_sys::window()
+                    .unwrap()
+                    .navigator()
+                    .connection()
+                    .unwrap()
+                    .type_()
+                {
+                    ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Other => {
+                        let task_id = Uuid::new_v4();
 
-                self.pending_tasks.insert(task_id, Task::GetChannels);
-                self.fetcher
-                    .send(fetcher::Request::FetchText(task_id, "/api/channels".into()));
+                        self.pending_tasks.insert(task_id, Task::GetChannels);
+                        self.fetcher
+                            .send(fetcher::Request::FetchText(task_id, "/api/channels".into()));
+                    }
+                    _ => {}
+                }
             }
             Message::RepoMessage(msg) => match msg {
                 repo::Response::AddChannelVals(_) => {
