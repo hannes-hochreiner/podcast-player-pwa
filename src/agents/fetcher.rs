@@ -40,6 +40,7 @@ pub struct Fetcher {
     client_id: String,
     audience: String,
     domain: String,
+    redirect_url: String,
     repo: Box<dyn Bridge<repo::Repo>>,
     config: Option<FetcherConfig>,
 }
@@ -66,7 +67,7 @@ impl Fetcher {
             verifier,
             challenge,
             state: Uuid::new_v4(),
-            redirect: "http://127.0.0.1:8080".into(),
+            redirect: self.redirect_url.clone(),
         }
     }
 }
@@ -91,6 +92,7 @@ impl Agent for Fetcher {
             domain: env!("DOMAIN").into(),
             repo,
             config: None,
+            redirect_url: env!("REDIRECT_DOMAIN").into(),
         }
     }
 
@@ -102,30 +104,26 @@ impl Agent for Fetcher {
             Message::ReceiveText(handler_id, uuid, res) => {
                 self.link.respond(handler_id, Response::Text(uuid, res))
             }
-            Message::GetToken(res) => {
-                log::info!("{:?}", res);
-
-                match (&mut self.config, res) {
-                    (Some(config), Ok(response)) => {
-                        let mut config = config.clone();
-                        config.authorization_task = None;
-                        config.authorization = Some(Authorization {
-                            access_token: response.access_token,
-                            token_type: response.token_type,
-                            expires_at: (Utc::now() + Duration::seconds(response.expires_in - 10))
-                                .into(),
-                        });
-                        self.repo.send(repo::Request::GetFetcherConf(Some(config)))
-                    }
-                    (_, _) => {}
+            Message::GetToken(res) => match (&mut self.config, res) {
+                (Some(config), Ok(response)) => {
+                    let mut config = config.clone();
+                    config.authorization_task = None;
+                    config.authorization = Some(Authorization {
+                        access_token: response.access_token,
+                        token_type: response.token_type,
+                        expires_at: (Utc::now() + Duration::seconds(response.expires_in - 10))
+                            .into(),
+                    });
+                    self.repo.send(repo::Request::GetFetcherConf(Some(config)))
                 }
-            }
+                (_, _) => {}
+            },
             Message::RepoMessage(repo_msg) => match repo_msg {
                 repo::Response::FetcherConfig(fetcher_config) => match fetcher_config {
                     Some(fc) => {
                         self.config = Some(fc);
 
-                        log::info!("obtained fetcher config");
+                        log::info!("obtained fetcher config: {}", &self.redirect_url);
 
                         if self.config.as_ref().unwrap().authorization.is_none() {
                             match &self.config.as_mut().unwrap().authorization_task {
@@ -140,8 +138,8 @@ impl Agent for Fetcher {
                                     )
                                     .unwrap();
 
-                                    match url.query_pairs().find(|(key, val)| key == "code") {
-                                        Some((key, val)) => {
+                                    match url.query_pairs().find(|(key, _)| key == "code") {
+                                        Some((_, val)) => {
                                             log::info!("found code: {}", val);
                                             let token_url = format!("{}/oauth/token", self.domain);
                                             let body = format!("grant_type=authorization_code&client_id={}&code_verifier={}&code={}&redirect_uri={}", self.client_id, at.verifier, val, at.redirect);
@@ -250,10 +248,10 @@ async fn fetch(
     };
 
     if let Some(headers) = headers {
-        let opt_headers = web_sys::Headers::new().unwrap();
+        let opt_headers = web_sys::Headers::new()?;
 
         for (key, val) in headers {
-            opt_headers.append(&key, &val);
+            opt_headers.append(&key, &val)?;
         }
 
         opts.headers(&opt_headers);
