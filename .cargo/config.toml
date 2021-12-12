@@ -1,0 +1,5 @@
+[env]
+AUDIENCE = "test_audience"
+DOMAIN = "test_domain"
+CLIENT_ID = "test_client"
+REDIRECT_DOMAIN = "test_domain"
