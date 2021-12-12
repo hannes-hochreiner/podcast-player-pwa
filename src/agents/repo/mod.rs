@@ -1,12 +1,12 @@
 mod tasks;
-use super::fetcher;
-use crate::objects::{channel::*, item::*};
+use super::fetcher::{self};
+use crate::objects::{channel::*, fetcher_config::*, item::*};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use tasks::{
     add_channel_vals::*, add_enclosure::*, add_item_vals::*, get_channels::*, get_enclosure::*,
-    get_items_by_channel_id_year_month::*, get_items_by_download_ok::*,
+    get_fetcher_conf::*, get_items_by_channel_id_year_month::*, get_items_by_download_ok::*,
     get_items_by_download_required::*, update_channel::*, update_item::*,
 };
 use uuid::Uuid;
@@ -28,6 +28,7 @@ pub enum Request {
     GetEnclosure(Uuid),
     UpdateChannel(Channel),
     UpdateItem(Item),
+    GetFetcherConf(Option<FetcherConfig>),
 }
 
 pub enum Response {
@@ -38,6 +39,7 @@ pub enum Response {
     AddItemVals(anyhow::Result<()>),
     Items(Vec<Item>),
     Item(Item),
+    FetcherConfig(Option<FetcherConfig>),
 }
 
 pub struct Repo {
@@ -330,6 +332,10 @@ impl Agent for Repo {
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
         match msg {
+            Request::GetFetcherConf(fct) => self.pending_tasks.push((
+                handler_id,
+                Box::new(GetFetcherConfTask::new_with_option(fct)),
+            )),
             Request::AddChannelVals(channels) => self.pending_tasks.push((
                 handler_id,
                 Box::new(AddChannelValsTask::new_with_channel_vals(channels)),
