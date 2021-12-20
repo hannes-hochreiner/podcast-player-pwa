@@ -27,3 +27,6 @@ yarn-error.log*
 
 # trunk output
 dist
+
+# custom test data
+test_data
