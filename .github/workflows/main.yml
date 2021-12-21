@@ -27,4 +27,3 @@ jobs:
       with:
         docker-user-name: ${{ secrets.DOCKER_USER }}
         docker-token: ${{ secrets.DOCKER_TOKEN }}
-        docker-targets: rss-json-service, updater
