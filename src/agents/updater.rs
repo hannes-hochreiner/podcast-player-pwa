@@ -74,14 +74,14 @@ impl Agent for Updater {
     fn update(&mut self, msg: Self::Message) {
         match msg {
             Message::Interval(_ev) => {
-                match web_sys::window()
+                let conn_type = web_sys::window()
                     .unwrap()
                     .navigator()
                     .connection()
                     .unwrap()
-                    .type_()
-                {
-                    ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Other => {
+                    .type_();
+                match conn_type {
+                    ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Unknown => {
                         let task_id = Uuid::new_v4();
 
                         self.pending_tasks.insert(task_id, Task::GetChannels);
