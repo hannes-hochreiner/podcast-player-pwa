@@ -211,20 +211,35 @@ impl Agent for Fetcher {
     }
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
-        match msg {
-            Request::FetchBinary(uuid, url) => {
-                self.link.send_future(async move {
-                    Message::ReceiveBinary(id, uuid, fetch_binary(&url).await)
-                });
-            }
-            Request::FetchText(uuid, url) => {
-                self.link.send_future(async move {
-                    Message::ReceiveText(
-                        id,
-                        uuid,
-                        fetch_text(&url, HttpMethod::Get, None, None).await,
-                    )
-                });
+        if let Some(config) = &self.config {
+            if let Some(auth) = &config.authorization {
+                let mut headers = HashMap::new();
+
+                headers.insert(
+                    "authorization".into(),
+                    format!("Bearer {}", auth.access_token),
+                );
+
+                match msg {
+                    Request::FetchBinary(uuid, url) => {
+                        self.link.send_future(async move {
+                            Message::ReceiveBinary(
+                                id,
+                                uuid,
+                                fetch_binary(&url, Some(headers)).await,
+                            )
+                        });
+                    }
+                    Request::FetchText(uuid, url) => {
+                        self.link.send_future(async move {
+                            Message::ReceiveText(
+                                id,
+                                uuid,
+                                fetch_text(&url, HttpMethod::Get, Some(headers), None).await,
+                            )
+                        });
+                    }
+                }
             }
         }
     }
@@ -274,10 +289,10 @@ async fn fetch(
 }
 
 // https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
-async fn fetch_binary(url: &str) -> Result<ArrayBuffer> {
+async fn fetch_binary(url: &str, headers: Option<HashMap<String, String>>) -> Result<ArrayBuffer> {
     Ok(ArrayBuffer::from(
         JsFuture::from(
-            fetch(url, HttpMethod::Get, None, None)
+            fetch(url, HttpMethod::Get, headers, None)
                 .await
                 .map_err(|_| anyhow::anyhow!("fetch failed"))?
                 .array_buffer()
