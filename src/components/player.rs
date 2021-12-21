@@ -210,7 +210,6 @@ impl Component for Player {
 
                     let item = &mut self.items.as_mut().unwrap().get_mut(&id).unwrap();
 
-                    log::info!("update: current time: {}", current_time);
                     item.set_current_time(Some(current_time));
 
                     self.repo.send(repo::Request::UpdateItem((**item).clone()));
