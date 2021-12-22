@@ -5,7 +5,7 @@ use crate::objects::{
 
 use super::repo;
 use anyhow::Result;
-use chrono::{Duration, Utc};
+use chrono::{DateTime, Duration, FixedOffset, Utc};
 use js_sys::ArrayBuffer;
 use serde::de::DeserializeOwned;
 use sha2::{Digest, Sha256};
@@ -45,28 +45,6 @@ pub struct Fetcher {
 enum HttpMethod {
     Get,
     Post,
-}
-
-impl Fetcher {
-    fn sha256_hash(&self, data: &[u8]) -> String {
-        let mut hasher = Sha256::new();
-
-        hasher.update(data);
-
-        base64_url::encode(&hasher.finalize())
-    }
-
-    fn get_authorization_task(&self) -> AuthorizationTask {
-        let verifier = self.sha256_hash(Uuid::new_v4().as_bytes());
-        let challenge = self.sha256_hash(verifier.as_bytes());
-
-        AuthorizationTask {
-            verifier,
-            challenge,
-            state: Uuid::new_v4(),
-            redirect: get_base_url(),
-        }
-    }
 }
 
 impl Agent for Fetcher {
@@ -124,8 +102,8 @@ impl Agent for Fetcher {
                     Some(fc) => {
                         self.config = Some(fc.clone());
 
-                        if self.config.as_ref().unwrap().authorization.is_none() {
-                            match &self.config.as_mut().unwrap().authorization_task {
+                        match fc.authorization {
+                            None => match &self.config.as_mut().unwrap().authorization_task {
                                 Some(at) => {
                                     let url = get_url();
 
@@ -154,7 +132,6 @@ impl Agent for Fetcher {
                                             });
                                         }
                                         None => {
-                                            log::info!("self domain: {}", fc.config.domain);
                                             let mut url = Url::parse(&format!(
                                                 "{}/authorize",
                                                 fc.config.domain
@@ -181,7 +158,17 @@ impl Agent for Fetcher {
                                 }
                                 None => {
                                     self.config.as_mut().unwrap().authorization_task =
-                                        Some(self.get_authorization_task());
+                                        Some(get_authorization_task());
+                                    self.repo
+                                        .send(repo::Request::GetFetcherConf(self.config.clone()));
+                                }
+                            },
+                            Some(auth) => {
+                                if auth.expires_at < Utc::now() {
+                                    let config = self.config.as_mut().unwrap();
+
+                                    config.authorization = None;
+                                    config.authorization_task = Some(get_authorization_task());
                                     self.repo
                                         .send(repo::Request::GetFetcherConf(self.config.clone()));
                                 }
@@ -361,5 +348,25 @@ fn get_base_url() -> String {
     match url.port() {
         Some(port) => format!("{}://{}:{}", url.scheme(), url.host_str().unwrap(), port),
         None => format!("{}://{}", url.scheme(), url.host_str().unwrap()),
+    }
+}
+
+fn sha256_hash(data: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+
+    hasher.update(data);
+
+    base64_url::encode(&hasher.finalize())
+}
+
+fn get_authorization_task() -> AuthorizationTask {
+    let verifier = sha256_hash(Uuid::new_v4().as_bytes());
+    let challenge = sha256_hash(verifier.as_bytes());
+
+    AuthorizationTask {
+        verifier,
+        challenge,
+        state: Uuid::new_v4(),
+        redirect: get_base_url(),
     }
 }
