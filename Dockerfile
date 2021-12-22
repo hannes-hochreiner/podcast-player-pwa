@@ -1,7 +1,7 @@
 FROM fedora:34 AS builder
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-RUN source $HOME/.cargo/env && cargo install --locked trunk && rustup target add wasm32-unknown-unknown
 RUN dnf install gcc
+RUN source $HOME/.cargo/env && cargo install --locked trunk && rustup target add wasm32-unknown-unknown
 RUN mkdir -p /opt/podcast-player
 COPY src /opt/podcast-player/src
 COPY public /opt/podcast-player/public
