@@ -1,3 +1,4 @@
+use chrono::{DateTime, FixedOffset};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use uuid::Uuid;
@@ -14,8 +15,9 @@ pub struct ChannelVal {
     pub id: Uuid,
     pub title: String,
     pub description: String,
-    pub image: String,
+    pub image: Option<String>,
     pub feed_id: Uuid,
+    pub update_ts: DateTime<FixedOffset>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

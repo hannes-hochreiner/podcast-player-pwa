@@ -108,6 +108,7 @@ pub struct ItemVal {
     pub enclosure_type: String,
     pub enclosure_url: String,
     pub channel_id: Uuid,
+    pub update_ts: DateTime<FixedOffset>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
