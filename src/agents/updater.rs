@@ -6,7 +6,7 @@ use wasm_bindgen::JsCast;
 use web_sys::ConnectionType;
 use yew::worker::*;
 
-use crate::objects::{channel::ChannelVal, item::DownloadStatus, item::ItemVal};
+use crate::objects::{channel::ChannelVal, feed::FeedVal, item::DownloadStatus, item::ItemVal};
 
 use super::{
     fetcher::{self},
@@ -33,6 +33,7 @@ pub struct Updater {
 }
 
 enum Task {
+    GetFeeds,
     GetChannels,
     GetItems(Uuid),
 }
@@ -82,11 +83,22 @@ impl Agent for Updater {
                     .type_();
                 match conn_type {
                     ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Unknown => {
-                        let task_id = Uuid::new_v4();
+                        let task_id_feeds = Uuid::new_v4();
 
-                        self.pending_tasks.insert(task_id, Task::GetChannels);
-                        self.fetcher
-                            .send(fetcher::Request::FetchText(task_id, "/api/channels".into()));
+                        self.pending_tasks.insert(task_id_feeds, Task::GetFeeds);
+                        self.fetcher.send(fetcher::Request::FetchText(
+                            task_id_feeds,
+                            "/api/feeds".into(),
+                        ));
+
+                        let task_id_channels = Uuid::new_v4();
+
+                        self.pending_tasks
+                            .insert(task_id_channels, Task::GetChannels);
+                        self.fetcher.send(fetcher::Request::FetchText(
+                            task_id_channels,
+                            "/api/channels".into(),
+                        ));
                     }
                     _ => {}
                 }
@@ -114,6 +126,11 @@ impl Agent for Updater {
 
                     match res {
                         Ok(s) => match task {
+                            Task::GetFeeds => {
+                                let feeds: Vec<FeedVal> = serde_json::from_str(&s).unwrap();
+
+                                self.repo.send(repo::Request::AddFeedVals(feeds));
+                            }
                             Task::GetChannels => {
                                 let channels: Vec<ChannelVal> = serde_json::from_str(&s).unwrap();
 

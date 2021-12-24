@@ -1,13 +1,14 @@
 mod tasks;
 use super::fetcher::{self};
-use crate::objects::{channel::*, fetcher_config::*, item::*};
+use crate::objects::{channel::*, feed::*, fetcher_config::*, item::*};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use tasks::{
-    add_channel_vals::*, add_enclosure::*, add_item_vals::*, get_channels::*, get_enclosure::*,
-    get_fetcher_conf::*, get_items_by_channel_id_year_month::*, get_items_by_download_ok::*,
-    get_items_by_download_required::*, update_channel::*, update_item::*,
+    add_channel_vals::*, add_enclosure::*, add_feed_vals::*, add_item_vals::*, get_all::*,
+    get_enclosure::*, get_fetcher_conf::*, get_items_by_channel_id_year_month::*,
+    get_items_by_download_ok::*, get_items_by_download_required::*, update_channel::*,
+    update_item::*,
 };
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
@@ -17,6 +18,7 @@ use yew::worker::*;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
+    GetFeeds,
     GetChannels,
     // GetItems,
     GetItemsByChannelIdYearMonth(Uuid, String),
@@ -24,19 +26,23 @@ pub enum Request {
     GetItemsByDownloadOk,
     AddChannelVals(Vec<ChannelVal>),
     AddItemVals(Vec<ItemVal>),
+    AddFeedVals(Vec<FeedVal>),
     DownloadEnclosure(Uuid),
     GetEnclosure(Uuid),
     UpdateChannel(Channel),
     UpdateItem(Item),
     GetFetcherConf(Option<FetcherConfig>),
+    AddFeed(String),
 }
 
 pub enum Response {
     Error(anyhow::Error),
     Channels(Vec<Channel>),
+    Feeds(Vec<Feed>),
     Enclosure(ArrayBuffer),
     AddChannelVals(anyhow::Result<()>),
     AddItemVals(anyhow::Result<()>),
+    AddFeedVals(anyhow::Result<()>),
     Items(Vec<Item>),
     Item(Item),
     FetcherConfig(Option<FetcherConfig>),
@@ -56,6 +62,7 @@ pub struct Repo {
 
 enum FetcherTask {
     DownloadEnclosure(Uuid, HandlerId),
+    AddFeed(String, HandlerId),
 }
 
 pub enum Msg {
@@ -227,6 +234,7 @@ impl Agent for Repo {
                                 (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
                             }
                         }
+                        _ => {}
                     }
                 }
                 fetcher::Response::Text(uuid, _res) => {
@@ -248,6 +256,7 @@ impl Agent for Repo {
                 );
                 let object_stores = vec![
                     "channels",
+                    "feeds",
                     "items",
                     "enclosures",
                     "images",
@@ -332,9 +341,27 @@ impl Agent for Repo {
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
         match msg {
+            Request::AddFeed(url) => {
+                let task_id = Uuid::new_v4();
+
+                self.fetcher_tasks
+                    .insert(task_id, FetcherTask::AddFeed(url.clone(), handler_id));
+                self.fetcher.send(fetcher::Request::PostString(
+                    task_id,
+                    format!("/api/feeds"),
+                    url,
+                ));
+            }
+            Request::GetFeeds => self
+                .pending_tasks
+                .push((handler_id, Box::new(GetAllTask::new(Kind::Feed)))),
             Request::GetFetcherConf(fct) => self.pending_tasks.push((
                 handler_id,
                 Box::new(GetFetcherConfTask::new_with_option(fct)),
+            )),
+            Request::AddFeedVals(feeds) => self.pending_tasks.push((
+                handler_id,
+                Box::new(AddFeedValsTask::new_with_feed_vals(feeds)),
             )),
             Request::AddChannelVals(channels) => self.pending_tasks.push((
                 handler_id,
@@ -346,7 +373,7 @@ impl Agent for Repo {
             )),
             Request::GetChannels => self
                 .pending_tasks
-                .push((handler_id, Box::new(GetChannelsTask::new()))),
+                .push((handler_id, Box::new(GetAllTask::new(Kind::Channel)))),
             Request::GetEnclosure(id) => self
                 .pending_tasks
                 .push((handler_id, Box::new(GetEnclosureTask::new_with_id(id)))),

@@ -1,4 +1,6 @@
 pub mod channel_list;
+pub mod feed_list;
+pub mod feed_new;
 pub mod icon;
 pub mod item_list;
 pub mod nav_bar;

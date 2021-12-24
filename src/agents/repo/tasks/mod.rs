@@ -1,7 +1,8 @@
 pub mod add_channel_vals;
 pub mod add_enclosure;
+pub mod add_feed_vals;
 pub mod add_item_vals;
-pub mod get_channels;
+pub mod get_all;
 pub mod get_enclosure;
 pub mod get_fetcher_conf;
 pub mod get_items_by_channel_id_year_month;

@@ -1,4 +1,6 @@
-use crate::pages::{channels_page::ChannelsPage, home_page::HomePage, items_page::ItemsPage};
+use crate::pages::{
+    channels_page::ChannelsPage, feeds_page::FeedsPage, home_page::HomePage, items_page::ItemsPage,
+};
 use uuid::Uuid;
 use yew::{prelude::*, virtual_dom::VNode};
 use yew_router::Switch;
@@ -9,6 +11,8 @@ pub enum AppRoute {
     ItemsPage { channel_id: Uuid },
     #[to = "/channels"]
     ChannelsPage,
+    #[to = "/feeds"]
+    FeedsPage,
     #[to = "/"]
     Home,
 }
@@ -27,6 +31,7 @@ impl Component for Router {
                     match switch {
                         AppRoute::Home => html!{<HomePage/>},
                         AppRoute::ChannelsPage => html!{<ChannelsPage/>},
+                        AppRoute::FeedsPage => html!{<FeedsPage/>},
                         AppRoute::ItemsPage{channel_id} => html!{<ItemsPage channel_id={channel_id}/>},
                     }
                 })

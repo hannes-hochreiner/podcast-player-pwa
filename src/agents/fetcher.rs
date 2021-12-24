@@ -5,7 +5,7 @@ use crate::objects::{
 
 use super::repo;
 use anyhow::Result;
-use chrono::{DateTime, Duration, FixedOffset, Utc};
+use chrono::{Duration, Utc};
 use js_sys::ArrayBuffer;
 use serde::de::DeserializeOwned;
 use sha2::{Digest, Sha256};
@@ -20,6 +20,7 @@ use yewtil::future::LinkFuture;
 pub enum Request {
     FetchText(Uuid, String),
     FetchBinary(Uuid, String),
+    PostString(Uuid, String, String),
 }
 
 pub enum Response {
@@ -45,6 +46,7 @@ pub struct Fetcher {
 enum HttpMethod {
     Get,
     Post,
+    Put,
 }
 
 impl Agent for Fetcher {
@@ -141,7 +143,7 @@ impl Agent for Fetcher {
                                                 .append_pair("audience", &fc.config.audience)
                                                 .append_pair(
                                                     "scope",
-                                                    "openid profile read:channels read:items",
+                                                    "openid profile read:channels read:items read:feeds write:feeds",
                                                 )
                                                 .append_pair("response_type", "code")
                                                 .append_pair("client_id", &fc.config.client_id)
@@ -226,6 +228,15 @@ impl Agent for Fetcher {
                             )
                         });
                     }
+                    Request::PostString(uuid, url, body) => {
+                        self.link.send_future(async move {
+                            Message::ReceiveText(
+                                id,
+                                uuid,
+                                fetch_text(&url, HttpMethod::Post, Some(headers), Some(body)).await,
+                            )
+                        });
+                    }
                 }
             }
         }
@@ -251,6 +262,7 @@ async fn fetch(
     match method {
         HttpMethod::Get => opts.method("GET"),
         HttpMethod::Post => opts.method("POST"),
+        HttpMethod::Put => opts.method("PUT"),
     };
 
     if let Some(headers) = headers {
