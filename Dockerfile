@@ -9,8 +9,6 @@ COPY index.html /opt/podcast-player/index.html
 COPY Cargo.* /opt/podcast-player/
 RUN source $HOME/.cargo/env && cd /opt/podcast-player && trunk build --release
 
-FROM h0h4/pwa-server:v1.0.1
+FROM h0h4/pwa-server:v1.1.0
 MAINTAINER Hannes Hochreiner <hannes@hochreiner.net>
 COPY --from=builder /opt/podcast-player/dist /opt/podcast-player/dist
-ENV ROOT_DIR=/opt/podcast-player/dist
-ENV ROCKET_ADDRESS=0.0.0.0
