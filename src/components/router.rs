@@ -1,7 +1,4 @@
-use crate::pages::{
-    channels_page::ChannelsPage, feeds_page::FeedsPage, home_page::HomePage, info_page::InfoPage,
-    items_page::ItemsPage,
-};
+use crate::pages::*;
 use uuid::Uuid;
 use yew::{prelude::*, Html};
 use yew_router::prelude::*;
