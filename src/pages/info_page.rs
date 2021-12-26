@@ -96,7 +96,7 @@ impl Component for InfoPage {
         });
         ctx.link().send_future(async move {
             let storage_manager = web_sys::window().unwrap().navigator().storage();
-            Message::GetPersisted(JsFuture::from(storage_manager.persist().unwrap()).await)
+            Message::GetPersist(JsFuture::from(storage_manager.persist().unwrap()).await)
         });
 
         Self { estimate: None }
@@ -112,11 +112,11 @@ impl Component for InfoPage {
                 }
             }
             Message::GetPersisted(res) => {
-                log::info!("{:?}", res);
+                log::info!("persisted: {:?}", res);
                 false
             }
             Message::GetPersist(res) => {
-                log::info!("{:?}", res);
+                log::info!("persist: {:?}", res);
                 false
             }
         }
