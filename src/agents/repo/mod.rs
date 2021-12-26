@@ -4,12 +4,7 @@ use crate::objects::*;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
-use tasks::{
-    add_channel_vals::*, add_enclosure::*, add_feed_vals::*, add_item_vals::*, get_all::*,
-    get_enclosure::*, get_fetcher_conf::*, get_items_by_channel_id_year_month::*,
-    get_items_by_download_ok::*, get_items_by_download_required::*, update_channel::*,
-    update_item::*,
-};
+use tasks::*;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
