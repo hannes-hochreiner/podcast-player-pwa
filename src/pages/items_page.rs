@@ -1,4 +1,4 @@
-use crate::components::{item_list::ItemList, nav_bar::NavBar};
+use crate::components::{ItemList, NavBar};
 use uuid::Uuid;
 use yew::{prelude::*, Html, Properties};
 

@@ -1,4 +1,4 @@
-use crate::{components::nav_bar::NavBar, objects::JsError};
+use crate::{components::NavBar, objects::JsError};
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;

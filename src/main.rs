@@ -3,7 +3,7 @@ mod components;
 mod objects;
 mod pages;
 
-use components::top::Top;
+use components::Top;
 #[allow(unused_imports)]
 use wasm_bindgen::prelude::*;
 #[allow(unused_imports)]

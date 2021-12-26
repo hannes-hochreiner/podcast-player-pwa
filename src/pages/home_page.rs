@@ -1,4 +1,4 @@
-use crate::components::{nav_bar::NavBar, player::Player};
+use crate::components::{NavBar, Player};
 use yew::{prelude::*, Html};
 
 pub struct HomePage {}

@@ -1,4 +1,4 @@
-use crate::components::{channel_list::ChannelList, nav_bar::NavBar};
+use crate::components::{ChannelList, NavBar};
 use yew::{prelude::*, Html};
 
 pub struct ChannelsPage {}
