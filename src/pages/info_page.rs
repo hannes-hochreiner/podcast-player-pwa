@@ -54,8 +54,8 @@ impl InfoPage {
             Some(estimate) => html! {
                 <section class="section">
                     <div class="title">{"Storage Information"}</div>
-                    <p>{"quota/usage"}</p>
-                    <p>{format!("{}/{}", estimate.quota, estimate.usage)}</p>
+                    <p>{"usage/quota"}</p>
+                    <p>{format!("{} MB/{} MB ({:.0}%)", estimate.usage/1024/1024, estimate.quota/1024/1024, (estimate.usage as f64/estimate.quota as f64)*100.0 )}</p>
                 </section>
             },
             None => html! {},
