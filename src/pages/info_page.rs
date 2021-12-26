@@ -1,4 +1,4 @@
-use crate::components::nav_bar::NavBar;
+use crate::{components::nav_bar::NavBar, objects::JsError};
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;
@@ -7,11 +7,15 @@ use yew::prelude::*;
 
 pub struct InfoPage {
     estimate: Option<Estimate>,
+    notifications: Vec<Notification>,
+    connection_type: Option<ConnectionType>,
+    current_notification: Option<Notification>,
 }
 pub enum Message {
     GetEstimate(Result<JsValue, JsValue>),
     GetPersisted(Result<JsValue, JsValue>),
     GetPersist(Result<JsValue, JsValue>),
+    AddNotification(Notification),
 }
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {}
@@ -22,28 +26,59 @@ struct Estimate {
     usage: u32,
 }
 
-impl InfoPage {
-    fn view_network_info(&self, _ctx: &Context<Self>) -> Html {
-        let conn_type = web_sys::window()
-            .unwrap()
-            .navigator()
-            .connection()
-            .unwrap()
-            .type_();
+pub enum NotificationSeverity {
+    Error,
+    Info,
+}
 
+pub struct Notification {
+    text: String,
+    severity: NotificationSeverity,
+}
+
+impl InfoPage {
+    fn view_notifications(&self, _ctx: &Context<Self>) -> Html {
+        match &self.current_notification {
+            Some(notification) => html! {
+                <article class={classes!(format!("message {}", match notification.severity {
+                    NotificationSeverity::Error => "is-danger",
+                    NotificationSeverity::Info => "is-primary"
+                }))}>
+                    <div class="message-header">
+                        <p>{match notification.severity {
+                            NotificationSeverity::Error => "Error",
+                            NotificationSeverity::Info => "Information"
+                        }}</p>
+                        <button class="delete" aria-label="delete"></button>
+                    </div>
+                    <div class="message-body">
+                        {notification.text.clone()}
+                    </div>
+                </article>
+            },
+            None => html! {},
+        }
+    }
+
+    fn view_network_info(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <section class="section">
                 <div class="title">{"Connection Information"}</div>
                 <p>{"Connection Type"}</p>
-                <p>{match conn_type {
-                    ConnectionType::Wifi=>"Wifi",
-                    ConnectionType::Cellular => "Cellular",
-                    ConnectionType::Bluetooth => "Bluetooth",
-                    ConnectionType::Ethernet => "Ethernet",
-                    ConnectionType::Other => "Other",
-                    ConnectionType::None => "None",
-                    ConnectionType::Unknown => "Unknown",
-                    ConnectionType::__Nonexhaustive => "Future", }}
+                <p>{match &self.connection_type {
+                    Some(connection_type) => match connection_type {
+                        ConnectionType::Wifi=>"Wifi",
+                        ConnectionType::Cellular => "Cellular",
+                        ConnectionType::Bluetooth => "Bluetooth",
+                        ConnectionType::Ethernet => "Ethernet",
+                        ConnectionType::Other => "Other",
+                        ConnectionType::None => "None",
+                        ConnectionType::Unknown => "Unknown",
+                        ConnectionType::__Nonexhaustive => "Future",
+                    }
+                    None => "connection type could not be obtained"
+                    }
+                }
                 </p>
             </section>
         }
@@ -62,10 +97,9 @@ impl InfoPage {
         }
     }
 
-    fn process_estimate(&mut self, res: Result<JsValue, JsValue>) -> anyhow::Result<()> {
-        let val = res.map_err(|e| anyhow::anyhow!("error getting estimate: {:?}", e))?;
-        let est = serde_wasm_bindgen::from_value::<Estimate>(val)
-            .map_err(|e| anyhow::anyhow!("error converting estimate: {:?}", e))?;
+    fn process_estimate(&mut self, res: Result<JsValue, JsValue>) -> Result<(), JsError> {
+        let val = res?;
+        let est = serde_wasm_bindgen::from_value::<Estimate>(val)?;
         self.estimate = Some(est);
         Ok(())
     }
@@ -79,6 +113,7 @@ impl Component for InfoPage {
         html! {
             <>
                 <NavBar/>
+                { self.view_notifications(ctx) }
                 { self.view_network_info(ctx) }
                 { self.view_storage_info(ctx) }
             </>
@@ -99,7 +134,22 @@ impl Component for InfoPage {
             Message::GetPersist(JsFuture::from(storage_manager.persist().unwrap()).await)
         });
 
-        Self { estimate: None }
+        Self {
+            estimate: None,
+            notifications: Vec::new(),
+            connection_type: match obtain_connection_type() {
+                Ok(ct) => Some(ct),
+                Err(e) => {
+                    ctx.link()
+                        .send_message(Message::AddNotification(Notification {
+                            severity: NotificationSeverity::Error,
+                            text: e.description,
+                        }));
+                    None
+                }
+            },
+            current_notification: None,
+        }
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
@@ -119,6 +169,25 @@ impl Component for InfoPage {
                 log::info!("persist: {:?}", res);
                 false
             }
+            Message::AddNotification(notification) => {
+                self.notifications.push(notification);
+
+                if self.current_notification.is_none() {
+                    self.current_notification =
+                        Some(self.notifications.remove(self.notifications.len() - 1));
+                    true
+                } else {
+                    false
+                }
+            }
         }
     }
+}
+
+fn obtain_connection_type() -> Result<ConnectionType, JsError> {
+    Ok(web_sys::window()
+        .ok_or("error getting window")?
+        .navigator()
+        .connection()?
+        .type_())
 }
