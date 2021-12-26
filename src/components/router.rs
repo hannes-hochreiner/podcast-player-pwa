@@ -1,5 +1,6 @@
 use crate::pages::{
-    channels_page::ChannelsPage, feeds_page::FeedsPage, home_page::HomePage, items_page::ItemsPage,
+    channels_page::ChannelsPage, feeds_page::FeedsPage, home_page::HomePage, info_page::InfoPage,
+    items_page::ItemsPage,
 };
 use uuid::Uuid;
 use yew::{prelude::*, Html};
@@ -13,6 +14,8 @@ pub enum AppRoute {
     ChannelsPage,
     #[at("/feeds")]
     FeedsPage,
+    #[at("/info")]
+    InfoPage,
     #[at("/")]
     Home,
 }
@@ -44,6 +47,7 @@ fn switch(routes: &AppRoute) -> Html {
         AppRoute::Home => html! {<HomePage/>},
         AppRoute::ChannelsPage => html! {<ChannelsPage/>},
         AppRoute::FeedsPage => html! {<FeedsPage/>},
+        AppRoute::InfoPage => html! {<InfoPage/>},
         AppRoute::ItemsPage { channel_id } => html! {<ItemsPage channel_id={channel_id}/>},
     }
 }
