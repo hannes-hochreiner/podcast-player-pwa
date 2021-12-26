@@ -5,10 +5,10 @@ use crate::objects::channel::Channel;
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;
-use yew_router::prelude::RouterAnchor;
+use yew_agent::{Bridge, Bridged};
+use yew_router::prelude::*;
 
 pub struct ChannelList {
-    link: ComponentLink<Self>,
     channels: Option<Vec<Channel>>,
     error: Option<Error>,
     repo: Box<dyn Bridge<Repo>>,
@@ -22,7 +22,7 @@ pub enum Message {
 }
 
 impl ChannelList {
-    fn view_channel_list(&self) -> Html {
+    fn view_channel_list(&self, ctx: &Context<Self>) -> Html {
         match &self.channels {
             Some(channels) => {
                 let channels: Vec<&Channel> = match self.show_all {
@@ -39,14 +39,14 @@ impl ChannelList {
                                         html! {
                                             <>
                                                 <li class="is-active"><a><span>{"Active"}</span></a></li>
-                                                <li><a onclick={self.link.callback(move |_| Message::SetShowAll(true))}><span>{"All"}</span></a></li>
+                                                <li><a onclick={ctx.link().callback(move |_| Message::SetShowAll(true))}><span>{"All"}</span></a></li>
                                             </>
                                         }
                                     },
                                     true => {
                                         html! {
                                             <>
-                                                <li><a onclick={self.link.callback(move |_| Message::SetShowAll(false))}><span>{"Active"}</span></a></li>
+                                                <li><a onclick={ctx.link().callback(move |_| Message::SetShowAll(false))}><span>{"Active"}</span></a></li>
                                                 <li class="is-active"><a><span>{"All"}</span></a></li>
                                             </>
                                         }
@@ -56,7 +56,7 @@ impl ChannelList {
                         </div>
                         <div class="columns"><div class="column">
                             { channels.iter().map(|channel| match self.show_all {
-                                true => self.view_show_all_channel(channel),
+                                true => self.view_show_all_channel(ctx, channel),
                                 false => self.view_show_selected_channel(channel)
                             }).collect::<Html>() }
                         </div></div>
@@ -68,17 +68,17 @@ impl ChannelList {
     }
 
     fn view_show_selected_channel(&self, channel: &Channel) -> Html {
-        html! { <RouterAnchor<AppRoute> classes={"navbar-item, card"} route={AppRoute::ItemsPage{channel_id: channel.val.id}}>
+        html! { <Link<AppRoute> classes={"navbar-item, card"} to={AppRoute::ItemsPage{channel_id: channel.val.id}}>
             <div class="card-content">
                 <div class="media">
                     <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
                     <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
                 </div>
             </div>
-        </RouterAnchor<AppRoute>> }
+        </Link<AppRoute>> }
     }
 
-    fn view_show_all_channel(&self, channel: &Channel) -> Html {
+    fn view_show_all_channel(&self, ctx: &Context<Self>, channel: &Channel) -> Html {
         let state = channel.meta.active;
         let channel_id = channel.val.id.clone();
 
@@ -89,8 +89,8 @@ impl ChannelList {
                     <div class="media-content">
                         <p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p>
                         {match state {
-                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::SetActive(channel_id, false))}><Icon name="check" style={IconStyle::Outlined}/></button>),
-                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::SetActive(channel_id, true))}><Icon name="check" style={IconStyle::Outlined}/></button>)
+                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, false))}><Icon name="check" style={IconStyle::Outlined}/></button>),
+                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, true))}><Icon name="check" style={IconStyle::Outlined}/></button>)
                         }}
                     </div>
                 </div>
@@ -118,14 +118,13 @@ impl Component for ChannelList {
     type Message = Message;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let cb = link.callback(Message::RepoMessage);
+    fn create(ctx: &Context<Self>) -> Self {
+        let cb = ctx.link().callback(Message::RepoMessage);
         let mut repo = Repo::bridge(cb);
 
         repo.send(RepoRequest::GetChannels);
 
         Self {
-            link: link,
             channels: None,
             error: None,
             repo,
@@ -133,7 +132,7 @@ impl Component for ChannelList {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::RepoMessage(response) => match response {
                 RepoResponse::Channels(res) => {
@@ -166,15 +165,11 @@ impl Component for ChannelList {
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        false
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <>
                 { self.view_fetching() }
-                { self.view_channel_list() }
+                { self.view_channel_list(ctx) }
                 { self.view_error() }
             </>
         }

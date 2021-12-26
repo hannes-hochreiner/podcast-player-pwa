@@ -4,14 +4,13 @@ use crate::objects::{channel::Channel, item::DownloadStatus, item::Item};
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;
+use yew_agent::{Bridge, Bridged};
 
 pub struct ItemList {
-    link: ComponentLink<Self>,
     items: Option<Vec<Item>>,
     error: Option<Error>,
     repo: Box<dyn Bridge<Repo>>,
     channel: Option<Channel>,
-    channel_id: Uuid,
     keys: Option<Vec<String>>,
     current_index: Option<usize>,
 }
@@ -29,7 +28,7 @@ pub struct Props {
 }
 
 impl ItemList {
-    fn view_item_list(&self) -> Html {
+    fn view_item_list(&self, ctx: &Context<Self>) -> Html {
         match &self.items {
             Some(items) => {
                 html! {
@@ -43,18 +42,18 @@ impl ItemList {
                                     <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}{&i.get_id()}</p>
                                     <p class="buttons">
                                         {match i.get_new() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
+                                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
+                                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
                                         }}
                                         {match i.get_download() {
-                                            true => html!(<button class="button is-primary" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
+                                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
                                                 DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
                                                 DownloadStatus::Ok(_) => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
                                                 DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
                                                 DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
                                                 _ => html!{<span>{"download"}</span>}
                                             }}</button>),
-                                            false => html!(<button class="button" onclick={self.link.callback(move |_| Message::ToggleDownload(id))}><Icon name="cloud_download" style={IconStyle::Outlined}/><span>{"download"}</span></button>)
+                                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}><Icon name="cloud_download" style={IconStyle::Outlined}/><span>{"download"}</span></button>)
                                         }}
                                     </p>
                                 </div>
@@ -67,7 +66,7 @@ impl ItemList {
         }
     }
 
-    fn view_pagination(&self) -> Html {
+    fn view_pagination(&self, ctx: &Context<Self>) -> Html {
         match (&self.keys, &self.current_index) {
             (Some(keys), Some(current_index)) => {
                 let mut ellopsis_drawn = false;
@@ -76,7 +75,7 @@ impl ItemList {
                 {
                     if *current_index != 0 {
                         let new_index = current_index - 1;
-                        html!(<a class="pagination-previous" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}>{"<"}</a>)
+                        html!(<a class="pagination-previous" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(new_index))}>{"<"}</a>)
                     } else {
                         html!()
                     }
@@ -84,7 +83,7 @@ impl ItemList {
                 {
                     if *current_index != keys.len()-1 {
                         let new_index = current_index + 1;
-                        html!(<a class="pagination-next" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(new_index))}>{">"}</a>)
+                        html!(<a class="pagination-next" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(new_index))}>{">"}</a>)
                     } else {
                         html!()
                     }
@@ -93,14 +92,14 @@ impl ItemList {
                 { keys.iter().enumerate().map(|(idx, key)| {
                     if idx == 0 {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(key, &keys[*current_index], idx)
+                        self.view_pagination_element(ctx,key, &keys[*current_index], idx)
                     }
                     else if idx == keys.len() -1 {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(key, &keys[*current_index], idx)
+                        self.view_pagination_element(ctx, key, &keys[*current_index], idx)
                     } else if idx == *current_index {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(key, &keys[*current_index], idx)
+                        self.view_pagination_element(ctx,key, &keys[*current_index], idx)
                     } else {
                         match ellopsis_drawn {
                             true =>  html!(),
@@ -118,11 +117,17 @@ impl ItemList {
         }
     }
 
-    fn view_pagination_element(&self, key: &String, current_key: &String, index: usize) -> Html {
+    fn view_pagination_element(
+        &self,
+        ctx: &Context<Self>,
+        key: &String,
+        current_key: &String,
+        index: usize,
+    ) -> Html {
         if key == current_key {
             html!(<li><a class="pagination-link is-current">{key}</a></li>)
         } else {
-            html!(<li><a class="pagination-link" onclick={self.link.callback(move |_| Message::UpdateCurrentIndex(index))}>{key}</a></li>)
+            html!(<li><a class="pagination-link" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(index))}>{key}</a></li>)
         }
     }
 
@@ -146,33 +151,33 @@ impl Component for ItemList {
     type Message = Message;
     type Properties = Props;
 
-    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let cb = link.callback(Message::RepoMessage);
+    fn create(ctx: &Context<Self>) -> Self {
+        let cb = ctx.link().callback(Message::RepoMessage);
         let mut repo = Repo::bridge(cb);
 
         repo.send(RepoRequest::GetChannels);
 
         Self {
-            link,
             items: None,
             error: None,
             channel: None,
             repo,
-            channel_id: props.channel_id,
             current_index: None,
             keys: None,
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::UpdateCurrentIndex(idx) => {
-                self.current_index = Some(idx);
-                self.items = None;
-                self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                    self.channel_id,
-                    self.keys.as_ref().unwrap()[idx].clone(),
-                ));
+                if let Some(channel) = &self.channel {
+                    self.current_index = Some(idx);
+                    self.items = None;
+                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                        channel.val.id,
+                        self.keys.as_ref().unwrap()[idx].clone(),
+                    ));
+                }
                 false
             }
             Message::ToggleNew(id) => match &self.items {
@@ -197,27 +202,30 @@ impl Component for ItemList {
             },
             Message::RepoMessage(resp) => match resp {
                 RepoResponse::Channels(res) => {
-                    let channel = res
-                        .iter()
-                        .find(|e| e.val.id == self.channel_id)
-                        .unwrap()
-                        .clone();
-                    let mut keys: Vec<String> = channel
-                        .keys
-                        .year_month_keys
-                        .iter()
-                        .map(|e| e.clone())
-                        .collect();
-                    keys.sort_by(|a, b| b.partial_cmp(a).unwrap());
+                    if let Some(channel) = &self.channel {
+                        let channel_id = channel.val.id.clone();
+                        let channel = res
+                            .iter()
+                            .find(|e| e.val.id == channel_id.clone())
+                            .unwrap()
+                            .clone();
+                        let mut keys: Vec<String> = channel
+                            .keys
+                            .year_month_keys
+                            .iter()
+                            .map(|e| e.clone())
+                            .collect();
+                        keys.sort_by(|a, b| b.partial_cmp(a).unwrap());
 
-                    self.current_index = Some(0);
-                    self.keys = Some(keys);
+                        self.current_index = Some(0);
+                        self.keys = Some(keys);
 
-                    self.channel = Some(channel);
-                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        self.channel_id,
-                        self.keys.as_ref().unwrap()[0].clone(),
-                    ));
+                        self.channel = Some(channel);
+                        self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                            channel_id,
+                            self.keys.as_ref().unwrap()[0].clone(),
+                        ));
+                    }
                     false
                 }
                 RepoResponse::Items(mut res) => {
@@ -248,16 +256,12 @@ impl Component for ItemList {
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        false
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <>
-                { self.view_pagination() }
+                { self.view_pagination(ctx) }
                 { self.view_fetching() }
-                { self.view_item_list() }
+                { self.view_item_list(ctx) }
                 { self.view_error() }
             </>
         }

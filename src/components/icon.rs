@@ -1,18 +1,15 @@
 use yew::prelude::*;
 
-pub struct Icon {
-    name: String,
-    style: IconStyle,
-}
+pub struct Icon {}
 pub enum Message {}
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum IconStyle {
     Filled,
     Outlined,
 }
 
-#[derive(Clone, yew::Properties)]
+#[derive(Clone, yew::Properties, PartialEq)]
 pub struct IconProperties {
     pub name: String,
     pub style: IconStyle,
@@ -22,31 +19,22 @@ impl Component for Icon {
     type Message = Message;
     type Properties = IconProperties;
 
-    fn view(&self) -> Html {
-        match &self.style {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        match &ctx.props().style {
             &IconStyle::Filled => {
-                html! {<span class="icon"><span class="material-icons">{&self.name}</span></span>}
+                html! {<span class="icon"><span class="material-icons">{ctx.props().name.clone()}</span></span>}
             }
             &IconStyle::Outlined => {
-                html! {<span class="icon"><span class="material-icons-outlined">{&self.name}</span></span>}
+                html! {<span class="icon"><span class="material-icons-outlined">{ctx.props().name.clone()}</span></span>}
             }
         }
     }
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self {
-            name: props.name,
-            style: props.style,
-        }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.name = props.name;
-        self.style = props.style;
-        true
     }
 }

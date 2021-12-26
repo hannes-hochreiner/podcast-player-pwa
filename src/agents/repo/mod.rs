@@ -14,7 +14,7 @@ use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{IdbDatabase, IdbIndexParameters, IdbRequest, IdbTransaction, IdbTransactionMode};
-use yew::worker::*;
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {

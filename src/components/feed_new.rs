@@ -2,9 +2,9 @@ use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse
 use crate::objects::feed::Feed;
 use anyhow::Error;
 use yew::prelude::*;
+use yew_agent::{Bridge, Bridged};
 
 pub struct FeedNew {
-    link: ComponentLink<Self>,
     feeds: Option<Vec<Feed>>,
     error: Option<Error>,
     repo: Box<dyn Bridge<Repo>>,
@@ -17,12 +17,12 @@ pub enum Message {
 }
 
 impl FeedNew {
-    fn view_channel_list(&self) -> Html {
+    fn view_channel_list(&self, ctx: &Context<Self>) -> Html {
         html! {
             <section class="section">
                 <div class="columns">
-                    <div class="column"><input class="input" ref=self.input_ref.clone() type="text" placeholder="feed url"/></div>
-                    <div class="column"><button class="button" onclick=self.link.callback(|_| Message::Submit)>{"submit"}</button></div>
+                    <div class="column"><input class="input" ref={self.input_ref.clone()} type="text" placeholder="feed url"/></div>
+                    <div class="column"><button class="button" onclick={ctx.link().callback(|_| Message::Submit)}>{"submit"}</button></div>
                 </div>
             </section>
         }
@@ -40,14 +40,13 @@ impl Component for FeedNew {
     type Message = Message;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let cb = link.callback(Message::RepoMessage);
+    fn create(ctx: &Context<Self>) -> Self {
+        let cb = ctx.link().callback(Message::RepoMessage);
         let mut repo = Repo::bridge(cb);
 
         repo.send(RepoRequest::GetFeeds);
 
         Self {
-            link: link,
             feeds: None,
             error: None,
             repo,
@@ -55,7 +54,7 @@ impl Component for FeedNew {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::RepoMessage(response) => match response {
                 RepoResponse::Feeds(res) => {
@@ -78,14 +77,10 @@ impl Component for FeedNew {
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        false
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <>
-                { self.view_channel_list() }
+                { self.view_channel_list(ctx) }
                 { self.view_error() }
             </>
         }

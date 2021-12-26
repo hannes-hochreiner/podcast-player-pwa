@@ -1,5 +1,5 @@
 use crate::components::{nav_bar::NavBar, player::Player};
-use yew::{prelude::*, virtual_dom::VNode};
+use yew::{prelude::*, Html};
 
 pub struct HomePage {}
 pub enum Message {}
@@ -8,7 +8,7 @@ impl Component for HomePage {
     type Message = Message;
     type Properties = ();
 
-    fn view(&self) -> VNode {
+    fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <>
                 <NavBar/>
@@ -17,15 +17,11 @@ impl Component for HomePage {
         }
     }
 
-    fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(_ctx: &Context<Self>) -> Self {
         Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         false
     }
 }

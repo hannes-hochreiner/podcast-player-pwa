@@ -1,6 +1,8 @@
 use super::router::Router;
 use crate::agents::{player, updater};
 use yew::{prelude::*, Component};
+use yew_agent::{Bridge, Bridged};
+use yew_router::BrowserRouter;
 
 pub struct Top {
     _updater: Box<dyn Bridge<updater::Updater>>,
@@ -15,9 +17,9 @@ impl Component for Top {
     type Message = Message;
     type Properties = ();
 
-    fn create(_props: Self::Properties, link: yew::ComponentLink<Self>) -> Self {
-        let updater_cb = link.callback(Message::UpdaterMessage);
-        let player_cb = link.callback(Message::PlayerMessage);
+    fn create(ctx: &Context<Self>) -> Self {
+        let updater_cb = ctx.link().callback(Message::UpdaterMessage);
+        let player_cb = ctx.link().callback(Message::PlayerMessage);
 
         Self {
             _updater: updater::Updater::bridge(updater_cb),
@@ -25,20 +27,18 @@ impl Component for Top {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> yew::ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::UpdaterMessage(_resp) => false,
             Message::PlayerMessage(_resp) => false,
         }
     }
 
-    fn change(&mut self, _props: Self::Properties) -> yew::ShouldRender {
-        todo!()
-    }
-
-    fn view(&self) -> yew::Html {
+    fn view(&self, _ctx: &Context<Self>) -> yew::Html {
         html! {
-            <Router/>
+            <BrowserRouter>
+                <Router/>
+            </BrowserRouter>
         }
     }
 }

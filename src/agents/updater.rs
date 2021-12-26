@@ -4,7 +4,7 @@ use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::ConnectionType;
-use yew::worker::*;
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
 
 use crate::objects::{channel::ChannelVal, feed::FeedVal, item::DownloadStatus, item::ItemVal};
 

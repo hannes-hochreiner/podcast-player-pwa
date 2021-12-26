@@ -14,8 +14,7 @@ use url::Url;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
-use yew::worker::*;
-use yewtil::future::LinkFuture;
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
 
 pub enum Request {
     FetchText(Uuid, String),
@@ -46,7 +45,6 @@ pub struct Fetcher {
 enum HttpMethod {
     Get,
     Post,
-    Put,
 }
 
 impl Agent for Fetcher {
@@ -262,7 +260,6 @@ async fn fetch(
     match method {
         HttpMethod::Get => opts.method("GET"),
         HttpMethod::Post => opts.method("POST"),
-        HttpMethod::Put => opts.method("PUT"),
     };
 
     if let Some(headers) = headers {
@@ -280,7 +277,7 @@ async fn fetch(
     }
 
     let request = web_sys::Request::new_with_str_and_init(url, &opts)?;
-    let window = yew::utils::window();
+    let window = web_sys::window().unwrap();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
     let resp: web_sys::Response = resp_value.dyn_into().unwrap();
 

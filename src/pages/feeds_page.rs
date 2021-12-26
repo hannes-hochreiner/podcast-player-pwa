@@ -1,5 +1,5 @@
 use crate::components::{feed_list::FeedList, feed_new::FeedNew, nav_bar::NavBar};
-use yew::{prelude::*, virtual_dom::VNode};
+use yew::{prelude::*, Html};
 
 pub struct FeedsPage {}
 pub enum Message {}
@@ -8,7 +8,7 @@ impl Component for FeedsPage {
     type Message = Message;
     type Properties = ();
 
-    fn view(&self) -> VNode {
+    fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <>
                 <NavBar/>
@@ -18,15 +18,11 @@ impl Component for FeedsPage {
         }
     }
 
-    fn create(_props: Self::Properties, _link: ComponentLink<Self>) -> Self {
+    fn create(_ctx: &Context<Self>) -> Self {
         Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         false
     }
 }

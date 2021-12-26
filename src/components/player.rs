@@ -6,12 +6,14 @@ use crate::{
     objects::item::Item,
 };
 use uuid::Uuid;
-use yew::{prelude::*, virtual_dom::VNode};
+use wasm_bindgen::JsCast;
+use web_sys::HtmlInputElement;
+use yew::prelude::*;
+use yew_agent::{Bridge, Bridged};
 
 pub struct Player {
     repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
-    link: ComponentLink<Self>,
     items: Option<HashMap<Uuid, Item>>,
     playing: Option<Uuid>,
     current_time: Option<f64>,
@@ -24,13 +26,13 @@ pub enum Message {
     PlayerMessage(player::Response),
     Play(Uuid),
     Pause,
-    TimeChange(ChangeData),
-    VolumeChange(ChangeData),
-    PlaybackRateChange(ChangeData),
+    TimeChange(Event),
+    VolumeChange(Event),
+    PlaybackRateChange(Event),
 }
 
 impl Player {
-    fn view_item_list(&self) -> Html {
+    fn view_item_list(&self, ctx: &Context<Self>) -> Html {
         match &self.items {
             Some(items) => html!(html! {
                 <section class="section">
@@ -40,7 +42,7 @@ impl Player {
                             html! { <div class="card">
                             <header class="card-header">
                                 <p class="card-header-title">{&i.get_title()}</p>
-                                <button class="card-header-icon" aria-label="play" onclick={self.link.callback(move |_| Message::Play(id))}>
+                                <button class="card-header-icon" aria-label="play" onclick={ctx.link().callback(move |_| Message::Play(id))}>
                                     <Icon name="play_arrow" style={IconStyle::Outlined}/>
                                 </button>
                             </header>
@@ -61,7 +63,7 @@ impl Component for Player {
     type Message = Message;
     type Properties = ();
 
-    fn view(&self) -> VNode {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <>
             <section class="section">
@@ -79,7 +81,7 @@ impl Component for Player {
                             <div class="tile is-vertical">
                                 <div class="tile is-parent">
                                     <div class="tile is-child is-1">
-                                        <button class="button" onclick={self.link.callback(move |_| Message::Pause)}>
+                                        <button class="button" onclick={ctx.link().callback(move |_| Message::Pause)}>
                                             <Icon name="pause" style={IconStyle::Outlined}/>
                                         </button>
                                     </div>
@@ -87,7 +89,7 @@ impl Component for Player {
                                         {self.format_time(current_time)}
                                     </div>
                                     <div class="tile is-child">
-                                        <input type="range" min="0" value=current_time.to_string() max=duration.to_string() style="width: 100%" onchange={self.link.callback(|e| Message::TimeChange(e))}/>
+                                        <input type="range" min="0" value={current_time.to_string()} max={duration.to_string()} style="width: 100%" onchange={ctx.link().callback(|e| Message::TimeChange(e))}/>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         {self.format_time(duration)}
@@ -98,7 +100,7 @@ impl Component for Player {
                                         <Icon name="volume_down" style={IconStyle::Outlined}/>
                                     </div>
                                     <div class="tile is-child">
-                                        <input type="range" min="0" step="0.05" value=volume.to_string() max="1.0" style="width: 100%" onchange={self.link.callback(|e| Message::VolumeChange(e))}/>
+                                        <input type="range" min="0" step="0.05" value={volume.to_string()} max="1.0" style="width: 100%" onchange={ctx.link().callback(|e| Message::VolumeChange(e))}/>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         <Icon name="volume_up" style={IconStyle::Outlined}/>
@@ -109,7 +111,7 @@ impl Component for Player {
                                         <Icon name="play_arrow" style={IconStyle::Outlined}/>
                                     </div>
                                     <div class="tile is-child">
-                                        <input type="range" min="0.5" step="0.05" value=playback_rate.to_string() max="2.5" style="width: 100%" onchange={self.link.callback(|e| Message::PlaybackRateChange(e))}/>
+                                        <input type="range" min="0.5" step="0.05" value={playback_rate.to_string()} max="2.5" style="width: 100%" onchange={ctx.link().callback(|e| Message::PlaybackRateChange(e))}/>
                                     </div>
                                     <div class="tile is-child is-1" style="text-align: center">
                                         <Icon name="fast_forward" style={IconStyle::Outlined}/>
@@ -124,21 +126,20 @@ impl Component for Player {
                 </div>
             </div>
             </section>
-            {self.view_item_list()}
+            {self.view_item_list(ctx)}
             </>
         }
     }
 
-    fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        let cb = link.callback(Message::RepoMessage);
+    fn create(ctx: &Context<Self>) -> Self {
+        let cb = ctx.link().callback(Message::RepoMessage);
         let mut repo = repo::Repo::bridge(cb);
 
         repo.send(repo::Request::GetItemsByDownloadOk);
 
-        let player = player::Player::bridge(link.callback(Message::PlayerMessage));
+        let player = player::Player::bridge(ctx.link().callback(Message::PlayerMessage));
 
         Self {
-            link,
             repo,
             items: None,
             playing: None,
@@ -150,7 +151,7 @@ impl Component for Player {
         }
     }
 
-    fn update(&mut self, msg: Self::Message) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::RepoMessage(response) => match response {
                 repo::Response::Items(items) => {
@@ -217,37 +218,42 @@ impl Component for Player {
                     true
                 }
             },
-            Message::TimeChange(cd) => match cd {
-                ChangeData::Value(value) => {
-                    let current_time = value.parse().unwrap();
+            Message::TimeChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let current_time = i.value().parse().unwrap();
 
                     self.player
                         .send(player::Request::SetCurrentTime(current_time));
-                    false
                 }
-                _ => false,
-            },
-            Message::VolumeChange(cd) => match cd {
-                ChangeData::Value(value) => {
-                    let volume = value.parse().unwrap();
+                false
+            }
+            Message::VolumeChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let volume = i.value().parse().unwrap();
+
                     self.player.send(player::Request::SetVolume(volume));
-                    false
                 }
-                _ => false,
-            },
-            Message::PlaybackRateChange(cd) => match cd {
-                ChangeData::Value(value) => {
-                    let playback_rate = value.parse().unwrap();
+                false
+            }
+            Message::PlaybackRateChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let playback_rate = i.value().parse().unwrap();
+
                     self.player
                         .send(player::Request::SetPlaybackRate(playback_rate));
-                    false
                 }
-                _ => false,
-            },
+                false
+            }
         }
     }
+}
 
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
-        false
-    }
+fn get_input_element_from_event(ev: Event) -> anyhow::Result<HtmlInputElement> {
+    let target = ev
+        .target()
+        .ok_or(anyhow::anyhow!("could not get target from event"))?;
+
+    target
+        .dyn_into::<HtmlInputElement>()
+        .map_err(|e| anyhow::anyhow!("error casting target to input element: {:?}", e))
 }

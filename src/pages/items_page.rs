@@ -1,10 +1,8 @@
 use crate::components::{item_list::ItemList, nav_bar::NavBar};
 use uuid::Uuid;
-use yew::{prelude::*, virtual_dom::VNode, Properties};
+use yew::{prelude::*, Html, Properties};
 
-pub struct ItemsPage {
-    channel_id: Uuid,
-}
+pub struct ItemsPage {}
 pub enum Message {}
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {
@@ -15,26 +13,20 @@ impl Component for ItemsPage {
     type Message = Message;
     type Properties = Props;
 
-    fn view(&self) -> VNode {
+    fn view(&self, ctx: &Context<Self>) -> Html {
         html! {
             <>
                 <NavBar/>
-                <ItemList channel_id={self.channel_id}/>
+                <ItemList channel_id={ctx.props().channel_id}/>
             </>
         }
     }
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self {
-            channel_id: props.channel_id,
-        }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, _props: Self::Properties) -> ShouldRender {
+    fn update(&mut self, _ctx: &Context<Self>, _msg: Self::Message) -> bool {
         false
     }
 }

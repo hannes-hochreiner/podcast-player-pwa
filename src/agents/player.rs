@@ -3,7 +3,7 @@ use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{self, Event, MediaSource, Url};
-use yew::worker::*;
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
 
 use super::repo;
 
