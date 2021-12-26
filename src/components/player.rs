@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 use crate::{
     agents::{player, repo},
-    objects::item::Item,
+    objects::Item,
 };
 use uuid::Uuid;
 use wasm_bindgen::JsCast;

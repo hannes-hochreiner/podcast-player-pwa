@@ -1,5 +1,7 @@
-use crate::objects::item::Item;
-use crate::{agents::repo, objects::item::DownloadStatus};
+use crate::{
+    agents::repo,
+    objects::{DownloadStatus, Item},
+};
 use anyhow::{anyhow, Result};
 use js_sys::ArrayBuffer;
 use uuid::Uuid;

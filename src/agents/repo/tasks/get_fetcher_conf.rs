@@ -1,4 +1,4 @@
-use crate::{agents::repo, objects::fetcher_config::FetcherConfig};
+use crate::{agents::repo, objects::FetcherConfig};
 use anyhow::{anyhow, Result};
 use web_sys::{IdbDatabase, IdbTransactionMode};
 

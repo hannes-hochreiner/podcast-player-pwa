@@ -1,5 +1,5 @@
 use crate::agents::repo;
-use crate::objects::channel::{Channel, ChannelKeys, ChannelMeta, ChannelVal};
+use crate::objects::{Channel, ChannelKeys, ChannelMeta, ChannelVal};
 use anyhow::{anyhow, Result};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;

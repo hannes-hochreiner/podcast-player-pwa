@@ -1,5 +1,5 @@
 use crate::agents::repo;
-use crate::objects::channel::Channel;
+use crate::objects::Channel;
 use anyhow::{anyhow, Result};
 use web_sys::{IdbDatabase, IdbTransactionMode};
 

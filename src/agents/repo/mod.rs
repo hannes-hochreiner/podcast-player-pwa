@@ -1,6 +1,6 @@
 mod tasks;
 use super::fetcher::{self};
-use crate::objects::{channel::*, feed::*, fetcher_config::*, item::*};
+use crate::objects::*;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};

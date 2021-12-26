@@ -1,7 +1,7 @@
 use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::components::icon::{Icon, IconStyle};
-use crate::objects::channel::Channel;
+use crate::objects::Channel;
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;

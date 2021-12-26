@@ -1,5 +1,5 @@
 use crate::agents::repo;
-use crate::objects::feed::{Feed, FeedVal};
+use crate::objects::{Feed, FeedVal};
 use anyhow::{anyhow, Result};
 use std::collections::HashMap;
 use uuid::Uuid;

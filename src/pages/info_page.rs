@@ -5,6 +5,8 @@ use wasm_bindgen_futures::JsFuture;
 use web_sys::ConnectionType;
 use yew::prelude::*;
 
+/// TODO: show persist information
+/// TODO: move persist request to repository
 pub struct InfoPage {
     estimate: Option<Estimate>,
     notifications: Vec<Notification>,

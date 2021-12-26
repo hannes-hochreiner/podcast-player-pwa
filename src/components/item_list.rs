@@ -1,6 +1,6 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::components::icon::{Icon, IconStyle};
-use crate::objects::{channel::Channel, item::DownloadStatus, item::Item};
+use crate::objects::{Channel, DownloadStatus, Item};
 use anyhow::Error;
 use uuid::Uuid;
 use yew::prelude::*;

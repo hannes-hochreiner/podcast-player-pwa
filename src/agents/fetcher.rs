@@ -1,6 +1,5 @@
 use crate::objects::{
-    auth0_token::Auth0Token,
-    fetcher_config::{self, Authorization, AuthorizationTask, FetcherConfig},
+    Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig,
 };
 
 use super::repo;
@@ -32,7 +31,7 @@ pub enum Message {
     ReceiveBinary(HandlerId, Uuid, Result<ArrayBuffer>),
     GetToken(Result<Auth0Token>),
     RepoMessage(repo::Response),
-    GetConfig(Result<fetcher_config::AuthorizationConfig>),
+    GetConfig(Result<AuthorizationConfig>),
 }
 
 pub struct Fetcher {

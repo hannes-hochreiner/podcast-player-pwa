@@ -1,5 +1,5 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
-use crate::objects::feed::Feed;
+use crate::objects::Feed;
 use anyhow::Error;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
