@@ -5,7 +5,7 @@ use yew_router::prelude::*;
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum AppRoute {
-    #[at("/channels/{channel_id}/items")]
+    #[at("/channels/:channel_id/items")]
     ItemsPage { channel_id: Uuid },
     #[at("/channels")]
     ChannelsPage,
@@ -40,11 +40,11 @@ impl Component for Router {
 }
 
 fn switch(routes: &AppRoute) -> Html {
-    match routes.clone() {
+    match routes {
         AppRoute::Home => html! {<HomePage/>},
         AppRoute::ChannelsPage => html! {<ChannelsPage/>},
         AppRoute::FeedsPage => html! {<FeedsPage/>},
         AppRoute::InfoPage => html! {<InfoPage/>},
-        AppRoute::ItemsPage { channel_id } => html! {<ItemsPage channel_id={channel_id}/>},
+        AppRoute::ItemsPage { channel_id } => html! {<ItemsPage channel_id={channel_id.clone()}/>},
     }
 }

@@ -167,7 +167,7 @@ impl Component for ItemList {
         }
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             Message::UpdateCurrentIndex(idx) => {
                 if let Some(channel) = &self.channel {
@@ -202,30 +202,28 @@ impl Component for ItemList {
             },
             Message::RepoMessage(resp) => match resp {
                 RepoResponse::Channels(res) => {
-                    if let Some(channel) = &self.channel {
-                        let channel_id = channel.val.id.clone();
-                        let channel = res
-                            .iter()
-                            .find(|e| e.val.id == channel_id.clone())
-                            .unwrap()
-                            .clone();
-                        let mut keys: Vec<String> = channel
-                            .keys
-                            .year_month_keys
-                            .iter()
-                            .map(|e| e.clone())
-                            .collect();
-                        keys.sort_by(|a, b| b.partial_cmp(a).unwrap());
+                    // let channel_id = channel.val.id.clone();
+                    let channel = res
+                        .iter()
+                        .find(|e| e.val.id == ctx.props().channel_id)
+                        .unwrap()
+                        .clone();
+                    let mut keys: Vec<String> = channel
+                        .keys
+                        .year_month_keys
+                        .iter()
+                        .map(|e| e.clone())
+                        .collect();
+                    keys.sort_by(|a, b| b.partial_cmp(a).unwrap());
 
-                        self.current_index = Some(0);
-                        self.keys = Some(keys);
+                    self.current_index = Some(0);
+                    self.keys = Some(keys);
 
-                        self.channel = Some(channel);
-                        self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                            channel_id,
-                            self.keys.as_ref().unwrap()[0].clone(),
-                        ));
-                    }
+                    self.channel = Some(channel);
+                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                        ctx.props().channel_id,
+                        self.keys.as_ref().unwrap()[0].clone(),
+                    ));
                     false
                 }
                 RepoResponse::Items(mut res) => {
