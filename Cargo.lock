@@ -463,7 +463,7 @@ dependencies = [
  "js-sys",
  "log",
  "serde",
- "serde-wasm-bindgen",
+ "serde-wasm-bindgen 0.4.1",
  "serde_json",
  "sha2",
  "url",
@@ -552,6 +552,18 @@ name = "serde-wasm-bindgen"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "618365e8e586c22123d692b72a7d791d5ee697817b65a218cdf12a98870af0f7"
+dependencies = [
+ "fnv",
+ "js-sys",
+ "serde",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "serde-wasm-bindgen"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d5cefe81e058ce25d1acbd79160e110d2eb4b9459024d46818d7553e4be6ff7e"
 dependencies = [
  "fnv",
  "js-sys",
@@ -942,7 +954,7 @@ dependencies = [
  "js-sys",
  "route-recognizer",
  "serde",
- "serde-wasm-bindgen",
+ "serde-wasm-bindgen 0.3.1",
  "serde_urlencoded",
  "thiserror",
  "wasm-bindgen",
