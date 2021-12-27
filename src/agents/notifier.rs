@@ -1,6 +1,8 @@
 use std::collections::HashSet;
 use yew_agent::{Agent, AgentLink, Context, HandlerId};
 
+use crate::objects::JsError;
+
 pub struct Notifier {
     subscribers: HashSet<HandlerId>,
     link: AgentLink<Self>,
@@ -21,6 +23,7 @@ pub struct Notification {
 
 pub enum Request {
     Notify(Notification),
+    NotifyError(JsError),
     Dismiss,
 }
 
@@ -65,6 +68,10 @@ impl Agent for Notifier {
     fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
         match msg {
             Request::Notify(notification) => self.notifications.push(notification),
+            Request::NotifyError(err) => self.notifications.push(Notification {
+                severity: NotificationSeverity::Error,
+                text: err.description,
+            }),
             Request::Dismiss => {
                 self.notifications.remove(0);
                 self.notify_subscribed();

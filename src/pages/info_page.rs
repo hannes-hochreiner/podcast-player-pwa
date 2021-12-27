@@ -1,3 +1,5 @@
+use std::future;
+
 use crate::{agents::notifier, components::NavBar, components::Notification, objects::JsError};
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
@@ -16,7 +18,7 @@ pub struct InfoPage {
 pub enum Message {
     GetEstimate(Result<JsValue, JsValue>),
     GetPersisted(Result<JsValue, JsValue>),
-    GetPersist(Result<JsValue, JsValue>),
+    // GetPersist(Result<JsValue, JsValue>),
 }
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {}
@@ -91,18 +93,20 @@ impl Component for InfoPage {
     fn create(ctx: &Context<Self>) -> Self {
         let mut notifier = notifier::Notifier::dispatcher();
 
-        ctx.link().send_future(async move {
-            let storage_manager = web_sys::window().unwrap().navigator().storage();
-            Message::GetEstimate(JsFuture::from(storage_manager.estimate().unwrap()).await)
-        });
+        match obtain_estimate_future() {
+            Ok(est) => ctx
+                .link()
+                .send_future(async move { Message::GetEstimate(est.await) }),
+            Err(e) => notifier.send(notifier::Request::NotifyError(e)),
+        };
         ctx.link().send_future(async move {
             let storage_manager = web_sys::window().unwrap().navigator().storage();
             Message::GetPersisted(JsFuture::from(storage_manager.persisted().unwrap()).await)
         });
-        ctx.link().send_future(async move {
-            let storage_manager = web_sys::window().unwrap().navigator().storage();
-            Message::GetPersist(JsFuture::from(storage_manager.persist().unwrap()).await)
-        });
+        // ctx.link().send_future(async move {
+        //     let storage_manager = web_sys::window().unwrap().navigator().storage();
+        //     Message::GetPersist(JsFuture::from(storage_manager.persist().unwrap()).await)
+        // });
 
         Self {
             estimate: None,
@@ -124,16 +128,18 @@ impl Component for InfoPage {
         match msg {
             Message::GetEstimate(res) => match self.process_estimate(res) {
                 Ok(()) => true,
-                Err(_e) => false,
+                Err(e) => {
+                    self.notifier.send(notifier::Request::NotifyError(e));
+                    false
+                }
             },
             Message::GetPersisted(res) => {
                 log::info!("persisted: {:?}", res);
                 false
-            }
-            Message::GetPersist(res) => {
-                log::info!("persist: {:?}", res);
-                false
-            }
+            } // Message::GetPersist(res) => {
+              //     log::info!("persist: {:?}", res);
+              //     false
+              // }
         }
     }
 }
@@ -144,4 +150,15 @@ fn obtain_connection_type() -> Result<ConnectionType, JsError> {
         .navigator()
         .connection()?
         .type_())
+}
+
+fn obtain_estimate_future() -> Result<JsFuture, JsError> {
+    let storage_manager = web_sys::window()
+        .ok_or("error getting storage manager")?
+        .navigator()
+        .storage();
+    storage_manager
+        .estimate()
+        .map(JsFuture::from)
+        .map_err(Into::into)
 }
