@@ -1,6 +1,5 @@
 use crate::agents::repo;
-use crate::objects::{Channel, ChannelKeys, ChannelMeta, ChannelVal};
-use anyhow::{anyhow, Result};
+use crate::objects::{Channel, ChannelKeys, ChannelMeta, ChannelVal, JsError};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use web_sys::{IdbDatabase, IdbTransaction, IdbTransactionMode};
@@ -20,10 +19,10 @@ impl AddChannelValsTask {
 }
 
 impl repo::RepositoryTask for AddChannelValsTask {
-    fn get_request(&mut self, db: &IdbDatabase) -> anyhow::Result<Vec<web_sys::IdbRequest>> {
+    fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<web_sys::IdbRequest>, JsError> {
         let trans = db
             .transaction_with_str_sequence_and_mode(
-                &serde_wasm_bindgen::to_value(&vec!["channels"]).unwrap(),
+                &serde_wasm_bindgen::to_value(&vec!["channels"])?,
                 IdbTransactionMode::Readwrite,
             )
             .unwrap();
@@ -37,13 +36,10 @@ impl repo::RepositoryTask for AddChannelValsTask {
     fn set_response(
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
-    ) -> anyhow::Result<Option<repo::Response>> {
+    ) -> Result<Option<repo::Response>, JsError> {
         match &self.transaction {
             Some(trans) => {
-                let channels: Vec<Channel> = serde_wasm_bindgen::from_value(
-                    result.map_err(|_e| anyhow!("error getting channel result"))?,
-                )
-                .map_err(|_e| anyhow!("error converting channel result"))?;
+                let channels: Vec<Channel> = serde_wasm_bindgen::from_value(result?)?;
 
                 let channel_os = trans.object_store("channels").unwrap();
                 let channel_map: HashMap<Uuid, &Channel> =
@@ -82,7 +78,7 @@ impl repo::RepositoryTask for AddChannelValsTask {
                 Ok(Some(repo::Response::AddChannelVals(Ok(()))))
             }
 
-            None => Err(anyhow!("error adding channel vals")),
+            None => Err("error adding channel vals".into()),
         }
     }
 }

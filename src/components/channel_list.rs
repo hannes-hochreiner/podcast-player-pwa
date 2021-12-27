@@ -1,8 +1,7 @@
 use super::router::AppRoute;
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::components::icon::{Icon, IconStyle};
-use crate::objects::Channel;
-use anyhow::Error;
+use crate::objects::{Channel, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
@@ -10,7 +9,7 @@ use yew_router::prelude::*;
 
 pub struct ChannelList {
     channels: Option<Vec<Channel>>,
-    error: Option<Error>,
+    error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
     show_all: bool,
 }

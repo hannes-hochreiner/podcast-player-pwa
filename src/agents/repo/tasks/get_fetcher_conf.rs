@@ -1,5 +1,7 @@
-use crate::{agents::repo, objects::FetcherConfig};
-use anyhow::{anyhow, Result};
+use crate::{
+    agents::repo,
+    objects::{FetcherConfig, JsError},
+};
 use web_sys::{IdbDatabase, IdbTransactionMode};
 
 pub struct GetFetcherConfTask {
@@ -13,7 +15,7 @@ impl GetFetcherConfTask {
 }
 
 impl repo::RepositoryTask for GetFetcherConfTask {
-    fn get_request(&mut self, db: &IdbDatabase) -> anyhow::Result<Vec<web_sys::IdbRequest>> {
+    fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<web_sys::IdbRequest>, JsError> {
         let trans = self.create_transaction(
             &db,
             match &self.fct {
@@ -23,41 +25,28 @@ impl repo::RepositoryTask for GetFetcherConfTask {
             &vec!["configuration"],
         )?;
 
-        let os = trans
-            .object_store("configuration")
-            .map_err(|_e| anyhow!("error creating object store"))?;
+        let os = trans.object_store("configuration")?;
 
         if let Some(fct) = &self.fct {
             os.put_with_key(
-                &serde_wasm_bindgen::to_value(fct).unwrap(),
-                &serde_wasm_bindgen::to_value("fetcher").unwrap(),
-            )
-            .unwrap();
+                &serde_wasm_bindgen::to_value(fct)?,
+                &serde_wasm_bindgen::to_value("fetcher")?,
+            )?;
         }
 
-        Ok(vec![os
-            .get(
-                &serde_wasm_bindgen::to_value("fetcher")
-                    .map_err(|_e| anyhow!("error converting key"))?,
-            )
-            .map_err(|_e| {
-                anyhow!("error items with channel id and year month")
-            })?])
+        Ok(vec![os.get(&serde_wasm_bindgen::to_value("fetcher")?)?])
     }
 
     fn set_response(
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
-    ) -> anyhow::Result<Option<repo::Response>> {
+    ) -> Result<Option<repo::Response>, JsError> {
         match result {
             Ok(val) => Ok(Some(match val.is_undefined() {
                 true => repo::Response::FetcherConfig(None),
-                false => repo::Response::FetcherConfig(Some(
-                    serde_wasm_bindgen::from_value(val)
-                        .map_err(|_e| anyhow!("error converting fetcher config result"))?,
-                )),
+                false => repo::Response::FetcherConfig(Some(serde_wasm_bindgen::from_value(val)?)),
             })),
-            Err(_e) => Err(anyhow!("error getting fetcher config result")),
+            Err(_e) => Err("error getting fetcher config result".into()),
         }
     }
 }

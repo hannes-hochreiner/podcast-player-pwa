@@ -1,12 +1,11 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
-use crate::objects::Feed;
-use anyhow::Error;
+use crate::objects::{Feed, JsError};
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
 
 pub struct FeedList {
     feeds: Option<Vec<Feed>>,
-    error: Option<Error>,
+    error: Option<JsError>,
     _repo: Box<dyn Bridge<Repo>>,
 }
 

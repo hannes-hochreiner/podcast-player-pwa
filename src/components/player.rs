@@ -3,7 +3,7 @@ use std::collections::HashMap;
 
 use crate::{
     agents::{player, repo},
-    objects::Item,
+    objects::{Item, JsError},
 };
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
@@ -248,12 +248,10 @@ impl Component for Player {
     }
 }
 
-fn get_input_element_from_event(ev: Event) -> anyhow::Result<HtmlInputElement> {
-    let target = ev
-        .target()
-        .ok_or(anyhow::anyhow!("could not get target from event"))?;
+fn get_input_element_from_event(ev: Event) -> Result<HtmlInputElement, JsError> {
+    let target = ev.target().ok_or("could not get target object")?;
 
     target
         .dyn_into::<HtmlInputElement>()
-        .map_err(|e| anyhow::anyhow!("error casting target to input element: {:?}", e))
+        .map_err(|_| JsError::from("error casting target to input element"))
 }

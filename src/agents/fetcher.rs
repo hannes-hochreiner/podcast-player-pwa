@@ -1,9 +1,8 @@
 use crate::objects::{
-    Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig,
+    Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig, JsError,
 };
 
 use super::repo;
-use anyhow::Result;
 use chrono::{Duration, Utc};
 use js_sys::ArrayBuffer;
 use serde::de::DeserializeOwned;
@@ -22,16 +21,16 @@ pub enum Request {
 }
 
 pub enum Response {
-    Binary(Uuid, anyhow::Result<ArrayBuffer>),
-    Text(Uuid, anyhow::Result<String>),
+    Binary(Uuid, Result<ArrayBuffer, JsError>),
+    Text(Uuid, Result<String, JsError>),
 }
 
 pub enum Message {
-    ReceiveText(HandlerId, Uuid, Result<String>),
-    ReceiveBinary(HandlerId, Uuid, Result<ArrayBuffer>),
-    GetToken(Result<Auth0Token>),
+    ReceiveText(HandlerId, Uuid, Result<String, JsError>),
+    ReceiveBinary(HandlerId, Uuid, Result<ArrayBuffer, JsError>),
+    GetToken(Result<Auth0Token, JsError>),
     RepoMessage(repo::Response),
-    GetConfig(Result<AuthorizationConfig>),
+    GetConfig(Result<AuthorizationConfig, JsError>),
 }
 
 pub struct Fetcher {
@@ -284,17 +283,17 @@ async fn fetch(
 }
 
 // https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
-async fn fetch_binary(url: &str, headers: Option<HashMap<String, String>>) -> Result<ArrayBuffer> {
+async fn fetch_binary(
+    url: &str,
+    headers: Option<HashMap<String, String>>,
+) -> Result<ArrayBuffer, JsError> {
     Ok(ArrayBuffer::from(
         JsFuture::from(
             fetch(url, HttpMethod::Get, headers, None)
-                .await
-                .map_err(|_| anyhow::anyhow!("fetch failed"))?
-                .array_buffer()
-                .map_err(|_| anyhow::anyhow!("retrieving arraybuffer failed"))?,
+                .await?
+                .array_buffer()?,
         )
-        .await
-        .map_err(|_| anyhow::anyhow!("creating future failed"))?,
+        .await?,
     ))
 }
 
@@ -303,18 +302,11 @@ async fn fetch_text(
     method: HttpMethod,
     headers: Option<HashMap<String, String>>,
     body: Option<String>,
-) -> anyhow::Result<String> {
-    JsFuture::from(
-        fetch(url, method, headers, body)
-            .await
-            .map_err(|_| anyhow::anyhow!("fetch failed"))?
-            .text()
-            .map_err(|_| anyhow::anyhow!("retrieving text failed"))?,
-    )
-    .await
-    .map_err(|_| anyhow::anyhow!("creating future failed"))?
-    .as_string()
-    .ok_or(anyhow::anyhow!("could not convert response into string"))
+) -> Result<String, JsError> {
+    JsFuture::from(fetch(url, method, headers, body).await?.text()?)
+        .await?
+        .as_string()
+        .ok_or("error casting fetched value to string".into())
 }
 
 async fn fetch_deserializable<T: DeserializeOwned>(
@@ -322,20 +314,10 @@ async fn fetch_deserializable<T: DeserializeOwned>(
     method: HttpMethod,
     headers: Option<HashMap<String, String>>,
     body: Option<String>,
-) -> anyhow::Result<T> {
-    JsFuture::from(
-        fetch(url, method, headers, body)
-            .await
-            .map_err(|_| anyhow::anyhow!("fetch failed"))?
-            .json()
-            .map_err(|_| anyhow::anyhow!("retrieving json failed"))?,
-    )
-    .await
-    .map_err(|_| anyhow::anyhow!("creating future failed"))
-    .map(|val| {
-        serde_wasm_bindgen::from_value(val)
-            .map_err(|e| anyhow::anyhow!("parsing failed: {}", e.to_string()))
-    })?
+) -> Result<T, JsError> {
+    JsFuture::from(fetch(url, method, headers, body).await?.json()?)
+        .await
+        .map(|val| serde_wasm_bindgen::from_value(val).map_err(Into::into))?
 }
 
 fn get_url() -> Url {

@@ -1,14 +1,13 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::components::icon::{Icon, IconStyle};
-use crate::objects::{Channel, DownloadStatus, Item};
-use anyhow::Error;
+use crate::objects::{Channel, DownloadStatus, Item, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
 
 pub struct ItemList {
     items: Option<Vec<Item>>,
-    error: Option<Error>,
+    error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
     channel: Option<Channel>,
     keys: Option<Vec<String>>,

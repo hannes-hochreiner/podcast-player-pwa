@@ -1,8 +1,7 @@
 use crate::{
     agents::repo,
-    objects::{DownloadStatus, Item},
+    objects::{DownloadStatus, Item, JsError},
 };
-use anyhow::{anyhow, Result};
 use js_sys::ArrayBuffer;
 use uuid::Uuid;
 use web_sys::{IdbDatabase, IdbTransaction, IdbTransactionMode};
@@ -24,56 +23,43 @@ impl AddEnclosureTask {
 }
 
 impl repo::RepositoryTask for AddEnclosureTask {
-    fn get_request(&mut self, db: &IdbDatabase) -> anyhow::Result<Vec<web_sys::IdbRequest>> {
-        let trans = db
-            .transaction_with_str_sequence_and_mode(
-                &serde_wasm_bindgen::to_value(&vec!["items", "enclosures"]).unwrap(),
-                IdbTransactionMode::Readwrite,
-            )
-            .unwrap();
+    fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<web_sys::IdbRequest>, JsError> {
+        let trans = db.transaction_with_str_sequence_and_mode(
+            &serde_wasm_bindgen::to_value(&vec!["items", "enclosures"])?,
+            IdbTransactionMode::Readwrite,
+        )?;
 
-        let os = trans.object_store("items").unwrap();
+        let os = trans.object_store("items")?;
         self.transaction = Some(trans);
 
-        Ok(vec![os
-            .get(&serde_wasm_bindgen::to_value(&self.item_id).unwrap())
-            .unwrap()])
+        Ok(vec![os.get(&serde_wasm_bindgen::to_value(&self.item_id)?)?])
     }
 
     fn set_response(
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
-    ) -> anyhow::Result<Option<repo::Response>> {
+    ) -> Result<Option<repo::Response>, JsError> {
         match &self.transaction {
             Some(trans) => {
-                let mut item: Item = serde_wasm_bindgen::from_value(
-                    result.map_err(|_e| anyhow!("error getting item result"))?,
-                )
-                .map_err(|_e| anyhow!("error converting item result"))?;
+                let mut item: Item = serde_wasm_bindgen::from_value(result?)?;
 
                 item.set_download_status(DownloadStatus::Ok(self.data.byte_length()));
 
-                let item_os = trans.object_store("items").unwrap();
+                let item_os = trans.object_store("items")?;
 
-                item_os
-                    .put_with_key(
-                        &serde_wasm_bindgen::to_value(&item).unwrap(),
-                        &serde_wasm_bindgen::to_value(&item.get_id()).unwrap(),
-                    )
-                    .unwrap();
+                item_os.put_with_key(
+                    &serde_wasm_bindgen::to_value(&item)?,
+                    &serde_wasm_bindgen::to_value(&item.get_id())?,
+                )?;
 
-                let enclosure_os = trans.object_store("enclosures").unwrap();
+                let enclosure_os = trans.object_store("enclosures")?;
 
                 enclosure_os
-                    .put_with_key(
-                        &self.data,
-                        &serde_wasm_bindgen::to_value(&item.get_id()).unwrap(),
-                    )
-                    .unwrap();
+                    .put_with_key(&self.data, &serde_wasm_bindgen::to_value(&item.get_id())?)?;
                 Ok(Some(repo::Response::Item(item)))
             }
 
-            None => Err(anyhow!("error adding channel vals")),
+            None => Err("error adding channel vals".into()),
         }
     }
 }

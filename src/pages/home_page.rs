@@ -1,4 +1,4 @@
-use crate::components::{NavBar, Player};
+use crate::components::{NavBar, Notification, Player};
 use yew::{prelude::*, Html};
 
 pub struct HomePage {}
@@ -12,6 +12,7 @@ impl Component for HomePage {
         html! {
             <>
                 <NavBar/>
+                <Notification/>
                 <Player/>
             </>
         }

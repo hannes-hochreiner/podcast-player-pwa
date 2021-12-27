@@ -1,5 +1,4 @@
-use crate::agents::repo;
-use anyhow::{anyhow, Result};
+use crate::{agents::repo, objects::JsError};
 use uuid::Uuid;
 use web_sys::{IdbDatabase, IdbTransactionMode};
 
@@ -18,37 +17,25 @@ impl GetItemsByChannelIdYearMonthTask {
 }
 
 impl repo::RepositoryTask for GetItemsByChannelIdYearMonthTask {
-    fn get_request(&mut self, db: &IdbDatabase) -> anyhow::Result<Vec<web_sys::IdbRequest>> {
+    fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<web_sys::IdbRequest>, JsError> {
         let trans = self.create_transaction(&db, IdbTransactionMode::Readonly, &vec!["items"])?;
 
-        let os = trans
-            .object_store("items")
-            .map_err(|_e| anyhow!("error creating object store"))?;
+        let os = trans.object_store("items")?;
 
-        Ok(vec![os
-            .index("channel_id_year_month")
-            .map_err(|_e| anyhow!("error getting index"))?
-            .get_all_with_key(
-                &serde_wasm_bindgen::to_value(&vec![
-                    self.channel_id.to_string(),
-                    self.year_month.clone(),
-                ])
-                .map_err(|_e| anyhow!("error converting keys"))?,
-            )
-            .map_err(|_e| {
-                anyhow!("error items with channel id and year month")
-            })?])
+        Ok(vec![os.index("channel_id_year_month")?.get_all_with_key(
+            &serde_wasm_bindgen::to_value(&vec![
+                self.channel_id.to_string(),
+                self.year_month.clone(),
+            ])?,
+        )?])
     }
 
     fn set_response(
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
-    ) -> anyhow::Result<Option<repo::Response>> {
-        Ok(Some(repo::Response::Items(
-            serde_wasm_bindgen::from_value(
-                result.map_err(|_e| anyhow!("error getting item result"))?,
-            )
-            .map_err(|_e| anyhow!("error converting item result"))?,
-        )))
+    ) -> Result<Option<repo::Response>, JsError> {
+        Ok(Some(repo::Response::Items(serde_wasm_bindgen::from_value(
+            result?,
+        )?)))
     }
 }

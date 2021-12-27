@@ -31,13 +31,13 @@ pub enum Request {
 }
 
 pub enum Response {
-    Error(anyhow::Error),
+    Error(JsError),
     Channels(Vec<Channel>),
     Feeds(Vec<Feed>),
     Enclosure(ArrayBuffer),
-    AddChannelVals(anyhow::Result<()>),
-    AddItemVals(anyhow::Result<()>),
-    AddFeedVals(anyhow::Result<()>),
+    AddChannelVals(Result<(), JsError>),
+    AddItemVals(Result<(), JsError>),
+    AddFeedVals(Result<(), JsError>),
     Items(Vec<Item>),
     Item(Item),
     FetcherConfig(Option<FetcherConfig>),
@@ -81,23 +81,22 @@ pub struct IdbResponse {
 }
 
 trait RepositoryTask {
-    fn get_request(&mut self, db: &IdbDatabase) -> anyhow::Result<Vec<IdbRequest>>;
+    fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<IdbRequest>, JsError>;
     fn set_response(
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
-    ) -> anyhow::Result<Option<Response>>;
+    ) -> Result<Option<Response>, JsError>;
     fn create_transaction(
         &self,
         db: &IdbDatabase,
         mode: IdbTransactionMode,
         store_names: &Vec<&str>,
-    ) -> anyhow::Result<IdbTransaction> {
+    ) -> Result<IdbTransaction, JsError> {
         db.transaction_with_str_sequence_and_mode(
-            &serde_wasm_bindgen::to_value(&store_names)
-                .map_err(|_e| anyhow::anyhow!("error creating store names"))?,
+            &serde_wasm_bindgen::to_value(&store_names)?,
             mode,
         )
-        .map_err(|_e| anyhow::anyhow!("error creating transaction"))
+        .map_err(Into::into)
     }
 }
 
