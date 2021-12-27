@@ -1,5 +1,3 @@
-use std::future;
-
 use crate::{agents::notifier, components::NavBar, components::Notification, objects::JsError};
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
@@ -8,11 +6,11 @@ use web_sys::ConnectionType;
 use yew::prelude::*;
 use yew_agent::{Dispatched, Dispatcher};
 
-/// TODO: show persist information
 /// TODO: move persist request to repository
 pub struct InfoPage {
     estimate: Option<Estimate>,
     connection_type: Option<ConnectionType>,
+    persisted: Option<bool>,
     notifier: Dispatcher<notifier::Notifier>,
 }
 pub enum Message {
@@ -34,36 +32,65 @@ impl InfoPage {
         html! {
             <section class="section">
                 <div class="title">{"Connection Information"}</div>
-                <p>{"Connection Type"}</p>
-                <p>{match &self.connection_type {
-                    Some(connection_type) => match connection_type {
-                        ConnectionType::Wifi=>"Wifi",
-                        ConnectionType::Cellular => "Cellular",
-                        ConnectionType::Bluetooth => "Bluetooth",
-                        ConnectionType::Ethernet => "Ethernet",
-                        ConnectionType::Other => "Other",
-                        ConnectionType::None => "None",
-                        ConnectionType::Unknown => "Unknown",
-                        ConnectionType::__Nonexhaustive => "Future",
-                    }
-                    None => "connection type could not be obtained"
-                    }
-                }
-                </p>
+                <nav class="level">
+                    <div class="level-item has-text-centered">
+                        <div>
+                            <p class="heading">{"connection type"}</p>
+                            <p class="title">{match &self.connection_type {
+                                Some(connection_type) => match connection_type {
+                                    ConnectionType::Wifi=>"Wifi",
+                                    ConnectionType::Cellular => "Cellular",
+                                    ConnectionType::Bluetooth => "Bluetooth",
+                                    ConnectionType::Ethernet => "Ethernet",
+                                    ConnectionType::Other => "Other",
+                                    ConnectionType::None => "None",
+                                    ConnectionType::Unknown => "Unknown",
+                                    ConnectionType::__Nonexhaustive => "Future",
+                                }
+                                None => "connection type could not be obtained"
+                                }
+                            }</p>
+                        </div>
+                    </div>
+                </nav>
             </section>
         }
     }
 
     fn view_storage_info(&self, _ctx: &Context<Self>) -> Html {
-        match &self.estimate {
-            Some(estimate) => html! {
+        match (&self.estimate, &self.persisted) {
+            (Some(estimate), Some(persisted)) => html! {
                 <section class="section">
                     <div class="title">{"Storage Information"}</div>
-                    <p>{"usage/quota"}</p>
-                    <p>{format!("{} MB/{} MB ({:.0}%)", estimate.usage/1024/1024, estimate.quota/1024/1024, (estimate.usage as f64/estimate.quota as f64)*100.0 )}</p>
+                    <nav class="level">
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">{"usage"}</p>
+                                <p class="title">{format!("{} MB", estimate.usage/1024/1024)}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">{"quota"}</p>
+                                <p class="title">{format!("{} MB", estimate.quota/1024/1024)}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">{"percentage"}</p>
+                                <p class="title">{format!("{:.0} %", (estimate.usage as f64/estimate.quota as f64)*100.0)}</p>
+                            </div>
+                        </div>
+                        <div class="level-item has-text-centered">
+                            <div>
+                                <p class="heading">{"persisted"}</p>
+                                <p class="title">{format!("{}", persisted)}</p>
+                            </div>
+                        </div>
+                    </nav>
                 </section>
             },
-            None => html! {},
+            (_, _) => html! {},
         }
     }
 
@@ -71,6 +98,12 @@ impl InfoPage {
         let val = res?;
         let est = serde_wasm_bindgen::from_value::<Estimate>(val)?;
         self.estimate = Some(est);
+        Ok(())
+    }
+
+    fn process_persisted(&mut self, res: Result<JsValue, JsValue>) -> Result<(), JsError> {
+        let val = res?;
+        self.persisted = Some(serde_wasm_bindgen::from_value::<bool>(val)?);
         Ok(())
     }
 }
@@ -99,10 +132,12 @@ impl Component for InfoPage {
                 .send_future(async move { Message::GetEstimate(est.await) }),
             Err(e) => notifier.send(notifier::Request::NotifyError(e)),
         };
-        ctx.link().send_future(async move {
-            let storage_manager = web_sys::window().unwrap().navigator().storage();
-            Message::GetPersisted(JsFuture::from(storage_manager.persisted().unwrap()).await)
-        });
+        match obtain_persisted_future() {
+            Ok(est) => ctx
+                .link()
+                .send_future(async move { Message::GetPersisted(est.await) }),
+            Err(e) => notifier.send(notifier::Request::NotifyError(e)),
+        };
         // ctx.link().send_future(async move {
         //     let storage_manager = web_sys::window().unwrap().navigator().storage();
         //     Message::GetPersist(JsFuture::from(storage_manager.persist().unwrap()).await)
@@ -121,6 +156,7 @@ impl Component for InfoPage {
                 }
             },
             notifier,
+            persisted: None,
         }
     }
 
@@ -133,13 +169,13 @@ impl Component for InfoPage {
                     false
                 }
             },
-            Message::GetPersisted(res) => {
-                log::info!("persisted: {:?}", res);
-                false
-            } // Message::GetPersist(res) => {
-              //     log::info!("persist: {:?}", res);
-              //     false
-              // }
+            Message::GetPersisted(res) => match self.process_persisted(res) {
+                Ok(()) => true,
+                Err(e) => {
+                    self.notifier.send(notifier::Request::NotifyError(e));
+                    false
+                }
+            },
         }
     }
 }
@@ -159,6 +195,17 @@ fn obtain_estimate_future() -> Result<JsFuture, JsError> {
         .storage();
     storage_manager
         .estimate()
+        .map(JsFuture::from)
+        .map_err(Into::into)
+}
+
+fn obtain_persisted_future() -> Result<JsFuture, JsError> {
+    let storage_manager = web_sys::window()
+        .ok_or("error getting storage manager")?
+        .navigator()
+        .storage();
+    storage_manager
+        .persisted()
         .map(JsFuture::from)
         .map_err(Into::into)
 }
