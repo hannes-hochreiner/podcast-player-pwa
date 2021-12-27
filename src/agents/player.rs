@@ -1,11 +1,11 @@
+use super::{notifier, repo};
+use crate::objects::JsError;
 use std::collections::HashSet;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{self, Event, MediaSource, Url};
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
-
-use super::repo;
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 // TODO: implement task list to ensure serial execution of tasks (especially to avoid interrupting the set source task)
 
@@ -52,6 +52,7 @@ pub struct Player {
     interval_closure: Closure<dyn Fn(web_sys::Event)>,
     active_id: Option<Uuid>,
     interval_handle: Option<i32>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 enum Task {
@@ -62,46 +63,99 @@ enum Task {
 }
 
 impl Player {
-    fn start_setting_source(&mut self, id: Uuid, handler_id: HandlerId, msg: Request) {
+    fn process_handle_input(&mut self, msg: Request, handler_id: HandlerId) -> Result<(), JsError> {
+        match msg {
+            Request::SetSource(id) => {
+                if self.active_id.is_some() {
+                    self.audio_element.pause()?;
+                    self.remove_interval()?;
+                    self.send_update();
+                    self.active_id = None;
+                }
+                self.start_setting_source(id, handler_id, msg)?;
+            }
+            Request::Play {
+                current_time,
+                volume,
+                playback_rate,
+            } => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_playback_rate(playback_rate);
+                    self.audio_element.set_volume(volume);
+                    self.audio_element.set_current_time(current_time);
+                    self.audio_element.play();
+                    self.set_interval()?;
+                }
+            }
+            Request::SetCurrentTime(current_time) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_current_time(current_time);
+                }
+            }
+            Request::SetPlaybackRate(playback_rate) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_playback_rate(playback_rate);
+                }
+            }
+            Request::SetVolume(volume) => {
+                if self.active_id.is_some() {
+                    self.audio_element.set_volume(volume);
+                }
+            }
+            Request::Pause => {
+                self.audio_element.pause()?;
+                self.remove_interval()?;
+            }
+        }
+
+        Ok(())
+    }
+
+    fn start_setting_source(
+        &mut self,
+        id: Uuid,
+        handler_id: HandlerId,
+        msg: Request,
+    ) -> Result<(), JsError> {
         self.active_id = Some(id);
         self.active_task = Some(Task::SetSource {
             handler_id,
             request: msg,
         });
-        self.media_source = MediaSource::new().unwrap();
+        self.media_source = MediaSource::new()?;
         self.audio_element
-            .set_src(&Url::create_object_url_with_source(&self.media_source).unwrap());
+            .set_src(&Url::create_object_url_with_source(&self.media_source)?);
         self.media_source.set_onsourceopen(Some(
             self.mediasource_opened_closure.as_ref().unchecked_ref(),
         ));
+        Ok(())
     }
 
-    fn set_interval(&mut self) {
+    fn set_interval(&mut self) -> Result<(), JsError> {
         match self.interval_handle {
             Some(_) => {}
             None => {
-                let window = web_sys::window().unwrap();
+                let window = web_sys::window().ok_or("could not obtain window")?;
 
-                self.interval_handle = Some(
-                    window
-                        .set_interval_with_callback_and_timeout_and_arguments(
-                            self.interval_closure.as_ref().unchecked_ref(),
-                            1_000,
-                            &js_sys::Array::new(),
-                        )
-                        .unwrap(),
-                );
+                self.interval_handle =
+                    Some(window.set_interval_with_callback_and_timeout_and_arguments(
+                        self.interval_closure.as_ref().unchecked_ref(),
+                        1_000,
+                        &js_sys::Array::new(),
+                    )?);
             }
         }
+        Ok(())
     }
 
-    fn remove_interval(&mut self) {
+    fn remove_interval(&mut self) -> Result<(), JsError> {
         if let Some(interval_handle) = self.interval_handle {
-            let window = web_sys::window().unwrap();
+            let window = web_sys::window().ok_or("could not obtain window")?;
 
             window.clear_interval_with_handle(interval_handle);
             self.interval_handle = None;
         }
+        Ok(())
     }
 
     fn send_update(&self) {
@@ -120,6 +174,47 @@ impl Player {
             }
         }
     }
+
+    fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
+        match msg {
+            Message::Interval(_e) => self.send_update(),
+            Message::RepoMessage(msg) => match msg {
+                repo::Response::Enclosure(data) => {
+                    let sb = self.media_source.add_source_buffer("audio/mpeg")?;
+                    self.audio_element.set_preload("metadata");
+                    sb.append_buffer_with_array_buffer(&data)?;
+                    sb.set_onupdate(Some(
+                        self.sourcebuffer_update_closure.as_ref().unchecked_ref(),
+                    ));
+                }
+                _ => {}
+            },
+            Message::SourceOpened(_e) => match self.active_id {
+                Some(id) => self.repo.send(repo::Request::GetEnclosure(id)),
+                None => {}
+            },
+            Message::SourceBufferUpdate(_e) => {
+                self.media_source.end_of_stream()?;
+
+                match &self.active_task {
+                    Some(task) => match task {
+                        Task::SetSource {
+                            handler_id,
+                            request,
+                        } => match request {
+                            &Request::SetSource(_id) => {
+                                self.link.respond(handler_id.clone(), Response::SourceSet)
+                            }
+                            _ => {}
+                        },
+                    },
+                    _ => {}
+                }
+            }
+        }
+
+        Ok(())
+    }
 }
 
 impl Agent for Player {
@@ -129,6 +224,7 @@ impl Agent for Player {
     type Output = Response;
 
     fn create(link: AgentLink<Self>) -> Self {
+        let mut notifier = notifier::Notifier::dispatcher();
         let callback_repo = link.callback(Message::RepoMessage);
         let callback_mediasource_opened = link.callback(move |e| Message::SourceOpened(e));
         let mediasource_opened_closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
@@ -157,91 +253,21 @@ impl Agent for Player {
             sourcebuffer_update_closure,
             interval_closure,
             interval_handle: None,
+            notifier: notifier,
         }
     }
 
     fn update(&mut self, msg: Self::Message) {
-        match msg {
-            Message::Interval(_e) => self.send_update(),
-            Message::RepoMessage(msg) => match msg {
-                repo::Response::Enclosure(data) => {
-                    let sb = self.media_source.add_source_buffer("audio/mpeg").unwrap();
-                    self.audio_element.set_preload("metadata");
-                    sb.append_buffer_with_array_buffer(&data).unwrap();
-                    sb.set_onupdate(Some(
-                        self.sourcebuffer_update_closure.as_ref().unchecked_ref(),
-                    ));
-                }
-                _ => {}
-            },
-            Message::SourceOpened(_e) => match self.active_id {
-                Some(id) => self.repo.send(repo::Request::GetEnclosure(id)),
-                None => {}
-            },
-            Message::SourceBufferUpdate(_e) => {
-                self.media_source.end_of_stream().unwrap();
-
-                match &self.active_task {
-                    Some(task) => match task {
-                        Task::SetSource {
-                            handler_id,
-                            request,
-                        } => match request {
-                            &Request::SetSource(_id) => {
-                                self.link.respond(handler_id.clone(), Response::SourceSet)
-                            }
-                            _ => {}
-                        },
-                    },
-                    _ => {}
-                }
-            }
+        match self.process_update(msg) {
+            Ok(()) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
         }
     }
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
-        match msg {
-            Request::SetSource(id) => {
-                if self.active_id.is_some() {
-                    self.audio_element.pause();
-                    self.remove_interval();
-                    self.send_update();
-                    self.active_id = None;
-                }
-                self.start_setting_source(id, handler_id, msg)
-            }
-            Request::Play {
-                current_time,
-                volume,
-                playback_rate,
-            } => {
-                if self.active_id.is_some() {
-                    self.audio_element.set_playback_rate(playback_rate);
-                    self.audio_element.set_volume(volume);
-                    self.audio_element.set_current_time(current_time);
-                    self.audio_element.play();
-                    self.set_interval();
-                }
-            }
-            Request::SetCurrentTime(current_time) => {
-                if self.active_id.is_some() {
-                    self.audio_element.set_current_time(current_time);
-                }
-            }
-            Request::SetPlaybackRate(playback_rate) => {
-                if self.active_id.is_some() {
-                    self.audio_element.set_playback_rate(playback_rate);
-                }
-            }
-            Request::SetVolume(volume) => {
-                if self.active_id.is_some() {
-                    self.audio_element.set_volume(volume);
-                }
-            }
-            Request::Pause => {
-                self.audio_element.pause().unwrap();
-                self.remove_interval();
-            }
+        match self.process_handle_input(msg, handler_id) {
+            Ok(()) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
         }
     }
 

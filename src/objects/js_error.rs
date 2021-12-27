@@ -6,6 +6,14 @@ pub struct JsError {
     pub description: String,
 }
 
+impl JsError {
+    pub fn from_str(s: &str) -> Self {
+        Self {
+            description: s.into(),
+        }
+    }
+}
+
 impl Error for JsError {}
 
 impl Display for JsError {
@@ -34,6 +42,22 @@ impl From<&str> for JsError {
     fn from(str: &str) -> Self {
         Self {
             description: String::from(str),
+        }
+    }
+}
+
+impl From<url::ParseError> for JsError {
+    fn from(e: url::ParseError) -> Self {
+        Self {
+            description: e.to_string(),
+        }
+    }
+}
+
+impl From<serde_json::Error> for JsError {
+    fn from(e: serde_json::Error) -> Self {
+        Self {
+            description: e.to_string(),
         }
     }
 }

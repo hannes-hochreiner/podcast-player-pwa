@@ -20,17 +20,15 @@ impl AddChannelValsTask {
 
 impl repo::RepositoryTask for AddChannelValsTask {
     fn get_request(&mut self, db: &IdbDatabase) -> Result<Vec<web_sys::IdbRequest>, JsError> {
-        let trans = db
-            .transaction_with_str_sequence_and_mode(
-                &serde_wasm_bindgen::to_value(&vec!["channels"])?,
-                IdbTransactionMode::Readwrite,
-            )
-            .unwrap();
+        let trans = db.transaction_with_str_sequence_and_mode(
+            &serde_wasm_bindgen::to_value(&vec!["channels"])?,
+            IdbTransactionMode::Readwrite,
+        )?;
 
-        let os = trans.object_store("channels").unwrap();
+        let os = trans.object_store("channels")?;
         self.transaction = Some(trans);
 
-        Ok(vec![os.get_all().unwrap()])
+        Ok(vec![os.get_all()?])
     }
 
     fn set_response(
@@ -41,7 +39,7 @@ impl repo::RepositoryTask for AddChannelValsTask {
             Some(trans) => {
                 let channels: Vec<Channel> = serde_wasm_bindgen::from_value(result?)?;
 
-                let channel_os = trans.object_store("channels").unwrap();
+                let channel_os = trans.object_store("channels")?;
                 let channel_map: HashMap<Uuid, &Channel> =
                     channels.iter().map(|e| (e.val.id, e)).collect();
 
@@ -68,12 +66,10 @@ impl repo::RepositoryTask for AddChannelValsTask {
                             }
                         }
                     };
-                    channel_os
-                        .put_with_key(
-                            &serde_wasm_bindgen::to_value(&channel_new).unwrap(),
-                            &serde_wasm_bindgen::to_value(&channel_new.val.id).unwrap(),
-                        )
-                        .unwrap();
+                    channel_os.put_with_key(
+                        &serde_wasm_bindgen::to_value(&channel_new)?,
+                        &serde_wasm_bindgen::to_value(&channel_new.val.id)?,
+                    )?;
                 }
                 Ok(Some(repo::Response::AddChannelVals(Ok(()))))
             }

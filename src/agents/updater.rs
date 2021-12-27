@@ -1,14 +1,15 @@
 // use anyhow::Result;
-use crate::objects::{ChannelVal, DownloadStatus, FeedVal, ItemVal};
+use crate::objects::{ChannelVal, DownloadStatus, FeedVal, ItemVal, JsError};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::ConnectionType;
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 use super::{
     fetcher::{self},
+    notifier::{self},
     repo::{self},
 };
 
@@ -29,6 +30,7 @@ pub struct Updater {
     repo: Box<dyn Bridge<repo::Repo>>,
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     pending_tasks: HashMap<Uuid, Task>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 enum Task {
@@ -37,48 +39,14 @@ enum Task {
     GetItems(Uuid),
 }
 
-impl Agent for Updater {
-    type Reach = Context<Self>;
-    type Message = Message;
-    type Input = Request;
-    type Output = Response;
-
-    fn create(link: AgentLink<Self>) -> Self {
-        let window = web_sys::window().unwrap();
-        let callback_repo = link.callback(Message::RepoMessage);
-        let callback_fetcher = link.callback(Message::FetcherMessage);
-        let callback_interval = link.callback(Message::Interval);
-        let closure_interval =
-            Closure::wrap(
-                Box::new(move |event: web_sys::Event| callback_interval.emit(event))
-                    as Box<dyn Fn(_)>,
-            );
-        window
-            .set_interval_with_callback_and_timeout_and_arguments(
-                closure_interval.as_ref().unchecked_ref(),
-                10_000,
-                &js_sys::Array::new(),
-            )
-            .unwrap();
-
-        Self {
-            _link: link,
-            subscribers: HashSet::new(),
-            _closure_interval: closure_interval,
-            repo: repo::Repo::bridge(callback_repo),
-            fetcher: fetcher::Fetcher::bridge(callback_fetcher),
-            pending_tasks: HashMap::new(),
-        }
-    }
-
-    fn update(&mut self, msg: Self::Message) {
+impl Updater {
+    fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
             Message::Interval(_ev) => {
                 let conn_type = web_sys::window()
-                    .unwrap()
+                    .ok_or("could not obtain window")?
                     .navigator()
-                    .connection()
-                    .unwrap()
+                    .connection()?
                     .type_();
                 match conn_type {
                     ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Unknown => {
@@ -121,17 +89,20 @@ impl Agent for Updater {
             },
             Message::FetcherMessage(fm) => match fm {
                 fetcher::Response::Text(task_id, res) => {
-                    let task = self.pending_tasks.remove(&task_id).unwrap();
+                    let task = self
+                        .pending_tasks
+                        .remove(&task_id)
+                        .ok_or("task not found")?;
 
                     match res {
                         Ok(s) => match task {
                             Task::GetFeeds => {
-                                let feeds: Vec<FeedVal> = serde_json::from_str(&s).unwrap();
+                                let feeds: Vec<FeedVal> = serde_json::from_str(&s)?;
 
                                 self.repo.send(repo::Request::AddFeedVals(feeds));
                             }
                             Task::GetChannels => {
-                                let channels: Vec<ChannelVal> = serde_json::from_str(&s).unwrap();
+                                let channels: Vec<ChannelVal> = serde_json::from_str(&s)?;
 
                                 for channel in &channels {
                                     let task_id = Uuid::new_v4();
@@ -146,7 +117,7 @@ impl Agent for Updater {
                                 self.repo.send(repo::Request::AddChannelVals(channels));
                             }
                             Task::GetItems(_) => {
-                                let items: Vec<ItemVal> = serde_json::from_str(&s).unwrap();
+                                let items: Vec<ItemVal> = serde_json::from_str(&s)?;
                                 self.repo.send(repo::Request::AddItemVals(items));
                             }
                         },
@@ -154,7 +125,10 @@ impl Agent for Updater {
                     }
                 }
                 fetcher::Response::Binary(task_id, res) => {
-                    let task = self.pending_tasks.remove(&task_id).unwrap();
+                    let task = self
+                        .pending_tasks
+                        .remove(&task_id)
+                        .ok_or("could not find task")?;
 
                     match res {
                         Ok(_ab) => match task {
@@ -164,6 +138,56 @@ impl Agent for Updater {
                     }
                 }
             },
+        };
+        Ok(())
+    }
+}
+
+impl Agent for Updater {
+    type Reach = Context<Self>;
+    type Message = Message;
+    type Input = Request;
+    type Output = Response;
+
+    fn create(link: AgentLink<Self>) -> Self {
+        let mut notifier = notifier::Notifier::dispatcher();
+        let callback_repo = link.callback(Message::RepoMessage);
+        let callback_fetcher = link.callback(Message::FetcherMessage);
+        let callback_interval = link.callback(Message::Interval);
+        let closure_interval =
+            Closure::wrap(
+                Box::new(move |event: web_sys::Event| callback_interval.emit(event))
+                    as Box<dyn Fn(_)>,
+            );
+        match web_sys::window()
+            .ok_or(JsError::from_str("could not obtain window"))
+            .and_then(|w| {
+                w.set_interval_with_callback_and_timeout_and_arguments(
+                    closure_interval.as_ref().unchecked_ref(),
+                    10_000,
+                    &js_sys::Array::new(),
+                )
+                .map_err(Into::into)
+            }) {
+            Ok(_handle) => {}
+            Err(e) => notifier.send(notifier::Request::NotifyError(e)),
+        }
+
+        Self {
+            _link: link,
+            subscribers: HashSet::new(),
+            _closure_interval: closure_interval,
+            repo: repo::Repo::bridge(callback_repo),
+            fetcher: fetcher::Fetcher::bridge(callback_fetcher),
+            pending_tasks: HashMap::new(),
+            notifier: notifier,
+        }
+    }
+
+    fn update(&mut self, msg: Self::Message) {
+        match self.process_update(msg) {
+            Ok(()) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
         }
     }
 

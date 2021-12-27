@@ -2,7 +2,7 @@ use crate::objects::{
     Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig, JsError,
 };
 
-use super::repo;
+use super::{notifier, repo};
 use chrono::{Duration, Utc};
 use js_sys::ArrayBuffer;
 use serde::de::DeserializeOwned;
@@ -12,7 +12,7 @@ use url::Url;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 pub enum Request {
     FetchText(Uuid, String),
@@ -38,6 +38,7 @@ pub struct Fetcher {
     subscribers: HashSet<HandlerId>,
     repo: Box<dyn Bridge<repo::Repo>>,
     config: Option<FetcherConfig>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 enum HttpMethod {
@@ -62,6 +63,7 @@ impl Agent for Fetcher {
             subscribers: HashSet::<HandlerId>::new(),
             repo,
             config: None,
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -101,90 +103,138 @@ impl Agent for Fetcher {
                         self.config = Some(fc.clone());
 
                         match fc.authorization {
+                            // unwrap is safe, as we set the configuration two lines earlier
                             None => match &self.config.as_mut().unwrap().authorization_task {
-                                Some(at) => {
-                                    let url = get_url();
+                                Some(at) => match get_url() {
+                                    Ok(url) => {
+                                        match url.query_pairs().find(|(key, _)| key == "code") {
+                                            Some((_, val)) => {
+                                                let token_url =
+                                                    format!("{}/oauth/token", fc.config.domain);
+                                                let body = format!("grant_type=authorization_code&client_id={}&code_verifier={}&code={}&redirect_uri={}", fc.config.client_id, at.verifier, val, at.redirect);
+                                                let mut headers: HashMap<String, String> =
+                                                    HashMap::new();
+                                                headers.insert(
+                                                    "Content-Type".into(),
+                                                    "application/x-www-form-urlencoded".into(),
+                                                );
 
-                                    match url.query_pairs().find(|(key, _)| key == "code") {
-                                        Some((_, val)) => {
-                                            let token_url =
-                                                format!("{}/oauth/token", fc.config.domain);
-                                            let body = format!("grant_type=authorization_code&client_id={}&code_verifier={}&code={}&redirect_uri={}", fc.config.client_id, at.verifier, val, at.redirect);
-                                            let mut headers: HashMap<String, String> =
-                                                HashMap::new();
-                                            headers.insert(
-                                                "Content-Type".into(),
-                                                "application/x-www-form-urlencoded".into(),
-                                            );
-
-                                            self.link.send_future(async move {
-                                                Message::GetToken(
-                                                    fetch_deserializable(
-                                                        &token_url,
-                                                        HttpMethod::Post,
-                                                        Some(headers),
-                                                        Some(body),
+                                                self.link.send_future(async move {
+                                                    Message::GetToken(
+                                                        fetch_deserializable(
+                                                            &token_url,
+                                                            HttpMethod::Post,
+                                                            Some(headers),
+                                                            Some(body),
+                                                        )
+                                                        .await,
                                                     )
-                                                    .await,
-                                                )
-                                            });
-                                        }
-                                        None => {
-                                            let mut url = Url::parse(&format!(
-                                                "{}/authorize",
-                                                fc.config.domain
-                                            ))
-                                            .unwrap();
-                                            url.query_pairs_mut()
-                                                .append_pair("audience", &fc.config.audience)
-                                                .append_pair(
-                                                    "scope",
-                                                    "openid profile read:channels read:items read:feeds write:feeds",
-                                                )
-                                                .append_pair("response_type", "code")
-                                                .append_pair("client_id", &fc.config.client_id)
-                                                .append_pair("redirect_uri", &at.redirect)
-                                                .append_pair("code_challenge", &at.challenge)
-                                                .append_pair("code_challenge_method", "S256");
+                                                });
+                                            }
+                                            None => {
+                                                match Url::parse(&format!(
+                                                    "{}/authorize",
+                                                    fc.config.domain
+                                                )) {
+                                                    Ok(mut url) => {
+                                                        url.query_pairs_mut()
+                                                            .append_pair("audience", &fc.config.audience)
+                                                            .append_pair(
+                                                                "scope",
+                                                                "openid profile read:channels read:items read:feeds write:feeds",
+                                                            )
+                                                            .append_pair("response_type", "code")
+                                                            .append_pair("client_id", &fc.config.client_id)
+                                                            .append_pair("redirect_uri", &at.redirect)
+                                                            .append_pair("code_challenge", &at.challenge)
+                                                            .append_pair("code_challenge_method", "S256");
 
-                                            web_sys::window()
-                                                .unwrap()
-                                                .location()
-                                                .set_href(url.as_str());
+                                                        match web_sys::window()
+                                                            .ok_or(JsError {
+                                                                description: "could not get window"
+                                                                    .into(),
+                                                            })
+                                                            .and_then(|w| {
+                                                                w.location()
+                                                                    .set_href(url.as_str())
+                                                                    .map_err(Into::into)
+                                                            }) {
+                                                            Ok(()) => {}
+                                                            Err(e) => self.notifier.send(
+                                                                notifier::Request::NotifyError(e),
+                                                            ),
+                                                        }
+                                                    }
+                                                    Err(e) => self.notifier.send(
+                                                        notifier::Request::NotifyError(e.into()),
+                                                    ),
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                                None => {
-                                    self.config.as_mut().unwrap().authorization_task =
-                                        Some(get_authorization_task());
-                                    self.repo
-                                        .send(repo::Request::GetFetcherConf(self.config.clone()));
-                                }
+                                    Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
+                                },
+                                None => match (get_authorization_task(), self.config.as_mut()) {
+                                    (Ok(auth_task), Some(config)) => {
+                                        config.authorization_task = Some(auth_task);
+                                        self.repo.send(repo::Request::GetFetcherConf(Some(
+                                            config.clone(),
+                                        )));
+                                    }
+                                    (_, None) => self.notifier.send(notifier::Request::Notify(
+                                        notifier::Notification {
+                                            severity: notifier::NotificationSeverity::Error,
+                                            text: String::from(
+                                                "could not obtain fetcher configuration",
+                                            ),
+                                        },
+                                    )),
+                                    (Err(e), _) => {
+                                        self.notifier.send(notifier::Request::NotifyError(e))
+                                    }
+                                },
                             },
                             Some(auth) => {
                                 if auth.expires_at < Utc::now() {
-                                    let config = self.config.as_mut().unwrap();
-
-                                    config.authorization = None;
-                                    config.authorization_task = Some(get_authorization_task());
-                                    self.repo
-                                        .send(repo::Request::GetFetcherConf(self.config.clone()));
+                                    match (get_authorization_task(), self.config.as_mut()) {
+                                        (Ok(auth_task), Some(config)) => {
+                                            config.authorization = None;
+                                            config.authorization_task = Some(auth_task);
+                                            self.repo.send(repo::Request::GetFetcherConf(
+                                                self.config.clone(),
+                                            ));
+                                        }
+                                        (_, None) => self.notifier.send(notifier::Request::Notify(
+                                            notifier::Notification {
+                                                severity: notifier::NotificationSeverity::Error,
+                                                text: String::from(
+                                                    "could not obtain fetcher configuration",
+                                                ),
+                                            },
+                                        )),
+                                        (Err(e), _) => {
+                                            self.notifier.send(notifier::Request::NotifyError(e))
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                     None => {
-                        self.link.send_future(async move {
-                            Message::GetConfig(
-                                fetch_deserializable(
-                                    &format!("{}/config/auth_config.json", get_base_url()),
-                                    HttpMethod::Get,
-                                    None,
-                                    None,
+                        match get_base_url() {
+                            Ok(url) => self.link.send_future(async move {
+                                Message::GetConfig(
+                                    fetch_deserializable(
+                                        &format!("{}/config/auth_config.json", url),
+                                        HttpMethod::Get,
+                                        None,
+                                        None,
+                                    )
+                                    .await,
                                 )
-                                .await,
-                            )
-                        });
+                            }),
+                            Err(e) => self.link.send_message(Message::GetConfig(Err(e))),
+                        };
                     }
                 },
                 repo::Response::Error(err) => {
@@ -252,7 +302,7 @@ async fn fetch(
     method: HttpMethod,
     headers: Option<HashMap<String, String>>,
     body: Option<String>,
-) -> Result<web_sys::Response, wasm_bindgen::JsValue> {
+) -> Result<web_sys::Response, JsError> {
     let mut opts = web_sys::RequestInit::new();
 
     match method {
@@ -271,13 +321,15 @@ async fn fetch(
     }
 
     if let Some(val) = body {
-        opts.body(Some(&serde_wasm_bindgen::to_value(&val).unwrap()));
+        opts.body(Some(&serde_wasm_bindgen::to_value(&val)?));
     }
 
     let request = web_sys::Request::new_with_str_and_init(url, &opts)?;
-    let window = web_sys::window().unwrap();
+    let window = web_sys::window().ok_or(JsError {
+        description: String::from("error getting window"),
+    })?;
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
-    let resp: web_sys::Response = resp_value.dyn_into().unwrap();
+    let resp: web_sys::Response = resp_value.dyn_into()?;
 
     Ok(resp)
 }
@@ -320,24 +372,29 @@ async fn fetch_deserializable<T: DeserializeOwned>(
         .map(|val| serde_wasm_bindgen::from_value(val).map_err(Into::into))?
 }
 
-fn get_url() -> Url {
-    Url::parse(
+fn get_url() -> Result<Url, JsError> {
+    Ok(Url::parse(
         &web_sys::window()
-            .unwrap()
+            .ok_or(JsError {
+                description: String::from("error getting window"),
+            })?
             .document()
-            .unwrap()
-            .url()
-            .unwrap(),
-    )
-    .unwrap()
+            .ok_or(JsError {
+                description: String::from("error getting document"),
+            })?
+            .url()?,
+    )?)
 }
 
-fn get_base_url() -> String {
-    let url = get_url();
+fn get_base_url() -> Result<String, JsError> {
+    let url = get_url()?;
 
-    match url.port() {
-        Some(port) => format!("{}://{}:{}", url.scheme(), url.host_str().unwrap(), port),
-        None => format!("{}://{}", url.scheme(), url.host_str().unwrap()),
+    match (url.port(), url.host_str()) {
+        (Some(port), Some(host)) => Ok(format!("{}://{}:{}", url.scheme(), host, port)),
+        (None, Some(host)) => Ok(format!("{}://{}", url.scheme(), host)),
+        (_, None) => Err(JsError {
+            description: "no host string provided".into(),
+        }),
     }
 }
 
@@ -349,14 +406,14 @@ fn sha256_hash(data: &[u8]) -> String {
     base64_url::encode(&hasher.finalize())
 }
 
-fn get_authorization_task() -> AuthorizationTask {
+fn get_authorization_task() -> Result<AuthorizationTask, JsError> {
     let verifier = sha256_hash(Uuid::new_v4().as_bytes());
     let challenge = sha256_hash(verifier.as_bytes());
 
-    AuthorizationTask {
+    Ok(AuthorizationTask {
         verifier,
         challenge,
         state: Uuid::new_v4(),
-        redirect: get_base_url(),
-    }
+        redirect: get_base_url()?,
+    })
 }
