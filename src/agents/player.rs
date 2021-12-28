@@ -11,26 +11,27 @@ use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatch
 // TODO: implement task list to ensure serial execution of tasks (especially to avoid interrupting the set source task)
 
 pub enum Request {
-    SetSource(Uuid),
-    SetCurrentTime(f64),
-    SetVolume(f64),
-    SetPlaybackRate(f64),
-    Play {
+    SetSource {
+        id: Uuid,
         current_time: f64,
         volume: f64,
         playback_rate: f64,
     },
+    SetCurrentTime(f64),
+    SetVolume(f64),
+    SetPlaybackRate(f64),
+    Play,
     Pause,
 }
 
 pub enum Response {
-    SourceSet,
     Update {
         id: Uuid,
         duration: f64,
         current_time: f64,
         volume: f64,
         playback_rate: f64,
+        is_playing: bool,
     },
 }
 
@@ -58,34 +59,32 @@ pub struct Player {
 }
 
 enum Task {
-    SetSource {
-        handler_id: HandlerId,
-        request: Request,
-    },
+    SetSource { request: Request },
 }
 
 impl Player {
-    fn process_handle_input(&mut self, msg: Request, handler_id: HandlerId) -> Result<(), JsError> {
+    fn process_handle_input(
+        &mut self,
+        msg: Request,
+        _handler_id: HandlerId,
+    ) -> Result<(), JsError> {
         match msg {
-            Request::SetSource(id) => {
+            Request::SetSource {
+                id,
+                current_time: _,
+                volume: _,
+                playback_rate: _,
+            } => {
                 if self.active_id.is_some() {
                     self.audio_element.pause()?;
                     self.remove_interval()?;
                     self.send_update();
                     self.active_id = None;
                 }
-                self.start_setting_source(id, handler_id, msg)?;
+                self.start_setting_source(id, msg)?;
             }
-            Request::Play {
-                current_time,
-                volume,
-                playback_rate,
-            } => {
+            Request::Play => {
                 if self.active_id.is_some() {
-                    self.audio_element.set_playback_rate(playback_rate);
-                    self.audio_element.set_volume(volume);
-                    self.audio_element.set_current_time(current_time);
-
                     let prom = self.audio_element.play()?;
 
                     self.link.send_future(async move {
@@ -111,23 +110,16 @@ impl Player {
             Request::Pause => {
                 self.audio_element.pause()?;
                 self.remove_interval()?;
+                self.send_update();
             }
         }
 
         Ok(())
     }
 
-    fn start_setting_source(
-        &mut self,
-        id: Uuid,
-        handler_id: HandlerId,
-        msg: Request,
-    ) -> Result<(), JsError> {
+    fn start_setting_source(&mut self, id: Uuid, msg: Request) -> Result<(), JsError> {
         self.active_id = Some(id);
-        self.active_task = Some(Task::SetSource {
-            handler_id,
-            request: msg,
-        });
+        self.active_task = Some(Task::SetSource { request: msg });
         self.media_source = MediaSource::new()?;
         self.audio_element
             .set_src(&Url::create_object_url_with_source(&self.media_source)?);
@@ -175,6 +167,7 @@ impl Player {
                         current_time: self.audio_element.current_time(),
                         playback_rate: self.audio_element.playback_rate(),
                         volume: self.audio_element.volume(),
+                        is_playing: !self.audio_element.paused(),
                     },
                 );
             }
@@ -208,12 +201,17 @@ impl Player {
 
                 match &self.active_task {
                     Some(task) => match task {
-                        Task::SetSource {
-                            handler_id,
-                            request,
-                        } => match request {
-                            &Request::SetSource(_id) => {
-                                self.link.respond(handler_id.clone(), Response::SourceSet)
+                        Task::SetSource { request } => match request {
+                            &Request::SetSource {
+                                id: _,
+                                volume,
+                                playback_rate,
+                                current_time,
+                            } => {
+                                self.audio_element.set_playback_rate(playback_rate);
+                                self.audio_element.set_volume(volume);
+                                self.audio_element.set_current_time(current_time);
+                                self.send_update();
                             }
                             _ => {}
                         },
