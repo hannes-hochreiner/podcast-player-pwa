@@ -2,8 +2,9 @@ use super::{notifier, repo};
 use crate::objects::JsError;
 use std::collections::HashSet;
 use uuid::Uuid;
-use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
+use wasm_bindgen::{closure::Closure, JsValue};
+use wasm_bindgen_futures::JsFuture;
 use web_sys::{self, Event, MediaSource, Url};
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
@@ -38,6 +39,7 @@ pub enum Message {
     SourceOpened(Event),
     SourceBufferUpdate(Event),
     Interval(web_sys::Event),
+    StartedPlaying(Result<JsValue, JsValue>),
 }
 
 pub struct Player {
@@ -83,8 +85,12 @@ impl Player {
                     self.audio_element.set_playback_rate(playback_rate);
                     self.audio_element.set_volume(volume);
                     self.audio_element.set_current_time(current_time);
-                    self.audio_element.play();
-                    self.set_interval()?;
+
+                    let prom = self.audio_element.play()?;
+
+                    self.link.send_future(async move {
+                        Message::StartedPlaying(JsFuture::from(prom).await)
+                    });
                 }
             }
             Request::SetCurrentTime(current_time) => {
@@ -177,6 +183,10 @@ impl Player {
 
     fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
+            Message::StartedPlaying(res) => match res {
+                Ok(_) => self.set_interval()?,
+                Err(e) => self.notifier.send(notifier::Request::NotifyError(e.into())),
+            },
             Message::Interval(_e) => self.send_update(),
             Message::RepoMessage(msg) => match msg {
                 repo::Response::Enclosure(data) => {
@@ -224,7 +234,6 @@ impl Agent for Player {
     type Output = Response;
 
     fn create(link: AgentLink<Self>) -> Self {
-        let mut notifier = notifier::Notifier::dispatcher();
         let callback_repo = link.callback(Message::RepoMessage);
         let callback_mediasource_opened = link.callback(move |e| Message::SourceOpened(e));
         let mediasource_opened_closure = Closure::wrap(Box::new(move |event: web_sys::Event| {
@@ -241,6 +250,9 @@ impl Agent for Player {
                     as Box<dyn Fn(_)>,
             );
 
+        // not sure how one could avoid the unwraps in the object creation; on option might be
+        // to wrap the media source and audio element in options; however, this increases the
+        // complexity and still does not provide the required functionality
         Self {
             link,
             audio_element: web_sys::HtmlAudioElement::new().unwrap(),
@@ -253,7 +265,7 @@ impl Agent for Player {
             sourcebuffer_update_closure,
             interval_closure,
             interval_handle: None,
-            notifier: notifier,
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
