@@ -1,13 +1,17 @@
-use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+use crate::agents::{
+    notifier,
+    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+};
 use crate::objects::{Feed, JsError};
 use yew::prelude::*;
-use yew_agent::{Bridge, Bridged};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 
 pub struct FeedNew {
     feeds: Option<Vec<Feed>>,
     error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
     input_ref: yew::NodeRef,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
@@ -33,6 +37,32 @@ impl FeedNew {
             None => html! {},
         }
     }
+
+    fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
+        match msg {
+            Message::RepoMessage(response) => match response {
+                RepoResponse::Feeds(res) => {
+                    self.feeds = Some(res);
+                    Ok(true)
+                }
+                RepoResponse::Error(e) => {
+                    log::info!("feed list error: {}", e);
+                    Ok(false)
+                }
+                _ => Ok(false),
+            },
+            Message::Submit => {
+                let elem = self
+                    .input_ref
+                    .cast::<web_sys::HtmlInputElement>()
+                    .ok_or("could not get input element")?;
+
+                self.repo.send(RepoRequest::AddFeed(elem.value()));
+                elem.set_value("");
+                Ok(true)
+            }
+        }
+    }
 }
 
 impl Component for FeedNew {
@@ -50,28 +80,16 @@ impl Component for FeedNew {
             error: None,
             repo,
             input_ref: NodeRef::default(),
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Message::RepoMessage(response) => match response {
-                RepoResponse::Feeds(res) => {
-                    self.feeds = Some(res);
-                    true
-                }
-                RepoResponse::Error(e) => {
-                    log::info!("feed list error: {}", e);
-                    false
-                }
-                _ => false,
-            },
-            Message::Submit => {
-                let elem = self.input_ref.cast::<web_sys::HtmlInputElement>().unwrap();
-
-                self.repo.send(RepoRequest::AddFeed(elem.value()));
-                elem.set_value("");
-                true
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match self.process_update(ctx, msg) {
+            Ok(res) => res,
+            Err(e) => {
+                self.notifier.send(notifier::Request::NotifyError(e));
+                false
             }
         }
     }

@@ -1,4 +1,4 @@
-use std::{error::Error, fmt::Display};
+use std::{error::Error, fmt::Display, num::ParseFloatError};
 
 /// TODO: there is a wasm_bindgen::JsError coming up. Once it lands, this class should no longer tbe required.
 #[derive(Debug, Clone)]
@@ -48,6 +48,14 @@ impl From<&str> for JsError {
 
 impl From<url::ParseError> for JsError {
     fn from(e: url::ParseError) -> Self {
+        Self {
+            description: e.to_string(),
+        }
+    }
+}
+
+impl From<ParseFloatError> for JsError {
+    fn from(e: ParseFloatError) -> Self {
         Self {
             description: e.to_string(),
         }

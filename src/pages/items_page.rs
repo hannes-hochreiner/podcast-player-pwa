@@ -1,4 +1,4 @@
-use crate::components::{ItemList, NavBar};
+use crate::components::{ItemList, NavBar, Notification};
 use uuid::Uuid;
 use yew::{prelude::*, Html, Properties};
 
@@ -17,6 +17,7 @@ impl Component for ItemsPage {
         html! {
             <>
                 <NavBar/>
+                <Notification/>
                 <ItemList channel_id={ctx.props().channel_id}/>
             </>
         }

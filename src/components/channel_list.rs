@@ -1,10 +1,13 @@
 use super::router::AppRoute;
-use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+use crate::agents::{
+    notifier,
+    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+};
 use crate::components::icon::{Icon, IconStyle};
 use crate::objects::{Channel, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
-use yew_agent::{Bridge, Bridged};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 use yew_router::prelude::*;
 
 pub struct ChannelList {
@@ -12,6 +15,7 @@ pub struct ChannelList {
     error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
     show_all: bool,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
@@ -111,6 +115,39 @@ impl ChannelList {
             None => html! {},
         }
     }
+
+    fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
+        match msg {
+            Message::RepoMessage(response) => match response {
+                RepoResponse::Channels(res) => {
+                    self.channels = Some(res);
+                    Ok(true)
+                }
+                RepoResponse::Error(e) => {
+                    log::info!("channel list error: {}", e);
+                    Ok(false)
+                }
+                _ => Ok(false),
+            },
+            Message::SetShowAll(show_all) => {
+                self.show_all = show_all;
+                Ok(true)
+            }
+            Message::SetActive(id, state) => {
+                let mut channel = self
+                    .channels
+                    .as_ref()
+                    .ok_or("could not get channel reference")?
+                    .iter()
+                    .find(|e| e.val.id == id)
+                    .ok_or("could not find channel")?
+                    .clone();
+                channel.meta.active = state;
+                self.repo.send(RepoRequest::UpdateChannel(channel));
+                Ok(false)
+            }
+        }
+    }
 }
 
 impl Component for ChannelList {
@@ -128,37 +165,15 @@ impl Component for ChannelList {
             error: None,
             repo,
             show_all: false,
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Message::RepoMessage(response) => match response {
-                RepoResponse::Channels(res) => {
-                    self.channels = Some(res);
-                    true
-                }
-                RepoResponse::Error(e) => {
-                    log::info!("channel list error: {}", e);
-                    false
-                }
-                _ => false,
-            },
-            Message::SetShowAll(show_all) => {
-                self.show_all = show_all;
-                true
-            }
-            Message::SetActive(id, state) => {
-                let mut channel = self
-                    .channels
-                    .as_ref()
-                    .unwrap()
-                    .iter()
-                    .find(|e| e.val.id == id)
-                    .unwrap()
-                    .clone();
-                channel.meta.active = state;
-                self.repo.send(RepoRequest::UpdateChannel(channel));
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match self.process_update(ctx, msg) {
+            Ok(res) => res,
+            Err(e) => {
+                self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }

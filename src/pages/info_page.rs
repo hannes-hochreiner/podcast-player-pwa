@@ -1,4 +1,8 @@
-use crate::{agents::notifier, components::NavBar, components::Notification, objects::JsError};
+use crate::{
+    agents::notifier,
+    components::{NavBar, Notification},
+    objects::JsError,
+};
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
 use wasm_bindgen_futures::JsFuture;

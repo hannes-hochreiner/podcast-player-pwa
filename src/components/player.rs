@@ -1,15 +1,14 @@
-use crate::components::icon::{Icon, IconStyle};
-use std::collections::HashMap;
-
 use crate::{
-    agents::{player, repo},
+    agents::{notifier, player, repo},
+    components::icon::{Icon, IconStyle},
     objects::{Item, JsError},
 };
+use std::collections::HashMap;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
-use yew_agent::{Bridge, Bridged};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 
 pub struct Player {
     repo: Box<dyn Bridge<repo::Repo>>,
@@ -20,6 +19,7 @@ pub struct Player {
     volume: Option<f64>,
     playback_rate: Option<f64>,
     duration: Option<f64>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 pub enum Message {
     RepoMessage(repo::Response),
@@ -56,6 +56,110 @@ impl Player {
 
     fn format_time(&self, time: f64) -> String {
         format!("{}:{:02}", (time / 60.0) as u64, (time % 60.0) as u64)
+    }
+
+    fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
+        match msg {
+            Message::RepoMessage(response) => match response {
+                repo::Response::Items(items) => {
+                    self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
+                    Ok(true)
+                }
+                repo::Response::Item(_item) => {
+                    // self.items.as_mut().unwrap().insert(item.get_id(), item);
+                    Ok(false)
+                }
+                _ => Ok(false),
+            },
+            Message::Pause => {
+                self.player.send(player::Request::Pause);
+                Ok(false)
+            }
+            Message::Play(id) => {
+                let item = &self
+                    .items
+                    .as_ref()
+                    .ok_or("error getting item list reference")?[&id];
+                let current_time = match item.get_current_time() {
+                    Some(ct) => ct,
+                    None => 0.0,
+                };
+
+                self.current_time = Some(current_time);
+                self.playing = Some(item.get_id());
+                self.volume = Some(1.0);
+                self.playback_rate = Some(1.5);
+                self.player.send(player::Request::SetSource(item.get_id()));
+                Ok(false)
+            }
+            Message::PlayerMessage(player_message) => match player_message {
+                player::Response::SourceSet => {
+                    match (&self.volume, &self.playback_rate, &self.current_time) {
+                        (Some(volume), Some(playback_rate), Some(current_time)) => {
+                            self.player.send(player::Request::Play {
+                                playback_rate: playback_rate.clone(),
+                                volume: volume.clone(),
+                                current_time: current_time.clone(),
+                            });
+                        }
+                        (_, _, _) => {}
+                    }
+                    Ok(false)
+                }
+                player::Response::Update {
+                    current_time,
+                    id,
+                    duration,
+                    playback_rate,
+                    volume,
+                } => {
+                    self.duration = Some(duration);
+                    self.current_time = Some(current_time);
+                    self.playing = Some(id);
+                    self.playback_rate = Some(playback_rate);
+                    self.volume = Some(volume);
+
+                    let item = &mut self
+                        .items
+                        .as_mut()
+                        .ok_or("could not get mutable reference")?
+                        .get_mut(&id)
+                        .ok_or("could not get mutable reference to item")?;
+
+                    item.set_current_time(Some(current_time));
+
+                    self.repo.send(repo::Request::UpdateItem((**item).clone()));
+
+                    Ok(true)
+                }
+            },
+            Message::TimeChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let current_time = i.value().parse()?;
+
+                    self.player
+                        .send(player::Request::SetCurrentTime(current_time));
+                }
+                Ok(false)
+            }
+            Message::VolumeChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let volume = i.value().parse()?;
+
+                    self.player.send(player::Request::SetVolume(volume));
+                }
+                Ok(false)
+            }
+            Message::PlaybackRateChange(ev) => {
+                if let Ok(i) = get_input_element_from_event(ev) {
+                    let playback_rate = i.value().parse()?;
+
+                    self.player
+                        .send(player::Request::SetPlaybackRate(playback_rate));
+                }
+                Ok(false)
+            }
+        }
     }
 }
 
@@ -148,100 +252,15 @@ impl Component for Player {
             playback_rate: None,
             volume: None,
             duration: None,
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Message::RepoMessage(response) => match response {
-                repo::Response::Items(items) => {
-                    self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
-                    true
-                }
-                repo::Response::Item(_item) => {
-                    // self.items.as_mut().unwrap().insert(item.get_id(), item);
-                    false
-                }
-                _ => false,
-            },
-            Message::Pause => {
-                self.player.send(player::Request::Pause);
-                false
-            }
-            Message::Play(id) => {
-                let item = &self.items.as_ref().unwrap()[&id];
-                let current_time = match item.get_current_time() {
-                    Some(ct) => ct,
-                    None => 0.0,
-                };
-
-                self.current_time = Some(current_time);
-                self.playing = Some(item.get_id());
-                self.volume = Some(1.0);
-                self.playback_rate = Some(1.5);
-                self.player.send(player::Request::SetSource(item.get_id()));
-                false
-            }
-            Message::PlayerMessage(player_message) => match player_message {
-                player::Response::SourceSet => {
-                    match (&self.volume, &self.playback_rate, &self.current_time) {
-                        (Some(volume), Some(playback_rate), Some(current_time)) => {
-                            self.player.send(player::Request::Play {
-                                playback_rate: playback_rate.clone(),
-                                volume: volume.clone(),
-                                current_time: current_time.clone(),
-                            });
-                        }
-                        (_, _, _) => {}
-                    }
-                    false
-                }
-                player::Response::Update {
-                    current_time,
-                    id,
-                    duration,
-                    playback_rate,
-                    volume,
-                } => {
-                    self.duration = Some(duration);
-                    self.current_time = Some(current_time);
-                    self.playing = Some(id);
-                    self.playback_rate = Some(playback_rate);
-                    self.volume = Some(volume);
-
-                    let item = &mut self.items.as_mut().unwrap().get_mut(&id).unwrap();
-
-                    item.set_current_time(Some(current_time));
-
-                    self.repo.send(repo::Request::UpdateItem((**item).clone()));
-
-                    true
-                }
-            },
-            Message::TimeChange(ev) => {
-                if let Ok(i) = get_input_element_from_event(ev) {
-                    let current_time = i.value().parse().unwrap();
-
-                    self.player
-                        .send(player::Request::SetCurrentTime(current_time));
-                }
-                false
-            }
-            Message::VolumeChange(ev) => {
-                if let Ok(i) = get_input_element_from_event(ev) {
-                    let volume = i.value().parse().unwrap();
-
-                    self.player.send(player::Request::SetVolume(volume));
-                }
-                false
-            }
-            Message::PlaybackRateChange(ev) => {
-                if let Ok(i) = get_input_element_from_event(ev) {
-                    let playback_rate = i.value().parse().unwrap();
-
-                    self.player
-                        .send(player::Request::SetPlaybackRate(playback_rate));
-                }
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match self.process_update(ctx, msg) {
+            Ok(res) => res,
+            Err(e) => {
+                self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }

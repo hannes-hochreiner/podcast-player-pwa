@@ -1,5 +1,5 @@
 mod tasks;
-use super::fetcher::{self};
+use super::{fetcher, notifier};
 use crate::objects::*;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
@@ -9,7 +9,7 @@ use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
 use web_sys::{IdbDatabase, IdbIndexParameters, IdbRequest, IdbTransaction, IdbTransactionMode};
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, HandlerId};
+use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
@@ -53,6 +53,7 @@ pub struct Repo {
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     idb_tasks: HashMap<Uuid, IdbResponse>,
     fetcher_tasks: HashMap<Uuid, FetcherTask>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 enum FetcherTask {
@@ -60,7 +61,7 @@ enum FetcherTask {
     AddFeed(String, HandlerId),
 }
 
-pub enum Msg {
+pub enum Message {
     OpenDbUpdate(web_sys::Event),
     OpenDbSuccess(web_sys::Event),
     IdbRequest((Uuid, Result<web_sys::Event, web_sys::Event>)),
@@ -101,13 +102,14 @@ trait RepositoryTask {
 }
 
 impl Repo {
-    fn init(&mut self) {
+    fn init(&mut self) -> Result<(), JsError> {
         let window: web_sys::Window = web_sys::window().expect("window not available");
-        let idb_factory: web_sys::IdbFactory = window.indexed_db().unwrap().unwrap();
+        let idb_factory: web_sys::IdbFactory =
+            window.indexed_db()?.ok_or("could not get indexed db")?;
         let idb_open_request: web_sys::IdbOpenDbRequest =
-            idb_factory.open_with_u32("podcast-player", 1).unwrap();
-        let callback_update = self.link.callback(Msg::OpenDbUpdate);
-        let callback_success = self.link.callback(Msg::OpenDbSuccess);
+            idb_factory.open_with_u32("podcast-player", 1)?;
+        let callback_update = self.link.callback(Message::OpenDbUpdate);
+        let callback_success = self.link.callback(Message::OpenDbSuccess);
         let closure_update =
             Closure::wrap(
                 Box::new(move |event: web_sys::Event| callback_update.emit(event))
@@ -126,13 +128,15 @@ impl Repo {
             _closure_success: closure_success,
             request: idb_open_request,
         });
+
+        Ok(())
     }
 
-    fn process_tasks(&mut self) {
+    fn process_tasks(&mut self) -> Result<(), JsError> {
         match &self.db {
             Some(db) => {
                 while self.pending_tasks.len() > 0 {
-                    let (handler_id, mut task) = self.pending_tasks.pop().unwrap();
+                    let (handler_id, mut task) = self.pending_tasks.pop().ok_or("no tasks left")?;
 
                     match task.get_request(db) {
                         Ok(req) => {
@@ -149,68 +153,15 @@ impl Repo {
             }
             None => log::error!("no database available"),
         }
-    }
-}
 
-fn wrap_idb_request(
-    link: &AgentLink<Repo>,
-    active_idb_tasks: &mut HashMap<Uuid, IdbResponse>,
-    task_id: Uuid,
-    request: IdbRequest,
-) {
-    let request_id = Uuid::new_v4();
-    let callback_success = link.callback(Msg::IdbRequest);
-    let callback_error = link.callback(Msg::IdbRequest);
-    let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
-        callback_success.emit((request_id, Ok(event)))
-    }) as Box<dyn Fn(_)>);
-    let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
-        callback_error.emit((request_id, Err(event)))
-    }) as Box<dyn Fn(_)>);
-    request.set_onsuccess(Some(closure_error.as_ref().unchecked_ref()));
-    request.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
-    active_idb_tasks.insert(
-        request_id,
-        IdbResponse {
-            request,
-            _closure_error: closure_error,
-            _closure_success: closure_success,
-            task_id,
-        },
-    );
-}
-
-impl Agent for Repo {
-    type Reach = Context<Self>;
-    type Message = Msg;
-    type Input = Request;
-    type Output = Response;
-
-    fn create(link: AgentLink<Self>) -> Self {
-        let fetcher_cb = link.callback(Msg::FetcherMessage);
-
-        let mut obj = Self {
-            link,
-            subscribers: HashSet::new(),
-            open_request: None,
-            db: None,
-            pending_tasks: Vec::new(),
-            fetcher: fetcher::Fetcher::bridge(fetcher_cb),
-            fetcher_tasks: HashMap::new(),
-            idb_tasks: HashMap::new(),
-            in_progress_tasks: HashMap::new(),
-        };
-
-        obj.init();
-
-        obj
+        Ok(())
     }
 
-    fn update(&mut self, msg: Self::Message) {
+    fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
-            Msg::FetcherMessage(resp) => match resp {
+            Message::FetcherMessage(resp) => match resp {
                 fetcher::Response::Binary(uuid, res) => {
-                    let task = self.fetcher_tasks.remove(&uuid).unwrap();
+                    let task = self.fetcher_tasks.remove(&uuid).ok_or("task not found")?;
 
                     match task {
                         FetcherTask::DownloadEnclosure(item_id, handler_id) => {
@@ -222,7 +173,7 @@ impl Agent for Repo {
                                             item_id, data,
                                         )),
                                     ));
-                                    self.process_tasks();
+                                    self.process_tasks()?;
                                 }
                                 (None, _) => log::error!("could not find database"),
                                 (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
@@ -232,21 +183,20 @@ impl Agent for Repo {
                     }
                 }
                 fetcher::Response::Text(uuid, _res) => {
-                    let task = self.fetcher_tasks.remove(&uuid).unwrap();
+                    let task = self.fetcher_tasks.remove(&uuid).ok_or("task not found")?;
 
                     match task {
                         _ => {}
                     }
                 }
             },
-            Msg::OpenDbUpdate(_e) => {
+            Message::OpenDbUpdate(_e) => {
                 let idb_db = IdbDatabase::from(
                     self.open_request
                         .as_ref()
-                        .unwrap()
+                        .ok_or("could not get reference")?
                         .request
-                        .result()
-                        .unwrap(),
+                        .result()?,
                 );
                 let object_stores = vec![
                     "channels",
@@ -277,7 +227,7 @@ impl Agent for Repo {
                                 for (name, key_paths) in &indices[object_store] {
                                     match os.create_index_with_str_sequence_and_optional_parameters(
                                         name,
-                                        &serde_wasm_bindgen::to_value(key_paths).unwrap(),
+                                        &serde_wasm_bindgen::to_value(key_paths)?,
                                         &IdbIndexParameters::new(),
                                     ) {
                                         Ok(_) => log::info!("created index {}", name),
@@ -296,23 +246,25 @@ impl Agent for Repo {
                     }
                 }
             }
-            Msg::OpenDbSuccess(_e) => {
+            Message::OpenDbSuccess(_e) => {
                 self.db = Some(
                     self.open_request
                         .as_ref()
-                        .unwrap()
+                        .ok_or("could not get reference")?
                         .request
-                        .result()
-                        .unwrap()
+                        .result()?
                         .into(),
                 );
                 self.open_request = None;
                 log::info!("open db");
-                self.process_tasks();
+                self.process_tasks()?;
             }
-            Msg::IdbRequest(res) => {
-                let req = self.idb_tasks.remove(&res.0).unwrap();
-                let (handler_id, mut task) = self.in_progress_tasks.remove(&req.task_id).unwrap();
+            Message::IdbRequest(res) => {
+                let req = self.idb_tasks.remove(&res.0).ok_or("task not found")?;
+                let (handler_id, mut task) = self
+                    .in_progress_tasks
+                    .remove(&req.task_id)
+                    .ok_or("task not found")?;
 
                 match task.set_response(req.request.result()) {
                     Ok(Some(resp)) => match resp {
@@ -330,6 +282,74 @@ impl Agent for Repo {
                     Err(e) => self.link.respond(handler_id, Response::Error(e)),
                 }
             }
+        }
+
+        Ok(())
+    }
+}
+
+fn wrap_idb_request(
+    link: &AgentLink<Repo>,
+    active_idb_tasks: &mut HashMap<Uuid, IdbResponse>,
+    task_id: Uuid,
+    request: IdbRequest,
+) {
+    let request_id = Uuid::new_v4();
+    let callback_success = link.callback(Message::IdbRequest);
+    let callback_error = link.callback(Message::IdbRequest);
+    let closure_success = Closure::wrap(Box::new(move |event: web_sys::Event| {
+        callback_success.emit((request_id, Ok(event)))
+    }) as Box<dyn Fn(_)>);
+    let closure_error = Closure::wrap(Box::new(move |event: web_sys::Event| {
+        callback_error.emit((request_id, Err(event)))
+    }) as Box<dyn Fn(_)>);
+    request.set_onsuccess(Some(closure_error.as_ref().unchecked_ref()));
+    request.set_onerror(Some(closure_error.as_ref().unchecked_ref()));
+    active_idb_tasks.insert(
+        request_id,
+        IdbResponse {
+            request,
+            _closure_error: closure_error,
+            _closure_success: closure_success,
+            task_id,
+        },
+    );
+}
+
+impl Agent for Repo {
+    type Reach = Context<Self>;
+    type Message = Message;
+    type Input = Request;
+    type Output = Response;
+
+    fn create(link: AgentLink<Self>) -> Self {
+        let fetcher_cb = link.callback(Message::FetcherMessage);
+
+        let mut obj = Self {
+            link,
+            subscribers: HashSet::new(),
+            open_request: None,
+            db: None,
+            pending_tasks: Vec::new(),
+            fetcher: fetcher::Fetcher::bridge(fetcher_cb),
+            fetcher_tasks: HashMap::new(),
+            idb_tasks: HashMap::new(),
+            in_progress_tasks: HashMap::new(),
+            notifier: notifier::Notifier::dispatcher(),
+        };
+
+        match obj.init() {
+            Ok(()) => {}
+            Err(e) => obj.notifier.send(notifier::Request::NotifyError(e)),
+        }
+
+        obj
+    }
+
+    fn update(&mut self, msg: Self::Message) {
+        match self.process_update(msg) {
+            Ok(()) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
         }
     }
 
@@ -407,7 +427,10 @@ impl Agent for Repo {
         }
 
         match &self.db {
-            Some(_) => self.process_tasks(),
+            Some(_) => match self.process_tasks() {
+                Ok(()) => {}
+                Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
+            },
             None => log::warn!("database not available; postponing task"),
         }
     }

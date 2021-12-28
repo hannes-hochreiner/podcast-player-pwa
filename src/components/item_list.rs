@@ -1,9 +1,14 @@
-use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+use std::cmp::Ordering;
+
+use crate::agents::{
+    notifier,
+    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+};
 use crate::components::icon::{Icon, IconStyle};
 use crate::objects::{Channel, DownloadStatus, Item, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
-use yew_agent::{Bridge, Bridged};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 
 pub struct ItemList {
     items: Option<Vec<Item>>,
@@ -12,6 +17,7 @@ pub struct ItemList {
     channel: Option<Channel>,
     keys: Option<Vec<String>>,
     current_index: Option<usize>,
+    notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
@@ -144,6 +150,108 @@ impl ItemList {
             None => html! {},
         }
     }
+
+    fn process_update(&mut self, ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
+        match msg {
+            Message::UpdateCurrentIndex(idx) => {
+                if let Some(channel) = &self.channel {
+                    self.current_index = Some(idx);
+                    self.items = None;
+                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                        channel.val.id,
+                        self.keys.as_ref().ok_or("could not get reference")?[idx].clone(),
+                    ));
+                }
+                Ok(false)
+            }
+            Message::ToggleNew(id) => match &self.items {
+                Some(items) => {
+                    let mut item = items
+                        .iter()
+                        .find(|i| i.get_id() == id)
+                        .ok_or("could not find item")?
+                        .clone();
+
+                    item.set_new(!item.get_new());
+                    self.repo.send(RepoRequest::UpdateItem(item));
+                    Ok(false)
+                }
+                None => Ok(false),
+            },
+            Message::ToggleDownload(id) => match &self.items {
+                Some(items) => {
+                    let mut item = items
+                        .iter()
+                        .find(|i| i.get_id() == id)
+                        .ok_or("could not find item")?
+                        .clone();
+
+                    item.set_download(!item.get_download());
+                    self.repo.send(RepoRequest::UpdateItem(item));
+                    Ok(false)
+                }
+                None => Ok(false),
+            },
+            Message::RepoMessage(resp) => match resp {
+                RepoResponse::Channels(res) => {
+                    // let channel_id = channel.val.id.clone();
+                    let channel = res
+                        .iter()
+                        .find(|e| e.val.id == ctx.props().channel_id)
+                        .ok_or("could not find channel")?
+                        .clone();
+                    let mut keys: Vec<String> = channel
+                        .keys
+                        .year_month_keys
+                        .iter()
+                        .map(|e| e.clone())
+                        .collect();
+                    // unwrap is safe, as a default is provided
+                    keys.sort_by(|a, b| b.partial_cmp(a).or(Some(Ordering::Equal)).unwrap());
+
+                    self.current_index = Some(0);
+                    self.keys = Some(keys);
+
+                    self.channel = Some(channel);
+                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                        ctx.props().channel_id,
+                        self.keys.as_ref().ok_or("could not get reference")?[0].clone(),
+                    ));
+                    Ok(false)
+                }
+                RepoResponse::Items(mut res) => {
+                    // unwrap is safe, as a default is provided
+                    res.sort_by(|a, b| {
+                        b.get_date()
+                            .partial_cmp(&a.get_date())
+                            .or(Some(Ordering::Equal))
+                            .unwrap()
+                    });
+
+                    self.items = Some(res);
+                    Ok(true)
+                }
+                RepoResponse::Error(e) => {
+                    self.error = Some(e);
+                    Ok(true)
+                }
+                RepoResponse::Item(item) => match &mut self.items {
+                    Some(items) => {
+                        let index = items
+                            .iter()
+                            .enumerate()
+                            .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
+                            .ok_or("could not find item")?
+                            .0;
+                        items[index] = item;
+                        Ok(true)
+                    }
+                    None => Ok(false),
+                },
+                _ => Ok(false),
+            },
+        }
+    }
 }
 
 impl Component for ItemList {
@@ -163,93 +271,17 @@ impl Component for ItemList {
             repo,
             current_index: None,
             keys: None,
+            notifier: notifier::Notifier::dispatcher(),
         }
     }
 
     fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Message::UpdateCurrentIndex(idx) => {
-                if let Some(channel) = &self.channel {
-                    self.current_index = Some(idx);
-                    self.items = None;
-                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        channel.val.id,
-                        self.keys.as_ref().unwrap()[idx].clone(),
-                    ));
-                }
+        match self.process_update(ctx, msg) {
+            Ok(res) => res,
+            Err(e) => {
+                self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
-            Message::ToggleNew(id) => match &self.items {
-                Some(items) => {
-                    let mut item = items.iter().find(|i| i.get_id() == id).unwrap().clone();
-
-                    item.set_new(!item.get_new());
-                    self.repo.send(RepoRequest::UpdateItem(item));
-                    false
-                }
-                None => false,
-            },
-            Message::ToggleDownload(id) => match &self.items {
-                Some(items) => {
-                    let mut item = items.iter().find(|i| i.get_id() == id).unwrap().clone();
-
-                    item.set_download(!item.get_download());
-                    self.repo.send(RepoRequest::UpdateItem(item));
-                    false
-                }
-                None => false,
-            },
-            Message::RepoMessage(resp) => match resp {
-                RepoResponse::Channels(res) => {
-                    // let channel_id = channel.val.id.clone();
-                    let channel = res
-                        .iter()
-                        .find(|e| e.val.id == ctx.props().channel_id)
-                        .unwrap()
-                        .clone();
-                    let mut keys: Vec<String> = channel
-                        .keys
-                        .year_month_keys
-                        .iter()
-                        .map(|e| e.clone())
-                        .collect();
-                    keys.sort_by(|a, b| b.partial_cmp(a).unwrap());
-
-                    self.current_index = Some(0);
-                    self.keys = Some(keys);
-
-                    self.channel = Some(channel);
-                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        ctx.props().channel_id,
-                        self.keys.as_ref().unwrap()[0].clone(),
-                    ));
-                    false
-                }
-                RepoResponse::Items(mut res) => {
-                    res.sort_by(|a, b| b.get_date().partial_cmp(&a.get_date()).unwrap());
-
-                    self.items = Some(res);
-                    true
-                }
-                RepoResponse::Error(e) => {
-                    self.error = Some(e);
-                    true
-                }
-                RepoResponse::Item(item) => match &mut self.items {
-                    Some(items) => {
-                        let index = items
-                            .iter()
-                            .enumerate()
-                            .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
-                            .unwrap()
-                            .0;
-                        items[index] = item;
-                        true
-                    }
-                    None => false,
-                },
-                _ => false,
-            },
         }
     }
 
