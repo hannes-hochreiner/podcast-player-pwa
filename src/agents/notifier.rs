@@ -67,16 +67,26 @@ impl Agent for Notifier {
 
     fn handle_input(&mut self, msg: Self::Input, _id: HandlerId) {
         match msg {
-            Request::Notify(notification) => self.notifications.push(notification),
-            Request::NotifyError(err) => self.notifications.push(Notification {
-                severity: NotificationSeverity::Error,
-                text: err.description,
-            }),
+            Request::Notify(notification) => {
+                match notification.severity {
+                    NotificationSeverity::Error => log::error!("{}", notification.text),
+                    NotificationSeverity::Info => log::info!("{}", notification.text),
+                }
+                self.notifications.push(notification)
+            }
+            Request::NotifyError(err) => {
+                log::error!("{}", err);
+                self.notifications.push(Notification {
+                    severity: NotificationSeverity::Error,
+                    text: err.description,
+                })
+            }
             Request::Dismiss => {
                 self.notifications.remove(0);
                 self.notify_subscribed();
             }
         }
+        self.notify_subscribed();
     }
 
     fn connected(&mut self, id: HandlerId) {
