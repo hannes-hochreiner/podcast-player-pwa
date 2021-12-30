@@ -56,10 +56,10 @@ impl repo::RepositoryTask for AddEnclosureTask {
 
                 enclosure_os
                     .put_with_key(&self.data, &serde_wasm_bindgen::to_value(&item.get_id())?)?;
-                Ok(Some(repo::Response::Item(item)))
+                Ok(Some(repo::Response::DownloadEnclosure(item)))
             }
 
-            None => Err("error adding channel vals".into()),
+            None => Err("error adding enclosure".into()),
         }
     }
 }

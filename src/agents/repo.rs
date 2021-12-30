@@ -30,6 +30,7 @@ pub enum Request {
     AddFeed(String),
 }
 
+#[derive(Debug, Clone)]
 pub enum Response {
     Error(JsError),
     Channels(Vec<Channel>),
@@ -39,7 +40,9 @@ pub enum Response {
     AddItemVals(Result<(), JsError>),
     AddFeedVals(Result<(), JsError>),
     Items(Vec<Item>),
-    Item(Item),
+    ModifiedItems(Vec<Item>),
+    UpdateItem(Item),
+    DownloadEnclosure(Item),
     FetcherConfig(Option<FetcherConfig>),
 }
 
@@ -267,14 +270,22 @@ impl Repo {
                     .ok_or("task not found")?;
 
                 match task.set_response(req.request.result()) {
-                    Ok(Some(resp)) => match resp {
-                        Response::Item(item) => {
-                            for sub in &self.subscribers {
-                                self.link.respond(*sub, Response::Item(item.clone()));
+                    Ok(Some(resp)) => {
+                        self.link.respond(handler_id.clone(), resp.clone());
+                        match resp {
+                            Response::UpdateItem(item) | Response::DownloadEnclosure(item) => {
+                                for sub in &self.subscribers {
+                                    if sub.is_respondable() && *sub != handler_id {
+                                        self.link.respond(
+                                            *sub,
+                                            Response::ModifiedItems(vec![item.clone()]),
+                                        );
+                                    }
+                                }
                             }
+                            _ => {}
                         }
-                        _ => self.link.respond(handler_id, resp),
-                    },
+                    }
                     Ok(None) => {
                         self.in_progress_tasks
                             .insert(req.task_id, (handler_id, task));
@@ -368,7 +379,7 @@ impl Agent for Repo {
             }
             Request::GetFeeds => self
                 .pending_tasks
-                .push((handler_id, Box::new(GetAllTask::new(Kind::Feed)))),
+                .push((handler_id, Box::new(GetAllTask::new(Kind::Feeds, None)))),
             Request::GetFetcherConf(fct) => self.pending_tasks.push((
                 handler_id,
                 Box::new(GetFetcherConfTask::new_with_option(fct)),
@@ -387,7 +398,7 @@ impl Agent for Repo {
             )),
             Request::GetChannels => self
                 .pending_tasks
-                .push((handler_id, Box::new(GetAllTask::new(Kind::Channel)))),
+                .push((handler_id, Box::new(GetAllTask::new(Kind::Channels, None)))),
             Request::GetEnclosure(id) => self
                 .pending_tasks
                 .push((handler_id, Box::new(GetEnclosureTask::new_with_id(id)))),

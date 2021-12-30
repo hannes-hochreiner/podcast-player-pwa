@@ -14,14 +14,14 @@ pub struct Player {
     repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
     items: Option<HashMap<Uuid, Item>>,
-    source_id: Option<Uuid>,
-    current_time: Option<f64>,
+    source: Option<Item>,
     volume: Option<f64>,
     playback_rate: Option<f64>,
     duration: Option<f64>,
     notifier: Dispatcher<notifier::Notifier>,
     is_playing: bool,
     show_sliders: bool,
+    allow_update: bool,
 }
 pub enum Message {
     RepoMessage(repo::Response),
@@ -29,6 +29,7 @@ pub enum Message {
     SetSource(Uuid),
     Play,
     Pause,
+    OnFocus(FocusEvent),
     TimeChange(Event),
     VolumeChange(Event),
     PlaybackRateChange(Event),
@@ -60,17 +61,23 @@ impl Player {
             true => {
                 html! {
                     <div class="card-content">
-                        {match (self.current_time, self.duration) {
-                            (Some(current_time), Some(duration)) => html! {
+                        {match (&self.source, self.duration) {
+                            (Some(source), Some(duration)) => {
+                                let current_time = match source.get_current_time() {
+                                    Some(curr_time) => curr_time,
+                                    None => 0.0
+                                };
+                                html! {
                                 <>
-                                    <input type="range" min="0" step="0.1" value={current_time.to_string()} max={duration.to_string()} style="width: 100%" onchange={ctx.link().callback(|e| Message::TimeChange(e))}/>
+                                    <input type="range" min="0" step="any" value={current_time.to_string()} max={duration.to_string()} style="width: 100%" onfocus={ctx.link().callback(|e| Message::OnFocus(e))} onchange={ctx.link().callback(|e| Message::TimeChange(e))}/>
                                     <div class="columns is-mobile">
                                         <div class="column is-one-third has-text-left">{""}</div>
                                         <div class="column is-one-third has-text-centered">{self.format_time(current_time)}</div>
                                         <div class="column is-one-third has-text-right">{self.format_time(duration)}</div>
                                     </div>
                                 </>
-                            },
+                            }
+                        },
                             (_, _) => html! {
                                 <>
                                     <input type="range" disabled={true} min="0" step="0.1" value="0.5" max="1.0" style="width: 100%"/>
@@ -148,9 +155,32 @@ impl Player {
                     self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
                     Ok(true)
                 }
-                repo::Response::Item(_item) => {
+                repo::Response::UpdateItem(_item) => {
                     // self.items.as_mut().unwrap().insert(item.get_id(), item);
                     Ok(false)
+                }
+                repo::Response::ModifiedItems(items) => {
+                    let mut res = false;
+
+                    if let Some(source) = &mut self.source {
+                        if let Some(updated_item) =
+                            items.iter().find(|i| i.get_id() == source.get_id())
+                        {
+                            self.source = Some((*updated_item).clone());
+                            res = true;
+                        }
+                    }
+
+                    if let Some(self_items) = &mut self.items {
+                        for item in items {
+                            if self_items.contains_key(&item.get_id()) {
+                                self_items.remove(&item.get_id());
+                                self_items.insert(item.get_id(), item);
+                            }
+                        }
+                    }
+
+                    Ok(res)
                 }
                 _ => Ok(false),
             },
@@ -174,52 +204,38 @@ impl Player {
                 let volume = 1.0;
                 let playback_rate = 1.5;
 
-                self.current_time = Some(current_time);
-                self.source_id = Some(item.get_id());
+                self.source = Some((*item).clone());
                 self.volume = Some(volume);
                 self.playback_rate = Some(playback_rate);
-                self.player.send(player::Request::SetSource {
-                    id: item.get_id(),
-                    current_time,
-                    playback_rate,
-                    volume,
-                });
-                Ok(false)
+                self.player
+                    .send(player::Request::SetSource((*item).clone()));
+                Ok(true)
             }
             Message::PlayerMessage(player_message) => match player_message {
-                player::Response::Update {
-                    current_time,
-                    id,
-                    duration,
-                    playback_rate,
-                    volume,
-                    is_playing,
-                } => {
+                player::Response::SourceSet(item, duration) => {
+                    self.source = Some(item);
                     self.duration = Some(duration);
-                    self.current_time = Some(current_time);
-                    self.source_id = Some(id);
-                    self.playback_rate = Some(playback_rate);
-                    self.volume = Some(volume);
-                    self.is_playing = is_playing;
-
-                    let item = &mut self
-                        .items
-                        .as_mut()
-                        .ok_or("could not get mutable reference")?
-                        .get_mut(&id)
-                        .ok_or("could not get mutable reference to item")?;
-
-                    item.set_current_time(Some(current_time));
-
-                    self.repo.send(repo::Request::UpdateItem((**item).clone()));
-
+                    Ok(true)
+                }
+                player::Response::Paused => {
+                    self.is_playing = false;
+                    Ok(true)
+                }
+                player::Response::Playing => {
+                    self.is_playing = true;
                     Ok(true)
                 }
             },
+            Message::OnFocus(_ev) => {
+                self.allow_update = false;
+                Ok(false)
+            }
             Message::TimeChange(ev) => {
                 if let Ok(i) = get_input_element_from_event(ev) {
                     let current_time = i.value().parse()?;
 
+                    self.allow_update = true;
+                    i.blur()?;
                     self.player
                         .send(player::Request::SetCurrentTime(current_time));
                 }
@@ -251,9 +267,9 @@ impl Component for Player {
     type Properties = ();
 
     fn view(&self, ctx: &Context<Self>) -> Html {
-        let item_title = match (&self.source_id, &self.items) {
-            (Some(source_id), Some(items)) => items[source_id].get_title(),
-            (_, _) => String::from("..."),
+        let item_title = match &self.source {
+            Some(source) => source.get_title(),
+            _ => String::from("..."),
         };
 
         html! {
@@ -261,7 +277,7 @@ impl Component for Player {
                 <section class="section">
                     <div class="card">
                         <header class="card-header">
-                            {match (self.source_id, self.is_playing) {
+                            {match (&self.source, self.is_playing) {
                                 (Some(_), true) => html! {
                                     <button class="card-header-icon" onclick={ctx.link().callback(|_| Message::Pause)}><Icon name="pause" style={IconStyle::Outlined}/></button>
                                 },
@@ -294,21 +310,21 @@ impl Component for Player {
         Self {
             repo,
             items: None,
-            source_id: None,
+            source: None,
             player,
-            current_time: None,
             playback_rate: None,
             volume: None,
             duration: None,
             notifier: notifier::Notifier::dispatcher(),
             is_playing: false,
             show_sliders: false,
+            allow_update: true,
         }
     }
 
     fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match self.process_update(ctx, msg) {
-            Ok(res) => res,
+            Ok(res) => res && self.allow_update,
             Err(e) => {
                 self.notifier.send(notifier::Request::NotifyError(e));
                 false

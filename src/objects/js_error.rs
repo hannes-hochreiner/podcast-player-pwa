@@ -25,7 +25,7 @@ impl Display for JsError {
 impl From<wasm_bindgen::JsValue> for JsError {
     fn from(val: wasm_bindgen::JsValue) -> Self {
         Self {
-            description: val.as_string().unwrap(),
+            description: format!("{:?}", val),
         }
     }
 }

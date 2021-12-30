@@ -34,8 +34,8 @@ impl repo::RepositoryTask for UpdateItemTask {
         &mut self,
         result: Result<wasm_bindgen::JsValue, wasm_bindgen::JsValue>,
     ) -> Result<Option<repo::Response>, JsError> {
-        Ok(Some(repo::Response::Item(serde_wasm_bindgen::from_value(
-            result?,
-        )?)))
+        Ok(Some(repo::Response::UpdateItem(
+            serde_wasm_bindgen::from_value(result?)?,
+        )))
     }
 }
