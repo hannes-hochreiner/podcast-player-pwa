@@ -82,7 +82,6 @@ impl Player {
     }
 
     fn process_task(&mut self, task: &mut Task) -> Result<bool, JsError> {
-        // log::debug!("process_task: {:?}", task);
         match task {
             Task::SetCurrentTime(task) => match task.get_stage() {
                 SetCurrentTimeStage::Init => {
@@ -144,24 +143,9 @@ impl Player {
                 }
             },
             Task::SetSource(task) => {
-                // log::info!(
-                //     "source: {:?}, source_opened: {}, buffer_update: {}, data: {}",
-                //     self.source,
-                //     task.source_opened,
-                //     task.buffer_updated,
-                //     task.data.is_some()
-                // );
                 match (&mut self.source, task.get_stage()) {
                     (source, SetSourceStage::Init) => {
                         if let Some(curr_item) = source {
-                            // // pause player
-                            // self.audio_element.pause()?;
-                            // // remove timeupdate handler
-                            // self.audio_element.remove_event_listener_with_callback(
-                            //     "timeupdate",
-                            //     self.on_timeupdate_closure.as_ref().unchecked_ref(),
-                            // )?;
-                            // update old item
                             curr_item.set_current_time(Some(self.audio_element.current_time()));
                             self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
                             self.source = None;
@@ -318,13 +302,11 @@ impl Player {
                 }
             }
             Message::OnTimeupdate(_e) => {
-                log::info!("ontimeupdate: event: {}", self.audio_element.current_time());
                 let mut task_required = false;
 
                 if let Some(mut task) = self.tasks.last_mut() {
                     match &mut task {
                         Task::SetCurrentTime(task) => {
-                            log::info!("ontimeupdate: task: {}", task.get_current_time());
                             task.time_set();
                         }
                         _ => task_required = true,
