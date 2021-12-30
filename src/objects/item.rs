@@ -79,6 +79,14 @@ impl Item {
     fn regenerate_keys(&mut self) {
         self.keys = ItemKeys::new_from_val_meta(&self.val, &self.meta);
     }
+
+    pub fn increment_play_count(&mut self) {
+        self.meta.play_count = self.meta.play_count + 1;
+    }
+
+    pub fn get_play_count(&self) -> u32 {
+        self.meta.play_count
+    }
 }
 
 impl From<&ItemVal> for Item {
@@ -89,6 +97,7 @@ impl From<&ItemVal> for Item {
             download: false,
             download_status: DownloadStatus::NotRequested,
             current_time: None,
+            play_count: 0,
         };
         let keys = ItemKeys::new_from_val_meta(&val, &meta);
 
@@ -118,6 +127,7 @@ pub struct ItemMeta {
     download: bool,
     download_status: DownloadStatus,
     current_time: Option<f64>,
+    play_count: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

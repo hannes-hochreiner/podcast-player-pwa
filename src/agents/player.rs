@@ -1,3 +1,5 @@
+mod task;
+
 use super::{notifier, repo};
 use crate::objects::{Item, JsError};
 use std::collections::HashSet;
@@ -7,8 +9,6 @@ use wasm_bindgen::{closure::Closure, JsValue};
 use wasm_bindgen_futures::JsFuture;
 use web_sys::{self, Event, MediaSource, Url};
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
-
-mod task;
 
 // TODO: check play events
 // TODO: check whether any of the updated items need to be added to the item list
@@ -28,6 +28,7 @@ pub enum Response {
     Playing,
     Paused,
     SourceSet(Item, f64),
+    End,
 }
 
 #[derive(Debug)]
@@ -39,14 +40,7 @@ pub enum Message {
     OnPlay(Event),
     OnPause(Event),
     OnTimeupdate(Event),
-}
-
-#[derive(Debug)]
-enum Task {
-    SetSource(SetSourceTask),
-    Play(PlayTask),
-    Pause(PauseTask),
-    SetCurrentTime(SetCurrentTimeTask),
+    OnEnd(Event),
 }
 
 pub struct Player {
@@ -59,6 +53,7 @@ pub struct Player {
     sourcebuffer_update_closure: Closure<dyn Fn(web_sys::Event)>,
     _on_play_closure: Closure<dyn Fn(web_sys::Event)>,
     _on_pause_closure: Closure<dyn Fn(web_sys::Event)>,
+    _on_end_closure: Closure<dyn Fn(web_sys::Event)>,
     on_timeupdate_closure: Closure<dyn Fn(web_sys::Event)>,
     source: Option<Item>,
     notifier: Dispatcher<notifier::Notifier>,
@@ -83,6 +78,25 @@ impl Player {
 
     fn process_task(&mut self, task: &mut Task) -> Result<bool, JsError> {
         match task {
+            Task::End(task) => match task.get_stage() {
+                EndStage::Finalize => {
+                    log::info!(
+                        "finalize: paused: {}, curr time: {}, duration: {}",
+                        self.audio_element.paused(),
+                        self.audio_element.current_time(),
+                        self.audio_element.duration()
+                    );
+                    if let Some(item) = &mut self.source {
+                        item.increment_play_count();
+                        item.set_current_time(None);
+                        self.repo.send(repo::Request::UpdateItem(item.clone()));
+                        log::info!("send end");
+                        self.send_response(Response::End);
+                    }
+
+                    Ok(true)
+                }
+            },
             Task::SetCurrentTime(task) => match task.get_stage() {
                 SetCurrentTimeStage::Init => {
                     self.audio_element
@@ -143,13 +157,10 @@ impl Player {
                 }
             },
             Task::SetSource(task) => {
-                match (&mut self.source, task.get_stage()) {
-                    (source, SetSourceStage::Init) => {
-                        if let Some(curr_item) = source {
-                            curr_item.set_current_time(Some(self.audio_element.current_time()));
-                            self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
-                            self.source = None;
-                        }
+                match task.get_stage() {
+                    SetSourceStage::Init => {
+                        // remove source
+                        self.source = None;
                         // set new media source
                         self.media_source = MediaSource::new()?;
                         self.audio_element
@@ -163,8 +174,8 @@ impl Player {
                         task.source_open_data_triggered();
                         Ok(false)
                     }
-                    (None, SetSourceStage::WaitingForSourceOpenData) => Ok(false),
-                    (None, SetSourceStage::SourceOpenData) => {
+                    SetSourceStage::WaitingForSourceOpenData => Ok(false),
+                    SetSourceStage::SourceOpenData => {
                         // clear existing source buffers
                         let sbl = self.media_source.source_buffers();
 
@@ -184,8 +195,8 @@ impl Player {
                         task.data_buffer_update_triggered();
                         Ok(false)
                     }
-                    (None, SetSourceStage::WaitingForBufferUpdate) => Ok(false),
-                    (source, SetSourceStage::Finalize) => {
+                    SetSourceStage::WaitingForBufferUpdate => Ok(false),
+                    SetSourceStage::Finalize => {
                         self.audio_element.set_playback_rate(1.5);
                         self.audio_element.set_volume(1.0);
                         self.audio_element.set_current_time(
@@ -194,14 +205,13 @@ impl Player {
                                 None => 0.0,
                             },
                         );
-                        *source = Some(task.get_item_ref().clone());
+                        self.source = Some(task.get_item_ref().clone());
                         self.send_response(Response::SourceSet(
                             task.get_item_ref().clone(),
                             self.audio_element.duration(),
                         ));
                         Ok(true)
                     }
-                    (_, _) => Err("set source: unexpected state encountered".into()),
                 }
             }
         }
@@ -258,6 +268,9 @@ impl Player {
                         _ => {}
                     }
                 }
+            }
+            Message::OnEnd(_e) => {
+                self.tasks.insert(0, Task::End(EndTask::new()));
             }
             Message::OnPause(_e) => {
                 let mut task_required = false;
@@ -364,6 +377,12 @@ impl Agent for Player {
                 Box::new(move |event: web_sys::Event| on_timeupdate_callback.emit(event))
                     as Box<dyn Fn(_)>,
             );
+        let on_end_callback = link.callback(move |e| Message::OnEnd(e));
+        let on_end_closure =
+            Closure::wrap(
+                Box::new(move |event: web_sys::Event| on_end_callback.emit(event))
+                    as Box<dyn Fn(_)>,
+            );
         let audio_element = web_sys::HtmlAudioElement::new().unwrap();
 
         audio_element
@@ -371,6 +390,9 @@ impl Agent for Player {
             .unwrap();
         audio_element
             .add_event_listener_with_callback("pause", on_pause_closure.as_ref().unchecked_ref())
+            .unwrap();
+        audio_element
+            .add_event_listener_with_callback("ended", on_end_closure.as_ref().unchecked_ref())
             .unwrap();
         // not sure how one could avoid the unwraps in the object creation; on option might be
         // to wrap the media source and audio element in options; however, this increases the
@@ -388,6 +410,7 @@ impl Agent for Player {
             tasks: Vec::new(),
             _on_pause_closure: on_pause_closure,
             _on_play_closure: on_play_closure,
+            _on_end_closure: on_end_closure,
             on_timeupdate_closure: on_timeupdate_closure,
         }
     }

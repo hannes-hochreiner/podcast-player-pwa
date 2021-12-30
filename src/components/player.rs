@@ -225,6 +225,29 @@ impl Player {
                     self.is_playing = true;
                     Ok(true)
                 }
+                player::Response::End => {
+                    self.is_playing = false;
+                    log::info!("component player: end");
+                    match (&self.source, &self.items) {
+                        (Some(curr_item), Some(items)) => {
+                            log::info!("component player: source, items");
+                            if let Some((_, new_item)) =
+                                items.iter().find(|(_, i)| i.get_id() != curr_item.get_id())
+                            {
+                                log::info!(
+                                    "component player: curr item: {}, new item: {}",
+                                    curr_item.get_id(),
+                                    new_item.get_id()
+                                );
+                                self.player
+                                    .send(player::Request::SetSource(new_item.clone()));
+                                self.player.send(player::Request::Play)
+                            }
+                        }
+                        (_, _) => {}
+                    };
+                    Ok(false)
+                }
             },
             Message::OnFocus(_ev) => {
                 self.allow_update = false;
