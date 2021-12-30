@@ -24,7 +24,6 @@ impl Component for Notification {
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        log::info!("notification received");
         match msg {
             Message::NotifierResponse(resp) => match resp {
                 notifier::Response::Notification(notification) => {

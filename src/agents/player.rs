@@ -80,17 +80,10 @@ impl Player {
         match task {
             Task::End(task) => match task.get_stage() {
                 EndStage::Finalize => {
-                    log::info!(
-                        "finalize: paused: {}, curr time: {}, duration: {}",
-                        self.audio_element.paused(),
-                        self.audio_element.current_time(),
-                        self.audio_element.duration()
-                    );
                     if let Some(item) = &mut self.source {
                         item.increment_play_count();
                         item.set_current_time(None);
                         self.repo.send(repo::Request::UpdateItem(item.clone()));
-                        log::info!("send end");
                         self.send_response(Response::End);
                     }
 

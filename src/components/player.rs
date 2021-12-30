@@ -10,8 +10,13 @@ use web_sys::HtmlInputElement;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 
+pub enum Tab {
+    Unplayed,
+    Downloaded,
+}
+
 pub struct Player {
-    repo: Box<dyn Bridge<repo::Repo>>,
+    _repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
     items: Option<HashMap<Uuid, Item>>,
     source: Option<Item>,
@@ -22,6 +27,7 @@ pub struct Player {
     is_playing: bool,
     show_sliders: bool,
     allow_update: bool,
+    tab: Tab,
 }
 pub enum Message {
     RepoMessage(repo::Response),
@@ -34,24 +40,53 @@ pub enum Message {
     VolumeChange(Event),
     PlaybackRateChange(Event),
     ToggleShowSliders,
+    SwitchTab(Tab),
 }
 
 impl Player {
+    fn view_tabs(&self, ctx: &Context<Self>) -> Html {
+        html! {
+            <div class="tabs is-centered is-toggle">
+                {match self.tab {
+                    Tab::Unplayed => html!{
+                        <ul>
+                            <li class="is-active"><a>{"unplayed"}</a></li>
+                            <li><a onclick={ctx.link().callback(|_| Message::SwitchTab(Tab::Downloaded))}>{"downloaded"}</a></li>
+                        </ul>
+                    },
+                    Tab::Downloaded => html!{
+                        <ul>
+                            <li><a onclick={ctx.link().callback(|_| Message::SwitchTab(Tab::Unplayed))}>{"unplayed"}</a></li>
+                            <li class="is-active"><a>{"downloaded"}</a></li>
+                        </ul>
+                    }
+                }}
+            </div>
+        }
+    }
+
     fn view_item_list(&self, ctx: &Context<Self>) -> Html {
         match &self.items {
-            Some(items) => html!(html! {
-                <section class="section">
-                    <div class="columns"><div class="column">
-                        { items.iter().map(|(_, i)| {
-                            let id = i.get_id();
-                            html! { <div class="card" onclick={ctx.link().callback(move |_| Message::SetSource(id))}>
-                            <header class="card-header">
-                                <p class="card-header-title">{&i.get_title()}</p>
-                            </header>
-                        </div> }}).collect::<Html>() }
-                    </div></div>
-                </section>
-            }),
+            Some(items) => html! {
+                <div class="columns"><div class="column">
+                    { items.iter().filter(|(_, i)| match self.tab {
+                        Tab::Downloaded => true,
+                        Tab::Unplayed => i.get_play_count() == 0
+                    }).map(|(_, i)| {
+                        let id = i.get_id();
+                        html! { <div class="card" onclick={ctx.link().callback(move |_| Message::SetSource(id))}>
+                        <header class="card-header">
+                            <p class="card-header-title">{&i.get_title()}</p>
+                        </header>
+                        <div class="card-content">
+                            <div class="tags has-addons">
+                                <span class="tag">{format!("{}x", &i.get_play_count())}</span>
+                                <span class="tag is-primary">{"played"}</span>
+                            </div>
+                        </div>
+                    </div> }}).collect::<Html>() }
+                </div></div>
+            },
             None => html!(),
         }
     }
@@ -144,15 +179,34 @@ impl Player {
         format!("{}:{:02}", (time / 60.0) as u64, (time % 60.0) as u64)
     }
 
-    fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
+    fn process_update(&mut self, ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
         match msg {
+            Message::SwitchTab(tab) => {
+                self.tab = tab;
+                Ok(true)
+            }
             Message::ToggleShowSliders => {
                 self.show_sliders = !self.show_sliders;
                 Ok(true)
             }
             Message::RepoMessage(response) => match response {
                 repo::Response::Items(items) => {
-                    self.items = Some(items.iter().map(|i| (i.get_id(), i.clone())).collect());
+                    let mut map = HashMap::new();
+                    let mut selected = None;
+
+                    for item in items {
+                        if item.get_play_count() == 0 && selected.is_none() {
+                            selected = Some(item.get_id());
+                        }
+                        map.insert(item.get_id(), item);
+                    }
+
+                    self.items = Some(map);
+
+                    if let Some(item_id) = selected {
+                        ctx.link().send_message(Message::SetSource(item_id))
+                    }
+
                     Ok(true)
                 }
                 repo::Response::UpdateItem(_item) => {
@@ -197,10 +251,6 @@ impl Player {
                     .items
                     .as_ref()
                     .ok_or("error getting item list reference")?[&id];
-                let current_time = match item.get_current_time() {
-                    Some(ct) => ct,
-                    None => 0.0,
-                };
                 let volume = 1.0;
                 let playback_rate = 1.5;
 
@@ -227,18 +277,11 @@ impl Player {
                 }
                 player::Response::End => {
                     self.is_playing = false;
-                    log::info!("component player: end");
                     match (&self.source, &self.items) {
                         (Some(curr_item), Some(items)) => {
-                            log::info!("component player: source, items");
-                            if let Some((_, new_item)) =
-                                items.iter().find(|(_, i)| i.get_id() != curr_item.get_id())
-                            {
-                                log::info!(
-                                    "component player: curr item: {}, new item: {}",
-                                    curr_item.get_id(),
-                                    new_item.get_id()
-                                );
+                            if let Some((_, new_item)) = items.iter().find(|(_, i)| {
+                                i.get_id() != curr_item.get_id() && i.get_play_count() == 0
+                            }) {
                                 self.player
                                     .send(player::Request::SetSource(new_item.clone()));
                                 self.player.send(player::Request::Play)
@@ -317,7 +360,10 @@ impl Component for Player {
                         { self.view_sliders(ctx) }
                     </div>
                 </section>
-                {self.view_item_list(ctx)}
+                <section class="section">
+                    {self.view_tabs(ctx)}
+                    {self.view_item_list(ctx)}
+                </section>
             </>
         }
     }
@@ -331,7 +377,7 @@ impl Component for Player {
         let player = player::Player::bridge(ctx.link().callback(Message::PlayerMessage));
 
         Self {
-            repo,
+            _repo: repo,
             items: None,
             source: None,
             player,
@@ -342,6 +388,7 @@ impl Component for Player {
             is_playing: false,
             show_sliders: false,
             allow_update: true,
+            tab: Tab::Unplayed,
         }
     }
 
