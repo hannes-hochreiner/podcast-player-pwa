@@ -11,7 +11,7 @@ use web_sys::{self, Event, MediaSource, Url};
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 // TODO: check play events
-// TODO: check whether any of the updated items need to be added to the item list
+// TODO: check whether any of the updated items need to be added to or removed from the item list
 
 #[derive(Debug, Clone)]
 pub enum Request {

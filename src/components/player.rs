@@ -1,9 +1,9 @@
 use crate::{
     agents::{notifier, player, repo},
     components::icon::{Icon, IconStyle},
-    objects::{Item, JsError},
+    objects::{DownloadStatus, Item, JsError},
 };
-use std::collections::HashMap;
+use std::cmp::Ordering;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
@@ -18,7 +18,7 @@ pub enum Tab {
 pub struct Player {
     _repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
-    items: Option<HashMap<Uuid, Item>>,
+    items: Option<Vec<Item>>,
     source: Option<Item>,
     volume: Option<f64>,
     playback_rate: Option<f64>,
@@ -32,7 +32,7 @@ pub struct Player {
 pub enum Message {
     RepoMessage(repo::Response),
     PlayerMessage(player::Response),
-    SetSource(Uuid),
+    SetSource(Option<Item>),
     Play,
     Pause,
     OnFocus(FocusEvent),
@@ -69,19 +69,26 @@ impl Player {
         match &self.items {
             Some(items) => html! {
                 <div class="columns"><div class="column">
-                    { items.iter().filter(|(_, i)| match self.tab {
+                    { items.iter().filter(|i| match self.tab {
                         Tab::Downloaded => true,
                         Tab::Unplayed => i.get_play_count() == 0
-                    }).map(|(_, i)| {
-                        let id = i.get_id();
-                        html! { <div class="card" onclick={ctx.link().callback(move |_| Message::SetSource(id))}>
-                        <header class="card-header">
-                            <p class="card-header-title">{&i.get_title()}</p>
-                        </header>
+                    }).map(|i| {
+                        let new_source = i.clone();
+                        html! { <div class="card" onclick={ctx.link().callback(move |_| Message::SetSource(Some(new_source.clone())))}>
                         <div class="card-content">
-                            <div class="tags has-addons">
-                                <span class="tag">{format!("{}x", &i.get_play_count())}</span>
-                                <span class="tag is-primary">{"played"}</span>
+                            <p class="has-text-weight-bold">{&i.get_title()}</p>
+                            <div class="field is-grouped is-grouped-multiline">
+                                <div class="control">
+                                    <div class="tags">
+                                        <span class="tag">{&i.get_date().format("%Y-%m-%d").to_string()}</span>
+                                    </div>
+                                </div>
+                                <div class="control">
+                                    <div class="tags has-addons">
+                                        <span class="tag">{format!("{}x", &i.get_play_count())}</span>
+                                        <span class="tag is-primary">{"played"}</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div> }}).collect::<Html>() }
@@ -190,22 +197,22 @@ impl Player {
                 Ok(true)
             }
             Message::RepoMessage(response) => match response {
-                repo::Response::Items(items) => {
-                    let mut map = HashMap::new();
-                    let mut selected = None;
+                repo::Response::Items(mut items) => {
+                    items.sort_by(|a, b| {
+                        a.get_date()
+                            .partial_cmp(&b.get_date())
+                            .unwrap_or(Ordering::Equal)
+                    });
 
-                    for item in items {
-                        if item.get_play_count() == 0 && selected.is_none() {
-                            selected = Some(item.get_id());
-                        }
-                        map.insert(item.get_id(), item);
+                    if let None = &mut self.source {
+                        let new_source = items
+                            .iter()
+                            .find(|i| i.get_play_count() == 0)
+                            .map(|i| i.clone());
+                        ctx.link().send_message(Message::SetSource(new_source))
                     }
 
-                    self.items = Some(map);
-
-                    if let Some(item_id) = selected {
-                        ctx.link().send_message(Message::SetSource(item_id))
-                    }
+                    self.items = Some(items);
 
                     Ok(true)
                 }
@@ -226,12 +233,17 @@ impl Player {
                     }
 
                     if let Some(self_items) = &mut self.items {
-                        for item in items {
-                            if self_items.contains_key(&item.get_id()) {
-                                self_items.remove(&item.get_id());
-                                self_items.insert(item.get_id(), item);
-                            }
-                        }
+                        let modified_ids: Vec<Uuid> = items.iter().map(|i| i.get_id()).collect();
+
+                        self_items.retain(|i| !modified_ids.contains(&i.get_id()));
+                        items
+                            .iter()
+                            .filter(|i| match i.get_download_status() {
+                                DownloadStatus::Ok(_) => true,
+                                _ => false,
+                            })
+                            .for_each(|i| self_items.push(i.clone()));
+                        self_items.sort_by(|a, b| a.get_date().cmp(&b.get_date()));
                     }
 
                     Ok(res)
@@ -246,19 +258,19 @@ impl Player {
                 self.player.send(player::Request::Play);
                 Ok(false)
             }
-            Message::SetSource(id) => {
-                let item = &self
-                    .items
-                    .as_ref()
-                    .ok_or("error getting item list reference")?[&id];
+            Message::SetSource(source) => {
+                self.source = source;
+
                 let volume = 1.0;
                 let playback_rate = 1.5;
 
-                self.source = Some((*item).clone());
                 self.volume = Some(volume);
                 self.playback_rate = Some(playback_rate);
-                self.player
-                    .send(player::Request::SetSource((*item).clone()));
+
+                if let Some(item) = &mut self.source {
+                    self.player.send(player::Request::SetSource(item.clone()));
+                }
+
                 Ok(true)
             }
             Message::PlayerMessage(player_message) => match player_message {
@@ -279,7 +291,7 @@ impl Player {
                     self.is_playing = false;
                     match (&self.source, &self.items) {
                         (Some(curr_item), Some(items)) => {
-                            if let Some((_, new_item)) = items.iter().find(|(_, i)| {
+                            if let Some(new_item) = items.iter().find(|i| {
                                 i.get_id() != curr_item.get_id() && i.get_play_count() == 0
                             }) {
                                 self.player
