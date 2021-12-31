@@ -1,4 +1,4 @@
-use crate::components::{FeedList, FeedNew, NavBar};
+use crate::components::{FeedList, FeedNew, NavBar, Notification};
 use yew::{prelude::*, Html};
 
 pub struct FeedsPage {}
@@ -12,6 +12,7 @@ impl Component for FeedsPage {
         html! {
             <>
                 <NavBar/>
+                <Notification/>
                 <FeedNew/>
                 <FeedList/>
             </>

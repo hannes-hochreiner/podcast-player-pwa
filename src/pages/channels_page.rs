@@ -1,4 +1,4 @@
-use crate::components::{ChannelList, NavBar};
+use crate::components::{ChannelList, NavBar, Notification};
 use yew::{prelude::*, Html};
 
 pub struct ChannelsPage {}
@@ -12,6 +12,7 @@ impl Component for ChannelsPage {
         html! {
             <>
                 <NavBar/>
+                <Notification/>
                 <ChannelList/>
             </>
         }
