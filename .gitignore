@@ -1,1 +1,10 @@
-target
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# Added by cargo
+/target
+
+# trunk output
+/dist
+
+# custom test data
+/test_data
