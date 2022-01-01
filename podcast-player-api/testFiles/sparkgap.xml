@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:cc="http://web.resource.org/cc/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+	<channel>
+		<atom:link href="https://thesparkgap.libsyn.com/rss" rel="self" type="application/rss+xml"/>
+		<title>The Spark Gap</title>
+		<pubDate>Wed, 31 Jan 2018 21:00:00 +0000</pubDate>
+		<lastBuildDate>Fri, 02 Aug 2019 10:02:27 +0000</lastBuildDate>
+		<generator>Libsyn WebEngine 2.0</generator>
+		<link>http://thesparkgap.libsyn.com/webpage</link>
+		<language>en</language>
+		<copyright><![CDATA[]]></copyright>
+		<docs>http://thesparkgap.libsyn.com/webpage</docs>
+		<managingEditor>show@thesparkgap.net (show@thesparkgap.net)</managingEditor>
+		<itunes:summary><![CDATA[Karl and Corey talk about various aspects of embedded electronics, from nuts and bolts design to high-level discussions and debates.  We also talk about some of our hobbies surrounding electronics (3D Printing and CNC Routers).
+
+New episodes are released Wednesdays.]]></itunes:summary>
+		<image>
+			<url>https://ssl-static.libsyn.com/p/assets/4/0/e/8/40e82aebe44f8431/The_Spark_Gap.png</url>
+			<title>The Spark Gap</title>
+			<link><![CDATA[http://thesparkgap.libsyn.com/webpage]]></link>
+		</image>
+		<itunes:author>The Spark Gap</itunes:author>
+		<itunes:keywords>electronics,embedded,hobby</itunes:keywords>
+		<itunes:category text="Technology"/>
+		<itunes:image href="https://ssl-static.libsyn.com/p/assets/4/0/e/8/40e82aebe44f8431/The_Spark_Gap.png" />
+		<itunes:explicit>clean</itunes:explicit>
+		<itunes:owner>
+			<itunes:name><![CDATA[Corey Lange]]></itunes:name>
+			<itunes:email>show@thesparkgap.net</itunes:email>
+		</itunes:owner>
+		<description><![CDATA[Karl and Corey talk about various aspects of embedded electronics.]]></description>
+		<itunes:subtitle><![CDATA[A podcast discussing the nuts and bolts of embedded electronics, the systems that use them, and the community that surrounds them.]]></itunes:subtitle>
+		<itunes:type>episodic</itunes:type>
+				<item>
+			<title>The Spark Gap - Episode 53</title>
+			<pubDate>Wed, 31 Jan 2018 21:00:00 +0000</pubDate>
+			<guid isPermaLink="false"><![CDATA[c83486efd804816252a8fcf167e630cf]]></guid>
+			<link><![CDATA[http://thesparkgap.libsyn.com/the-spark-gap-episode-53]]></link>
+			<itunes:image href="https://ssl-static.libsyn.com/p/assets/4/0/e/8/40e82aebe44f8431/The_Spark_Gap.png" />
+			<description><![CDATA[<p>Karl and Corey talk about projects they've been working on in their spare time.  Corey discusses his ping pong scoreboard's progress and challenges.</p>]]></description>
+			<content:encoded><![CDATA[<p>Karl and Corey talk about projects they've been working on in their spare time.  Corey discusses his ping pong scoreboard's progress and challenges.</p>]]></content:encoded>
+			<enclosure length="40706190" type="audio/mpeg" url="https://traffic.libsyn.com/secure/thesparkgap/Podcast53.mp3?dest-id=205185" />
+			<itunes:duration>54:56</itunes:duration>
+			<itunes:explicit>clean</itunes:explicit>
+			<itunes:keywords />
+			<itunes:subtitle><![CDATA[Project updates - Part 1]]></itunes:subtitle>
+			<itunes:episodeType>full</itunes:episodeType>
+		</item>
+		<item>
+			<title>The Spark Gap - Episode 52</title>
+			<pubDate>Mon, 01 Jan 2018 18:00:00 +0000</pubDate>
+			<guid isPermaLink="false"><![CDATA[4cd2a2c8b62734d5a2c2fa35d924a8dd]]></guid>
+			<link><![CDATA[http://thesparkgap.libsyn.com/the-spark-gap-episode-52]]></link>
+			<itunes:image href="https://ssl-static.libsyn.com/p/assets/4/0/e/8/40e82aebe44f8431/The_Spark_Gap.png" />
+			<description><![CDATA[<p>Karl and Corey discuss how to work with development kits, specifically on how to best transition from a dev kit to a custom design.</p>]]></description>
+			<content:encoded><![CDATA[<p>Karl and Corey discuss how to work with development kits, specifically on how to best transition from a dev kit to a custom design.</p>]]></content:encoded>
+			<enclosure length="67632325" type="audio/mpeg" url="https://traffic.libsyn.com/secure/thesparkgap/Podcast52.mp3?dest-id=205185" />
+			<itunes:duration>01:32:20</itunes:duration>
+			<itunes:explicit>clean</itunes:explicit>
+			<itunes:keywords />
+			<itunes:subtitle><![CDATA[Working with Dev Kits]]></itunes:subtitle>
+			<itunes:episodeType>full</itunes:episodeType>
+		</item>
+	</channel>
+</rss>

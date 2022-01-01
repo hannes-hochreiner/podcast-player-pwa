@@ -1,0 +1,1894 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2enclosuresfull.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?><rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:media="http://search.yahoo.com/mrss/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" version="2.0" xml:base="http://makingitpodcast.com/">
+  <channel>
+    <title>Making It With Jimmy Diresta, Bob Clagett and David Picciuto</title>
+    <description>Making It is a biweekly audio podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. Three different makers with different backgrounds talking about creativity, design and making things with your bare hands.</description>
+    <link>http://makingitpodcast.com/</link>
+    
+    <language>en-us</language>
+    <category>Games &amp; Hobbies</category>
+    <image>
+      <url>http://makingitpodcast.com/sites/all/themes/starter/images/makingititunes.jpg</url>
+      <title>Making It With Jimmy Diresta, Bob Clagett and David Picciuto</title>
+      <link>http://makingitpodcast.com/</link>
+      <width>1400</width>
+      <height>1400</height>
+    </image>
+    <copyright>Copyright Making It</copyright>
+    <managingEditor>david@drunkenwoodworker.com (David Picciuto)</managingEditor>
+    <webMaster>david@drunkenwoodworker.com (David Picciuto)</webMaster>
+    <pubDate>Thu, 05 Oct 2017 23:59:00 -0400</pubDate>
+    <lastBuildDate>Fri, 06 Oct 2017 09:33:32 -0400</lastBuildDate>
+    <itunes:subtitle>Making It is a weekly audio podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. Three different makers with different backgrounds talking about creativity, design and making things with your bare hands.</itunes:subtitle>
+    <itunes:summary>Making It is a weekly audio podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. Three different makers with different backgrounds talking about creativity, design and making things with your bare hands.</itunes:summary>
+    <itunes:category text="Games &amp; Hobbies">
+      <itunes:category text="Hobbies" />
+    </itunes:category>
+    <itunes:keywords>woodworking, metal working, electronics, making, makers, maker, handmade, hand made</itunes:keywords>
+    <itunes:image href="http://makingitpodcast.com/sites/all/themes/starter/images/makingititunes.jpg" />
+    <itunes:author>Diresta, Clagett &amp; Picciuto</itunes:author>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:block>no</itunes:block>
+    <itunes:owner>
+      <itunes:email>info@makingitpodcast.com</itunes:email>
+    </itunes:owner>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/MakingItWithJimmyDirestaBobClagettAndDavidPicciuto" /><feedburner:info uri="makingitwithjimmydirestabobclagettanddavidpicciuto" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><media:copyright>Copyright Making It</media:copyright><media:thumbnail url="http://makingitpodcast.com/sites/all/themes/starter/images/makingititunes.jpg" /><media:keywords>woodworking, metal working, electronics, making, makers, maker, handmade, hand made</media:keywords><media:category scheme="http://www.itunes.com/dtds/podcast-1.0.dtd">Games &amp; Hobbies/Hobbies</media:category><feedburner:browserFriendly></feedburner:browserFriendly><item>
+      <title>Episode 138: Rethinking Priorities</title>
+      <link>http://makingitpodcast.com/node/148</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they wish they'd focused on when starting making videos.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/345506440-makingitpodcast-episode-138-rethinking-priorities.mp3" length="51723831" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/148</guid>
+      <pubDate>Thu, 05 Oct 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 138: Rethinking Priorities</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they wish they'd focused on when starting making videos.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/345506440-makingitpodcast-episode-138-rethinking-priorities.mp3" fileSize="51723831" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 137: Where's my broom?</title>
+      <link>http://makingitpodcast.com/node/147</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about some video failures, successes and how we decide what to shoot for project videos.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/344506606-makingitpodcast-episode-137-wheres-my-broom.mp3" length="56179560" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/147</guid>
+      <pubDate>Thu, 28 Sep 2017 23:52:43 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 137: Where's my broom?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about some video failures, successes and how we decide what to shoot for project videos.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/344506606-makingitpodcast-episode-137-wheres-my-broom.mp3" fileSize="56179560" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 136: I can't. I'm busy.</title>
+      <link>http://makingitpodcast.com/node/146</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer questions from Patreon supporters about all sorts of stuff.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/343547923-makingitpodcast-episode-136-i-cant-im-busy.mp3" length="50381307" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/146</guid>
+      <pubDate>Thu, 21 Sep 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 136: I can't. I'm busy.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer questions from Patreon supporters about all sorts of stuff.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/343547923-makingitpodcast-episode-136-i-cant-im-busy.mp3" fileSize="50381307" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 135: Get Jimmy a 78 ft 2x4</title>
+      <link>http://makingitpodcast.com/node/145</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how their personalities have an effect on their process and products.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/342492521-makingitpodcast-episode-135-get-jimmy-a-78-ft-2x4.mp3" length="48127018" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/145</guid>
+      <pubDate>Fri, 15 Sep 2017 10:40:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 135: Get Jimmy a 78 ft 2x4</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how their personalities have an effect on their process and products.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/342492521-makingitpodcast-episode-135-get-jimmy-a-78-ft-2x4.mp3" fileSize="48127018" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 134: THE SHOP OF THE FUTURE!!!!!</title>
+      <link>http://makingitpodcast.com/node/144</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about THE SHOP OF THE FUTURE!!!!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/341409051-makingitpodcast-episode-134-the-shop-of-the-future.mp3" length="52592173" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/144</guid>
+      <pubDate>Thu, 07 Sep 2017 23:26:33 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 134: THE SHOP OF THE FUTURE!!!!!</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about THE SHOP OF THE FUTURE!!!!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/341409051-makingitpodcast-episode-134-the-shop-of-the-future.mp3" fileSize="52592173" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 133: LASER BANDSAW (with William Osman)</title>
+      <link>http://makingitpodcast.com/node/143</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk to William Osman and Peter Sripal about all sorts of stuff!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/340397178-makingitpodcast-episode-133-laser-bandsaw-with-william-osman.mp3" length="48083287" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/143</guid>
+      <pubDate>Thu, 31 Aug 2017 22:21:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 133: LASER BANDSAW (with William Osman)</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk to William Osman and Peter Sripal about all sorts of stuff!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/340397178-makingitpodcast-episode-133-laser-bandsaw-with-william-osman.mp3" fileSize="48083287" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 132: The bottleneck</title>
+      <link>http://makingitpodcast.com/node/142</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bottlenecks and how much life we put on display.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/339395214-makingitpodcast-episode-132-the-bottleneck.mp3" length="80594463" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/142</guid>
+      <pubDate>Thu, 24 Aug 2017 23:20:20 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 132: The bottleneck</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bottlenecks and how much life we put on display.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/339395214-makingitpodcast-episode-132-the-bottleneck.mp3" fileSize="80594463" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 131: Monopoly and safety</title>
+      <link>http://makingitpodcast.com/node/141</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about SawStop, safety and patents.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/338374923-makingitpodcast-episode-131-monopoly-and-safety.mp3" length="67465320" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/141</guid>
+      <pubDate>Thu, 17 Aug 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 131: Monopoly and safety</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about SawStop, safety and patents.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/338374923-makingitpodcast-episode-131-monopoly-and-safety.mp3" fileSize="67465320" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 130: Let's talk about pants</title>
+      <link>http://makingitpodcast.com/node/140</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what to wear in the shop.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/337426126-makingitpodcast-episode-130-lets-talk-about-pants.mp3" length="85531083" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/140</guid>
+      <pubDate>Thu, 10 Aug 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 130: Let's talk about pants</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what to wear in the shop.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/337426126-makingitpodcast-episode-130-lets-talk-about-pants.mp3" fileSize="85531083" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 129: Benjamin Buttoning</title>
+      <link>http://makingitpodcast.com/node/139</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about getting older and how age affects how we take risks.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/336182225-makingitpodcast-episode-129-benjamin-buttoning.mp3" length="78754920" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/139</guid>
+      <pubDate>Fri, 04 Aug 2017 00:36:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 129: Benjamin Buttoning</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about getting older and how age affects how we take risks.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/336182225-makingitpodcast-episode-129-benjamin-buttoning.mp3" fileSize="78754920" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 128: Little Teepee Party</title>
+      <link>http://makingitpodcast.com/node/138</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about breaking rules, how paint colors cause fights and more.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/334126420-makingitpodcast-episode-128-little-teepee-party.mp3" length="73255622" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/138</guid>
+      <pubDate>Thu, 20 Jul 2017 23:49:04 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 128: Little Teepee Party</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about breaking rules, how paint colors cause fights and more.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/334126420-makingitpodcast-episode-128-little-teepee-party.mp3" fileSize="73255622" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 127: Jimmy is a giant goldfish</title>
+      <link>http://makingitpodcast.com/node/137</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about limitations, fear, and giant goldfish.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/333126415-makingitpodcast-episode-127-jimmy-is-a-giant-goldfish.mp3" length="52019109" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/137</guid>
+      <pubDate>Fri, 14 Jul 2017 00:05:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 127: Jimmy is a giant goldfish</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about limitations, fear, and giant goldfish.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/333126415-makingitpodcast-episode-127-jimmy-is-a-giant-goldfish.mp3" fileSize="52019109" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 126: Expect the unexpected</title>
+      <link>http://makingitpodcast.com/node/136</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about avoiding and setting expectations.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/330794885-makingitpodcast-episode-126-expect-the-unexpected.mp3" length="82789271" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/136</guid>
+      <pubDate>Mon, 26 Jun 2017 12:20:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 126: Expect the unexpected</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about avoiding and setting expectations.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/330794885-makingitpodcast-episode-126-expect-the-unexpected.mp3" fileSize="82789271" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 125: My backup phone(s)</title>
+      <link>http://makingitpodcast.com/node/135</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about moving strategies and why Jimmy has 10 iPhones.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/329574293-makingitpodcast-episode-125-my-backup-phones.mp3" length="88598903" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/135</guid>
+      <pubDate>Mon, 19 Jun 2017 10:19:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 125: My backup phone(s)</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about moving strategies and why Jimmy has 10 iPhones.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/329574293-makingitpodcast-episode-125-my-backup-phones.mp3" fileSize="88598903" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 124: The Cloud.</title>
+      <link>http://makingitpodcast.com/node/134</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about software as a tool for making.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/328358713-makingitpodcast-episode-124-the-cloud.mp3" length="86028977" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/134</guid>
+      <pubDate>Fri, 16 Jun 2017 10:01:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 124: The Cloud.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about software as a tool for making.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/328358713-makingitpodcast-episode-124-the-cloud.mp3" fileSize="86028977" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 123: No.</title>
+      <link>http://makingitpodcast.com/node/133</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about saying no.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/327157737-makingitpodcast-episode-123-no.mp3" length="54685145" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/133</guid>
+      <pubDate>Thu, 08 Jun 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 123: No.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about saying no.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/327157737-makingitpodcast-episode-123-no.mp3" fileSize="54685145" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 122: So, you had a bad day...</title>
+      <link>http://makingitpodcast.com/node/132</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bad days, how to come back from them and fighting creative block.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/325706004-makingitpodcast-episode-122-so-you-had-a-bad-day.mp3" length="38069525" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/132</guid>
+      <pubDate>Thu, 01 Jun 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 122: So, you had a bad day...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bad days, how to come back from them and fighting creative block.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/325706004-makingitpodcast-episode-122-so-you-had-a-bad-day.mp3" fileSize="38069525" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 121: Moving It</title>
+      <link>http://makingitpodcast.com/node/131</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about moving and milestones.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/324557671-makingitpodcast-episode-121-moving-it.mp3" length="50161284" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/131</guid>
+      <pubDate>Fri, 26 May 2017 00:14:35 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 121: Moving It</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about moving and milestones.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/324557671-makingitpodcast-episode-121-moving-it.mp3" fileSize="50161284" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 120: We don't have a toaster</title>
+      <link>http://makingitpodcast.com/node/130</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more questions from Twitter!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/323331431-makingitpodcast-episode-120-we-dont-have-a-toaster.mp3" length="54329409" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/130</guid>
+      <pubDate>Thu, 18 May 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 120: We don't have a toaster</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more questions from Twitter!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/323331431-makingitpodcast-episode-120-we-dont-have-a-toaster.mp3" fileSize="54329409" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 119: Buffing and grinding</title>
+      <link>http://makingitpodcast.com/node/129</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more questions from Twitter and beyond!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/322162764-makingitpodcast-episode-119-buffing-and-grinding.mp3" length="63468502" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/129</guid>
+      <pubDate>Thu, 11 May 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 119: Buffing and grinding</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more questions from Twitter and beyond!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/322162764-makingitpodcast-episode-119-buffing-and-grinding.mp3" fileSize="63468502" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 118: The point of no return</title>
+      <link>http://makingitpodcast.com/node/128</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how to promote yourself without an audience and if there is a point of no return.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/321102532-makingitpodcast-episode-118-the-point-of-no-return.mp3" length="44223600" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/128</guid>
+      <pubDate>Thu, 04 May 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 118: The point of no return</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how to promote yourself without an audience and if there is a point of no return.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/321102532-makingitpodcast-episode-118-the-point-of-no-return.mp3" fileSize="44223600" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 117: What's your favorite ... ?</title>
+      <link>http://makingitpodcast.com/node/127</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about content theft and do a lightning round of "what's your favorite?"</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/319881198-makingitpodcast-episode-117-whats-your-favorite.mp3" length="57681288" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/127</guid>
+      <pubDate>Thu, 27 Apr 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 117: What's your favorite ... ?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about content theft and do a lightning round of "what's your favorite?"</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/319881198-makingitpodcast-episode-117-whats-your-favorite.mp3" fileSize="57681288" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 116: Winging It</title>
+      <link>http://makingitpodcast.com/node/126</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Disney World, how we've grown and YouTube's future.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/318699581-makingitpodcast-episode-116-winging-it.mp3" length="52557631" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/126</guid>
+      <pubDate>Thu, 20 Apr 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 116: Winging It</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Disney World, how we've grown and YouTube's future.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/318699581-makingitpodcast-episode-116-winging-it.mp3" fileSize="52557631" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 115: Questioning each other</title>
+      <link>http://makingitpodcast.com/node/125</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other questions, talk about taxes and other random stuff.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/317492526-makingitpodcast-episode-115-questioning-for-each-other.mp3" length="59350990" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/125</guid>
+      <pubDate>Thu, 13 Apr 2017 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 115: Questioning each other</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other questions, talk about taxes and other random stuff.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/317492526-makingitpodcast-episode-115-questioning-for-each-other.mp3" fileSize="59350990" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 114: What keeps you from productivity?</title>
+      <link>http://makingitpodcast.com/node/124</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what helps and hurts their productivity.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/316458900-makingitpodcast-episode-114-what-keeps-you-from-productivity.mp3" length="48712990" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/124</guid>
+      <pubDate>Thu, 06 Apr 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 114: What keeps you from productivity?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what helps and hurts their productivity.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/316458900-makingitpodcast-episode-114-what-keeps-you-from-productivity.mp3" fileSize="48712990" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 113: You've changed.... Change is good</title>
+      <link>http://makingitpodcast.com/node/123</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why changing is one of the best things you can do.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/315288920-makingitpodcast-episode-113-youve-changed-change-is-good.mp3" length="46109966" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/123</guid>
+      <pubDate>Thu, 30 Mar 2017 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 113: You've changed.... Change is good</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why changing is one of the best things you can do.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/315288920-makingitpodcast-episode-113-youve-changed-change-is-good.mp3" fileSize="46109966" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 112: Not even wearing pants...</title>
+      <link>http://makingitpodcast.com/node/122</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Martha Stewart, pants and are Bob and David related?!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/314102505-makingitpodcast-episode-112-not-even-wearing-pants.mp3" length="57899709" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/122</guid>
+      <pubDate>Thu, 23 Mar 2017 23:59:01 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 112: Not even wearing pants...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Martha Stewart, pants and are Bob and David related?!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/314102505-makingitpodcast-episode-112-not-even-wearing-pants.mp3" fileSize="57899709" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 111: Choose one thing..</title>
+      <link>http://makingitpodcast.com/node/121</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they would and wouldn't want to do, if they had to pick one area to work in.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/312862115-makingitpodcast-episode-111-choose-one-thing.mp3" length="44591943" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/121</guid>
+      <pubDate>Fri, 17 Mar 2017 00:30:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 111: Choose one thing..</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they would and wouldn't want to do, if they had to pick one area to work in.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/312862115-makingitpodcast-episode-111-choose-one-thing.mp3" fileSize="44591943" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 110: Amateur Hour</title>
+      <link>http://makingitpodcast.com/node/120</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why it perfectly ok to not be perfect.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/310397087-makingitpodcast-episode-110-amateur-hour.mp3" length="44993958" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/120</guid>
+      <pubDate>Thu, 02 Mar 2017 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 110: Amateur Hour</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why it perfectly ok to not be perfect.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/310397087-makingitpodcast-episode-110-amateur-hour.mp3" fileSize="44993958" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 109: Taking a vacation from the vacation you live</title>
+      <link>http://makingitpodcast.com/node/119</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being present and unproductive for the sake of being productive.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/308134751-makingitpodcast-episode-109-taking-a-vacation-from-the-vacation-you-live.mp3" length="41330842" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/119</guid>
+      <pubDate>Thu, 16 Feb 2017 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 109: Taking a vacation from the vacation you live</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being present and unproductive for the sake of being productive.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/308134751-makingitpodcast-episode-109-taking-a-vacation-from-the-vacation-you-live.mp3" fileSize="41330842" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 108: Being fearless</title>
+      <link>http://makingitpodcast.com/node/118</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about fearlessness and the worst possible scenerio.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/306939700-makingitpodcast-episode-108-being-fearless.mp3" length="42738797" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/118</guid>
+      <pubDate>Thu, 09 Feb 2017 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 108: Being fearless</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about fearlessness and the worst possible scenerio.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/306939700-makingitpodcast-episode-108-being-fearless.mp3" fileSize="42738797" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 107: That sounds wiener dog shaped too...</title>
+      <link>http://makingitpodcast.com/node/117</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their dream shops.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/305795211-makingitpodcast-episode-107-that-sounds-wiener-dog-shaped-too.mp3" length="46353197" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/117</guid>
+      <pubDate>Thu, 02 Feb 2017 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 107: That sounds wiener dog shaped too...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their dream shops.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/305795211-makingitpodcast-episode-107-that-sounds-wiener-dog-shaped-too.mp3" fileSize="46353197" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 106: You've always got more options...</title>
+      <link>http://makingitpodcast.com/node/116</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about coming back to a failed project with a fresh approach.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/304554664-makingitpodcast-episode-106-youve-always-got-more-options.mp3" length="29583597" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/116</guid>
+      <pubDate>Thu, 26 Jan 2017 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 106: You've always got more options...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about coming back to a failed project with a fresh approach.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/304554664-makingitpodcast-episode-106-youve-always-got-more-options.mp3" fileSize="29583597" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 105: What if everything goes right?</title>
+      <link>http://makingitpodcast.com/node/115</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about when things are out of your control, the good and the bad.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/303654267-makingitpodcast-episode-105-what-if-everything-goes-right.mp3" length="56841901" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/115</guid>
+      <pubDate>Thu, 19 Jan 2017 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 105: What if everything goes right?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about when things are out of your control, the good and the bad.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/303654267-makingitpodcast-episode-105-what-if-everything-goes-right.mp3" fileSize="56841901" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 104: 8 Band Saws, 5 Radial Arm Saws, 2 Milling Machines...</title>
+      <link>http://makingitpodcast.com/node/114</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about having too many tools.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/302502795-makingitpodcast-episode-104-8-band-saws-5-radial-arm-saws-2-milling-machines.mp3" length="80953462" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/114</guid>
+      <pubDate>Thu, 12 Jan 2017 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 104: 8 Band Saws, 5 Radial Arm Saws, 2 Milling Machines...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about having too many tools.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/302502795-makingitpodcast-episode-104-8-band-saws-5-radial-arm-saws-2-milling-machines.mp3" fileSize="80953462" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 103: Looking Back, looking ahead.. yet, again.</title>
+      <link>http://makingitpodcast.com/node/113</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the ups and downs of 2016 and what they're looking forward to in the coming year!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/301088832-makingitpodcast-episode-103-looking-back-looking-ahead-yet-again.mp3" length="59413878" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/113</guid>
+      <pubDate>Thu, 05 Jan 2017 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 103: Looking Back, looking ahead.. yet, again.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the ups and downs of 2016 and what they're looking forward to in the coming year!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/301088832-makingitpodcast-episode-103-looking-back-looking-ahead-yet-again.mp3" fileSize="59413878" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 102: CN-Cheese</title>
+      <link>http://makingitpodcast.com/node/112</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about 3d printing, how they use it and how they don't.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/299191385-makingitpodcast-episode-102-cn-cheese.mp3" length="66820341" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/112</guid>
+      <pubDate>Thu, 22 Dec 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 102: CN-Cheese</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about 3d printing, how they use it and how they don't.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/299191385-makingitpodcast-episode-102-cn-cheese.mp3" fileSize="66820341" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 101: Hot news in the library world</title>
+      <link>http://makingitpodcast.com/node/111</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they learned after putting on their first event.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/298043150-makingitpodcast-episode-101-hot-news-in-the-library-world.mp3" length="50719802" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/111</guid>
+      <pubDate>Thu, 15 Dec 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 101: Hot news in the library world</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they learned after putting on their first event.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/298043150-makingitpodcast-episode-101-hot-news-in-the-library-world.mp3" fileSize="50719802" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 100: Live From Boston!</title>
+      <link>http://makingitpodcast.com/node/110</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto meet up with 200 close friends in Boston for the MakingIt100 event!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/296897596-makingitpodcast-episode-100-live-from-boston.mp3" length="74816832" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/110</guid>
+      <pubDate>Thu, 08 Dec 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 100: Live From Boston!</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto meet up with 200 close friends in Boston for the MakingIt100 event!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/296897596-makingitpodcast-episode-100-live-from-boston.mp3" fileSize="74816832" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 099: Out of your control.</title>
+      <link>http://makingitpodcast.com/node/109</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what to do when you realize how little control you have over the things around you.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/295923863-makingitpodcast-episode-099-out-of-your-control.mp3" length="38776412" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/109</guid>
+      <pubDate>Thu, 01 Dec 2016 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 099: Out of your control.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what to do when you realize how little control you have over the things around you.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/295923863-makingitpodcast-episode-099-out-of-your-control.mp3" fileSize="38776412" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 098: I don't want to break the baby.</title>
+      <link>http://makingitpodcast.com/node/108</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Casey quitting vlogging and changing directions for the better.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/294587084-makingitpodcast-episode-098-i-dont-want-to-break-the-baby.mp3" length="46618265" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/108</guid>
+      <pubDate>Thu, 24 Nov 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 098: I don't want to break the baby.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Casey quitting vlogging and changing directions for the better.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/294587084-makingitpodcast-episode-098-i-dont-want-to-break-the-baby.mp3" fileSize="46618265" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 097: At your own risk...</title>
+      <link>http://makingitpodcast.com/node/107</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about liability and budgeting (sounds boring, but it was fun..)</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/293520263-makingitpodcast-episode-097-at-your-own-risk.mp3" length="59509421" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/107</guid>
+      <pubDate>Thu, 17 Nov 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 097: At your own risk...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about liability and budgeting (sounds boring, but it was fun..)</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/293520263-makingitpodcast-episode-097-at-your-own-risk.mp3" fileSize="59509421" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 096: A fish does not look like a bar of soap.</title>
+      <link>http://makingitpodcast.com/node/106</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they want to see each other make.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/292428352-makingitpodcast-episode-096-a-fish-does-not-look-like-a-bar-of-soap.mp3" length="52525039" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/106</guid>
+      <pubDate>Thu, 10 Nov 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 096: A fish does not look like a bar of soap.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they want to see each other make.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/292428352-makingitpodcast-episode-096-a-fish-does-not-look-like-a-bar-of-soap.mp3" fileSize="52525039" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 095: Tandem Horse</title>
+      <link>http://makingitpodcast.com/node/105</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how to get unstuck and the pros and cons of working alone.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/291376753-makingitpodcast-episode-095-tandem-horse.mp3" length="63830572" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/105</guid>
+      <pubDate>Thu, 03 Nov 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 095: Tandem Horse</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how to get unstuck and the pros and cons of working alone.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/291376753-makingitpodcast-episode-095-tandem-horse.mp3" fileSize="63830572" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 094: Being a hoarder is a big job...</title>
+      <link>http://makingitpodcast.com/node/104</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about buying old stuff and giving it a new life.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/290274046-makingitpodcast-episode-094-being-a-hoarder-is-a-big-job.mp3" length="66539486" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/104</guid>
+      <pubDate>Thu, 27 Oct 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 094: Being a hoarder is a big job...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about buying old stuff and giving it a new life.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/290274046-makingitpodcast-episode-094-being-a-hoarder-is-a-big-job.mp3" fileSize="66539486" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 093: Change is hard</title>
+      <link>http://makingitpodcast.com/node/102</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about making changes.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/289195870-makingitpodcast-episode-093-change-is-hard.mp3" length="63707777" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/102</guid>
+      <pubDate>Thu, 20 Oct 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 093: Change is hard</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about making changes.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/289195870-makingitpodcast-episode-093-change-is-hard.mp3" fileSize="63707777" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 092: Good Clean Fun with Nick Offerman</title>
+      <link>http://makingitpodcast.com/node/101</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk to Nick Offerman!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/287517381-makingitpodcast-episode-092-good-clean-fun-with-nick-offerman.mp3" length="63779417" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/101</guid>
+      <pubDate>Thu, 13 Oct 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 092: Good Clean Fun with Nick Offerman</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk to Nick Offerman!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/287517381-makingitpodcast-episode-092-good-clean-fun-with-nick-offerman.mp3" fileSize="63779417" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 091: Getting the help you need.</title>
+      <link>http://makingitpodcast.com/node/100</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about when to get help with your work.
+
+What We're Working On
+
+Jimmy Diresta - Maker Faire NY
+David Picciuto - Acrylic clocks
+Bob Clagett - Custom car horn for any car
+Links:
+
+Ability3d.com
+What we're watching:
+
+David's Pick of the Week: Katz-Moses Woodworking
+Bob's Pick of the Week: 3d Printing Nerd
+Jimmy's Pick of the Week: Barnacules Nerdgasm
+Special thanks to all of our patrons on Patreon for supporting this episode! Especially:
+
+Make    Build Modify
+Luis    
+Dan    Krupnik
+Corey    Creehan
+Thomas    Parson
+Jared    Shaw
+Afaque    Amanulla
+Carl    Brink
+Ben    Uyeda
+Michael    Sepe
+If you enjoy the show,
+
+please consider supporting us on Patreon</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/286316321-makingitpodcast-episode-091-getting-the-help-you-need.mp3" length="48722884" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/100</guid>
+      <pubDate>Thu, 06 Oct 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 091: Getting the help you need.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about when to get help with your work.
+
+What We're Working On
+
+Jimmy Diresta - Maker Faire NY
+David Picciuto - Acrylic clocks
+Bob Clagett - Custom car horn for any car
+Links:
+
+Ability3d.com
+What we're watching:
+
+David's Pick of the Week: Katz-Moses Woodworking
+Bob's Pick of the Week: 3d Printing Nerd
+Jimmy's Pick of the Week: Barnacules Nerdgasm
+Special thanks to all of our patrons on Patreon for supporting this episode! Especially:
+
+Make    Build Modify
+Luis    
+Dan    Krupnik
+Corey    Creehan
+Thomas    Parson
+Jared    Shaw
+Afaque    Amanulla
+Carl    Brink
+Ben    Uyeda
+Michael    Sepe
+If you enjoy the show,
+
+please consider supporting us on Patreon</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/286316321-makingitpodcast-episode-091-getting-the-help-you-need.mp3" fileSize="48722884" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 090: Purpose</title>
+      <link>http://makingitpodcast.com/node/99</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about finding purpose in work and life.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/285275850-makingitpodcast-episode-090-purpose.mp3" length="49183289" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/99</guid>
+      <pubDate>Thu, 29 Sep 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 090: Purpose</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about finding purpose in work and life.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/285275850-makingitpodcast-episode-090-purpose.mp3" fileSize="49183289" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 089: Avoiding the task at hand</title>
+      <link>http://makingitpodcast.com/node/98</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about putting off today what you can do tomorrow.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/284151477-makingitpodcast-making-it-89.mp3" length="51171516" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/98</guid>
+      <pubDate>Thu, 22 Sep 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 089: Avoiding the task at hand</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about putting off today what you can do tomorrow.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/284151477-makingitpodcast-making-it-89.mp3" fileSize="51171516" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 088: Making your mark</title>
+      <link>http://makingitpodcast.com/node/97</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about logos, walkmen and fax machines.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/283055252-makingitpodcast-episode-088-making-your-mark.mp3" length="65172912" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/97</guid>
+      <pubDate>Thu, 15 Sep 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 088: Making your mark</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about logos, walkmen and fax machines.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/283055252-makingitpodcast-episode-088-making-your-mark.mp3" fileSize="65172912" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 087: Maybe it's time to change directions</title>
+      <link>http://makingitpodcast.com/node/96</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about deciding when to give up and make a new plan.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/281966178-makingitpodcast-episode-087-maybe-its-time-to-change-directions.mp3" length="48336822" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/96</guid>
+      <pubDate>Thu, 08 Sep 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 087: Maybe it's time to change directions</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about deciding when to give up and make a new plan.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/281966178-makingitpodcast-episode-087-maybe-its-time-to-change-directions.mp3" fileSize="48336822" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 086: Questioning each other</title>
+      <link>http://makingitpodcast.com/node/95</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other two questions. One work related, one personal.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/281011368-makingitpodcast-episode-086-questioning-each-other.mp3" length="65934703" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/95</guid>
+      <pubDate>Thu, 01 Sep 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 086: Questioning each other</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other two questions. One work related, one personal.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/281011368-makingitpodcast-episode-086-questioning-each-other.mp3" fileSize="65934703" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 085: Sometimes I'm really into the laser.</title>
+      <link>http://makingitpodcast.com/node/94</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about favorite tools and first times.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/279981566-makingitpodcast-episode-085-sometimes-im-really-into-the-laser.mp3" length="55724476" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/94</guid>
+      <pubDate>Thu, 25 Aug 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 085: Sometimes I'm really into the laser.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about favorite tools and first times.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/279981566-makingitpodcast-episode-085-sometimes-im-really-into-the-laser.mp3" fileSize="55724476" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 084: Cutting down a tree with nothing on...</title>
+      <link>http://makingitpodcast.com/node/93</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about nerves, meals and cutting down trees in crocs.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://dts.podtrac.com/redirect.mp3/feeds.soundcloud.com/stream/278909424-makingitpodcast-episode-084-cutting-down-a-tree-with-nothing-on.mp3" length="50766540" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/93</guid>
+      <pubDate>Thu, 18 Aug 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 084: Cutting down a tree with nothing on...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about nerves, meals and cutting down trees in crocs.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://dts.podtrac.com/redirect.mp3/feeds.soundcloud.com/stream/278909424-makingitpodcast-episode-084-cutting-down-a-tree-with-nothing-on.mp3" fileSize="50766540" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 083: Learn how to learn.</title>
+      <link>http://makingitpodcast.com/node/92</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about college vs free online education.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/277856736-makingitpodcast-episode-083-learn-how-to-learn.mp3" length="43568459" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/92</guid>
+      <pubDate>Thu, 11 Aug 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 083: Learn how to learn.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about college vs free online education.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/277856736-makingitpodcast-episode-083-learn-how-to-learn.mp3" fileSize="43568459" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 082: I buy a lot of hammers...</title>
+      <link>http://makingitpodcast.com/node/91</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about lots of random stuff via Twitter questions.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/276802309-makingitpodcast-episode-082-i-buy-a-lot-of-hammers.mp3" length="57655058" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/91</guid>
+      <pubDate>Thu, 04 Aug 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 082: I buy a lot of hammers...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about lots of random stuff via Twitter questions.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/276802309-makingitpodcast-episode-082-i-buy-a-lot-of-hammers.mp3" fileSize="57655058" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 081: Let's just get through the next 10 minutes</title>
+      <link>http://makingitpodcast.com/node/90</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about keeping track of your life.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/275914220-makingitpodcast-episode-081-lets-just-get-through-the-next-10-minutes.mp3" length="53553031" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/90</guid>
+      <pubDate>Thu, 28 Jul 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 081: Let's just get through the next 10 minutes</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about keeping track of your life.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/275914220-makingitpodcast-episode-081-lets-just-get-through-the-next-10-minutes.mp3" fileSize="53553031" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 080: Go where you don't fit</title>
+      <link>http://makingitpodcast.com/node/89</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about learning my embedding yourself in a place that you don't belong.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/274760681-makingitpodcast-episode-080-go-where-you-dont-fit.mp3" length="47553374" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/89</guid>
+      <pubDate>Thu, 21 Jul 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 080: Go where you don't fit</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about learning my embedding yourself in a place that you don't belong.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/274760681-makingitpodcast-episode-080-go-where-you-dont-fit.mp3" fileSize="47553374" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 079: A ramekin is a little dragon...</title>
+      <link>http://makingitpodcast.com/node/87</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer some questions from Twitter and talk about cookware and dragons.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/273793755-makingitpodcast-episode-079-a-ramekin-is-a-little-dragon.mp3" length="59232021" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/87</guid>
+      <pubDate>Thu, 14 Jul 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 079: A ramekin is a little dragon...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer some questions from Twitter and talk about cookware and dragons.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/273793755-makingitpodcast-episode-079-a-ramekin-is-a-little-dragon.mp3" fileSize="59232021" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 078: Sometime the cookie floats</title>
+      <link>http://makingitpodcast.com/node/86</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about reacting to crisis and dealing with change that you can't control.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/272608337-makingitpodcast-episode-078-sometimes-the-cookie-floats.mp3" length="40568985" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/86</guid>
+      <pubDate>Thu, 07 Jul 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 078: Sometime the cookie floats</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about reacting to crisis and dealing with change that you can't control.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/272608337-makingitpodcast-episode-078-sometimes-the-cookie-floats.mp3" fileSize="40568985" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 077: Learning up close</title>
+      <link>http://makingitpodcast.com/node/85</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the difference between learning in person and learning online.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/271498185-makingitpodcast-episode-077-learning-up-close.mp3" length="49994312" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/85</guid>
+      <pubDate>Thu, 30 Jun 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 077: Learning up close</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the difference between learning in person and learning online.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/271498185-makingitpodcast-episode-077-learning-up-close.mp3" fileSize="49994312" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 076: The Process (Maker Faire 2016)</title>
+      <link>http://makingitpodcast.com/node/84</link>
+      <description>We couldn't record a new episode this week, so we pulled the audio from a GoPro from our Maker Faire 2016 talk to share with you.  The audio is pretty bad, but hopefully you'll be able to enjoy it!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/270499815-makingitpodcast-episode-076-the-process-maker-faire-2016.mp3" length="51800285" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/84</guid>
+      <pubDate>Thu, 23 Jun 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 076: The Process (Maker Faire 2016)</itunes:subtitle>
+      <itunes:summary>We couldn't record a new episode this week, so we pulled the audio from a GoPro from our Maker Faire 2016 talk to share with you.  The audio is pretty bad, but hopefully you'll be able to enjoy it!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/270499815-makingitpodcast-episode-076-the-process-maker-faire-2016.mp3" fileSize="51800285" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 075: Interviewing each other</title>
+      <link>http://makingitpodcast.com/node/83</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other two questions.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/269499503-makingitpodcast-episode-075-interviewing-each-other.mp3" length="49689803" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/83</guid>
+      <pubDate>Thu, 16 Jun 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 075: Interviewing each other</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto ask each other two questions.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/269499503-makingitpodcast-episode-075-interviewing-each-other.mp3" fileSize="49689803" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 074: They're not gonna take away your birthday</title>
+      <link>http://makingitpodcast.com/node/82</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer impromptu questions from twitter and talk a lot about fear.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/268308014-makingitpodcast-episode-074-theyre-not-gonna-take-away-your-birthday.mp3" length="53107454" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/82</guid>
+      <pubDate>Thu, 09 Jun 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 074: They're not gonna take away your birthday</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer impromptu questions from twitter and talk a lot about fear.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/268308014-makingitpodcast-episode-074-theyre-not-gonna-take-away-your-birthday.mp3" fileSize="53107454" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 073: Eyeball trauma</title>
+      <link>http://makingitpodcast.com/node/81</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about dogs and safety.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/267177591-makingitpodcast-episode-073-eyeball-trauma.mp3" length="67776872" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/81</guid>
+      <pubDate>Thu, 02 Jun 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 073: Eyeball trauma</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about dogs and safety.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/267177591-makingitpodcast-episode-073-eyeball-trauma.mp3" fileSize="67776872" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 072: Back FROM Maker Faire</title>
+      <link>http://makingitpodcast.com/node/80</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their trip to California for Maker Faire, and more!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/266176056-makingitpodcast-episode-072-back-from-maker-faire.mp3" length="50840574" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/80</guid>
+      <pubDate>Thu, 26 May 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 072: Back FROM Maker Faire</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their trip to California for Maker Faire, and more!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/266176056-makingitpodcast-episode-072-back-from-maker-faire.mp3" fileSize="50840574" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 071: Back to Maker Faire</title>
+      <link>http://makingitpodcast.com/node/79</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the upcoming Maker Faire and what's changed in the last year.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/264723493-makingitpodcast-episode-071-back-to-maker-faire.mp3" length="51182891" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/79</guid>
+      <pubDate>Thu, 19 May 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 071: Back to Maker Faire</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the upcoming Maker Faire and what's changed in the last year.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/264723493-makingitpodcast-episode-071-back-to-maker-faire.mp3" fileSize="51182891" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 070: Kryptonite, Taxes and the Powerball</title>
+      <link>http://makingitpodcast.com/node/78</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about...  well, lots of stuff.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/263804967-makingitpodcast-episode-070-kryptonite-taxes-and-the-powerball.mp3" length="60788991" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/78</guid>
+      <pubDate>Thu, 12 May 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 070: Kryptonite, Taxes and the Powerball</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about...  well, lots of stuff.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/263804967-makingitpodcast-episode-070-kryptonite-taxes-and-the-powerball.mp3" fileSize="60788991" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 069: Legacy</title>
+      <link>http://makingitpodcast.com/node/77</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about leaving a legacy.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/262669161-makingitpodcast-episode-069-legacy.mp3" length="53473697" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/77</guid>
+      <pubDate>Thu, 05 May 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 069: Legacy</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about leaving a legacy.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/262669161-makingitpodcast-episode-069-legacy.mp3" fileSize="53473697" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 068: Love Handles and Bald Spots</title>
+      <link>http://makingitpodcast.com/node/76</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Glowforge delay, bald spots and community vs competition.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/260226996-makingitpodcast-episode-068-love-handles-and-bald-spots.mp3" length="55230026" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/76</guid>
+      <pubDate>Thu, 21 Apr 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 068: Love Handles and Bald Spots</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Glowforge delay, bald spots and community vs competition.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/260226996-makingitpodcast-episode-068-love-handles-and-bald-spots.mp3" fileSize="55230026" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 067: Awww, look at that poor little piece of rope</title>
+      <link>http://makingitpodcast.com/node/75</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Maker Faires, rope and t-shirts.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/258726517-makingitpodcast-episode-67-awww-look-at-that-poor-little-piece-of-rope.mp3" length="54296654" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/75</guid>
+      <pubDate>Thu, 14 Apr 2016 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 067: Awww, look at that poor little piece of rope</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Maker Faires, rope and t-shirts.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/258726517-makingitpodcast-episode-67-awww-look-at-that-poor-little-piece-of-rope.mp3" fileSize="54296654" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 066: Trampolines, testing and structure</title>
+      <link>http://makingitpodcast.com/node/74</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about testing potential employees, CAD and what our weeks look like.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/257834819-makingitpodcast-episode-066.mp3" length="78913841" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/74</guid>
+      <pubDate>Thu, 07 Apr 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 066: Trampolines, testing and structure</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about testing potential employees, CAD and what our weeks look like.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/257834819-makingitpodcast-episode-066.mp3" fileSize="78913841" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 065: A mallard is a tool you use when you do chisel work</title>
+      <link>http://makingitpodcast.com/node/73</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about ducks, getting things done and overlapping projects.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/256534383-makingitpodcast-65a.mp3" length="61761814" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/73</guid>
+      <pubDate>Thu, 31 Mar 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 065: A mallard is a tool you use when you do chisel work</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about ducks, getting things done and overlapping projects.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/256534383-makingitpodcast-65a.mp3" fileSize="61761814" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 064: Pat the bushes of my brain</title>
+      <link>http://makingitpodcast.com/node/72</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Sam Maloof, Death Star chairs  and bionic arms.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/254527175-makingitpodcast-episode-064-pat-the-bushes-of-my-brain.mp3" length="49804477" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/72</guid>
+      <pubDate>Thu, 24 Mar 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 064: Pat the bushes of my brain</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Sam Maloof, Death Star chairs  and bionic arms.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/254527175-makingitpodcast-episode-064-pat-the-bushes-of-my-brain.mp3" fileSize="49804477" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 063: $2000 to start over</title>
+      <link>http://makingitpodcast.com/node/71</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about doing things the hard way for practice and what they'd buy to start a new shop, with $2000.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/252225994-makingitpodcast-episode-063-2000-to-start-over.mp3" length="53201013" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/71</guid>
+      <pubDate>Thu, 17 Mar 2016 23:59:59 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 063: $2000 to start over</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about doing things the hard way for practice and what they'd buy to start a new shop, with $2000.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/252225994-makingitpodcast-episode-063-2000-to-start-over.mp3" fileSize="53201013" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 062: Totally bananas</title>
+      <link>http://makingitpodcast.com/node/70</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer a bunch of questions from Twitter!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/251265499-makingitpodcast-episode-062-totally-bananas.mp3" length="45980359" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/70</guid>
+      <pubDate>Thu, 10 Mar 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 062: Totally bananas</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer a bunch of questions from Twitter!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/251265499-makingitpodcast-episode-062-totally-bananas.mp3" fileSize="45980359" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 061: Time and tools and lathes and apps</title>
+      <link>http://makingitpodcast.com/node/69</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about a bunch of random stuff from time management to lathes and tool abuse.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/250027576-makingitpodcast-episode-061-time-and-tools-and-lathes-and-apps.mp3" length="54266508" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/69</guid>
+      <pubDate>Thu, 03 Mar 2016 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 061: Time and tools and lathes and apps</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about a bunch of random stuff from time management to lathes and tool abuse.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/250027576-makingitpodcast-episode-061-time-and-tools-and-lathes-and-apps.mp3" fileSize="54266508" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 60: Don't match your socks</title>
+      <link>http://makingitpodcast.com/node/68</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about digital tools that help or hurt your productivity.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/248781890-makingitpodcast-episode-060-dont-match-your-socks.mp3" length="42386124" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/68</guid>
+      <pubDate>Thu, 25 Feb 2016 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 60: Don't match your socks</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about digital tools that help or hurt your productivity.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/248781890-makingitpodcast-episode-060-dont-match-your-socks.mp3" fileSize="42386124" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 059: Bobcats &amp; Bologna sandwiches</title>
+      <link>http://makingitpodcast.com/node/67</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about expectations vs impact and do some more brainstorming.  Also, bobcats &amp; bologna sandwiches.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/247638532-makingitpodcast-episode-059-bobcats-and-bologna-sandwiches.mp3" length="58453633" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/67</guid>
+      <pubDate>Thu, 18 Feb 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 059: Bobcats &amp; Bologna sandwiches</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about expectations vs impact and do some more brainstorming.  Also, bobcats &amp; bologna sandwiches.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/247638532-makingitpodcast-episode-059-bobcats-and-bologna-sandwiches.mp3" fileSize="58453633" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 058: Important Forks</title>
+      <link>http://makingitpodcast.com/node/66</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about forks in the road and moments that changed our paths.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/246523214-makingitpodcast-episode-058-important-forks.mp3" length="49415873" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/66</guid>
+      <pubDate>Thu, 11 Feb 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 058: Important Forks</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about forks in the road and moments that changed our paths.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/246523214-makingitpodcast-episode-058-important-forks.mp3" fileSize="49415873" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 057: brainstorming</title>
+      <link>http://makingitpodcast.com/node/65</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto brainstorm future project ideas!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/245294640-makingitpodcast-episode-057-brainstorming.mp3" length="53549032" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/65</guid>
+      <pubDate>Thu, 04 Feb 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 057: brainstorming</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto brainstorm future project ideas!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/245294640-makingitpodcast-episode-057-brainstorming.mp3" fileSize="53549032" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 056: #freetools</title>
+      <link>http://makingitpodcast.com/node/64</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about #freetools.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/244284268-makingitpodcast-episode-056-freetools.mp3" length="59521948" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/64</guid>
+      <pubDate>Thu, 28 Jan 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 056: #freetools</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about #freetools.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/244284268-makingitpodcast-episode-056-freetools.mp3" fileSize="59521948" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 055: Job Insecurity</title>
+      <link>http://makingitpodcast.com/node/63</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about job insecurity and the bubble.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/242905635-makingitpodcast-episode-055-job-insecurity.mp3" length="45210339" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/63</guid>
+      <pubDate>Thu, 21 Jan 2016 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 055: Job Insecurity</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about job insecurity and the bubble.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/242905635-makingitpodcast-episode-055-job-insecurity.mp3" fileSize="45210339" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 054: The end goal.</title>
+      <link>http://makingitpodcast.com/node/62</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about YouTube as the end goal... or not.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/241928526-makingitpodcast-episode-054-the-end-goal.mp3" length="49590468" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/62</guid>
+      <pubDate>Fri, 15 Jan 2016 09:40:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 054: The end goal.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about YouTube as the end goal... or not.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/241928526-makingitpodcast-episode-054-the-end-goal.mp3" fileSize="49590468" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 053: Follow through</title>
+      <link>http://makingitpodcast.com/node/61</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about following through with the things we say that we'll do.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/240724688-makingitpodcast-episode-053-follow-through.mp3" length="53107921" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/61</guid>
+      <pubDate>Thu, 07 Jan 2016 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 053: Follow through</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about following through with the things we say that we'll do.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/240724688-makingitpodcast-episode-053-follow-through.mp3" fileSize="53107921" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 052: Looking back, Looking ahead (again)</title>
+      <link>http://makingitpodcast.com/node/60</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they learned in 2015, and what they're looking forward to in 2016.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/239719175-makingitpodcast-episode-052-looking-back-looking-ahead-again.mp3" length="65667858" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/60</guid>
+      <pubDate>Thu, 31 Dec 2015 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 052: Looking back, Looking ahead (again)</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they learned in 2015, and what they're looking forward to in 2016.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/239719175-makingitpodcast-episode-052-looking-back-looking-ahead-again.mp3" fileSize="65667858" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 051: There's much trouble in the fuselage</title>
+      <link>http://makingitpodcast.com/node/59</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they'd get each other for Christmas (and other stuff).</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/238958654-makingitpodcast-episode-51-theres-much-trouble-in-the-fuselage.mp3" length="56160091" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/59</guid>
+      <pubDate>Fri, 25 Dec 2015 14:00:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 051: There's much trouble in the fuselage</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they'd get each other for Christmas (and other stuff).</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/238958654-makingitpodcast-episode-51-theres-much-trouble-in-the-fuselage.mp3" fileSize="56160091" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 050: Good Days</title>
+      <link>http://makingitpodcast.com/node/58</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about YouTube Red, how much is too much, and good days!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/238007901-makingitpodcast-episode-050-good-days.mp3" length="52142068" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/58</guid>
+      <pubDate>Thu, 17 Dec 2015 23:59:59 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 050: Good Days</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about YouTube Red, how much is too much, and good days!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/238007901-makingitpodcast-episode-050-good-days.mp3" fileSize="52142068" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 049: TV</title>
+      <link>http://makingitpodcast.com/node/57</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about ideas for tv shows, and why they won't happen.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/237035347-makingitpodcast-episode-049-tv.mp3" length="50035120" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/57</guid>
+      <pubDate>Thu, 10 Dec 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 049: TV</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about ideas for tv shows, and why they won't happen.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/237035347-makingitpodcast-episode-049-tv.mp3" fileSize="50035120" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 048: Bad days</title>
+      <link>http://makingitpodcast.com/node/56</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bad days.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/235737623-makingitpodcast-episode-048-bad-days.mp3" length="38273377" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/56</guid>
+      <pubDate>Thu, 03 Dec 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 048: Bad days</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about bad days.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/235737623-makingitpodcast-episode-048-bad-days.mp3" fileSize="38273377" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 047: Jack of all trades</title>
+      <link>http://makingitpodcast.com/node/55</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being a jack of all trades.. or not.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/234832615-makingitpodcast-episode-047-jack-of-all-trades.mp3" length="26643445" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/55</guid>
+      <pubDate>Thu, 26 Nov 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 047: Jack of all trades</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being a jack of all trades.. or not.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/234832615-makingitpodcast-episode-047-jack-of-all-trades.mp3" fileSize="26643445" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 046: Going all Howard Hughes</title>
+      <link>http://makingitpodcast.com/node/54</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about focus, business and Jimmy going full on Howard Hughes.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/233776638-makingitpodcast-episode-046-going-all-howard-hughes.mp3" length="40165749" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/54</guid>
+      <pubDate>Thu, 19 Nov 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 046: Going all Howard Hughes</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about focus, business and Jimmy going full on Howard Hughes.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/233776638-makingitpodcast-episode-046-going-all-howard-hughes.mp3" fileSize="40165749" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 045: Just what we need... another YouTuber with a backhoe.</title>
+      <link>http://makingitpodcast.com/node/53</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about freebooting, historical makers, and old rock stars.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/232743733-makingitpodcast-episode-045-just-what-we-need-another-youtuber-with-a-backhoe.mp3" length="48930804" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/53</guid>
+      <pubDate>Thu, 12 Nov 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 045: Just what we need... another YouTuber with a backhoe.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about freebooting, historical makers, and old rock stars.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/232743733-makingitpodcast-episode-045-just-what-we-need-another-youtuber-with-a-backhoe.mp3" fileSize="48930804" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 044: If I was going to shoot the side of a barn...</title>
+      <link>http://makingitpodcast.com/node/52</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about MCNs, channel growth and planking.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/231676055-makingitpodcast-episode-44-if-i-shot-the-side-of-a-barn.mp3" length="50274249" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/52</guid>
+      <pubDate>Thu, 05 Nov 2015 23:59:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 044: If I was going to shoot the side of a barn...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about MCNs, channel growth and planking.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/231676055-makingitpodcast-episode-44-if-i-shot-the-side-of-a-barn.mp3" fileSize="50274249" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 043: Tell us how you really feel, Jimmy..</title>
+      <link>http://makingitpodcast.com/node/51</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about next big tool purchases, YouTube Red and how we got to YouTube!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/230672637-makingitpodcast-episode-043-tell-us-how-you-really-feel-jimmy.mp3" length="99488382" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/51</guid>
+      <pubDate>Thu, 29 Oct 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 043: Tell us how you really feel, Jimmy..</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about next big tool purchases, YouTube Red and how we got to YouTube!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/230672637-makingitpodcast-episode-043-tell-us-how-you-really-feel-jimmy.mp3" fileSize="99488382" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 042: All over the place, again.</title>
+      <link>http://makingitpodcast.com/node/50</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto bounce from topic to topic... talking YouTube Red, Star Wars, CPM's and more.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/229590560-makingitpodcast-episode-42-all-over-the-place.mp3" length="102935626" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/50</guid>
+      <pubDate>Thu, 22 Oct 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 042: All over the place, again.</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto bounce from topic to topic... talking YouTube Red, Star Wars, CPM's and more.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/229590560-makingitpodcast-episode-42-all-over-the-place.mp3" fileSize="102935626" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 041: I wanted to be Batman</title>
+      <link>http://makingitpodcast.com/node/48</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they wanted to be when they grew up, and what that kid would think about them now.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/228378210-makingitpodcast-episode-041-i-wanted-to-be-batman.mp3" length="63137352" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/48</guid>
+      <pubDate>Thu, 15 Oct 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 041: I wanted to be Batman</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what they wanted to be when they grew up, and what that kid would think about them now.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/228378210-makingitpodcast-episode-041-i-wanted-to-be-batman.mp3" fileSize="63137352" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 040: How does content creation change you?</title>
+      <link>http://makingitpodcast.com/node/47</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how creating content changes how you work as an artist.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/227356545-makingitpodcast-episode-40-how-does-content-creation-change-you.mp3" length="55478202" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/47</guid>
+      <pubDate>Thu, 08 Oct 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 040: How does content creation change you?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how creating content changes how you work as an artist.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/227356545-makingitpodcast-episode-40-how-does-content-creation-change-you.mp3" fileSize="55478202" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 039: Emergency Penguin</title>
+      <link>http://makingitpodcast.com/node/46</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about penguins, airports and WIA.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/226450741-makingitpodcast-episode-39-emergency-penguin.mp3" length="31521033" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/46</guid>
+      <pubDate>Thu, 01 Oct 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 039: Emergency Penguin</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about penguins, airports and WIA.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/226450741-makingitpodcast-episode-39-emergency-penguin.mp3" fileSize="31521033" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 038: Before the first cut</title>
+      <link>http://makingitpodcast.com/node/45</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what goes into a project before you even make the first cut.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/225379042-makingitpodcast-episode-38-before-the-first-cut.mp3" length="25213107" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/45</guid>
+      <pubDate>Thu, 24 Sep 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 038: Before the first cut</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what goes into a project before you even make the first cut.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/225379042-makingitpodcast-episode-38-before-the-first-cut.mp3" fileSize="25213107" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 037: What are you excited about?</title>
+      <link>http://makingitpodcast.com/node/44</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what is exciting and motivating them right now.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/224287988-makingitpodcast-episode-37.mp3" length="37689454" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/44</guid>
+      <pubDate>Thu, 17 Sep 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 037: What are you excited about?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what is exciting and motivating them right now.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/224287988-makingitpodcast-episode-37.mp3" fileSize="37689454" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 036: Precision &amp; Accuracy</title>
+      <link>http://makingitpodcast.com/node/43</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about accuracy, if and when it matters.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/223258137-makingitpodcast-episode-36.mp3" length="27458033" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/43</guid>
+      <pubDate>Thu, 10 Sep 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 036: Precision &amp; Accuracy</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about accuracy, if and when it matters.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/223258137-makingitpodcast-episode-36.mp3" fileSize="27458033" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 035: 47,793 unread messages</title>
+      <link>http://makingitpodcast.com/node/42</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the software they use in all of the different parts of their businesses and content creation, and why Jimmy's email is SO OUT OF CONTROL.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/222210959-makingitpodcast-episode-35-47793-unread-messages.mp3" length="47555848" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/42</guid>
+      <pubDate>Thu, 03 Sep 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 035: 47,793 unread messages</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the software they use in all of the different parts of their businesses and content creation, and why Jimmy's email is SO OUT OF CONTROL.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/222210959-makingitpodcast-episode-35-47793-unread-messages.mp3" fileSize="47555848" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 034: WAELDER</title>
+      <link>http://makingitpodcast.com/node/41</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto are joined by a special guest, David Waelder to talk about what it's like sharing a shop with Jimmy and getting started on YouTube.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/221178622-makingitpodcast-episode-34-waelder.mp3" length="46793660" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/41</guid>
+      <pubDate>Thu, 27 Aug 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 034: WAELDER</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto are joined by a special guest, David Waelder to talk about what it's like sharing a shop with Jimmy and getting started on YouTube.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/221178622-makingitpodcast-episode-34-waelder.mp3" fileSize="46793660" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 033: More listener questions</title>
+      <link>http://makingitpodcast.com/node/40</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more of YOUR questions!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/220159151-makingitpodcast-33a.mp3" length="50923693" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/40</guid>
+      <pubDate>Thu, 20 Aug 2015 23:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 033: More listener questions</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer more of YOUR questions!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/220159151-makingitpodcast-33a.mp3" fileSize="50923693" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 032: Listener Questions</title>
+      <link>http://makingitpodcast.com/node/39</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer YOUR questions!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/219137961-makingitpodcast-making-it-032.mp3" length="41407672" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/39</guid>
+      <pubDate>Thu, 13 Aug 2015 11:59:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 032: Listener Questions</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer YOUR questions!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/219137961-makingitpodcast-making-it-032.mp3" fileSize="41407672" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 031: Brainstorming</title>
+      <link>http://makingitpodcast.com/node/38</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they brainstorm ideas and about Jimmy's new makerspace fundraising campaign!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/217985443-makingitpodcast-making-it-031.mp3" length="42646243" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/38</guid>
+      <pubDate>Wed, 05 Aug 2015 21:29:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 031: Brainstorming</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they brainstorm ideas and about Jimmy's new makerspace fundraising campaign!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/217985443-makingitpodcast-making-it-031.mp3" fileSize="42646243" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 030: Productivity.geocities.com</title>
+      <link>http://makingitpodcast.com/node/37</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about some ways that they stay productive when working alone, or just when there's a ton to do.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/217036911-makingitpodcast-making-it-030.mp3" length="38482544" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/37</guid>
+      <pubDate>Thu, 30 Jul 2015 23:05:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 030: Productivity.geocities.com</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about some ways that they stay productive when working alone, or just when there's a ton to do.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/217036911-makingitpodcast-making-it-030.mp3" fileSize="38482544" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 029: How to be a sellout</title>
+      <link>http://makingitpodcast.com/node/36</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being a sellout, sponsorships and making a living.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/215998701-makingitpodcast-making-it-029-how-to-be-a-sellout.mp3" length="37206662" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/36</guid>
+      <pubDate>Thu, 23 Jul 2015 10:36:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 029: How to be a sellout</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about being a sellout, sponsorships and making a living.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/215998701-makingitpodcast-making-it-029-how-to-be-a-sellout.mp3" fileSize="37206662" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 028: Signs</title>
+      <link>http://makingitpodcast.com/node/35</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about sign making, camping and fireworks.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/213973731-makingitpodcast-making-it-028-edit.mp3" length="24067688" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/35</guid>
+      <pubDate>Thu, 09 Jul 2015 11:30:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 028: Signs</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about sign making, camping and fireworks.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/213973731-makingitpodcast-making-it-028-edit.mp3" fileSize="24067688" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 027: Simplify</title>
+      <link>http://makingitpodcast.com/node/34</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about simplifying, organizing and knowing when you have too much stuff.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/212883950-makingitpodcast-making-it-027.mp3" length="37581123" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/34</guid>
+      <pubDate>Thu, 02 Jul 2015 22:08:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 027: Simplify</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about simplifying, organizing and knowing when you have too much stuff.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/212883950-makingitpodcast-making-it-027.mp3" fileSize="37581123" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 026: The next five years...</title>
+      <link>http://makingitpodcast.com/node/33</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about where they hope to be in five years, and what MIGHT change in the maker community in general!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/211983659-makingitpodcast-making-it-026.mp3" length="36736057" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/33</guid>
+      <pubDate>Thu, 25 Jun 2015 11:32:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 026: The next five years...</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about where they hope to be in five years, and what MIGHT change in the maker community in general!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/211983659-makingitpodcast-making-it-026.mp3" fileSize="36736057" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 025: Staying playful</title>
+      <link>http://makingitpodcast.com/node/32</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why playing is such a big deal!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/210959622-makingitpodcast-making-it-025-always-keep-playing.mp3" length="36402078" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/32</guid>
+      <pubDate>Thu, 18 Jun 2015 17:30:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 025: Staying playful</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why playing is such a big deal!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/210959622-makingitpodcast-making-it-025-always-keep-playing.mp3" fileSize="36402078" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 024: What makes you happy? </title>
+      <link>http://makingitpodcast.com/node/31</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what makes them happy, both in and out of the shop!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/209992038-makingitpodcast-making-it-024.mp3" length="33554007" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/31</guid>
+      <pubDate>Thu, 11 Jun 2015 15:09:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 024: What makes you happy? </itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about what makes them happy, both in and out of the shop!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/209992038-makingitpodcast-making-it-024.mp3" fileSize="33554007" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 023: Style &amp; Uniqueness</title>
+      <link>http://makingitpodcast.com/node/30</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they found their style and whether being unique really even matters.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/208777815-makingitpodcast-making-it-023-style-uniqueness.mp3" length="34138929" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/30</guid>
+      <pubDate>Thu, 04 Jun 2015 11:24:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 023: Style &amp; Uniqueness</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they found their style and whether being unique really even matters.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/208777815-makingitpodcast-making-it-023-style-uniqueness.mp3" fileSize="34138929" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 022: Keeping the hustle</title>
+      <link>http://makingitpodcast.com/node/29</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about keeping the hustle going, even when you might not feel like it, and.. what is hustle anyway?</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/207801202-makingitpodcast-making-it-022-keeping-the-hustle.mp3" length="29928878" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/29</guid>
+      <pubDate>Thu, 28 May 2015 10:29:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 022: Keeping the hustle</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about keeping the hustle going, even when you might not feel like it, and.. what is hustle anyway?</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/207801202-makingitpodcast-making-it-022-keeping-the-hustle.mp3" fileSize="29928878" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 021: Maker Faire and the gas mask guy</title>
+      <link>http://makingitpodcast.com/node/28</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Maker Faire Bay Area and all of the crazy stuff they saw there!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/206709761-makingitpodcast-making-it-021-maker-faire-was-crazy.mp3" length="30995015" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/28</guid>
+      <pubDate>Fri, 22 May 2015 11:17:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 021: Maker Faire and the gas mask guy</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about Maker Faire Bay Area and all of the crazy stuff they saw there!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/206709761-makingitpodcast-making-it-021-maker-faire-was-crazy.mp3" fileSize="30995015" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Episode 020: Open source ideas</title>
+      <link>http://makingitpodcast.com/node/27</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about inspiration vs copying, open source and remixing ideas!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/204528597-makingitpodcast-making-it-020.mp3" length="34709144" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/27</guid>
+      <pubDate>Thu, 07 May 2015 21:02:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Episode 020: Open source ideas</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about inspiration vs copying, open source and remixing ideas!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/204528597-makingitpodcast-making-it-020.mp3" fileSize="34709144" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #019: Learning to teach</title>
+      <link>http://makingitpodcast.com/node/26</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about teaching and learning.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/203417136-makingitpodcast-making-it-019-learning-to-teach.mp3" length="34720848" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/26</guid>
+      <pubDate>Wed, 29 Apr 2015 17:42:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #019: Learning to teach</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about teaching and learning.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/203417136-makingitpodcast-making-it-019-learning-to-teach.mp3" fileSize="34720848" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #018: All over the place</title>
+      <link>http://makingitpodcast.com/node/25</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about a bunch of random stuff including intimidation and procrastination.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/202331588-makingitpodcast-making-it-018.mp3" length="29427653" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/25</guid>
+      <pubDate>Fri, 24 Apr 2015 09:26:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #018: All over the place</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about a bunch of random stuff including intimidation and procrastination.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/202331588-makingitpodcast-making-it-018.mp3" fileSize="29427653" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #017: Organization</title>
+      <link>http://makingitpodcast.com/node/24</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they organize (or don't organize) their shops.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/201124745-makingitpodcast-making-it-017.mp3" length="33200965" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/24</guid>
+      <pubDate>Wed, 15 Apr 2015 17:23:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #017: Organization</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they organize (or don't organize) their shops.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/201124745-makingitpodcast-making-it-017.mp3" fileSize="33200965" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #016: Perfect vs profit</title>
+      <link>http://makingitpodcast.com/node/23</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the tipping point of perfection vs profit.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/200163972-makingitpodcast-making-it-016.mp3" length="33869824" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/23</guid>
+      <pubDate>Fri, 10 Apr 2015 10:18:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #016: Perfect vs profit</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the tipping point of perfection vs profit.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/200163972-makingitpodcast-making-it-016.mp3" fileSize="33869824" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #015: Gilligan's Workshop</title>
+      <link>http://makingitpodcast.com/node/22</link>
+      <description>This week, Jimmy Diresta, Bob Clagett and David Picciuto figure out what tools they would want to have if shipwrecked on a deserted island... seriously.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198961902-makingitpodcast-making-it-015-gilligans-workshop.mp3" length="36647352" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/22</guid>
+      <pubDate>Thu, 02 Apr 2015 12:18:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #015: Gilligan's Workshop</itunes:subtitle>
+      <itunes:summary>This week, Jimmy Diresta, Bob Clagett and David Picciuto figure out what tools they would want to have if shipwrecked on a deserted island... seriously.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198961902-makingitpodcast-making-it-015-gilligans-workshop.mp3" fileSize="36647352" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #014: Why</title>
+      <link>http://makingitpodcast.com/node/21</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why they do what they do and how it can help you focus when you think about it too.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/197955342-makingitpodcast-making-it-014-why.mp3" length="15875029" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/21</guid>
+      <pubDate>Thu, 26 Mar 2015 10:25:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #014: Why</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why they do what they do and how it can help you focus when you think about it too.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/197955342-makingitpodcast-making-it-014-why.mp3" fileSize="15875029" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #013: Be Curious</title>
+      <link>http://makingitpodcast.com/node/20</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they learn and why it's important to be curious.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/197446709-makingitpodcast-making-it-013-be-curious.mp3" length="27150472" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/20</guid>
+      <pubDate>Thu, 19 Mar 2015 15:23:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #013: Be Curious</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they learn and why it's important to be curious.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/197446709-makingitpodcast-making-it-013-be-curious.mp3" fileSize="27150472" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #012: Handmade?</title>
+      <link>http://makingitpodcast.com/node/19</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about using computer controlled tools vs hand making projects. What is the difference? When does it matter?</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746294-makingitpodcast-making-it-012-handmade.mp3" length="16051058" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/19</guid>
+      <pubDate>Thu, 12 Mar 2015 00:36:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #012: Handmade?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about using computer controlled tools vs hand making projects. What is the difference? When does it matter?</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746294-makingitpodcast-making-it-012-handmade.mp3" fileSize="16051058" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #011: Making movies</title>
+      <link>http://makingitpodcast.com/node/18</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they make their YouTube videos, from cameras and software to lighting and composition.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746349-makingitpodcast-making-it-011.mp3" length="26207501" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/18</guid>
+      <pubDate>Thu, 05 Mar 2015 11:16:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #011: Making movies</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how they make their YouTube videos, from cameras and software to lighting and composition.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746349-makingitpodcast-making-it-011.mp3" fileSize="26207501" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #010: If it looks straight....</title>
+      <link>http://makingitpodcast.com/node/17</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto answer a whole bunch of listener questions about all sorts of different topics!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746424-makingitpodcast-making-it-010-if-it-looks-straight.mp3" length="23640332" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/17</guid>
+      <pubDate>Wed, 25 Feb 2015 23:14:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #010: If it looks straight....</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto answer a whole bunch of listener questions about all sorts of different topics!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746424-makingitpodcast-making-it-010-if-it-looks-straight.mp3" fileSize="23640332" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #009: Fears and Doubts</title>
+      <link>http://makingitpodcast.com/node/16</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about all of the things that scare them, both in and out of the shop.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745226-makingitpodcast-making-it-009-fears-and-doubts.mp3" length="24469529" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/16</guid>
+      <pubDate>Thu, 12 Feb 2015 16:16:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #009: Fears and Doubts</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about all of the things that scare them, both in and out of the shop.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745226-makingitpodcast-making-it-009-fears-and-doubts.mp3" fileSize="24469529" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #008 : Who inspires us</title>
+      <link>http://makingitpodcast.com/node/15</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about who inspires them. Some of their inspiration may comes from obvious sources, but a lot of it does not!</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198756422-makingitpodcast-making-it-008-who-inspires-us.mp3" length="19915884" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/15</guid>
+      <pubDate>Thu, 29 Jan 2015 12:14:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #008 : Who inspires us</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about who inspires them. Some of their inspiration may comes from obvious sources, but a lot of it does not!</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198756422-makingitpodcast-making-it-008-who-inspires-us.mp3" fileSize="19915884" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #007 : Failure</title>
+      <link>http://makingitpodcast.com/node/14</link>
+      <description>This week, Jimmy, David and Bob talk about past and current project failures. </description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745128-makingitpodcast-making-it-007-failure.mp3" length="20251397" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/14</guid>
+      <pubDate>Thu, 15 Jan 2015 10:43:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #007 : Failure</itunes:subtitle>
+      <itunes:summary>This week, Jimmy, David and Bob talk about past and current project failures. </itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745128-makingitpodcast-making-it-007-failure.mp3" fileSize="20251397" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #006 : How do I quit my job, and do what you do?</title>
+      <link>http://makingitpodcast.com/node/13</link>
+      <description>This week, Jimmy, David and Bob address a question that we all get a lot.. "How do I quit my job and do what you do?"
+There's a lot to think about when pursing being a full time maker, and the guys just scratch the surface of what it takes to chase that dream.
+Also, they talk about Jimmy's essay in the new book, Maker Pro, which is about making a living as a maker.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745008-makingitpodcast-making-it-006-how-do-i-quit-my-job-and-do-what-you-do.mp3" length="24365027" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/13</guid>
+      <pubDate>Fri, 02 Jan 2015 11:14:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #006 : How do I quit my job, and do what you do?</itunes:subtitle>
+      <itunes:summary>This week, Jimmy, David and Bob address a question that we all get a lot.. "How do I quit my job and do what you do?"
+There's a lot to think about when pursing being a full time maker, and the guys just scratch the surface of what it takes to chase that dream.
+Also, they talk about Jimmy's essay in the new book, Maker Pro, which is about making a living as a maker.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198745008-makingitpodcast-making-it-006-how-do-i-quit-my-job-and-do-what-you-do.mp3" fileSize="24365027" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #005: Looking Back, Looking Ahead</title>
+      <link>http://makingitpodcast.com/node/12</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the good and bad of 2014 as well as what they are hoping for in the new year. As usual, the topic creeps into related ideas like arcade machines, YouTube comments, and again... lasers.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198744953-makingitpodcast-making-it-005-looking-back-looking-ahead.mp3" length="28699470" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/12</guid>
+      <pubDate>Fri, 19 Dec 2014 00:00:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #005: Looking Back, Looking Ahead</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about the good and bad of 2014 as well as what they are hoping for in the new year. As usual, the topic creeps into related ideas like arcade machines, YouTube comments, and again... lasers.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198744953-makingitpodcast-making-it-005-looking-back-looking-ahead.mp3" fileSize="28699470" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #004 : Getting Started</title>
+      <link>http://makingitpodcast.com/node/11</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why it is hard to just getting started.  Jimmy shares some tips that he gives to his students, and how he started his own shop. </description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746516-makingitpodcast-making-it-004-getting-started.mp3" length="28546201" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/11</guid>
+      <pubDate>Thu, 04 Dec 2014 13:57:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #004 : Getting Started</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about why it is hard to just getting started.  Jimmy shares some tips that he gives to his students, and how he started his own shop. </itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198746516-makingitpodcast-making-it-004-getting-started.mp3" fileSize="28546201" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #003 : Goals (and LASERS)</title>
+      <link>http://makingitpodcast.com/node/10</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their goals, in life, skill sets and business. 
+Also, LASERS.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198744172-makingitpodcast-making-it-002-how-materials-and-tools-inspire-creativity.mp3" length="32554683" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/10</guid>
+      <pubDate>Thu, 20 Nov 2014 15:37:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #003 : Goals (and LASERS)</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about their goals, in life, skill sets and business. 
+Also, LASERS.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198744172-makingitpodcast-making-it-002-how-materials-and-tools-inspire-creativity.mp3" fileSize="32554683" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #002 : How Materials and Tools Inspire Creativity?</title>
+      <link>http://makingitpodcast.com/node/9</link>
+      <description>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how materials and tools inspire creativity and how they have incorporated CNC machines into their workflows.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198747669-makingitpodcast-making-it-002-how-materials-and-tools-inspire-creativity-1.mp3" length="28830350" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/9</guid>
+      <pubDate>Fri, 07 Nov 2014 16:09:00 -0500</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #002 : How Materials and Tools Inspire Creativity?</itunes:subtitle>
+      <itunes:summary>This week Jimmy Diresta, Bob Clagett and David Picciuto talk about how materials and tools inspire creativity and how they have incorporated CNC machines into their workflows.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/198747669-makingitpodcast-making-it-002-how-materials-and-tools-inspire-creativity-1.mp3" fileSize="28830350" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+    <item>
+      <title>Making It #001 :  Where Does Creativity Come From?</title>
+      <link>http://makingitpodcast.com/node/8</link>
+      <description>Welcome to the very first episode of Making It, a podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. In this debut episode we talk about who we are, what we do and where we find creativity.</description>
+      <author>david@drunkenwoodworker.com (David Picciuto)</author>
+      <enclosure url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/199057544-makingitpodcast-making-it-001-making-it-001-where-does-creativity-come-from.mp3" length="37171715" type="audio/mpeg" />
+      <guid isPermaLink="false">http://makingitpodcast.com/node/8</guid>
+      <pubDate>Fri, 31 Oct 2014 18:48:00 -0400</pubDate>
+      <source url="http://makingitpodcast.com/itunes">Making It With Jimmy Diresta, Bob Clagett and David Picciuto</source>
+      <itunes:subtitle>Making It #001 :  Where Does Creativity Come From?</itunes:subtitle>
+      <itunes:summary>Welcome to the very first episode of Making It, a podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. In this debut episode we talk about who we are, what we do and where we find creativity.</itunes:summary>
+      <itunes:author>david@drunkenwoodworker.com (David Picciuto)</itunes:author>
+    <media:content url="http://www.podtrac.com/pts/redirect.mp3/feeds.soundcloud.com/stream/199057544-makingitpodcast-making-it-001-making-it-001-where-does-creativity-come-from.mp3" fileSize="37171715" type="audio/mpeg" /><itunes:explicit>no</itunes:explicit></item>
+  <media:credit role="author">Diresta, Clagett &amp; Picciuto</media:credit><media:rating>nonadult</media:rating><media:description type="plain">Making It is a weekly audio podcast hosted by Jimmy Diresta, Bob Clagett and David Picciuto. Three different makers with different backgrounds talking about creativity, design and making things with your bare hands.</media:description></channel>
+</rss>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/"
+xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+>
+
+<channel>
+	<title>C-RadaR</title>
+	<atom:link href="https://www.c-radar.de/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.c-radar.de</link>
+	<description>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</description>
+	<lastBuildDate>Fri, 22 Sep 2017 16:35:57 +0000</lastBuildDate>
+	<language>de-DE</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.8.2</generator>
+
+<image>
+	<url>https://www.c-radar.de/wp-content/uploads/2016/05/cropped-chaosknoten-1-32x32.png</url>
+	<title>C-RadaR</title>
+	<link>https://www.c-radar.de</link>
+	<width>32</width>
+	<height>32</height>
+</image>
+<!-- podcast_generator="Blubrry PowerPress/7.1.1" mode="advanced" feedslug="feed" -->
+	<itunes:summary>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</itunes:summary>
+	<itunes:author>C-RadaR</itunes:author>
+	<itunes:explicit>clean</itunes:explicit>
+	<itunes:image href="https://www.c-radar.de/wp-content/uploads/2017/07/Cradar_Logo1.jpg" />
+	<itunes:type>serial</itunes:type>
+	<itunes:owner>
+		<itunes:name>C-RadaR</itunes:name>
+		<itunes:email>info@c-radar.de</itunes:email>
+	</itunes:owner>
+	<managingEditor>info@c-radar.de (C-RadaR)</managingEditor>
+	<itunes:subtitle>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</itunes:subtitle>
+	<image>
+		<title>C-RadaR</title>
+		<url>https://www.c-radar.de/wp-content/uploads/2017/07/Cradar_Logo1.jpg</url>
+		<link>https://www.c-radar.de</link>
+	</image>
+	<itunes:category text="Technology">
+		<itunes:category text="Tech News"></itunes:category>
+	</itunes:category>
+	<item>
+		<title>c-radar September 2017 – Martin Tschirsich zu PC-Wahl, Piratenspitzenkandidat Sebulino und ein Überraschungsgast</title>
+		<link>https://www.c-radar.de/2017/09/c-radar-september-2017-martin-tschirsich-zu-pc-wahl-piratenspitzenkandidat-sebulino-und-ein-ueberraschungsgast/</link>
+		<pubDate>Fri, 15 Sep 2017 11:00:36 +0000</pubDate>
+		<dc:creator><![CDATA[benny]]></dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">https://www.c-radar.de/?p=354</guid>
+		<description><![CDATA[Aus dem neuen, digitalen und vollbesetzten RadaR Studio haben wir heute viel über die anstehende Bundestagswahl gesprochen. Genauer hatten wir Martin Tschirsich zu Gast, welcher mit dem Chaos Computer Club vor einer Woche Mängel an dem Programm PC-Wahl vorstellte, welches &#8230; <a href="https://www.c-radar.de/2017/09/c-radar-september-2017-martin-tschirsich-zu-pc-wahl-piratenspitzenkandidat-sebulino-und-ein-ueberraschungsgast/">Weiterlesen <span class="meta-nav">&#8594;</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Aus dem neuen, digitalen und vollbesetzten RadaR Studio haben wir heute viel über die anstehende Bundestagswahl gesprochen.<br />
+Genauer hatten wir <strong>Martin Tschirsich</strong> zu Gast, welcher mit dem Chaos Computer Club vor einer Woche <a href="http://ccc.de/de/updates/2017/pc-wahl" target="_blank" rel="noopener">Mängel an dem Programm PC-Wahl</a> vorstellte, welches zur Berechnung und Weitergabe der Stimmergebnisse zu Wahlen in Hessen und anderen Bundesländern genutzt wird. Martin berichtete uns, wie er auf dies Thema kam und die Ereignisse ihren Lauf nahmen, wie er den Kontakt zum CCC bekam und wie die Verantwortlichen reagiert haben.</p>
+<p>Am Telefon hatten wir anschließend <strong><a href="https://twitter.com/sebulino">@sebulino</a></strong>, welcher für die Piratenpartei in Frankfurt als Direktkandidat antritt und zum Trio der Bundesspitzenkandidaten gehört. Sebulino schilderte uns die aktuelle Lage der Piraten und ein wenig aus seinem aktuellen Wahlkampf Alltag.</p>
+<p>Natürlich durften ein paar Worte zu den zurückliegenden <a href="https://2017.mrmcd.net/">MetaRheinMain Chaosdays 2017</a> nicht fehlen &#8211; diese übernahm <strong>dj-spock</strong>.</p>
+<p>Die ganze Sendung über begleitete uns ein <strong>Überraschungsgast</strong>, welcher von einem findigen Anrufer als <a href="http://www.indiepedia.de/index.php/Marcnesium" target="_blank" rel="noopener">marcnesium</a> von <a href="https://de.wikipedia.org/wiki/F%C3%BCnf_Sterne_deluxe" target="_blank" rel="noopener">Fünf Sterne deluxe</a> enttarnt wurde &#8211; aber hört selbst!</p>
+<p>Im Studio waren <strong>Martin, marcnesium, Benny und dj-spock</strong>.</p>
+<audio class="wp-audio-shortcode" id="audio-354-2" preload="none" style="width: 100%;" controls="controls"><source type="audio/mpeg" src="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-09-2017.mp3?_=2" /><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-09-2017.mp3">http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-09-2017.mp3</a></audio>
+<p><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-09-2017.mp3">Download als mp3!</a></p>
+]]></content:encoded>
+	<enclosure url="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-09-2017.mp3" length="285600026" type="audio/mpeg" />
+		<itunes:subtitle>Aus dem neuen, digitalen und vollbesetzten RadaR Studio haben wir heute viel über die anstehende Bundestagswahl gesprochen. Genauer hatten wir Martin Tschirsich zu Gast, welcher mit dem Chaos Computer Club vor einer Woche Mängel an dem Programm PC-Wahl...</itunes:subtitle>
+		<itunes:summary>Aus dem neuen, digitalen und vollbesetzten RadaR Studio haben wir heute viel über die anstehende Bundestagswahl gesprochen. Genauer hatten wir Martin Tschirsich zu Gast, welcher mit dem Chaos Computer Club vor einer Woche Mängel an dem Programm PC-Wahl vorstellte, welches … Weiterlesen →</itunes:summary>
+		<itunes:author>C-RadaR</itunes:author>
+		<itunes:explicit>clean</itunes:explicit>
+		<itunes:duration>1:59:00</itunes:duration>
+	</item>
+		<item>
+		<title>c-radar Juli 2017 &#8211; zwei Berichte vom G20 in HH; NODE Forum, CCC Regiotreff,  Grundrechte Demo in Berlin</title>
+		<link>https://www.c-radar.de/2017/07/c-radar-juli-2017-zwei-berichte-vom-g20-in-hh-node-forum-ccc-regiotreff-grundrechte-demo-in-berlin/</link>
+		<pubDate>Thu, 27 Jul 2017 20:39:43 +0000</pubDate>
+		<dc:creator><![CDATA[benny]]></dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">https://www.c-radar.de/?p=322</guid>
+		<description><![CDATA[Diese Sendung hatte einen klaren Schwerpunkt: Die zahlreichen Protestformen um den G20 in HH. Am Telefon hatten wir Kathia (@stephiewunder), welche in Hamburg wohnt und schon seit einem halben Jahr verschiedene friedliche Proteste mit vorbereitet hat, insbesondere mit der Gruppierung &#8230; <a href="https://www.c-radar.de/2017/07/c-radar-juli-2017-zwei-berichte-vom-g20-in-hh-node-forum-ccc-regiotreff-grundrechte-demo-in-berlin/">Weiterlesen <span class="meta-nav">&#8594;</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Diese Sendung hatte einen klaren Schwerpunkt: Die zahlreichen Protestformen um den G20 in HH.<br />
+Am Telefon hatten wir <strong>Kathia</strong> (<a href="https://twitter.com/stephiewunder">@stephiewunder</a>), welche in Hamburg wohnt und schon seit einem halben Jahr verschiedene friedliche Proteste mit vorbereitet hat, insbesondere mit der Gruppierung <a href="https://www.allesallen.info/">ALLES ALLEN!</a> (<a href="https://twitter.com/allen_alles">@alles_allen</a>). Sie beschreibt dabei wie sie tagsüber die ganze Demo-Woche mit den vielfältigen Teilnehmern erlebt hat. Ebenso ging es um das alternative Medienzentrum <a href="https://fcmc.tv/">FC/MC</a> und die Webseite <a href="https://g20-doku.org/">G20 Doku</a>, auf der Polizeigewalt dokumentiert wird.<br />
+Nach einer kurzen musikalischen Unterbrechung sprachen wir mit Kathia noch über das <a href="https://17.nodeforum.org/">NODE Forum – Designing Hope</a>, welches vor dem G20 in Frankfurt stattgefunden hatte. Hier dreht sich alles um die Programmiersprache <a href="https://vvvv.org/">vvvv</a>, welche insbesondere für die live Erzeugung von Bild/Ton/Video Werken genutzt wird. Alle zwei Jahre trifft sich die internationalle Community in Frankfurt und tauscht sich darüber aus. Kathia war als Künstlerin eingeladen und berichtet über die Unterschiede &amp; Gemeinsamkeiten zur Chaos Community und deren großen Veranstaltungen.</p>
+<p><strong>sva</strong> hat uns nach einer langen Zugfahrt telefonisch erreicht, um uns etwas über das CCC Regiotreffen dies Wochenende zu berichten. Sie kündigte eine Demo verschiedener Gruppen unter dem Motto <a href="https://freiheitstattangst.de/">Freiheit 4.0 &#8211; Rettet die Grundrechte</a> am Sa 09.09.2017 in Berlin an, an welcher sich auch der CCC beteiligen wird.</p>
+<p><strong>oyoy</strong> war ebenfalls zum G20 in Hamburg und hat uns in den letzten Minuten der Sendung noch seine ganz eigenen Eindrücke und besonderen Erlebnisse rund um die Demonstrationen geschildert.</p>
+<p>Im Studio waren wieder für euch <strong>Max, Benny und dj-spock</strong>.</p>
+<audio class="wp-audio-shortcode" id="audio-322-6" preload="none" style="width: 100%;" controls="controls"><source type="audio/mpeg" src="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-07-2017.mp3?_=6" /><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-07-2017.mp3">http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-07-2017.mp3</a></audio>
+<p><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-07-2017.mp3">Download als mp3!</a></p>
+]]></content:encoded>
+	<enclosure url="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-07-2017.mp3" length="287815167" type="audio/mpeg" />
+		<itunes:subtitle>Diese Sendung hatte einen klaren Schwerpunkt: Die zahlreichen Protestformen um den G20 in HH. Am Telefon hatten wir Kathia (@stephiewunder), welche in Hamburg wohnt und schon seit einem halben Jahr verschiedene friedliche Proteste mit vorbereitet hat,</itunes:subtitle>
+		<itunes:summary>Diese Sendung hatte einen klaren Schwerpunkt: Die zahlreichen Protestformen um den G20 in HH. Am Telefon hatten wir Kathia (@stephiewunder), welche in Hamburg wohnt und schon seit einem halben Jahr verschiedene friedliche Proteste mit vorbereitet hat, insbesondere mit der Gruppierung … Weiterlesen →</itunes:summary>
+		<itunes:author>C-RadaR</itunes:author>
+		<itunes:explicit>clean</itunes:explicit>
+		<itunes:duration>1:59:55</itunes:duration>
+	</item>
+		<item>
+		<title>c-radar Juni 2017 – BalCCon, FF Hessentag, Night of Science, SHA2017, Debian Release Party</title>
+		<link>https://www.c-radar.de/2017/06/c-radar-juni-2017-balccon-ff-hessentag-night-of-science-sha2017-debian-release-party/</link>
+		<pubDate>Mon, 12 Jun 2017 08:33:35 +0000</pubDate>
+		<dc:creator><![CDATA[benny]]></dc:creator>
+				<category><![CDATA[Uncategorized]]></category>
+
+		<guid isPermaLink="false">https://www.c-radar.de/?p=294</guid>
+		<description><![CDATA[Wir haben diesmal wieder alles für Euch gegeben! Wir hatten einige coole Anrufer: milobit vom BalCCon Orga Team stellte uns das Event vor. Dies findet vom 15.-17. September 2017 in Novi Sad, Serbien statt &#8211; und dj-spock hat versprochen dort &#8230; <a href="https://www.c-radar.de/2017/06/c-radar-juni-2017-balccon-ff-hessentag-night-of-science-sha2017-debian-release-party/">Weiterlesen <span class="meta-nav">&#8594;</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Wir haben diesmal wieder alles für Euch gegeben! Wir hatten einige coole Anrufer:</p>
+<p><strong>milobit</strong> vom <a href="https://www.balccon.org/">BalCCon</a> Orga Team stellte uns das Event vor. Dies findet vom 15.-17. September 2017 in Novi Sad, Serbien statt &#8211; und dj-spock hat versprochen dort vorbeizuschauen! Auch wenn dieser Hackercongress in Serbien stattfindet kommen Referenten und Gäste doch aus allen angrenzenden Ländern und darüber hinaus. Es wird alles geboten, von Gigabit-Glasfaser über Club-Mate bis zur Lounge. Tickets gibt es ab kommendem Wochenende im Vorverkauf.</p>
+<p><strong>Christian Hufgard</strong> von <a href="http://freifunk-kelsterbach.de/">Freifunk Kelsterbach</a> hat uns berichtet, wie die Vorbereitungen für <a href="https://www.freifunk-hessentag.de/">Freifunk Hessentag</a> 2017 gelaufen sind. Man hat sich frühzeitig an die Stadt Rüsselsheim gewandt, aber nun in gut 5 Wochen mit Unterstützung der Stadt einige Bereiche des <a href="https://www.hessentag2017.de/">Hessentages</a> mit Freifunk-Technik versorgt, damit vom 9.-18. Juni mehrere tausend Besucher dort Freifunk nutzen können.</p>
+<p><strong>wonko</strong> vom <a href="https://ccc-ffm.de/">CCC Frankfurt</a> hat die <a href="https://www.nightofscience.de/">Night of Science</a> vorgestellt, welche in der Nacht von Fr. 9. Juni ab 17 Uhr auf Sa. 10. Juni bis 6 Uhr am Uni Campus Frankfurt &#8222;Riedberg&#8220; ihre Pforten für alle Interessierten öffnet. Es gibt auch eine passende App für diese Veranstaltung (<a href="https://play.google.com/store/apps/details?id=de.night.of.science">Google Play Store</a>, <a href="https://www.amazon.de/Night-of-Science/dp/B00ZPIK624/">Amazon</a>). Der <a href="https://ccc-ffm.de/">CCC Frankfurt</a> wird einen Stand + Exponate im Biologicum haben. Hier <a href="https://ccc-ffm.de/2016/06/night-of-science-es-wurde-spaet/">Eindrücke</a> der letztens NoS vom CCC FFM.</p>
+<p><strong>netsmurf</strong> von der <a href="https://sha2017.org/">SHA 2017</a> Orga steht Rede und Antwort, was das diesjährige Hacker Camp in den Niederlanden angeht. Man hat dort einiges vor und es sollte für jeden etwas dabei sein! Interessant ist auch der Hintergrund des <a href="https://sha2017.org/design/">Designs</a>.</p>
+<p><strong>hexa-</strong> vom <a href="https://www.chaos-darmstadt.de/">CCC Darmstadt</a> hat ihre <a href="https://wiki.debian.org/ReleasePartyStretch#ReleasePartyStretch.2FGermany.2FDarmstadt.Deutschland:_Darmstadt">Debian Stretch Releaseparty</a> für den Sa. 17.06. angekündigt. Die Darmstädter waren spontan, die ersten die zum Veröffentlichungstermin der nächsten stabilen Version von <a href="https://www.debian.org/">Debian GNU/Linux</a> eine Releaseparty angekündigt hatten und damit sogar beim <a href="https://www.heise.de/ix/meldung/Linux-Debian-9-Stretch-fuer-den-17-Juni-angekuendigt-3727031.html">Heise-Ticker</a> erwähnt wurden. Bei dieser Veranstaltung kann man gemeinsam vor Ort sein Debian System aktualisieren oder auch eine Erstinstallation ggf. parallel zu Windows begleitet durchführen.</p>
+<p>Noch ein letzter Terminhinweis: <a href="https://jugendhackt.org/events/ffm/">Jugend hackt &#8211; in Frankfurt</a> findet vom 30.06.-02.07. im Rahmen des <a href="https://nodeforum.org/announcements/node17/">NODE Forum for Digital Arts</a> statt.</p>
+<p>Musikalisch wurde die Sendung von <a href="http://dj-spock's Set von der GPN">dj-spock&#8217;s Set von der GPN</a> begleitet.</p>
+<p>Im Studio waren <strong>Max, Benny und dj-spock</strong>.</p>
+<audio class="wp-audio-shortcode" id="audio-294-10" preload="none" style="width: 100%;" controls="controls"><source type="audio/mpeg" src="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-06-2017.mp3?_=10" /><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-06-2017.mp3">http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-06-2017.mp3</a></audio>
+<p><a href="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-06-2017.mp3">Download als mp3!</a></p>
+]]></content:encoded>
+	<enclosure url="http://ftp.ccc.de/broadcast/c-radar/c-radar/2017/c-radar-06-2017.mp3" length="288079553" type="audio/mpeg" />
+		<itunes:subtitle>Wir haben diesmal wieder alles für Euch gegeben! Wir hatten einige coole Anrufer: milobit vom BalCCon Orga Team stellte uns das Event vor. Dies findet vom 15.-17. September 2017 in Novi Sad, Serbien statt – und dj-spock hat versprochen dort … Weiterles...</itunes:subtitle>
+		<itunes:summary>Wir haben diesmal wieder alles für Euch gegeben! Wir hatten einige coole Anrufer: milobit vom BalCCon Orga Team stellte uns das Event vor. Dies findet vom 15.-17. September 2017 in Novi Sad, Serbien statt – und dj-spock hat versprochen dort … Weiterlesen →</itunes:summary>
+		<itunes:author>C-RadaR</itunes:author>
+		<itunes:explicit>clean</itunes:explicit>
+		<itunes:duration>2:00:02</itunes:duration>
+	</item>
+	</channel>
+</rss>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="565px" preserveAspectRatio="none" style="width:801px;height:565px;background:#FFFFFF;" version="1.1" viewBox="0 0 801 565" width="801px" zoomAndPan="magnify"><defs/><g><!--MD5=[ac927cc23785cc8a8c15a7140a74bf86]
+cluster Cloud Server--><polygon fill="#FFFFFF" points="153.5135,21,163.5135,11,581.5135,11,581.5135,538,571.5135,548,153.5135,548,153.5135,21" style="stroke:#000000;stroke-width:1.0;"/><line style="stroke:#000000;stroke-width:1.0;" x1="571.5135" x2="581.5135" y1="21" y2="11"/><line style="stroke:#000000;stroke-width:1.0;" x1="153.5135" x2="571.5135" y1="21" y2="21"/><line style="stroke:#000000;stroke-width:1.0;" x1="571.5135" x2="571.5135" y1="21" y2="548"/><text fill="#000000" font-family="Verdana" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="161" x="283.0135" y="44.4209">Cloud Server</text><!--MD5=[1272c6417ae16a66c4a884d85e06d826]
+cluster Postgres--><path d="M423.5135,298 C423.5135,288 490.5135,288 490.5135,288 C490.5135,288 557.5135,288 557.5135,298 L557.5135,399 C557.5135,409 490.5135,409 490.5135,409 C490.5135,409 423.5135,409 423.5135,399 L423.5135,298 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;"/><path d="M423.5135,298 C423.5135,308 490.5135,308 490.5135,308 C490.5135,308 557.5135,308 557.5135,298 " fill="none" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="110" x="435.5135" y="330.4209">Postgres</text><!--MD5=[b2405c6fc5f03869c5ad1de6e0cf50d5]
+cluster Auth0--><path d="M28.5508,312.4118 C30.6471,306.0706 34.7506,305.7917 39.558,309.4181 C42.6419,304.7046 46.064,303.4533 50.0077,308.4974 C50.9297,302.5181 55.2412,300.5288 60.224,304.1974 C63.681,299.2742 68.5294,297.8 72.2332,303.9293 C76.2423,298.6812 80.0998,299.3624 83.6187,304.4683 C87.999,300.2516 90.8548,301.542 93.1368,306.6176 C98.9219,301.3669 102.8017,302.3593 104.9284,309.9713 C113.6682,305.3715 120.2999,307.0528 121.5135,318 C122.2467,317.239 122.9589,317.6503 123.1863,318.5191 C130.2161,321.1256 130.6555,326.4954 124.8868,330.8647 C131.1424,333.7694 133.8809,339.5577 127.1765,344.6197 C132.77,347.2594 134.5727,352.3303 129.0609,356.702 C134.8329,362.3491 132.9148,366.75 126.1404,369.5438 C131.6574,373.88 130.2884,379.4636 124.6446,382.5125 C129.1889,393.3661 127.2637,399.6238 114.5135,401 C115.871,400.6027 116.6016,401.6119 116.3175,402.8315 C112.4856,406.9457 108.6378,407.1498 105.5759,401.9442 C102.9911,407.4935 97.7905,409.4702 93.2917,404.0968 C90.48,408.7806 85.1322,409.4912 82.5444,403.8635 C80.4182,408.6942 75.849,410.124 72.0271,405.8146 C67.1876,411.5047 62.1506,410.1724 59.9908,403.2562 C57.2493,407.0574 52.5131,407.5557 50.3872,402.5824 C46.6769,409.4116 42.5482,408.3806 37.9134,403.5733 C26.7445,409.6929 21.0748,406.3463 19.5135,394 C21.1451,393.8325 21.6759,394.6862 21.2672,396.1686 C15.0069,393.1857 14.6188,387.3895 20.1445,383.3725 C14.0909,379.7191 12.455,373.6579 19.8172,369.6838 C14.0489,366.9702 12.6232,361.2735 18.2065,357.1062 C13.3617,352.8949 13.4453,349.159 18.7641,345.4332 C11,340.939 12.8816,334.6844 19.459,330.8748 C11.6477,321.1012 15.8684,314.2227 26.5135,311 C27.8781,310.3016 28.5731,311.1089 28.5508,312.4118 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="75" x="33.0135" y="336.4209">Auth0</text><!--MD5=[07074073229a58b98d86dbf75a12e332]
+cluster Internet--><path d="M621.1884,450.0839 C625.174,444.1865 628.9635,442.0171 634.2985,448.6749 C637.4195,441.8144 643.642,441.0845 647.5416,447.9221 C651.3168,441.3972 656.3017,440.6015 660.7365,447.262 C664.0779,439.131 669.7057,440.254 674.8411,445.3488 C676.7805,437.8045 682.78,437.7864 687.341,442.7232 C690.1638,437.5647 695.8008,435.7465 699.5202,441.7445 C704.5395,434.8117 709.8312,436.1375 714.3258,442.336 C720.2875,436.9846 724.6094,438.4469 727.3435,445.6759 C731.4435,438.6675 735.951,439.9702 740.3059,445.4103 C744.6584,439.2312 750.4849,439.6016 753.3437,446.8596 C758.0412,442.0545 763.9827,442.7447 765.8367,449.8438 C774.8772,443.2078 782.7836,446.2842 785.5135,457 C785.7286,457.0764 785.7626,457.1994 785.6179,457.3757 C792.1929,461.5394 792.6131,466.297 785.9692,470.8065 C791.2952,474.625 792.0721,478.5056 786.4358,482.7523 C793.743,486.6699 794.2188,492.6346 787.2004,497.3048 C793.3165,500.7227 792.3903,505.1351 787.2103,508.5629 C792.4653,511.9081 792.1652,517.8962 787.0588,521.1164 C793.8915,531.541 789.5228,537.6494 778.5135,540 C779.4434,540.4023 779.5284,541.0474 778.8836,541.7776 C775.7073,546.9624 769.7978,547.029 766.8789,541.4894 C762.6126,547.7813 757.4658,548.0045 752.3645,542.5185 C747.9102,547.667 743.5617,548.012 740.0226,541.546 C737.1321,547.1876 731.343,547.2774 728.0631,541.9713 C723.011,549.1025 718.1619,548.7686 713.4007,541.6716 C710.5398,547.958 705.206,547.5001 701.6514,542.3865 C698.0264,549.2345 691.0557,548.9277 686.8864,543.0162 C682.2943,549.2713 678.0437,548.8479 673.8161,542.6341 C669.9027,548.2633 664.7231,547.8467 661.3708,542.0243 C657.3347,548.1438 651.4729,546.5697 648.7202,540.6732 C645.0165,547.3953 639.7935,547.3298 635.9945,540.7645 C626.0483,550.408 615.5797,546.1715 613.5135,533 C614.0043,532.2811 614.5183,532.3458 615.0048,533.0047 C609.6268,530.9193 608.6004,525.5153 612.7794,521.5699 C605.5112,519.938 603.6196,514.22 608.7711,508.7155 C602.8336,506.7822 600.4697,501.5663 606.0791,496.9834 C600.4104,491.8176 600.3576,485.8236 608.4427,482.9791 C604.2459,477.4022 604.9889,472.6117 612.3547,470.7265 C604.524,459.3049 609.1889,453.8814 620.5135,450 C620.737,449.7269 621.0463,449.7026 621.1884,450.0839 " fill="#FFFFFF" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="22" font-weight="bold" lengthAdjust="spacing" textLength="103" x="648.0135" y="475.4209">Internet</text><!--MD5=[96f7e1299d4a43069e6ed32352fcac20]
+entity HTTP--><ellipse cx="268.5135" cy="89" fill="#FFFFFF" rx="8" ry="8" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="37" x="250.0135" y="118.9951">HTTP</text><!--MD5=[bc1ce94c225e5da3804af9fa862ec3e0]
+entity reverse proxy--><rect fill="#FFFFFF" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="133" x="202.0135" y="179"/><rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="315.0135" y="184"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="313.0135" y="186"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="313.0135" y="190"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="93" x="217.0135" y="211.9951">reverse proxy</text><!--MD5=[46046d02dcd166e75093ec6b1ee8dbde]
+entity pwa--><rect fill="#808080" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="68" x="336.5135" y="347"/><rect fill="#808080" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="384.5135" y="352"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="382.5135" y="354"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="382.5135" y="358"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="28" x="351.5135" y="379.9951">pwa</text><!--MD5=[7d1852b57be8f1b04aace6ea3e5cee6e]
+entity authenticator--><rect fill="#FFFFFF" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="132" x="169.5135" y="347"/><rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="281.5135" y="352"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="279.5135" y="354"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="279.5135" y="358"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="92" x="184.5135" y="379.9951">authenticator</text><!--MD5=[e2307af040e3f87d22824e7603ca28ec]
+entity api--><rect fill="#808080" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="60" x="287.5135" y="486"/><rect fill="#808080" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="327.5135" y="491"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="325.5135" y="493"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="325.5135" y="497"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="20" x="302.5135" y="518.9951">api</text><!--MD5=[ac53aadba9d3139295176a8aa83f878c]
+entity updater--><rect fill="#808080" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="94" x="457.5135" y="486"/><rect fill="#808080" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="531.5135" y="491"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="529.5135" y="493"/><rect fill="#808080" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="529.5135" y="497"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="54" x="472.5135" y="518.9951">updater</text><!--MD5=[0e1fecc31e3549f2a1667c6349b56d9e]
+entity postgres--><rect fill="#FFFFFF" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="102" x="439.5135" y="347"/><rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="521.5135" y="352"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="519.5135" y="354"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="519.5135" y="358"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="62" x="454.5135" y="379.9951">postgres</text><!--MD5=[8084ad898ab70d49b28a9beceff76d52]
+entity tenant--><rect fill="#FFFFFF" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="85" x="28.0135" y="347"/><rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="93.0135" y="352"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="91.0135" y="354"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="91.0135" y="358"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="45" x="43.0135" y="379.9951">tenant</text><!--MD5=[31e1ab843d5a8c5cda714a5ac228c283]
+entity podcast provider--><rect fill="#FFFFFF" height="46.2969" style="stroke:#000000;stroke-width:1.0;" width="156" x="621.5135" y="486"/><rect fill="#FFFFFF" height="10" style="stroke:#000000;stroke-width:1.0;" width="15" x="757.5135" y="491"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="755.5135" y="493"/><rect fill="#FFFFFF" height="2" style="stroke:#000000;stroke-width:1.0;" width="4" x="755.5135" y="497"/><text fill="#000000" font-family="Verdana" font-size="14" lengthAdjust="spacing" textLength="116" x="636.5135" y="518.9951">podcast provider</text><!--MD5=[b14eddc07b95792f8f05fc80fc4360a7]
+link postgres to api--><path d="M460.4935,396.47 C452.4335,403.21 443.6835,410.43 435.5135,417 C407.2935,439.67 374.6735,464.74 350.8935,482.81 " fill="none" id="postgres-api" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="346.8635,485.88,356.4495,483.6198,350.8446,482.8549,351.6094,477.25,346.8635,485.88" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="464.3935,393.21,454.9286,395.9334,460.5641,396.425,460.0726,402.0604,464.3935,393.21" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[880c64df05c1d3e55012f625ce83ab53]
+link postgres to updater--><path d="M493.3035,398.28 C495.7335,422.08 499.2435,456.45 501.6835,480.35 " fill="none" id="postgres-updater" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="502.2235,485.59,505.3028,476.2349,501.7231,480.6151,497.3429,477.0355,502.2235,485.59" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="492.7635,393.01,489.6842,402.3651,493.2638,397.9849,497.644,401.5645,492.7635,393.01" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[0c6772ea4333721565e51e90b48f1108]
+link tenant to authenticator--><path d="M118.3435,370 C133.6635,370 148.9835,370 164.3035,370 " fill="none" id="tenant-authenticator" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="169.5035,370,160.5035,366,164.5035,370,160.5035,374,169.5035,370" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="113.0535,370,122.0535,374,118.0535,370,122.0535,366,113.0535,370" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[b651eb8d158601afa088e2310bb160b9]
+link HTTP to reverse proxy--><path d="M268.5135,103.66 C268.5135,121.06 268.5135,151.55 268.5135,173.78 " fill="none" id="HTTP-reverse proxy" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="268.5135,178.95,272.5135,169.95,268.5135,173.95,264.5135,169.95,268.5135,178.95" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="268.5135,98.34,264.5135,107.34,268.5135,103.34,272.5135,107.34,268.5135,98.34" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[055e04584368e4a275faa2a631d875f1]
+link reverse proxy to authenticator--><path d="M263.1335,230.08 C257.0135,260.86 247.0735,310.83 240.9435,341.71 " fill="none" id="reverse proxy-authenticator" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="239.9135,346.87,245.5873,338.8197,240.8858,341.9655,237.74,337.264,239.9135,346.87" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="264.1335,225.04,258.4596,233.0903,263.1611,229.9445,266.3069,234.646,264.1335,225.04" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="23" x="258.5135" y="268.0669">/api</text><!--MD5=[aed3f4202af59d25fbc43a30ed49f348]
+link authenticator to api--><path d="M251.2635,397.32 C265.6935,421.43 286.9535,456.94 301.4735,481.2 " fill="none" id="authenticator-api" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="304.1035,485.59,302.903,475.8146,301.531,481.3025,296.043,479.9305,304.1035,485.59" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="248.6835,393.01,249.884,402.7854,251.256,397.2975,256.7439,398.6695,248.6835,393.01" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[ab319d9bc15a0c3e0e0860caa0c5fde8]
+link reverse proxy to pwa--><path d="M286.8435,229.75 C296.7535,244.44 309.0635,263.06 319.5135,280 C332.2735,300.68 345.9135,324.6 355.8735,342.43 " fill="none" id="reverse proxy-pwa" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="358.3335,346.82,357.4349,337.0122,355.8944,342.4553,350.4513,340.9148,358.3335,346.82" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="283.8535,225.33,285.5791,235.0265,286.6533,229.4726,292.2072,230.5468,283.8535,225.33" style="stroke:#000000;stroke-width:1.0;"/><text fill="#000000" font-family="Verdana" font-size="13" lengthAdjust="spacing" textLength="4" x="314.5135" y="268.0669">/</text><!--MD5=[a47ce638aefe63fb21fdf540a6db8fd0]
+link updater to podcast provider--><path d="M556.9035,509 C576.6935,509 596.4835,509 616.2635,509 " fill="none" id="updater-podcast provider" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="621.2935,509,612.2935,505,616.2935,509,612.2935,513,621.2935,509" style="stroke:#000000;stroke-width:1.0;"/><polygon fill="#000000" points="551.7435,509,560.7435,513,556.7435,509,560.7435,505,551.7435,509" style="stroke:#000000;stroke-width:1.0;"/><!--MD5=[21172d40b69d6aa0428a8ffb7da5ee3f]
+@startuml
+!theme plain
+
+node "Cloud Server" {
+  () HTTP
+  [reverse proxy]
+  [pwa] #grey
+  [authenticator]
+  [api] #grey
+  [updater] #grey
+  
+  database "Postgres" {
+    [postgres] <-down-> api
+    [postgres] <-down-> updater
+  }
+}
+
+cloud "Auth0" {
+  [tenant]
+}
+
+cloud "Internet" {
+  [podcast provider]
+}
+
+[tenant] <-> [authenticator]
+[reverse proxy] <-up-> HTTP
+[reverse proxy] <-down-> [authenticator] : /api
+[authenticator] <-down-> [api]
+[reverse proxy] <-down-> [pwa] : /
+[updater] <-right-> [podcast provider]
+
+@enduml
+
+@startuml
+
+
+
+
+
+
+
+<style>
+  root {
+    BackgroundColor white
+    FontColor black
+    FontName Verdana
+    HyperLinkColor blue
+    LineColor black
+    LineThickness 1
+    Margin 5
+  }
+  caption {
+    LineThickness 0
+  }
+  footer {
+    LineThickness 0
+  }
+  header {
+    LineThickness 0
+  }
+  node {
+    MaximumWidth 300
+  }
+  title {
+    FontSize 22
+    LineThickness 0
+  }
+</style>
+
+skinparam ArrowLollipopColor black
+skinparam BackgroundColor white
+skinparam DefaultFontName Verdana
+skinparam DefaultMonospacedFontName Courier
+skinparam LifelineStrategy nosolid
+skinparam ParticipantPadding 10
+skinparam SequenceLifeLineBorderColor black
+skinparam Shadowing false
+skinparam UseBetaStyle true
+
+skinparam Activity {
+  BackgroundColor white
+  BarColor black
+  BorderColor black
+  FontColor black
+  FontName Verdana
+}
+skinparam Boundary {
+  FontColor black
+}
+skinparam Box {
+  Padding 5
+}
+skinparam CircledCharacter {
+  FontColor black
+  FontName Courier
+  Radius 9
+}
+skinparam Class {
+  BackgroundColor white
+  BorderColor black
+  FontColor black
+  FontName Verdana
+}
+skinparam ClassAttribute {
+  FontColor black
+  FontName Verdana
+}
+skinparam ClassStereotype {
+  FontColor black
+  FontName Verdana
+}
+skinparam Footer {
+  FontColor black
+  FontName Verdana
+}
+skinparam Header {
+  FontColor black
+  FontName Verdana
+}
+skinparam Hyperlink {
+  Color blue
+}
+skinparam IconPackage {
+  Color black
+  BackgroundColor white
+}
+skinparam IconPrivate {
+  Color black
+  BackgroundColor white
+}
+skinparam IconProtected {
+  Color black
+  BackgroundColor white
+}
+skinparam IconPublic {
+  Color black
+  BackgroundColor white
+}
+skinparam Note {
+  FontColor black
+  FontName Verdana
+}
+skinparam Object {
+  BorderColor black
+}
+skinparam Package {
+  BorderColor black
+  FontColor black
+  FontName Verdana
+}
+skinparam State {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam StereotypeA {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam StereotypeC {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam StereotypeE {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam StereotypeI {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam StereotypeN {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam UseCaseStereoType {
+  FontColor black
+  FontName Verdana
+}
+
+node "Cloud Server" {
+  () HTTP
+  [reverse proxy]
+  [pwa] #grey
+  [authenticator]
+  [api] #grey
+  [updater] #grey
+  
+  database "Postgres" {
+    [postgres] <-down-> api
+    [postgres] <-down-> updater
+  }
+}
+
+cloud "Auth0" {
+  [tenant]
+}
+
+cloud "Internet" {
+  [podcast provider]
+}
+
+[tenant] <-> [authenticator]
+[reverse proxy] <-up-> HTTP
+[reverse proxy] <-down-> [authenticator] : /api
+[authenticator] <-down-> [api]
+[reverse proxy] <-down-> [pwa] : /
+[updater] <-right-> [podcast provider]
+
+@enduml
+
+PlantUML version 1.2021.16(Wed Dec 08 18:25:22 CET 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

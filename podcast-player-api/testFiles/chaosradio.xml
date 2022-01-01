@@ -1,0 +1,1252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:xhtml="http://www.w3.org/1999/xhtml" version="2.0">
+  <channel>
+    <!--http://www.podcast.de/podcast/claim/action/claim/frmHash/pod_19683XDRTEPygdxpLc5ii3300/-->
+    <title>Chaosradio</title>
+    <!-- 1zqhpcdgol8bjqnljt69gsa7so31o6zu3esfrf -->
+    <link>http://chaosradio.ccc.de/chaosradio.html</link>
+    <atom:link href="http://chaosradio.ccc.de/chaosradio-latest.rss" rel="self" title="Chaosradio" type="application/rss+xml"/>
+    <description>
+    Chaosradio ist der unterhaltsame Live-Talk-Radio-Klassiker des Chaos Computer Clubs aus Berlin und eines der ältesten Tech-Radios überhaupt. Chaosradio informiert seit 1995 über wechselnde Themen rund um Technologie und Gesellschaft. Chaosradio sendet in der Regel am jeweils letzten Donnerstag eines Monats, an ungeraden Monaten auch auf dem Radiosender Fritz (RBB), jeweils von 22 bis 0 Uhr und lädt zur aktiven Teilnahme via Telefon und IRC ein.
+  </description>
+    <itunes:subtitle>Das monatliche Live-Talk-Radio auf Fritz</itunes:subtitle>
+    <itunes:summary>
+    Chaosradio ist der unterhaltsame Live-Talk-Radio-Klassiker des Chaos Computer Clubs aus Berlin und eines der ältesten Tech-Radios überhaupt. Chaosradio informiert seit 1995 über wechselnde Themen rund um Technologie und Gesellschaft. Chaosradio sendet in der Regel am jeweils letzten Donnerstag eines Monats, an ungeraden Monaten auch auf dem Radiosender Fritz (RBB), jeweils von 22 bis 0 Uhr und lädt zur aktiven Teilnahme via Telefon und IRC ein.
+  </itunes:summary>
+    <language>de</language>
+    <generator>Chaosradio Web Site and Feed Generator XSLT Script. Hacked by Tim Pritlove.</generator>
+    <webMaster>chaosradio@ccc.de</webMaster>
+    <managingEditor>chaosradio@ccc.de</managingEditor>
+    <itunes:author>Chaos Computer Club</itunes:author>
+    <itunes:owner>
+      <itunes:name>Chaos Computer Club</itunes:name>
+      <itunes:email>chaosradio@ccc.de</itunes:email>
+    </itunes:owner>
+    <itunes:image href="http://chaosradio.ccc.de/chaosradio-logo-300x300.jpg"/>
+    <category>Technology</category>
+    <itunes:category text="Technology"/>
+    <itunes:keywords>Chaos Computer Club,Chaosradio,Chaos Radio,Fritz,RBB,Hacking,Technology,Politics,Science,Society,Community</itunes:keywords>
+    <itunes:explicit>no</itunes:explicit>
+    <item>
+      <title>CR239 Sichere Stimmauszählung</title>
+      <itunes:subtitle>Freie und transparente Wahlen durch Public Funded Code</itunes:subtitle>
+      <description>Freie und transparente Wahlen durch Public Funded Code</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr239-sicherestimmauszaehlung.mp3" length="115415070"/>
+      <itunes:duration>02:00:12</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr239.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr239.html</link>
+      <pubDate>30 Sep 2017 00:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR239
+
+Veröffentlicht am: 30.09.2017, 00:00 Uhr
+Aufnahme vom: 28.09.2017
+Sendungsdatum: 28.09.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr239.html
+
+Teilnehmer: Marcus Richter (Moderation), Martin Tschirsich, Katharina Nocun, Elisa, Danimo
+
+Sichere Stimmauszählung
+Freie und transparente Wahlen durch Public Funded Code
+
+Allgemein, gleich, unmittelbar, frei und geheim müssen demokratische Wahlen sein. So lernt es jedes Schulkind. Die Wahlen gehören zum Allerheiligsten der Demokratie – und die Auswertung ist doch so aufwändig, dass es für die Wähler nicht mehr transparent ist. 
+
+Im Chaosradio 239 wollen wir gemeinsam herausfinden, wie der technische Teil einer Wahl abläuft. Wie werden die ausgezählten Stimmen weitergegeben, was kann dabei schief gehen und was ist bei der Bundestagswahl tatsächlich schiefgegangen? 
+
+Wo kann und will man Computer einsetzen und wo sind sie keinesfalls zu akzeptieren? Welche Rolle kann Public Funded Code dabei spielen? 
+
+Das bespricht Marcus Richter im Chaosradio 239, live ab 22 Uhr bei Radio Fritz mit seinen Gästen. 
+
+Die Musik ist wie immer unter Creative Commons verfügbar, diesmal stammt sie von der Live playing tricks EP von ProleteR https://proleter.bandcamp.com/album/life-playing-tricks-ep . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Allgemein, gleich, unmittelbar, frei und geheim müssen demokratische Wahlen sein. So lernt es jedes Schulkind. Die Wahlen gehören zum Allerheiligsten der Demokratie – und die Auswertung ist doch so aufwändig, dass es für die Wähler nicht mehr transparent ist.</p>
+        <p>Im Chaosradio 239 wollen wir gemeinsam herausfinden, wie der technische Teil einer Wahl abläuft. Wie werden die ausgezählten Stimmen weitergegeben, was kann dabei schief gehen und was ist bei der Bundestagswahl tatsächlich schiefgegangen?</p>
+        <p>Wo kann und will man Computer einsetzen und wo sind sie keinesfalls zu akzeptieren? Welche Rolle kann Public Funded Code dabei spielen?</p>
+        <p>Das bespricht Marcus Richter im Chaosradio 239, live ab 22 Uhr bei Radio Fritz mit seinen Gästen.</p>
+        <p>Die Musik ist wie immer unter Creative Commons verfügbar, diesmal stammt sie von der <a href="https://proleter.bandcamp.com/album/life-playing-tricks-ep">Live playing tricks EP von ProleteR</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Martin Tschirsich, Katharina Nocun, Elisa, Danimo</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR238 Informatik-Studium und -Ausbildung</title>
+      <itunes:subtitle>Theorie und Praxis</itunes:subtitle>
+      <description>Theorie und Praxis</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr238-informatikstudiumundausbildung.mp3" length="113421182"/>
+      <itunes:duration>01:58:07</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr238.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr238.html</link>
+      <pubDate>06 Sep 2017 19:15:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR238
+
+Veröffentlicht am: 06.09.2017, 19:15 Uhr
+Aufnahme vom: 29.06.2017
+Sendungsdatum: 31.08.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr238.html
+
+Teilnehmer: Marcus Richter (Moderation), David, Andreas Bogk, Mutax, Tobias Fiebig
+
+Informatik-Studium und -Ausbildung
+Theorie und Praxis
+
+Es gibt die Redewendung, dass man nur ein richtiger Hacker sei, wenn man ein abgebrochenes Informatikstudium vorzuweisen habe. 
+
+Im Jahr 2017 ist Informatik ein Trend-Studienfach - in den Top 10 der Studiengänge liegt es auf Platz 4. Doch was steckt hinter einem Informatikstudium? Welche Grundlagen vermittelt es? Wieviel dieses Grundlagenwissens kann man später im Beruf wirklich nutzen? Brauche ich wirklich ein Studium, wenn ich später "was mit Computern" machen will? Ist es vielleicht sinnvoller, eine Fachinformatiker-Ausbildung zu machen? 
+
+Das bespricht Marcus Richter im Chaosradio 238, live ab 22 Uhr im CCCB in der Marienstrasse 11 https://berlin.ccc.de/wiki/Club_Discordia mit seinen Gästen. Kommt zahlreich oder folgt dem Stream https://streaming.media.ccc.de ! 
+
+Die Musik ist wie immer Creative Commons https://creativecommons.org/ -lizensiert und stammt aus dem Album Interactive Dear Device https://stijnvanwakeren.bandcamp.com/album/interactive-dear-device . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Es gibt die Redewendung, dass man nur ein richtiger Hacker sei, wenn man ein abgebrochenes Informatikstudium vorzuweisen habe.</p>
+        <p>Im Jahr 2017 ist Informatik ein Trend-Studienfach - in den Top 10 der Studiengänge liegt es auf Platz 4. Doch was steckt hinter einem Informatikstudium? Welche Grundlagen vermittelt es? Wieviel dieses Grundlagenwissens kann man später im Beruf wirklich nutzen? Brauche ich wirklich ein Studium, wenn ich später "was mit Computern" machen will? Ist es vielleicht sinnvoller, eine Fachinformatiker-Ausbildung zu machen?</p>
+        <p>Das bespricht Marcus Richter im Chaosradio 238, live ab 22 Uhr im <a href="https://berlin.ccc.de/wiki/Club_Discordia">CCCB in der Marienstrasse 11</a> mit seinen Gästen. Kommt zahlreich oder folgt dem <a href="https://streaming.media.ccc.de">Stream</a>!</p>
+        <p>Die Musik ist wie immer <a href="https://creativecommons.org/">Creative Commons</a>-lizensiert und stammt aus dem Album <a href="https://stijnvanwakeren.bandcamp.com/album/interactive-dear-device">Interactive Dear Device</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), David, Andreas Bogk, Mutax, Tobias Fiebig</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR237 Vier Jahre Neuland</title>
+      <itunes:subtitle>Der netzpolitische Abwasch</itunes:subtitle>
+      <description>Der netzpolitische Abwasch</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr237-vierjahreneuland.mp3" length="114044304"/>
+      <itunes:duration>01:58:46</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr237.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr237.html</link>
+      <pubDate>28 Jul 2017 03:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR237
+
+Veröffentlicht am: 28.07.2017, 03:00 Uhr
+Aufnahme vom: 27.07.2017
+Sendungsdatum: 27.07.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr237.html
+
+Teilnehmer: Marcus Richter (Moderation), Anna Biselli, Christian Djeffal, Katharina Nocun
+
+Vier Jahre Neuland
+Der netzpolitische Abwasch
+
+Es ist nun fast vier Jahre her, seit die Große Koalition das "Neuland" Internet ergründen und erschließen wollte. Mit Innen-, Wirtschafts- und Verkehrsministerium zeichneten sich nach der Wahl gleich drei Häuser für die Erschließung und Gestaltung jedes vermeintlichen weissen Fleckens verantwortlich -- über zwanzig Jahre, nachdem das Internet in Deutschland kommerziell verfügbar wurde. 
+
+In der Tat ist in dieser Legislaturperiode viel passiert. Doch halb-aufgeklärte Geheimdienstskandale, Anklagen wegen Landesverrat, Hacken von Mobiltelefonen und freiheitseinschränkende Gesetze waren nicht das, was sich Internetnutzer von der Politik erhofft haben. Die vermeintliche Haben-Seite sieht etwa mit den lebensverlängernden Maßnahmen für langsames Kupfer-Internet nicht viel besser aus. 
+
+Was war noch los in den letzten vier Jahren, und wie wird es weitergehen? Das bespricht Marcus Richter im Chaosradio 237, live ab 22 auf Fritz mit seinen Gästen. 
+
+Die Musik ist wie immer unter Creative Commons verfügbar, diesmal stammt sie vom Z Tapes Summer 2017-Album https://ztapes.bandcamp.com/album/summer-2017 . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Es ist nun fast vier Jahre her, seit die Große Koalition das "Neuland" Internet ergründen und erschließen wollte. Mit Innen-, Wirtschafts- und Verkehrsministerium zeichneten sich nach der Wahl gleich drei Häuser für die Erschließung und Gestaltung jedes vermeintlichen weissen Fleckens verantwortlich -- über zwanzig Jahre, nachdem das Internet in Deutschland kommerziell verfügbar wurde.</p>
+        <p>In der Tat ist in dieser Legislaturperiode viel passiert. Doch halb-aufgeklärte Geheimdienstskandale, Anklagen wegen Landesverrat, Hacken von Mobiltelefonen und freiheitseinschränkende Gesetze waren nicht das, was sich Internetnutzer von der Politik erhofft haben. Die vermeintliche Haben-Seite sieht etwa mit den lebensverlängernden Maßnahmen für langsames Kupfer-Internet nicht viel besser aus.</p>
+        <p>Was war noch los in den letzten vier Jahren, und wie wird es weitergehen? Das bespricht Marcus Richter im Chaosradio 237, live ab 22 auf Fritz mit seinen Gästen.</p>
+        <p>Die Musik ist wie immer unter Creative Commons verfügbar, diesmal stammt sie vom <a href="https://ztapes.bandcamp.com/album/summer-2017">Z Tapes Summer 2017-Album</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Anna Biselli, Christian Djeffal, Katharina Nocun</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR236 Intrusion Detection und Incident Response</title>
+      <itunes:subtitle>Who ya gonna call?</itunes:subtitle>
+      <description>Who ya gonna call?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr236-intrusiondetectionundincidenceresponse.mp3" length="114659365"/>
+      <itunes:duration>01:59:25</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr236.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr236.html</link>
+      <pubDate>02 Jul 2017 14:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR236
+
+Veröffentlicht am: 02.07.2017, 14:00 Uhr
+Aufnahme vom: 29.06.2017
+Sendungsdatum: 29.06.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr236.html
+
+Teilnehmer: Marcus Richter (Moderation), CBass, Linus, Mirar, Wolpertwo
+
+Intrusion Detection und Incident Response
+Who ya gonna call?
+
+Für fast jedes Unternehmen kommt der Tag, an dem es zu spät ist: Leute und Programme, die da eindeutig nicht hingehören, haben sich im Firmennetz breitgemacht. Doch was nun? Stecker ziehen? Glasfaser durchschneiden? 
+
+Wie merkt man eigentlich, dass noch ein paar Augenpaare mehr Einsicht in die eigenen Daten haben? Und wie sieht der Alltag von Leuten aus, die Firmen beruflich bei solchen Problemen begleiten? 
+
+Das alles und wie man Eindringlinge erkennt, wie man auf sie reagiert und ob auch ein Hobby-Admin Maßnahmen ergreifen kann bespricht Marcus Richter mit Experten aus dem Chaos-Dunstkreis im Chaosradio 236, Live on Tape aus dem CCCB in der Marienstrasse 11 https://berlin.ccc.de/wiki/Club_Discordia . 
+
+Die Musik ist wie immer Creative Commons https://creativecommons.org/licenses/by/3.0/ -lizensiert und stammt aus dem Album Bubble Music https://musicbyclam.bandcamp.com/album/bubble-music von Clam. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Für fast jedes Unternehmen kommt der Tag, an dem es zu spät ist: Leute und Programme, die da eindeutig nicht hingehören, haben sich im Firmennetz breitgemacht. Doch was nun? Stecker ziehen? Glasfaser durchschneiden?</p>
+        <p>Wie merkt man eigentlich, dass noch ein paar Augenpaare mehr Einsicht in die eigenen Daten haben? Und wie sieht der Alltag von Leuten aus, die Firmen beruflich bei solchen Problemen begleiten?</p>
+        <p>Das alles und wie man Eindringlinge erkennt, wie man auf sie reagiert und ob auch ein Hobby-Admin Maßnahmen ergreifen kann bespricht Marcus Richter mit Experten aus dem Chaos-Dunstkreis im Chaosradio 236, Live on Tape aus dem CCCB in der <a href="https://berlin.ccc.de/wiki/Club_Discordia">Marienstrasse 11</a>.</p>
+        <p>Die Musik ist wie immer <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons</a>-lizensiert und stammt aus dem Album <a href="https://musicbyclam.bandcamp.com/album/bubble-music">Bubble Music</a> von Clam.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), CBass, Linus, Mirar, Wolpertwo</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR235 I #WannaCry</title>
+      <itunes:subtitle>Der Angriff der Cryptotrojaner</itunes:subtitle>
+      <description>Der Angriff der Cryptotrojaner</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr235-iwannacry.mp3" length="114553506"/>
+      <itunes:duration>01:59:18</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr235.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr235.html</link>
+      <pubDate>25 May 2017 17:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR235
+
+Veröffentlicht am: 25.05.2017, 17:00 Uhr
+Aufnahme vom: 25.05.2017
+Sendungsdatum: 25.05.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr235.html
+
+Teilnehmer: Konrad Spremberg (Moderation), Danimo, Peter, Mirar
+
+I #WannaCry
+Der Angriff der Cryptotrojaner
+
+Als der Krypto-Trojaner #WannaCry ausbrach, wurde uns allen mal wieder ins Bewusstsein gerufen, wie sehr unser tägliches Leben davon abhängt, dass unsere Computer zuverlässig funktionieren. Teile der öffentlichen Infrastruktur waren beeinträchtigt, Krankenhäuser und Bahnverkehr kamen zum Stillstand. Im Chaosradio 235 im Bluemoon auf Fritz klärt Konrad Spremberg mit seinen Gästen Danimo, Mirar und Peter vom CCC heute ab 22 Uhr die Hintergründe und beleuchtet die dunkelsten Ecken des Darknet. Dabei geht es um Trojaner und Viren, aber auch Gegenmaßnahmen, die wirklich vor einem Angriff schützen können. Den Audio-Stream gibts von Fritz https://fritz.de/livestream oder per Video auch vom VOC http://streaming.media.ccc.de/ . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Als der Krypto-Trojaner #WannaCry ausbrach, wurde uns allen mal wieder ins Bewusstsein gerufen, wie sehr unser tägliches Leben davon abhängt, dass unsere Computer zuverlässig funktionieren. Teile der öffentlichen Infrastruktur waren beeinträchtigt, Krankenhäuser und Bahnverkehr kamen zum Stillstand. Im Chaosradio 235 im Bluemoon auf Fritz klärt Konrad Spremberg mit seinen Gästen Danimo, Mirar und Peter vom CCC heute ab 22 Uhr die Hintergründe und beleuchtet die dunkelsten Ecken des Darknet. Dabei geht es um Trojaner und Viren, aber auch Gegenmaßnahmen, die wirklich vor einem Angriff schützen können. Den Audio-Stream gibts von <a href="https://fritz.de/livestream">Fritz</a> oder per Video auch vom <a href="http://streaming.media.ccc.de/">VOC</a>.
+    </p>
+        <p>Teilnehmer: Konrad Spremberg (Moderation), Danimo, Peter, Mirar</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR234 Home Sweet Home</title>
+      <itunes:subtitle>Wir bauen uns ein Heimnetz</itunes:subtitle>
+      <description>Wir bauen uns ein Heimnetz</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr234-homesweethome.mp3" length="116040866"/>
+      <itunes:duration>02:00:51</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr234.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr234.html</link>
+      <pubDate>05 May 2017 16:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR234
+
+Veröffentlicht am: 05.05.2017, 16:00 Uhr
+Aufnahme vom: 27.04.2017
+Sendungsdatum: 27.04.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr234.html
+
+Teilnehmer: Marcus Richter (Moderation), Henryk, Jaseg, Danimo
+
+Home Sweet Home
+Wir bauen uns ein Heimnetz
+
+Wir schreiben das Jahr 2017. Der Breitbandanschluss ist frisch verlegt, bestenfalls leuchtet die Glasfaser glücklich aus der Wand. Der nächste logische Schritt ist die Vernetzung des trauten Heims. Doch bevor wir uns beim Kistenschieber die Hardware klicken, halten wir inne und fragen uns, was alles auf die Einkaufsliste gehört und was nicht, wie wir die tollen Devices verkabeln und welche Services wir im Heimnetz eigentlich brauchen. Marcus Richter und seine Gäste vernetzen mit Euch eure Wohnung. 
+
+Die Songs aus der Sendung stammen vom Album Midwest Collective Vol. 7 https://midwestcollective.bandcamp.com/album/vol-7 . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Wir schreiben das Jahr 2017. Der Breitbandanschluss ist frisch verlegt, bestenfalls leuchtet die Glasfaser glücklich aus der Wand. Der nächste logische Schritt ist die Vernetzung des trauten Heims. Doch bevor wir uns beim Kistenschieber die Hardware klicken, halten wir inne und fragen uns, was alles auf die Einkaufsliste gehört und was nicht, wie wir die tollen Devices verkabeln und welche Services wir im Heimnetz eigentlich brauchen. Marcus Richter und seine Gäste vernetzen mit Euch eure Wohnung.</p>
+        <p>Die Songs aus der Sendung stammen vom Album <a href="https://midwestcollective.bandcamp.com/album/vol-7">Midwest Collective Vol. 7</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Henryk, Jaseg, Danimo</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR233 Glasfaserausbau</title>
+      <itunes:subtitle>Wo geht's hier zum Gigabit?</itunes:subtitle>
+      <description>Wo geht's hier zum Gigabit?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr233-glasfaserausbau.mp3" length="114860160"/>
+      <itunes:duration>01:59:37.502</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr233.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr233.html</link>
+      <pubDate>01 Apr 2017 14:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR233
+
+Veröffentlicht am: 01.04.2017, 14:30 Uhr
+Aufnahme vom: 30.03.2017
+Sendungsdatum: 30.03.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr233.html
+
+Teilnehmer: Marcus Richter (Moderation), Stefan Wahl, Johannes Lenz-Hawliczek, Phils, Mutax
+
+Glasfaserausbau
+Wo geht's hier zum Gigabit?
+
+Von der Politik werden regelmäßig mit salbungsvollen Worten neue Netzallianzen angekündigt, Zukunftsoffensiven gestartet und Eckpunkteprogramme vorgestellt. Doch allen Versprechungen zum Trotz dümpeln Daten derweil durch dünne DSL-Drähte. Die deutsche Telekom setzt auch im dritten Jahrtausend mehrheitlich auf alte, längst überholte Übertragungswege. Die Politik der Gießkanne versagt. Der Breitbandausbau stagniert. 
+
+Was ist der Status Quo? Was sind die Alternativen? Was kann die Politik besser machen? Das diskutiert Marcus Richter mit seinen Gästen Stefan Wahl, Johannes Lenz-Hawliczek, Phils und Mutax. Den Stream gibts von Fritz https://fritz.de/livestream oder per Video auch vom VOC http://streaming.media.ccc.de/ . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Von der Politik werden regelmäßig mit salbungsvollen Worten neue Netzallianzen angekündigt, Zukunftsoffensiven gestartet und Eckpunkteprogramme vorgestellt. Doch allen Versprechungen zum Trotz dümpeln Daten derweil durch dünne DSL-Drähte. Die deutsche Telekom setzt auch im dritten Jahrtausend mehrheitlich auf alte, längst überholte Übertragungswege. Die Politik der Gießkanne versagt. Der Breitbandausbau stagniert. 
+    </p>
+        <p>
+Was ist der Status Quo? Was sind die Alternativen? Was kann die Politik besser machen? Das diskutiert Marcus Richter mit seinen Gästen Stefan Wahl, Johannes Lenz-Hawliczek, Phils und Mutax. Den Stream gibts von <a href="https://fritz.de/livestream">Fritz</a> oder per Video auch vom <a href="http://streaming.media.ccc.de/">VOC</a>.
+    </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Stefan Wahl, Johannes Lenz-Hawliczek, Phils, Mutax</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR232 There is no Game</title>
+      <itunes:subtitle>Spiele als Medium zur Aktivierung und zur Revolution</itunes:subtitle>
+      <description>Spiele als Medium zur Aktivierung und zur Revolution</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr232-thereisnogame.mp3" length="133446284"/>
+      <itunes:duration>01:58:00</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr232.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr232.html</link>
+      <pubDate>27 Feb 2017 23:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR232
+
+Veröffentlicht am: 27.02.2017, 23:30 Uhr
+Aufnahme vom: 23.02.2017
+Sendungsdatum: 27.02.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr232.html
+
+Teilnehmer: Marcus Richter (Moderation), Sarah, Kathia, Miko, Markus
+
+There is no Game
+Spiele als Medium zur Aktivierung und zur Revolution
+
+Die Wikipedia definiert Hacker als "Tüftler im Kontext einer verspielten selbstbezüglichen Hingabe im Umgang mit Technik". Das verspielte Wesen der Hacker-Community wird beim alljährlichen Chaos Communication Congress besonders sichtbar. 
+
+Auf dem 33c3 konnten die Teilnehmer an einem kniffligen Spiel teilnehmen, das die mysteriöse Botschaft trug: "There is no game - There is action. 
+
+Welche kreativen Köpfe hinter "There is no game" stecken und welche Ziele sie damit verfolgten, was Gamification ist und wie man Spiele als Medium zur Aktivierung nutzen kann, erfahrt Ihr von Marcus Richter und seinen Gästen in der Marienstraße 11 vor Live-Publikum. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Die Wikipedia definiert Hacker als "Tüftler im Kontext einer verspielten selbstbezüglichen Hingabe im Umgang mit Technik". Das verspielte Wesen der Hacker-Community wird beim alljährlichen Chaos Communication Congress besonders sichtbar.</p>
+        <p>Auf dem 33c3 konnten die Teilnehmer an einem kniffligen Spiel teilnehmen, das die mysteriöse Botschaft trug: "There is no game - There is action.</p>
+        <p>Welche kreativen Köpfe hinter "There is no game" stecken und welche Ziele sie damit verfolgten, was Gamification ist und wie man Spiele als Medium zur Aktivierung nutzen kann, erfahrt Ihr von Marcus Richter und seinen Gästen in der Marienstraße 11 vor Live-Publikum.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Sarah, Kathia, Miko, Markus</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR231 Programmieren lernen</title>
+      <itunes:subtitle>Hallo Welt!</itunes:subtitle>
+      <description>Hallo Welt!</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr231-programmierenlernen.mp3" length="114268056"/>
+      <itunes:duration>01:59:00</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr231.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr231.html</link>
+      <pubDate>27 Jan 2017 03:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR231
+
+Veröffentlicht am: 27.01.2017, 03:00 Uhr
+Aufnahme vom: 26.01.2017
+Sendungsdatum: 26.01.2017, 22:00 Uhr
+http://chaosradio.ccc.de/cr231.html
+
+Teilnehmer: Marcus Richter (Moderation), erdgeist, Marie, Nana
+
+Programmieren lernen
+Hallo Welt!
+
+Nicht jeder kann Autos reparieren, aber fast jeder weiß aus der Schule, wie ein Verbrennungsmotor im Prinzip funktioniert. Aber wie ist das eigentlich bei Computern? Sollte man in einer Welt, die von kleinen grauen Kästen und ihren Artverwandten durchdrungen ist, nicht wenigstens eine Ahnung davon haben, wie sie funktionieren und wie man ihnen neue Funktionen beibringen kann? 
+
+Deswegen geht es diesmal im Chaosradio um die Frage, wie und vielleicht auch wie viel jeder von uns programmieren lernen sollte. Mit Einsteigertipps für jede Gewichtsklasse, und einem Rundgang über den Basar der einsteigerfreundlichen Programmiersprachen, -Kursen und -Initiativen. 
+
+Zu Gast bei Marcus Richter im Fritz-Studio sind dazu Marie von Heart of Code http://heartofcode.org/ , Nana vom Coder Dojo https://zen.coderdojo.com/dojo/522 sowie erdgeist vom CCC. Los geht's am 26.01.2017 ab 22 Uhr. Neben den üblichen Ausspielwegen von Fritz stellt das VOC einen Video-Stream http://streaming.media.ccc.de/ bereit. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Nicht jeder kann Autos reparieren, aber fast jeder weiß aus der Schule, wie ein Verbrennungsmotor im Prinzip funktioniert. Aber wie ist das eigentlich bei Computern? Sollte man in einer Welt, die von kleinen grauen Kästen und ihren Artverwandten durchdrungen ist, nicht wenigstens eine Ahnung davon haben, wie sie funktionieren und wie man ihnen neue Funktionen beibringen kann?
+    </p>
+        <p>
+Deswegen geht es diesmal im Chaosradio um die Frage, wie und vielleicht auch wie viel jeder von uns programmieren lernen sollte. Mit Einsteigertipps für jede Gewichtsklasse, und einem Rundgang über den Basar der einsteigerfreundlichen Programmiersprachen, -Kursen und -Initiativen.
+    </p>
+        <p>
+Zu Gast bei Marcus Richter im Fritz-Studio sind dazu Marie von <a href="http://heartofcode.org/">Heart of Code</a>, Nana vom <a href="https://zen.coderdojo.com/dojo/522">Coder Dojo</a> sowie erdgeist vom CCC. Los geht's am 26.01.2017 ab 22 Uhr. Neben den üblichen Ausspielwegen von Fritz stellt das VOC einen <a href="http://streaming.media.ccc.de/">Video-Stream</a> bereit.
+    </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), erdgeist, Marie, Nana</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR230 33C3-Spezial</title>
+      <itunes:subtitle>Live vom Chaos Communication Congress</itunes:subtitle>
+      <description>Live vom Chaos Communication Congress</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr230-33c3spezial.mp3" length="133446284"/>
+      <itunes:duration>01:51:11</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr230.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr230.html</link>
+      <pubDate>02 Jan 2017 17:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR230
+
+Veröffentlicht am: 02.01.2017, 17:30 Uhr
+Aufnahme vom: 30.12.2016
+Sendungsdatum: 30.12.2016, 12:00 Uhr
+http://chaosradio.ccc.de/cr230.html
+
+Teilnehmer: Marcus Richter (Moderation), Maria Reimer, Martin Haase, Holgi, Daniel Lange, Linus Neumann
+
+33C3-Spezial
+Live vom Chaos Communication Congress
+
+Bislang war der Chaos Communication Congress https://events.ccc.de/congress/2016/wiki/Main_Page immer der Grund, das Chaosradio im Dezember zu pausieren. Bis jetzt. Denn am Freitag den 30.12. hat Marcus Richter das Studio gegen die Bühne des Sendezentrums https://das-sendezentrum.de/sendezentrum-33c3/ auf dem 33c3 getauscht, um euch Highlights und Congressfeeling in euren Podcatcher zu bringen und interessante Gäste zu empfangen: Maria Reimer von Jugend hackt, Martin Haase, der auf dem Congress über die Sprache der Populisten gesprochen hat sowie Daniel Lange, der eine Übersicht zu Dieselgate gibt. Zum Abschluss lassen wir mit Linus Neumann den Congress Revue passieren. 
+
+Die Musik stammt aus den Chillhop Essentials Winter 2016 https://chillhop.bandcamp.com/album/chillhop-essentials-winter-2016 . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Bislang war der <a href="https://events.ccc.de/congress/2016/wiki/Main_Page">Chaos Communication Congress</a> immer der Grund, das Chaosradio im Dezember zu pausieren. Bis jetzt. Denn am Freitag den 30.12. hat Marcus Richter das Studio gegen die <a href="https://das-sendezentrum.de/sendezentrum-33c3/">Bühne des Sendezentrums</a> auf dem 33c3 getauscht, um euch Highlights und Congressfeeling in euren Podcatcher zu bringen und interessante Gäste zu empfangen: Maria Reimer von Jugend hackt, Martin Haase, der auf dem Congress über die Sprache der Populisten gesprochen hat sowie Daniel Lange, der eine Übersicht zu Dieselgate gibt. Zum Abschluss lassen wir mit Linus Neumann den Congress Revue passieren.
+  </p>
+        <p>Die Musik stammt aus den <a href="https://chillhop.bandcamp.com/album/chillhop-essentials-winter-2016">Chillhop Essentials Winter 2016</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Maria Reimer, Martin Haase, Holgi, Daniel Lange, Linus Neumann</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR229 Ein Kessel Buntes</title>
+      <itunes:subtitle>Von Grundgesetzversicherungen, Weihnachtsgeschenken und Kongressen</itunes:subtitle>
+      <description>Von Grundgesetzversicherungen, Weihnachtsgeschenken und Kongressen</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr229-einkesselbuntes.mp3" length="114459724"/>
+      <itunes:duration>01:59:12</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr229.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr229.html</link>
+      <pubDate>25 Nov 2016 9:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR229
+
+Veröffentlicht am: 25.11.2016, 9:30 Uhr
+Aufnahme vom: 24.10.2016
+Sendungsdatum: 24.11.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr229.html
+
+Teilnehmer: Marcus Richter (Moderation), Carina, Danimo, Matthias, Sokrates
+
+Ein Kessel Buntes
+Von Grundgesetzversicherungen, Weihnachtsgeschenken und Kongressen
+
+Warum braucht das Grundgesetz eine Versicherung? Wird Snowden vor dem NSA Untersuchungsausschuss sprechen können? Was schenkt man den Liebsten, und was besser nicht? Und wie kommt man noch an Tickets für den Chaos Communication Congress im Dezember? Fragen über Fragen, die Marcus Richter dieses Mal seine Gästen Carina, Danimo, Matthias und Sokrates vom Chaos Computer Club im Chaosradio 229 stellt. Zugeschaltet: Ulf Buermeyer und Anne Roth. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Warum braucht das Grundgesetz eine Versicherung? Wird Snowden vor dem NSA Untersuchungsausschuss sprechen können? Was schenkt man den Liebsten, und was besser nicht? Und wie kommt man noch an Tickets für den Chaos Communication Congress im Dezember? Fragen über Fragen, die Marcus Richter dieses Mal seine Gästen Carina, Danimo, Matthias und Sokrates vom Chaos Computer Club im Chaosradio 229 stellt. Zugeschaltet: Ulf Buermeyer und Anne Roth.
+  </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Carina, Danimo, Matthias, Sokrates</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR228 DDOS aus dem IoT-Botnetz</title>
+      <itunes:subtitle>Der Aufstand der Haushaltsgeräte</itunes:subtitle>
+      <description>Der Aufstand der Haushaltsgeräte</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr228-ddosausdemiotbotnetz.mp3" length="114604342"/>
+      <itunes:duration>01:59:21</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr228.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr228.html</link>
+      <pubDate>12 Nov 2016 23:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR228
+
+Veröffentlicht am: 12.11.2016, 23:00 Uhr
+Aufnahme vom: 28.10.2016
+Sendungsdatum: 27.10.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr228.html
+
+Teilnehmer: Marcus Richter (Moderation), Mutax, Benthor, Sokrates
+
+DDOS aus dem IoT-Botnetz
+Der Aufstand der Haushaltsgeräte
+
+Twitter? Kaputt. Amazon? Geht nicht! Alles, wegen einer Attacke, die selbst Experten ob ihres schieren Ausmaßes Geheimdiensten oder regierungsnahen Hackern zuschreiben wollte, steckten in Wirklichkeit Haushaltsgeräte. Denn das “Internet of Things”, bestehend aus nützlichen Gerätschaften mit Internetanschluss, lässt sich oft nur zu einfach von unter Kontrolle bringen -- auch von Tunichtguten, die dann komplette Infrastrukturen lahmlegen. 
+
+Warum es soweit kommen konnte, was genau geschah, und was man eventuell dagegen unternehmen kann, klärt Marcus Richter mit seinen Gästen vom Chaos Computer Club im Chaosradio 228. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Twitter? Kaputt. Amazon? Geht nicht! Alles, wegen einer Attacke, die selbst Experten ob ihres schieren Ausmaßes Geheimdiensten oder regierungsnahen Hackern zuschreiben wollte, steckten in Wirklichkeit Haushaltsgeräte. Denn das “Internet of Things”, bestehend aus nützlichen Gerätschaften mit Internetanschluss, lässt sich oft nur zu einfach von unter Kontrolle bringen -- auch von Tunichtguten, die dann komplette Infrastrukturen lahmlegen.
+  </p>
+        <p>
+     Warum es soweit kommen konnte, was genau geschah, und was man eventuell dagegen unternehmen kann, klärt Marcus Richter mit seinen Gästen vom Chaos Computer Club im Chaosradio 228.
+   </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Mutax, Benthor, Sokrates</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR227 Geheimdienstgesetzgebung</title>
+      <itunes:subtitle>…und andere demokratische Unwägbarkeiten</itunes:subtitle>
+      <description>…und andere demokratische Unwägbarkeiten</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr227-geheimdienstgesetzgebung.mp3" length="116372850"/>
+      <itunes:duration>02:01:12</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr227.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr227.html</link>
+      <pubDate>30 Sep 2016 17:50:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR227
+
+Veröffentlicht am: 30.09.2016, 17:50 Uhr
+Aufnahme vom: 29.09.2016
+Sendungsdatum: 29.09.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr227.html
+
+Teilnehmer: Marcus Richter (Moderation), cbass, Ulf Buermeyer, Katharina Nocun, Anne Roth
+
+Geheimdienstgesetzgebung
+…und andere demokratische Unwägbarkeiten
+
+Der BND bekommt ein neues Gesetz, dass ihm weitreichende Befugnisse einräumt. Auch die Schweiz stimmt dafür ab, sich mehr überwachen zu lassen und in Frankreich ist es ungefähr ein Jahr her, dass der Ausnahmezustand in Kraft trat. Politik und weite Teile der Bevölkerung suchen ihr Heil im Stärken der Geheimdienste, einer dieser Tage scheinbar alternativlosen Praxis. 
+
+Das Chraosradio 227, das diesmal wieder im Blue Moon bei Fritz http://www.fritz.de/livestream/index.html zu Gast ist, nimmt dies zum Anlass, die Themen Überwachung, Geheimdienste und andere Gefahren für den Rechtsstaat zu diskutieren. Dazu begrüsst Marcus Richter ab 22:00 Uhr Gäste aus dem CCC und seinem Umfeld, die sich mit diesen Themen intensiv beschäftigen. 
+
+Update: Den Stream gibt es hier https://streaming.media.ccc.de . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Der BND bekommt ein neues Gesetz, dass ihm weitreichende Befugnisse einräumt. Auch die Schweiz stimmt dafür ab, sich mehr überwachen zu lassen und in Frankreich ist es ungefähr ein Jahr her, dass der Ausnahmezustand in Kraft trat. Politik und weite Teile der Bevölkerung suchen ihr Heil im Stärken der Geheimdienste, einer dieser Tage scheinbar alternativlosen Praxis.
+  </p>
+        <p>
+Das Chraosradio 227, das diesmal wieder im Blue Moon bei <a href="http://www.fritz.de/livestream/index.html">Fritz</a> zu Gast ist, nimmt dies zum Anlass,  die Themen Überwachung, Geheimdienste und andere Gefahren für den Rechtsstaat zu diskutieren. Dazu begrüsst Marcus Richter ab 22:00 Uhr Gäste aus dem CCC und seinem Umfeld, die sich mit diesen Themen intensiv beschäftigen.
+    </p>
+        <p><b>Update:</b> Den Stream gibt es <a href="https://streaming.media.ccc.de">hier</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), cbass, Ulf Buermeyer, Katharina Nocun, Anne Roth</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR226 Anwendungssicherheit</title>
+      <itunes:subtitle>Warum Malware auch heute noch erfolgreich ist</itunes:subtitle>
+      <description>Warum Malware auch heute noch erfolgreich ist</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr226-anwendungssicherheit.mp3" length="114124580"/>
+      <itunes:duration>01:58:51</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr226.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr226.html</link>
+      <pubDate>28 Aug 2016 19:15:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR226
+
+Veröffentlicht am: 28.08.2016, 19:15 Uhr
+Aufnahme vom: 25.08.2016
+Sendungsdatum: 25.08.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr226.html
+
+Teilnehmer: danimo (Moderation), Jaseg, Warker, Marco, Nitram
+
+Anwendungssicherheit
+Warum Malware auch heute noch erfolgreich ist
+
+Software beeinflusst unser aller Leben. Wir vertrauen Software und Betriebssystemen, ohne sie vollstaendig ueberpruefen zu koennen. Doch welche Gefahren lauern in den Tiefen der Betriebssystemarchitektur? Welche Maßnahmen wurden ergriffen, um ungebetene Gäste draussen zu halten? Und wieso gelangen trotzdem jeden Tag erneut eben jene ungebetene Gäste selbst in vermeintlich abgesicherte Systeme? 
+
+Im Chaosradio 226 versuchen wir einen Überblick über die aktuelle Situation und das Wettrüsten zwischen Entwickern und Angreifern zu geben. Darüber diskutiert Danimo mit Gästen aus dem CCC in der Marienstrasse 11 https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin vor Live-Publikum. Das VOC https://c3voc.de hält wie immer einen Stream https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin bereit. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+Software beeinflusst unser aller Leben. Wir vertrauen Software und Betriebssystemen, ohne sie vollstaendig ueberpruefen zu koennen. Doch welche Gefahren lauern in den Tiefen der Betriebssystemarchitektur? Welche Maßnahmen wurden ergriffen, um ungebetene Gäste draussen zu halten? Und wieso gelangen trotzdem jeden Tag erneut eben jene ungebetene Gäste selbst in vermeintlich abgesicherte Systeme?
+   </p>
+        <p>
+Im Chaosradio 226 versuchen wir einen Überblick über die aktuelle Situation und das Wettrüsten zwischen Entwickern und Angreifern zu geben. Darüber diskutiert Danimo mit Gästen aus dem CCC in der <a href="https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin">Marienstrasse 11</a> vor Live-Publikum. Das <a href="https://c3voc.de">VOC</a> hält wie immer einen <a href="https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin">Stream</a> bereit.
+    </p>
+        <p>Teilnehmer: danimo (Moderation), Jaseg, Warker, Marco, Nitram</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR225 Digitales Geld &amp; Smart Contracts</title>
+      <itunes:subtitle>Wieviel Bit ist eigentlich ein Euro?</itunes:subtitle>
+      <description>Wieviel Bit ist eigentlich ein Euro?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr225-digitalesgeldundsmartcontracts.mp3" length="116571269"/>
+      <itunes:duration>02:01:24</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr225.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr225.html</link>
+      <pubDate>29 Jul 2016 10:15:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR225
+
+Veröffentlicht am: 29.07.2016, 10:15 Uhr
+Aufnahme vom: 28.06.2016
+Sendungsdatum: 28.07.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr225.html
+
+Teilnehmer: Marcus Richter (Moderation), Dirk Jaeckel, Christian Reitwiessner, Denis Ahrens
+
+Digitales Geld &amp; Smart Contracts
+Wieviel Bit ist eigentlich ein Euro?
+
+Unser Geld wird zunehmend digital. Einerseits durch Schaffung von sogenannten digitalen Währungen oder "Smart Contracts" wie das (schon fast veraltete) Bitcoin oder Ethereum. Andererseits gibt es durch sogenannte "Fintech-Startups" das altehrwürdige Girokonto zu modernisieren und ins Smartphone zu bringen. 
+
+In Zukunft werden wir also keine Münzen, Scheine und Kreditkarten mehr haben, sondern nur noch per App bezahlen? Den aktuellen Stand und natürlich Risiken und Nebenwirkungen der digitalen Finanzwelt erklärt und hinterfragt Marcus Richter mit den Gästen vom Chaos Computer Club im Chaosradio im Blue Moon. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+      Unser Geld wird zunehmend digital. Einerseits durch Schaffung von
+      sogenannten digitalen Währungen oder "Smart Contracts" wie das (schon
+      fast veraltete) Bitcoin oder Ethereum. Andererseits gibt es durch
+      sogenannte "Fintech-Startups" das altehrwürdige Girokonto zu
+      modernisieren und ins Smartphone zu bringen.
+    </p>
+        <p>
+      In Zukunft werden wir also keine Münzen, Scheine und Kreditkarten mehr
+      haben, sondern nur noch per App bezahlen? Den aktuellen Stand und
+      natürlich Risiken und Nebenwirkungen der digitalen Finanzwelt erklärt
+      und hinterfragt Marcus Richter mit den Gästen vom Chaos Computer Club im
+      Chaosradio im Blue Moon.
+    </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Dirk Jaeckel, Christian Reitwiessner, Denis Ahrens</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR224 Amateurfunk</title>
+      <itunes:subtitle>Lizenz zum Löten</itunes:subtitle>
+      <description>Lizenz zum Löten</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr224-amateurfunk.mp3" length="114441008"/>
+      <itunes:duration>01:59:11</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr224.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr224.html</link>
+      <pubDate>02 Jul 2016 15:45:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR224
+
+Veröffentlicht am: 02.07.2016, 15:45 Uhr
+Aufnahme vom: 30.06.2016
+Sendungsdatum: 30.06.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr224.html
+
+Teilnehmer: Marcus Richter (Moderation), DC4LW, DL7MTX, DD4MD, K7FP
+
+Amateurfunk
+Lizenz zum Löten
+
+Als Hobby alter grauer Männer verschrieen, erfreut sich der Amateurfunk in letzter Zeit auch unter Jüngeren insbesondere im CCC neuer Beliebtheit. Doch vor dem Spass am Gerät stehen eine Prüfung über Regularien und technischem Sachwissen, und viele Stunden der Vorbereitung. 
+
+Im Chaosradio 224 wollen wir klären, was die Faszination Amateurfunk ausmacht und welche Hürden es zu meistern gibt, bevor man mit eigenem Rufzeichen drauflosfunken kann. Außerdem klären wir, wie ein Badge für das Chaos Communication Camp 2015 das Funk-Fieber befeuer hat. Dazu empfängt Marcus Richter in der Marienstrasse 11 Funkausbilder Lars DC4LW, sowie die frischgebackenen Funkneulige Florian DL7MTX und Matthias DD4MD. Aus den USA ist Fabienne K7FP zugeschaltet. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>
+      Als Hobby alter grauer Männer verschrieen, erfreut sich der Amateurfunk in letzter Zeit auch unter Jüngeren insbesondere im CCC neuer Beliebtheit.
+      Doch vor dem Spass am Gerät stehen eine Prüfung über Regularien und technischem Sachwissen, und viele Stunden der Vorbereitung.
+   </p>
+        <p>
+      Im Chaosradio 224 wollen wir klären, was die Faszination Amateurfunk ausmacht und welche Hürden es zu meistern gibt, bevor man
+      mit eigenem Rufzeichen drauflosfunken kann. Außerdem klären wir, wie ein Badge für das Chaos Communication Camp 2015 das Funk-Fieber befeuer hat.
+      Dazu empfängt Marcus Richter in der Marienstrasse 11 Funkausbilder Lars DC4LW, sowie die frischgebackenen Funkneulige Florian DL7MTX
+      und Matthias DD4MD. Aus den USA ist Fabienne K7FP zugeschaltet.
+    </p>
+        <p>Teilnehmer: Marcus Richter (Moderation), DC4LW, DL7MTX, DD4MD, K7FP</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR223 Die Netzwerbewirtschaft</title>
+      <itunes:subtitle>Kaffeefahrten ins Internet</itunes:subtitle>
+      <description>Kaffeefahrten ins Internet</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr223-dienetzwerbewirtschaft.mp3" length="116663022"/>
+      <itunes:duration>02:01:30</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr223.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr223.html</link>
+      <pubDate>27 May 2016 11:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR223
+
+Veröffentlicht am: 27.05.2016, 11:00 Uhr
+Aufnahme vom: 26.05.2016
+Sendungsdatum: 26.05.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr223.html
+
+Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, henryk
+
+Die Netzwerbewirtschaft
+Kaffeefahrten ins Internet
+
+In den Weiten des Internets lauern riesige Netzwerke von Anbietern, die sich darum prügeln, durch die magere Bandbreite Informationen auf das Endgerät zu schaufeln, die man im besten Fall nicht braucht, im schlimmsten Fall aber vom eigentlichen Vorhaben ablenken, stören oder gar Computer oder Telefon gefährden. 
+
+Teilweise bezahlt die geraubte Aufmerksamkeit den Zugang zum Netz oder die unentgeltlich angebotenen Dienste wie Freemail und Zeitungen, teilweise schmarotzen Werber und Kriminelle dreist an den Datenleitungen und Diensten von Dritten. Wir versuchen, den Sumpf der Industrie zu beleuchten, die sich an unser aller Aufmerksamkeit bereichert und die Trittbrettfahrer ins Rampenlicht zu rücken, die die Werbeinfrastruktur für eigene krumme Geschäfte benutzen. 
+
+Im Studio sind Danimo, henryk und erdgeist vom Chaos Computer Club, die mit Euch darüber reden wollen, wie Ihr Eure Datentarife schonen, das nervige Geblinke auf Webseiten wegzappen und Einfallstore für Cryptotrojaner ausschalten könnt. Den Stream gibt es hier https://streaming.media.ccc.de . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>In den Weiten des Internets lauern riesige Netzwerke von Anbietern, die sich darum prügeln, durch die magere Bandbreite Informationen auf das Endgerät zu schaufeln, die man im besten Fall nicht braucht, im schlimmsten Fall aber vom eigentlichen Vorhaben ablenken, stören oder gar Computer oder Telefon gefährden.</p>
+        <p>Teilweise bezahlt die geraubte Aufmerksamkeit den Zugang zum Netz oder die unentgeltlich angebotenen Dienste wie Freemail und Zeitungen, teilweise schmarotzen Werber und Kriminelle dreist an den Datenleitungen und Diensten von Dritten. Wir versuchen, den Sumpf der Industrie zu beleuchten, die sich an unser aller Aufmerksamkeit bereichert und die Trittbrettfahrer ins Rampenlicht zu rücken, die die Werbeinfrastruktur für eigene krumme Geschäfte benutzen.</p>
+        <p>Im Studio sind Danimo, henryk und erdgeist vom Chaos Computer Club, die mit Euch darüber reden wollen, wie Ihr Eure Datentarife schonen, das nervige Geblinke auf Webseiten wegzappen und Einfallstore für Cryptotrojaner ausschalten könnt. Den Stream gibt es <a href="https://streaming.media.ccc.de">hier</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, henryk</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR222 Hacker- und Makerspaces</title>
+      <itunes:subtitle>Ein Rundgang durch die Welt des kollaborativen Nerdens</itunes:subtitle>
+      <description>Ein Rundgang durch die Welt des kollaborativen Nerdens</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr222-hackerundmakerspaces.mp3" length="116663022"/>
+      <itunes:duration>1:57:59</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr222.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr222.html</link>
+      <category>Hackerspace</category>
+      <category>Makerspace</category>
+      <category>Coworking</category>
+      <pubDate>05 May 2016 23:50:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR222
+
+Veröffentlicht am: 05.05.2016, 23:50 Uhr
+Aufnahme vom: 28.04.2016
+Sendungsdatum: 28.04.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr222.html
+
+Teilnehmer: Marcus Richter (Moderation), Johl, Pylon, Gizmo, Cat
+
+Hacker- und Makerspaces
+Ein Rundgang durch die Welt des kollaborativen Nerdens
+
+Seit geraumer Zeit existieren in fast allen größeren Städten sogenannte Hacker- oder Makerspaces. Gleichzeitig wird das sogenannte Coworking immer beliebter. Nach welchem Prinzip funktionieren diese Orte kollaborativen Arbeitens? 
+
+Was hat sich über die Jahre verändert? Wo liegen die Unterschiede zwischen Hackerspace, Makerspace und Coworking und wie unterscheiden sich die Einrichtungen in ihren Ideen und Philosophien? Und was ist zu beachten, wenn man selber einen solchen Space gründen möchte? 
+
+All diese Fragen beantworten Betreiber und Bewohner von Hacker- und Makerspaces bei Marcus Richter im Chaosradio 222 https://chaosradio.ccc.de/cr222.html , live im Hackerspace des CCCB https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin am Donnerstag ab 22 Uhr in der Marienstraße 11 (auch per Stream https://streaming.media.ccc.de ). 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Seit geraumer Zeit existieren in fast allen größeren Städten sogenannte Hacker- oder Makerspaces. Gleichzeitig wird das sogenannte Coworking immer beliebter. Nach welchem Prinzip funktionieren diese Orte kollaborativen Arbeitens?</p>
+        <p>Was hat sich über die Jahre verändert? Wo liegen die Unterschiede zwischen Hackerspace, Makerspace und Coworking und wie unterscheiden sich die Einrichtungen in ihren Ideen und Philosophien? Und was ist zu beachten, wenn man selber einen solchen Space gründen möchte?</p>
+        <p>All diese Fragen beantworten Betreiber und Bewohner von Hacker- und Makerspaces bei Marcus Richter im <a href="https://chaosradio.ccc.de/cr222.html">Chaosradio 222</a>, live im <a href="https://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin">Hackerspace des CCCB</a> am Donnerstag ab 22 Uhr in der Marienstraße 11 (auch per <a href="https://streaming.media.ccc.de">Stream</a>).</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Johl, Pylon, Gizmo, Cat</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR221 Künstliche Intelligenz</title>
+      <itunes:subtitle>Ist das schon Denken?</itunes:subtitle>
+      <description>Ist das schon Denken?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr221-kuenstlicheintelligenz.mp3" length="113500304"/>
+      <itunes:duration>01:58:12.63</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr221.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr221.html</link>
+      <category>Künstliche Intelligenz</category>
+      <pubDate>01 Apr 2016 10:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR221
+
+Veröffentlicht am: 01.04.2016, 10:00 Uhr
+Aufnahme vom: 31.03.2016
+Sendungsdatum: 31.03.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr221.html
+
+Teilnehmer: Marcus Richter (Moderation), Tobias, Benthor, Priska, Clemens
+
+Künstliche Intelligenz
+Ist das schon Denken?
+
+Mit Googles Programm "AlphaGo" schlug eine künstliche Intelligenz (KI) Lee Sedol, einen der stärksten Go-Spieler der Welt, klar mit 4:1. Ein paar Tage später stellte Microsoft mit dem Chatbot "Tay" eine KI vor, die sehr schnell, und vor allem sehr unkritisch, alles nachplapperte, was man ihr vorsagte. Langsam scheinen KIs dem Labor zu entwachsen, doch was heisst das für uns? Kann man diese Programme wirklich als "intelligent" bezeichnen? Und wie funktionieren sie überhaupt? 
+
+Diesen Fragen geht der Chaos Computer Club kommenden Donnerstag ab 22 Uhr bei Marcus Richter im Chaosradio auf Fritz nach. Und wenn ihr Fragen habt, dann stellt sie unseren Experten: 0331 / 7097 110. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Mit Googles Programm "AlphaGo" schlug eine künstliche Intelligenz (KI) Lee Sedol, einen der stärksten Go-Spieler der Welt, klar mit 4:1. Ein paar Tage später stellte Microsoft mit dem Chatbot "Tay" eine KI vor, die sehr schnell, und vor allem sehr unkritisch, alles nachplapperte, was man ihr vorsagte. Langsam scheinen KIs dem Labor zu entwachsen, doch was heisst das für uns?  Kann man diese Programme wirklich als "intelligent" bezeichnen? Und wie funktionieren sie überhaupt?</p>
+        <p>Diesen Fragen geht der Chaos Computer Club kommenden Donnerstag ab 22 Uhr bei Marcus Richter im Chaosradio auf Fritz nach. Und wenn ihr Fragen habt, dann stellt sie unseren Experten: 0331 / 7097 110.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Tobias, Benthor, Priska, Clemens</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR220 Offene Daten und Transparenz</title>
+      <itunes:subtitle>Technologie gegen staatliche Geheimniskrämerei</itunes:subtitle>
+      <description>Technologie gegen staatliche Geheimniskrämerei</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr220-offenedatenundtransparenz.mp3" length="116705730"/>
+      <itunes:duration>02:01:33.00</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr220.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr220.html</link>
+      <category>Frag den Staat</category>
+      <category>Informationsfreiheit</category>
+      <category>Frag den Bundestag</category>
+      <category>Digiwhist</category>
+      <pubDate>16 Mar 2016 00:40:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR220
+
+Veröffentlicht am: 16.03.2016, 00:40 Uhr
+Aufnahme vom: 25.02.2016
+Sendungsdatum: 25.02.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr220.html
+
+Teilnehmer: Marcus Richter (Moderation), Arne Semsrott, Mara Mendes
+
+Offene Daten und Transparenz
+Technologie gegen staatliche Geheimniskrämerei
+
+Ein guter Staat ist transparent und offen und lässt sich auf die Finger schauen. Doch oft stößt man bei Nachfragen in Beamtenstuben auf taube Ohren oder wird mit Vorwänden abgespeist. Glücklicherweise gibt es immer öfter Informationsfreiheitsgesetze, die den Staat zur Auskunft verpflichten. Doch reicht ein Gesetz? Wie kann man zeitsparend und ohne Frust interessante Daten anfragen? Und wie kann man sonst noch Korruption vorbeugen? 
+
+Im Chaosradio 220 spricht Marcus Richter heute abend ab 22 Uhr mit Arne Semsrott und Mara Mendes, die bei der Open Knowledge Foundation https://okfn.de an entsprechenden Projekten arbeiten -- live im CCCB in der Marienstrasse 11 oder im Stream https://streaming.media.ccc.de . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Ein guter Staat ist transparent und offen und lässt sich auf die Finger schauen. Doch oft stößt man bei Nachfragen in Beamtenstuben auf taube Ohren oder wird mit Vorwänden abgespeist. Glücklicherweise gibt es immer öfter Informationsfreiheitsgesetze, die den Staat zur Auskunft verpflichten. Doch reicht ein Gesetz? Wie kann man zeitsparend und ohne Frust interessante Daten anfragen? Und wie kann man sonst noch Korruption vorbeugen?</p>
+        <p>Im Chaosradio 220 spricht Marcus Richter heute abend ab 22 Uhr mit Arne Semsrott und Mara Mendes, die bei der <a href="https://okfn.de">Open Knowledge Foundation</a> an entsprechenden Projekten arbeiten -- live im CCCB in der Marienstrasse 11 oder im <a href="https://streaming.media.ccc.de">Stream</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Arne Semsrott, Mara Mendes</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR219 Backstage im Netz</title>
+      <itunes:subtitle>Die Internet-Selbstverwaltung</itunes:subtitle>
+      <description>Die Internet-Selbstverwaltung</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr219-backstageimnetz.mp3" length="112952094"/>
+      <itunes:duration>01:58:55</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr219.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr219.html</link>
+      <category>Chaosradio</category>
+      <category>Internet</category>
+      <category>Selbstverwaltung</category>
+      <pubDate>28 Jan 2016 22:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR219
+
+Veröffentlicht am: 28.01.2016, 22:00 Uhr
+Aufnahme vom: 28.01.2016
+Sendungsdatum: 28.01.2016, 22:00 Uhr
+http://chaosradio.ccc.de/cr219.html
+
+Teilnehmer: Marcus Richter (Moderation), mutax, Clemens Schrimpe
+
+Backstage im Netz
+Die Internet-Selbstverwaltung
+
+Das Internet und das Web funktionieren einfach so und wir müssen uns darüber keine Sorgen machen. Dafür sorgen jede Menge Standards und Vereinbarungen, die regeln, wie das Netz funktioniert. Aber wer legt diese Standards fest? Wer nimmt Einfluß darauf, wie wir das Netz benutzen? Haben wir als Nutzer die Möglichkeit darauf Einfluß zu nehmen? Und wollen wir das überhaupt? 
+
+Im Chaosradio 219 im Bluemoon auf Fritz http://www.fritz.de wirft Marcus Richter am Donnerstag ab 22 Uhr mit Gästen vom CCC einen Blick hinter die Kulissen des Internets. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Das Internet und das Web funktionieren einfach so und wir müssen uns darüber keine Sorgen machen. Dafür sorgen jede Menge Standards und Vereinbarungen, die regeln, wie das Netz funktioniert. Aber wer legt diese Standards fest? Wer nimmt Einfluß darauf, wie wir das Netz benutzen? Haben wir als Nutzer die Möglichkeit darauf Einfluß zu nehmen? Und wollen wir das überhaupt?</p>
+        <p>Im Chaosradio 219 im Bluemoon auf <a href="http://www.fritz.de">Fritz</a> wirft Marcus Richter am Donnerstag ab 22 Uhr mit Gästen vom CCC einen Blick hinter die Kulissen des Internets.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), mutax, Clemens Schrimpe</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR218 Internet of Things</title>
+      <itunes:subtitle>On the Internet, nobody knows you're a Fridge</itunes:subtitle>
+      <description>On the Internet, nobody knows you're a Fridge</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr218-internetofthings.mp3" length="114194836"/>
+      <itunes:duration>01:58:55</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr218.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr218.html</link>
+      <category>Chaosradio</category>
+      <pubDate>28 Nov 2015 17:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR218
+
+Veröffentlicht am: 28.11.2015, 17:00 Uhr
+Aufnahme vom: 26.11.2015
+Sendungsdatum: 26.10.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr218.html
+
+Teilnehmer: Marcus Richter (Moderation), derpeter, mutax, danimo
+
+Internet of Things
+On the Internet, nobody knows you're a Fridge
+
+Wenn es nach dem Willen von Hardware-Herstellern geht, ist das Internet of Things, also die Anbindung von Alltagsgegenständen an das Internet, nicht mehr aufzuhalten. Schon heute sind einzelne Geräte überall miteinander vernetzt. Doch es gibt berechtigte Zweifel an Produkten, deren Herstellern ihre eigene Suppe kochen und die für die Updates ein Fremdwort sind. Und wenn es dann noch Daten abzugreifen gibt, die bei der Benutzung anfallen, sind endgültig Zweifel angesagt. Und ist es wirklich sinnvoll, dass jedes Produkt mit einem Internet-Anschluss auszustatten? 
+
+Im Chaosradio 218 im Bluemoon auf Fritz http://www.fritz.de klärt Marcus Richter und Gäste vom CCC heute ab 22 Uhr die Hintergründe und beleuchten die Schattenseiten dieser schönen neue Welt. Dabei geht es um die Risiken und Nebenwirkungen des IoT, aber auch positive Beispiele, die wirklichen Nutzen bringen können. 
+
+Hinweis: Das VOC http://c3voc.de bemüht sich um einen Video-Livestream http://streaming.media.ccc.de . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Wenn es nach dem Willen von Hardware-Herstellern geht, ist das Internet of Things, also die Anbindung von Alltagsgegenständen an das Internet, nicht mehr aufzuhalten. Schon heute sind einzelne Geräte überall miteinander vernetzt. Doch es gibt berechtigte Zweifel an Produkten, deren Herstellern ihre eigene Suppe kochen und die für die Updates ein Fremdwort sind. Und wenn es dann noch Daten abzugreifen gibt, die bei der Benutzung anfallen, sind endgültig Zweifel angesagt. Und ist es wirklich sinnvoll, dass jedes Produkt mit einem Internet-Anschluss auszustatten?</p>
+        <p>Im Chaosradio 218 im Bluemoon auf <a href="http://www.fritz.de">Fritz</a> klärt Marcus Richter und Gäste vom CCC heute ab 22 Uhr die Hintergründe und beleuchten die Schattenseiten dieser schönen neue Welt. Dabei geht es um die Risiken und Nebenwirkungen des IoT, aber auch positive Beispiele, die wirklichen Nutzen bringen können.</p>
+        <p>Hinweis: Das <a href="http://c3voc.de">VOC</a> bemüht sich um einen <a href="http://streaming.media.ccc.de">Video-Livestream</a>.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), derpeter, mutax, danimo</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR217 Professional Hackers</title>
+      <itunes:subtitle>Ein Einblick in die Security-Industrie</itunes:subtitle>
+      <description>Ein Einblick in die Security-Industrie</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr217-professionalhackers.mp3" length="114769710"/>
+      <itunes:duration>01:59:31</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr217.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr217.html</link>
+      <category>Chaosradio,Hacking,IT-Security</category>
+      <pubDate>30 Oct 2015 13:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR217
+
+Veröffentlicht am: 30.10.2015, 13:00 Uhr
+Aufnahme vom: 29.10.2015
+Sendungsdatum: 29.10.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr217.html
+
+Teilnehmer: Marcus Richter (Moderation), cbass, frank, linus, ths
+
+Professional Hackers
+Ein Einblick in die Security-Industrie
+
+Jenseits von TV-Klischees und anderen Stereotypen analysieren sie die Sicherheit Infrastruktur in Firmen, geben Ratschläge und prüfen Hard- und Software auf Sicherheitslücken. Andere wiederum handeln mit eben diesen Sicherheitslücken. 
+
+Wie gehen die Gruppen dabei vor? Welche Motivation veranlasst Hacker dazu, in der Security-Branche zu arbeiten. Welche Leitlinien und Standards gibt es und wo muss sich ein Hacker auf Erfahrung, Intuition und gesunden Menschenverstand verlassen? Dies alles wollen wir ab 22 Uhr im Chaosradio 217 klären, diesmal wieder live aus der Räumen des CCCB http://berlin.ccc.de . Interessenten sind herzlich eingeladen, live dabei zu sein. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Jenseits von TV-Klischees und anderen Stereotypen analysieren sie die Sicherheit Infrastruktur in Firmen, geben Ratschläge und prüfen Hard- und Software auf Sicherheitslücken. Andere wiederum handeln mit eben diesen Sicherheitslücken.</p>
+        <p>Wie gehen die Gruppen dabei vor? Welche Motivation veranlasst Hacker dazu, in der Security-Branche zu arbeiten. Welche Leitlinien und Standards gibt es und wo muss sich ein Hacker auf Erfahrung, Intuition und gesunden Menschenverstand verlassen? Dies alles wollen wir ab 22 Uhr im Chaosradio 217 klären, diesmal wieder live aus der Räumen des <a href="http://berlin.ccc.de">CCCB</a>. Interessenten sind herzlich eingeladen, live dabei zu sein.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), cbass, frank, linus, ths</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR216 Flüchtlinge und Hacker</title>
+      <itunes:subtitle>Hilfe zur Selbsthilfe</itunes:subtitle>
+      <description>Hilfe zur Selbsthilfe</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr216-fluechtlingeundhacker.mp3" length="114853617"/>
+      <itunes:duration>01:59:37</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr216.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr216.html</link>
+      <category>Chaosradio</category>
+      <pubDate>25 Sep 2015 04:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR216
+
+Veröffentlicht am: 25.09.2015, 04:00 Uhr
+Aufnahme vom: 24.09.2015
+Sendungsdatum: 24.09.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr216.html
+
+Teilnehmer: Marcus Richter (Moderation), Lasse, Elektra, Monic, Imma
+
+Flüchtlinge und Hacker
+Hilfe zur Selbsthilfe
+
+Während es für die Meisten von uns in Deutschland selbstverständlich ist, in irgendeiner Form Internet zu haben, gibt es immer noch Gruppen von Menschen, denen der Zugang zum Internet massiv erschwert wird. Eine dieser Gruppen sind Flüchtlinge. Doch auch hier gibt es engagierte Initiativen, die Abhilfe schaffen. Wie das funktioniert, warum das notwendig ist und welche Probleme dabei auftauchen erklären Euch Gäste von Chaos Computer Club, den Berliner Freifunkern https://berlin.freifunk.net/ und dem Verein Refugee Emancipation http://www.refugeesemancipation.com/ , bei dem sich Flüchtlinge für Flüchtlinge engagieren. 
+
+Bitte untstützt die in der Sendung erwähnte Support Refugees Emancipation http://support.refugeesemancipation.com/en/ -Kampagne. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Während es für die Meisten von uns in Deutschland selbstverständlich ist, in irgendeiner Form Internet zu haben, gibt es immer noch Gruppen von Menschen, denen der Zugang zum Internet massiv erschwert wird. Eine dieser Gruppen sind Flüchtlinge. Doch auch hier gibt es engagierte Initiativen, die Abhilfe schaffen. Wie das funktioniert, warum das notwendig ist und welche Probleme dabei auftauchen erklären Euch Gäste von Chaos Computer Club, den <a href="https://berlin.freifunk.net/">Berliner Freifunkern</a> und dem Verein <a href="http://www.refugeesemancipation.com/">Refugee Emancipation</a>, bei dem sich Flüchtlinge für Flüchtlinge engagieren.</p>
+        <p>Bitte untstützt die in der Sendung erwähnte <a href="http://support.refugeesemancipation.com/en/">Support Refugees Emancipation</a>-Kampagne.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Lasse, Elektra, Monic, Imma</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR215 Das Chaos Communication Camp</title>
+      <itunes:subtitle>Hacker auf dem Acker</itunes:subtitle>
+      <description>Hacker auf dem Acker</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr215-daschaoscommunicationcamp.mp3" length="116906207"/>
+      <itunes:duration>02:01:45</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr215.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr215.html</link>
+      <category>Chaosradio</category>
+      <pubDate>06 Sep 2015 15:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR215
+
+Veröffentlicht am: 06.09.2015, 15:00 Uhr
+Aufnahme vom: 27.08.2015
+Sendungsdatum: 27.08.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr215.html
+
+Teilnehmer: danimo (Moderation), starbug, Tim Pritlove, Ariane
+
+Das Chaos Communication Camp
+Hacker auf dem Acker
+
+Das Chaos Communication Camp 2015 in Mildenberg ist vorbei - Zeit, das erste CCC Hacker-Camp seit 4 Jahren Revue passieren zu lassen. Was waren die Herausforderungen? Was die Highlights? 
+
+Was ist ein Trainquilizer und was hat der mit farblich sortierten Bällen zu tun? Wie kommen Berliner Flughäfen und Fernsehtürme nach Brandenburg? Wie versorgt man über 4500 Leute "auf dem Acker" mit Wasser, Strom, Internet und Kommunikation? Und wie verwandelt man ein Industriedenkmal in ein buntes Farbenmeer? 
+
+Über dies und mehr sprechen wir im Chaosradio 215 live am Donnerstag ab 22 Uhr aus dem Chaos Computer Club Berlin in der Marienstrasse 11. Audio- und Videostreams gibts auf der Streaming-Seite des VOC http://streaming.media.ccc.de . 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Das Chaos Communication Camp 2015 in Mildenberg ist vorbei - Zeit, das erste CCC Hacker-Camp seit 4 Jahren Revue passieren zu lassen. Was waren die Herausforderungen? Was die Highlights?</p>
+        <p>Was ist ein Trainquilizer und was hat der mit farblich sortierten Bällen zu tun? Wie kommen Berliner Flughäfen und Fernsehtürme nach Brandenburg?  Wie versorgt man über 4500 Leute "auf dem Acker" mit Wasser, Strom, Internet und Kommunikation? Und wie verwandelt man ein Industriedenkmal in ein buntes Farbenmeer?</p>
+        <p>Über dies und mehr sprechen wir im Chaosradio 215 live am Donnerstag ab 22 Uhr aus dem Chaos Computer Club Berlin in der Marienstrasse 11. Audio- und Videostreams gibts auf der <a href="http://streaming.media.ccc.de">Streaming-Seite des VOC</a>.</p>
+        <p>Teilnehmer: danimo (Moderation), starbug, Tim Pritlove, Ariane</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR214 Hackerethik</title>
+      <itunes:subtitle>Von moralischer Flexibilität und ihren Folgen</itunes:subtitle>
+      <description>Von moralischer Flexibilität und ihren Folgen</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr214-hackerethik.mp3" length="112566659"/>
+      <itunes:duration>01:57:14</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr214.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr214.html</link>
+      <category>Chaosradio</category>
+      <pubDate>31 Jul 2015 3:10:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR214
+
+Veröffentlicht am: 31.07.2015, 3:10 Uhr
+Aufnahme vom: 30.07.2015
+Sendungsdatum: 30.07.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr214.html
+
+Teilnehmer: Marcus Richter (Moderation), Andreas Bogk, danimo, erdgeist
+
+Hackerethik
+Von moralischer Flexibilität und ihren Folgen
+
+Der Skandal um das Hacking Team hat (wieder einmal) gezeigt, dass es auch Hacker ohne Moral gibt, die sich nicht scheuen auch mit Menschenrechtsverletzern Geschäfte machen. Und der Skandal um den Hack von Autos hat gezeigt, dass sich in Zukunft immer mehr digitale Angriffspunkte bieten. 
+
+Was genau ist da eigentlich passiert? Kann man sich vor so etwas schützen? Brauchen wir Hackergesetze? Und wie geht man als Hacker damit um, wenn der eigene Programmiercode von “den Bösen” eingesetzt wird? Heute ab 22 Uhr werden wir diese Fragen und Probleme im Chaosradio 214 diskutieren, live im Blue Moon auf Fritz http://www.fritz.de/ . Und wenn ihr mögt, dann könnt ihr euch unter 0331/7097110 beteiligen. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Der Skandal um das Hacking Team hat (wieder einmal) gezeigt, dass es auch Hacker ohne Moral gibt, die sich nicht scheuen auch mit Menschenrechtsverletzern Geschäfte machen. Und der Skandal um den Hack von Autos hat gezeigt, dass sich in Zukunft immer mehr digitale Angriffspunkte bieten.</p>
+        <p>Was genau ist da eigentlich passiert? Kann man sich vor so etwas schützen? Brauchen wir Hackergesetze? Und wie geht man als Hacker damit um, wenn der eigene Programmiercode von “den Bösen” eingesetzt wird? Heute ab 22 Uhr werden wir diese Fragen und Probleme im Chaosradio 214 diskutieren, live im Blue Moon auf <a href="http://www.fritz.de/">Fritz</a>. Und wenn ihr mögt, dann könnt ihr euch unter 0331/7097110 beteiligen.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Andreas Bogk, danimo, erdgeist</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR213 Das Internet hinter dem DSL-Router</title>
+      <itunes:subtitle>Von DSLAMs, IXPs, BGP und der Cloud</itunes:subtitle>
+      <description>Von DSLAMs, IXPs, BGP und der Cloud</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr213-dasinternethinterdemdslrouter.mp3" length="123715321"/>
+      <itunes:duration>02:08:50</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr213.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr213.html</link>
+      <category>Chaosradio</category>
+      <pubDate>03 Jul 2015 18:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR213
+
+Veröffentlicht am: 03.07.2015, 18:30 Uhr
+Aufnahme vom: 25.06.2015
+Sendungsdatum: 25.06.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr213.html
+
+Teilnehmer: danimo (Moderation), Kay, Nblr, Mutax
+
+Das Internet hinter dem DSL-Router
+Von DSLAMs, IXPs, BGP und der Cloud
+
+Das Internet kommt aus der Wand – oder aus der Luft. Soviel ist klar. Aber was passiert auf der anderen Seite? Was ist nötig, damit ich auf meinem Handy Webseiten vom anderen Ende des Planeten in wenigen Millisekunden abrufen kann? Wieso gibt es an manchen Orten in Berlin kein DSL, obwohl Glasfaserkabel manchmal bis ins Haus liegen, während andere über Jahrzehnten alten Kupferkabel halbwegs schnelles Netz bekommen? Und was macht in den grauen Kästen am Straßenrand nachts Lärm? 
+
+Warum ist Youtube manchmal kaum benutzbar, obwohl der Speedtest des Anbieters volle Datenraten bescheinigt? Was ist eine Distributed Denial of Service Attacke und wie wird damit Geld verdient? Wieso ist trotz großer Anstrengungen manchmal “das ganze Internet” für Stunden kaputt? Und warum hängt die Steuerung einer Ölpipeline und die Flugplanung einer Airline angeblich direkt im Internet? 
+
+Diesen und anderen Fragen gehen wir am Donnerstag dem 25.6. ab 22 Uhr im Chaosradio 213 nach. Live aus den Räumen des Chaos Computer Club Berlin https://berlin.ccc.de/wiki/Hauptseite in der Marienstraße 11, per Audio und Video unter streaming.media.ccc.de http://streaming.media.ccc.de , oder direkt vor Ort. Gäste sind herzlich willkommen. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Das Internet kommt aus der Wand – oder aus der Luft. Soviel ist klar. Aber was passiert auf der anderen Seite? Was ist nötig, damit ich auf meinem Handy Webseiten vom anderen Ende des Planeten in wenigen Millisekunden abrufen kann? Wieso gibt es an manchen Orten in Berlin kein DSL, obwohl Glasfaserkabel manchmal bis ins Haus liegen, während andere über Jahrzehnten alten Kupferkabel halbwegs schnelles Netz bekommen? Und was macht in den grauen Kästen am Straßenrand nachts Lärm?</p>
+        <p>Warum ist Youtube manchmal kaum benutzbar, obwohl der Speedtest des Anbieters volle Datenraten bescheinigt? Was ist eine Distributed Denial of Service Attacke und wie wird damit Geld verdient? Wieso ist trotz großer Anstrengungen manchmal “das ganze Internet” für Stunden kaputt? Und warum hängt die Steuerung einer Ölpipeline und die Flugplanung einer Airline angeblich direkt im Internet?</p>
+        <p>Diesen und anderen Fragen gehen wir am Donnerstag dem 25.6. ab 22 Uhr im Chaosradio 213 nach. Live aus den Räumen des <a href="https://berlin.ccc.de/wiki/Hauptseite">Chaos Computer Club Berlin</a> in der Marienstraße 11, per Audio und Video unter <a href="http://streaming.media.ccc.de">streaming.media.ccc.de</a>, oder direkt vor Ort. Gäste sind herzlich willkommen.</p>
+        <p>Teilnehmer: danimo (Moderation), Kay, Nblr, Mutax</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR212 Was von Snowden übrig blieb</title>
+      <itunes:subtitle>Fazit nach zwei Jahren Überwachungsskandal: Neuanfang oder verpasste Chance?</itunes:subtitle>
+      <description>Fazit nach zwei Jahren Überwachungsskandal: Neuanfang oder verpasste Chance?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr212-wasvonsnowdenuebrigblieb.mp3" length="115212952"/>
+      <itunes:duration>01:59:59</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr212.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr212.html</link>
+      <category>Chaosradio</category>
+      <category>Snowden</category>
+      <category>NSA</category>
+      <category>BND</category>
+      <pubDate>01 Jun 2015 18:30:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR212
+
+Veröffentlicht am: 01.06.2015, 18:30 Uhr
+Aufnahme vom: 28.05.2015
+Sendungsdatum: 28.05.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr212.html
+
+Teilnehmer: Marcus Richter (Moderation), Andre Meister, Linus Neumann, Anne Roth
+
+Was von Snowden übrig blieb
+Fazit nach zwei Jahren Überwachungsskandal: Neuanfang oder verpasste Chance?
+
+Vor zwei Jahren, im Mai 2013 flog Edward Joseph "Ed" Snowden von Hawaii nach Honkong um sich dort mit der Dokumentarfilmerin Laura Poitras und dem Journalisten Glenn Greenwald zu treffen... 
+
+Eine schier endlose Reihe an Enthüllungen und Skandalen waren die Folge. Erst jetzt scheint die Aufarbeitung zu beginnen – erste Gerichtsurteile verurteilen die Späh-Angriffe als nicht verfassungskonform, in Deutschland wühlt der Geheimdienst-Untersuchungsausschuss eine Menge unangenehmen Staub auf, und große Unternehmen sorgen für besseren Schutz ihrer Kunden. Gleichzeitig versuchen Regierung und Parlament die Überwachung der Bevölkerung mit einer Wiedervorlage der Vorratsdatenspeicherung zu legalisieren. 
+
+War's das, oder ist das erst der Anfang? Das diskutiert Marcus Richter mit Andre Meister, Linus Neumann und Anne Roth im Chaosradio, am Donnerstag ab 22 Uhr live im Blue Moon auf Fritz. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Vor zwei Jahren, im Mai 2013 flog Edward Joseph "Ed" Snowden von Hawaii nach Honkong um sich dort mit der Dokumentarfilmerin Laura Poitras und dem Journalisten Glenn Greenwald zu treffen...</p>
+        <p>Eine schier endlose Reihe an Enthüllungen und Skandalen waren die Folge. Erst jetzt scheint die Aufarbeitung zu beginnen – erste Gerichtsurteile verurteilen die Späh-Angriffe als nicht verfassungskonform, in Deutschland wühlt der Geheimdienst-Untersuchungsausschuss eine Menge unangenehmen Staub auf, und große Unternehmen sorgen für besseren Schutz ihrer Kunden. Gleichzeitig versuchen Regierung und Parlament die Überwachung der Bevölkerung mit einer Wiedervorlage der Vorratsdatenspeicherung zu legalisieren.</p>
+        <p>War's das, oder ist das erst der Anfang? Das diskutiert Marcus Richter mit Andre Meister, Linus Neumann und Anne Roth im Chaosradio, am Donnerstag ab 22 Uhr live im Blue Moon auf Fritz.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Andre Meister, Linus Neumann, Anne Roth</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR211 Bioinformatik</title>
+      <itunes:subtitle>Genomhacking &amp; Biotinkering</itunes:subtitle>
+      <description>Genomhacking &amp; Biotinkering</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr211-bioinformatik.mp3" length="118907378"/>
+      <itunes:duration>02:03:50</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr211.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr211.html</link>
+      <category>Chaosradio</category>
+      <pubDate>30 Apr 2015 21:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR211
+
+Veröffentlicht am: 30.04.2015, 21:00 Uhr
+Aufnahme vom: 30.04.2015
+Sendungsdatum: 30.04.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr211.html
+
+Teilnehmer: Marcus Richter (Moderation), Lisa, linse, Bastian, Carina
+
+Bioinformatik
+Genomhacking &amp; Biotinkering
+
+Computer können gut dazu verwendet werden hochkomplexe Systeme zu berechnen, zu analysieren, auseinanderzunehmen und wieder zusammenzusetzen. Der menschliche Körper beruht auf einem hochkomplexen System, dass berechnet, analysiert und vielleicht auch auseinandergenommen und wieder zusammengesetzt werden soll. Mit einem Wort: Bioinformatik. 
+
+Das aktuelle Chaosradio soll euch einen Einstieg in den Wissenschaftsbereich bieten, in dem die Fragestellungen der Biologie mit den Mitteln der Informatik bearbeitet werden. Was machen Bioinformatiker eigentlich? Wieviel wissen wir über Genome und was hat das mit Biogasanlagen zu tun? Wofür braucht man ein Massenspektrometer? Und wie schafft man den Einstieg in die Bioinformatik? Das alles klärt Marcus Richter mit Gästen aus dem CCC ab 22 Uhr im Chaosradio, live aus den Räumen des CCCB http://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin in der Marienstraße 11. Ihr seid wie immer eingeladen, live dabei zu sein. Alle anderen können die Sendung natürlich wie immer im Livestream http://streaming.media.ccc.de verfolgen. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Computer können gut dazu verwendet werden hochkomplexe Systeme zu berechnen, zu analysieren, auseinanderzunehmen und wieder zusammenzusetzen. Der menschliche Körper beruht auf einem hochkomplexen System, dass berechnet, analysiert und vielleicht auch auseinandergenommen und wieder zusammengesetzt werden soll. Mit einem Wort: Bioinformatik.</p>
+        <p>Das aktuelle Chaosradio soll euch einen Einstieg in den Wissenschaftsbereich bieten, in dem die Fragestellungen der Biologie mit den Mitteln der Informatik bearbeitet werden. Was machen Bioinformatiker eigentlich? Wieviel wissen wir über Genome und was hat das mit Biogasanlagen zu tun? Wofür braucht man ein Massenspektrometer? Und wie schafft man den Einstieg in die Bioinformatik? Das alles klärt Marcus Richter mit Gästen aus dem CCC ab 22 Uhr im Chaosradio, live aus den <a href="http://berlin.ccc.de/wiki/Chaos_Computer_Club_Berlin">Räumen des CCCB</a> in der Marienstraße 11. Ihr seid wie immer eingeladen, live dabei zu sein. Alle anderen können die Sendung natürlich wie immer im <a href="http://streaming.media.ccc.de">Livestream</a> verfolgen.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), Lisa, linse, Bastian, Carina</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR210 Was ist Netzpolitik?</title>
+      <itunes:subtitle>Wir bringen Licht in den Dschungel</itunes:subtitle>
+      <description>Wir bringen Licht in den Dschungel</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr210-wasistnetzpolitik.mp3" length="115048697"/>
+      <itunes:duration>01:59:26</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr210.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr210.html</link>
+      <category>Chaosradio</category>
+      <pubDate>30 Mar 2015 23:00:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR210
+
+Veröffentlicht am: 30.03.2015, 23:00 Uhr
+Aufnahme vom: 30.03.2015
+Sendungsdatum: 26.03.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr210.html
+
+Teilnehmer: Marcus Richter (Moderation), 46halbe, Florian Gilberg
+
+Was ist Netzpolitik?
+Wir bringen Licht in den Dschungel
+
+Vorratsdatenspeicherung, Netzneutralität, Breitbandausbau, Urheberrechtsdebatte. Wann immer es um unseren digitalen Lebensraum geht und sich Politiker einmischen, müssen sie noch viel zu häufig zurückgehalten und zur Vernunft gebracht werden. Und das, so könnte man böse sagen, ist Netzpolitik. 
+
+Aber wer macht eigentlich diese Netzpolitik? Mit wem wird wann hinter welchen Kulissen interagiert? Gibt es ein großes Ziel oder müssen immer wieder dieselben Probleme geklärt werden? Und letztlich: Was geht es mich an? Im Chaosradio 210 werden Constanze Kurz und Florian Gilberg einen Einstieg in die Netzpolitik geben und den aktuellen Stand der wichtigsten Debatten darstellen. 
+
+Los geht's am 26.03.2015 ab 22 Uhr im Blue Moon mit Marcus Richter auf Fritz http://fritz.de . Wie immer mit euren Fragen, die ihr unter 0331 - 70 97 110 loswerden könnt. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Vorratsdatenspeicherung, Netzneutralität, Breitbandausbau, Urheberrechtsdebatte. Wann immer es um unseren digitalen Lebensraum geht und sich Politiker einmischen, müssen sie noch viel zu häufig zurückgehalten und zur Vernunft gebracht werden. Und das, so könnte man böse sagen, ist Netzpolitik.</p>
+        <p>Aber wer macht eigentlich diese Netzpolitik? Mit wem wird wann hinter welchen Kulissen interagiert? Gibt es ein großes Ziel oder müssen immer wieder dieselben Probleme geklärt werden? Und letztlich: Was geht es mich an? Im Chaosradio 210 werden Constanze Kurz und Florian Gilberg  einen Einstieg in die Netzpolitik geben und den aktuellen Stand der wichtigsten Debatten darstellen.</p>
+        <p>Los geht's am 26.03.2015 ab 22 Uhr im Blue Moon mit Marcus Richter auf <a href="http://fritz.de">Fritz</a>. Wie immer mit euren Fragen, die ihr unter 0331 - 70 97 110 loswerden könnt.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), 46halbe, Florian Gilberg</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR209 Open-Source-Finanzierung</title>
+      <itunes:subtitle>Jeder will es, keiner zahlt?</itunes:subtitle>
+      <description>Jeder will es, keiner zahlt?</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr209-opensourcefinanzierung.mp3" length="116128271"/>
+      <itunes:duration>02:00:57</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr209.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr209.html</link>
+      <category>Chaosradio</category>
+      <category>Open Source</category>
+      <category>Freie Software</category>
+      <category>Finanzierung</category>
+      <category>Sicherheit</category>
+      <pubDate>27 Feb 2015 15:45:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR209
+
+Veröffentlicht am: 27.02.2015, 15:45 Uhr
+Aufnahme vom: 26.02.2015
+Sendungsdatum: 26.02.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr209.html
+
+Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, Lasse, Matthias Kirschner
+
+Open-Source-Finanzierung
+Jeder will es, keiner zahlt?
+
+Wer E-Mail-Verschlüsselung sagt, meint meist: GnuPG. Doch obwohl das Programm als Standard gilt, scheiterte ein Spendenaufruf, der die Kosten für Erhaltung, Pflege und Weiterentwicklung ermöglichen sollte, beinahe. Und GnuPG ist kein Einzelfall: Die nachhaltige Finanzierung von Open Source-Projekten ist schwierig ist, obwohl viele Projekte immer wichtiger für die zentrale Infrastruktur im Netz werden. Welche Modelle gibt es? Welche sind denkbar? 
+
+Darüber diskutiert Moderator Marcus Richter am Donnerstag den 26.02. ab 22 Uhr mit Gästen aus dem CCC sowie Matthias Kirschner von der Free Software Foundation Europe live im CCCB in der Marienstrasse 11. Einlass ab 19 Uhr. Der Eintritt ist frei. 
+
+Für alle, die heute nicht live dabei sein können, stellt das VOC Video- und Audio-Streams http://streaming.media.ccc.de bereit. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Wer E-Mail-Verschlüsselung sagt, meint meist: GnuPG. Doch obwohl das Programm als Standard gilt, scheiterte ein Spendenaufruf, der die Kosten für Erhaltung, Pflege und Weiterentwicklung ermöglichen sollte, beinahe. Und GnuPG ist kein Einzelfall: Die nachhaltige Finanzierung von Open Source-Projekten ist schwierig ist, obwohl viele Projekte immer wichtiger für die zentrale Infrastruktur im Netz werden. Welche Modelle gibt es? Welche sind denkbar?</p>
+        <p>Darüber diskutiert Moderator Marcus Richter am Donnerstag den 26.02. ab 22 Uhr mit Gästen aus dem CCC sowie Matthias Kirschner von der Free Software Foundation Europe live im CCCB in der Marienstrasse 11. Einlass ab 19 Uhr. Der Eintritt ist frei.</p>
+        <p>Für alle, die heute nicht live dabei sein können, stellt das VOC <a href="http://streaming.media.ccc.de">Video- und Audio-Streams</a> bereit.</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, Lasse, Matthias Kirschner</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+    <item>
+      <title>CR208 How to make a Congress</title>
+      <itunes:subtitle>Ein Blick hinter die Kulissen</itunes:subtitle>
+      <description>Ein Blick hinter die Kulissen</description>
+      <enclosure type="audio/mpeg" url="http://chaosradio.ccc.de/archive/cr208-howtomakeacongress.mp3" length="114685597"/>
+      <itunes:duration>01:59:26</itunes:duration>
+      <guid isPermaLink="false">http://chaosradio.ccc.de/cr208.html-001</guid>
+      <link>http://chaosradio.ccc.de/cr208.html</link>
+      <category>Chaosradio</category>
+      <category>Congress</category>
+      <category>31C3</category>
+      <pubDate>30 Jan 2015 20:40:00 +0100</pubDate>
+      <itunes:summary>Chaosradio CR208
+
+Veröffentlicht am: 30.01.2015, 20:40 Uhr
+Aufnahme vom: 29.01.2015
+Sendungsdatum: 29.01.2015, 22:00 Uhr
+http://chaosradio.ccc.de/cr208.html
+
+Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, starbug
+
+How to make a Congress
+Ein Blick hinter die Kulissen
+
+Zum 31. Chaos Communication Congress haben sich Ende 2014 über 10.000 Hacker, Haecksen und interessierte Menschen getroffen. Veranstaltet und organisiert wurde das Ganze von freiwilligen, unbezahlten Helfern. 
+
+Was braucht man alles, um so ein riesiges Treffen zu organisieren? Was läuft immer schief? Ist es einfacher Technik zu organisieren oder große Menschenmassen? Im Chaosradio im Blue Moon nimmt euch der CCC mit hinter die Kulissen der größten Hackerveranstaltung der freien Welt, spricht Marcus Richter am 26. Januar ab 22 Uhr in Chaosradio-Ausgabe 208 auf Fritz mit Machern, um eure Fragen zum Thema zu beantworten. 
+
+
+</itunes:summary>
+      <xhtml:body>
+        <p>Zum 31. Chaos Communication Congress haben sich Ende 2014 über 10.000 Hacker, Haecksen und interessierte Menschen getroffen. Veranstaltet und organisiert wurde das Ganze von freiwilligen, unbezahlten Helfern.</p>
+        <p>Was braucht man alles, um so ein riesiges Treffen zu organisieren? Was läuft immer schief? Ist es einfacher Technik zu organisieren oder große Menschenmassen? Im Chaosradio im Blue Moon nimmt euch der CCC mit hinter die Kulissen der größten Hackerveranstaltung der freien Welt, spricht Marcus Richter am 26. Januar ab 22 Uhr in Chaosradio-Ausgabe 208  auf Fritz mit Machern, um eure Fragen zum Thema zu beantworten.
+</p>
+        <p>Teilnehmer: Marcus Richter (Moderation), danimo, erdgeist, starbug</p>
+      </xhtml:body>
+      <itunes:explicit>no</itunes:explicit>
+    </item>
+  </channel>
+</rss>

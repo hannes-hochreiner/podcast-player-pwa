@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/"
+xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+>
+
+<channel>
+	<title>IoT Podcast &#8211; Internet of Things</title>
+	<atom:link href="http://iotpodcast.com/feed/" rel="self" type="application/rss+xml" />
+	<link>http://iotpodcast.com</link>
+	<description>with Stacey Higginbotham</description>
+	<lastBuildDate>Thu, 12 Oct 2017 09:00:05 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.8.2</generator>
+<!-- podcast_generator="Blubrry PowerPress/7.1.1" mode="advanced" feedslug="feed" -->
+	<itunes:summary>Stacey Higginbotham has covered technology since 2001. In my years covering tech I became more fascinated by the stuff were were able to do on vast computing networks and ever speedier mobile and wireline broadband networks. Finally all of the elements of the technology I’ve covered in more than a decade have culminated in this moment and we’re creating the internet of things.&lt;br /&gt;
+&lt;br /&gt;
+No matter what you call it, we’re at a pivotal moment in the evolution of human creativity, business creation and productivity gains. We could see the gains we make in these next few years help us conserve resources and let us lead safer and healthier lives or we could open the door to a dystopian society where our every thought is monitored and our every utterance is effectively for sale. I hope to explore all of these issues, the people who will make it possible and the devices that will lead us there in the IoT Podcast. I hope you will join me.</itunes:summary>
+	<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+	<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+	<itunes:owner>
+		<itunes:name>Stacey Higginbotham, tech journalist</itunes:name>
+		<itunes:email>higginbob@gmail.com</itunes:email>
+	</itunes:owner>
+	<managingEditor>higginbob@gmail.com (Stacey Higginbotham, tech journalist)</managingEditor>
+	<copyright>Copyright Stacey Higginbotham 2017</copyright>
+	<itunes:subtitle>The Internet of Things (IoT) Podcast</itunes:subtitle>
+	<image>
+		<title>IoT Podcast &#8211; Internet of Things</title>
+		<url>http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png</url>
+		<link>http://iotpodcast.com</link>
+	</image>
+	<itunes:category text="Technology">
+		<itunes:category text="Tech News"></itunes:category>
+	</itunes:category>
+	<itunes:category text="Technology">
+		<itunes:category text="Gadgets"></itunes:category>
+	</itunes:category>
+	<itunes:category text="Technology">
+		<itunes:category text="Software How-To"></itunes:category>
+	</itunes:category>
+	<googleplay:email>higginbob@gmail.com</googleplay:email>
+	<googleplay:description>Stacey Higginbotham has covered technology since 2001. In my years covering tech I became more fascinated by the stuff were were able to do on vast computing networks and ever speedier mobile and wireline broadband networks. Finally all of the elements of the technology I’ve covered in more than a decade have culminated in this moment and we’re creating the internet of things.
+
+No matter what you call it, we’re at a pivotal moment in the evolution of human creativity, business creation and productivity gains. We could see the gains we make in these next few years help us conserve resources and let us lead safer and healthier lives or we could open the door to a dystopian society where our every thought is monitored and our every utterance is effectively for sale. I hope to explore all of these issues, the people who will make it possible and the devices that will lead us there in the IoT Podcast. I hope you will join me.
+</googleplay:description>
+	<googleplay:category text="Technology" />
+	<googleplay:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+	<rawvoice:rating>TV-G</rawvoice:rating>
+	<rawvoice:frequency>Weekly</rawvoice:frequency>
+	<rawvoice:subscribe feed="http://iotpodcast.com/feed/" itunes="https://itunes.apple.com/us/podcast/internet-things-podcast/id994362496" googleplay="http://iotpodcast.com/feed/podcast/"></rawvoice:subscribe>
+	<item>
+		<title>Episode 133: August&#8217;s new doorbell and Vitamix blends with Bluetooth</title>
+		<link>http://iotpodcast.com/2017/10/episode-133-augusts-new-doorbell-and-vitamix-blends-with-bluetooth/</link>
+		<comments>http://iotpodcast.com/2017/10/episode-133-augusts-new-doorbell-and-vitamix-blends-with-bluetooth/#respond</comments>
+		<pubDate>Thu, 12 Oct 2017 09:00:05 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[connected car]]></category>
+		<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[standards]]></category>
+		<category><![CDATA[Amazon Echo]]></category>
+		<category><![CDATA[August]]></category>
+		<category><![CDATA[Dell]]></category>
+		<category><![CDATA[GM]]></category>
+		<category><![CDATA[Google Home]]></category>
+		<category><![CDATA[Nvidia]]></category>
+		<category><![CDATA[Salesforce]]></category>
+		<category><![CDATA[Sonos]]></category>
+		<category><![CDATA[Strobe]]></category>
+		<category><![CDATA[Vitamix]]></category>
+		<category><![CDATA[Walmart]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=971</guid>
+		<description><![CDATA[Both Dell and Salesforce made big announcements about their internet of things plans this week, so Kevin and I try to break that down for people. We then discussed Amazon trying to deliver things to the trunk of your car, Google Home going too far in recording conversations and updates to hardware for autonomous cars. &#8230; <a href="http://iotpodcast.com/2017/10/episode-133-augusts-new-doorbell-and-vitamix-blends-with-bluetooth/" class="more-link">Continue reading <span class="screen-reader-text">Episode 133: August&#8217;s new doorbell and Vitamix blends with Bluetooth</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Both <a href="http://www.zdnet.com/article/dell-outlines-iot-strategy-plans-to-spend-1-billion-on-r-d-over-three-years/">Dell</a> and <a href="https://techcrunch.com/2017/10/10/salesforce-takes-another-shot-at-iot/">Salesforce</a> made big announcements about their internet of things plans this week, so Kevin and I try to break that down for people. We then discussed Amazon trying to <a href="https://www.cnbc.com/2017/10/10/amazon-is-in-talks-with-phrame-and-is-working-on-a-smart-doorbell.html">deliver things</a> to the trunk of your car, Google Home <a href="http://www.androidpolice.com/2017/10/10/google-nerfing-home-minis-mine-spied-everything-said-247/">going too far</a> in recording conversations and <a href="https://www.theverge.com/2017/10/10/16449416/nvidia-pegasus-self-driving-car-ai-robotaxi">updates</a> to <a href="https://www.nytimes.com/2017/10/09/business/general-motors-driverless.html">hardware</a> for autonomous cars. We also review the latest August lock and doorbell hardware and answer a listener question from Sally about linking her Sonos with her August locks for some musical automation.</p>
+<figure id="attachment_973" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/10/Ascent_A3300_Black_20oz_2Cups_WhiteKitchen_Environment.png.pagespeed.ce_.IYzYXrwA3h.png"><img class="size-large wp-image-973" src="http://iotpodcast.com/wp-content/uploads/2017/10/Ascent_A3300_Black_20oz_2Cups_WhiteKitchen_Environment.png.pagespeed.ce_.IYzYXrwA3h-1024x683.png" alt="" width="660" height="440" srcset="http://iotpodcast.com/wp-content/uploads/2017/10/Ascent_A3300_Black_20oz_2Cups_WhiteKitchen_Environment.png.pagespeed.ce_.IYzYXrwA3h-1024x683.png 1024w, http://iotpodcast.com/wp-content/uploads/2017/10/Ascent_A3300_Black_20oz_2Cups_WhiteKitchen_Environment.png.pagespeed.ce_.IYzYXrwA3h-300x200.png 300w, http://iotpodcast.com/wp-content/uploads/2017/10/Ascent_A3300_Black_20oz_2Cups_WhiteKitchen_Environment.png.pagespeed.ce_.IYzYXrwA3h-768x512.png 768w" sizes="(max-width: 660px) 100vw, 660px" /></a><figcaption class="wp-caption-text">This Vitamix blender has Bluetooth and an app.</figcaption></figure>
+<p>I was at the Smart Kitchen Summit this week, and ran into Tony Ciepiel, COO of Vitamix, which just launched a connected blender. I had a few moments to ask Ciepiel how Vitamix was thinking about bringing its blenders into the 21st century and why. He explained how to think about technology in a product designed to be an heirloom and what it means for the company&#8217;s operations to support a connected device. We also talk about sharing data across connected products and how technology changes blenders&#8217; capabilities. Enjoy the show!</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Tony Ciepiel, COO of Vitamix<br />
+<strong>Sponsors</strong>: Qualcomm and <a href="https://events.sap.com/sap-leonardo-na-summit/en/registration.aspx?campaigncode=CRM-US17-1LE-LEOSUMPOD">SAP</a></p>
+<ul>
+<li>Dell and Salesforce are adapting to the IoT</li>
+<li>Cheaper LIDAR and smarter cars are coming</li>
+<li>August locks are good but the doorbell made me angry</li>
+<li>Why use Bluetooth as opposed to Wi-Fi in a connected blender</li>
+<li>Software can let you count calories even more granularly</li>
+</ul>
+<p>Have a question? Leave a voicemail on the IoT Podcast hotline at 512.623.7424 and we might answer it on the show!</p>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/10/episode-133-augusts-new-doorbell-and-vitamix-blends-with-bluetooth/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT133.mp3" length="36862691" type="audio/mpeg" />
+		<itunes:subtitle>Both Dell and Salesforce made big announcements about their internet of things plans this week, so Kevin and I try to break that down for people. We then discussed Amazon trying to deliver things to the trunk of your car,</itunes:subtitle>
+		<itunes:summary>Both Dell and Salesforce made big announcements about their internet of things plans this week, so Kevin and I try to break that down for people. We then discussed Amazon trying to deliver things to the trunk of your car, Google Home going too far in recording conversations and updates to hardware for autonomous cars. … Continue reading Episode 133: August’s new doorbell and Vitamix blends with Bluetooth</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>43:41</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 132: Ring&#8217;s new security system and scaling sensors</title>
+		<link>http://iotpodcast.com/2017/10/episode-132-rings-new-security-system-and-scaling-sensors/</link>
+		<comments>http://iotpodcast.com/2017/10/episode-132-rings-new-security-system-and-scaling-sensors/#respond</comments>
+		<pubDate>Thu, 05 Oct 2017 09:00:52 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[industrial internet]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[ADT]]></category>
+		<category><![CDATA[FSG]]></category>
+		<category><![CDATA[Heelight]]></category>
+		<category><![CDATA[Klue]]></category>
+		<category><![CDATA[LoRa]]></category>
+		<category><![CDATA[OpenSensors]]></category>
+		<category><![CDATA[Qualcomm]]></category>
+		<category><![CDATA[Raj Talluri]]></category>
+		<category><![CDATA[Raven]]></category>
+		<category><![CDATA[Ring]]></category>
+		<category><![CDATA[SmartThings]]></category>
+		<category><![CDATA[T-Mobile]]></category>
+		<category><![CDATA[WayMo]]></category>
+		<category><![CDATA[Yodit Stanton]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=963</guid>
+		<description><![CDATA[This show is awesome, but we don&#8217;t discuss the Google or Sonos news, because it happened after we recorded. I just want to let y&#8217;all know going in. Instead we cover Ring&#8217;s new security system, ADT&#8217;s pair up with SmartThings and why home security is so hot right now. We also talk about a new &#8230; <a href="http://iotpodcast.com/2017/10/episode-132-rings-new-security-system-and-scaling-sensors/" class="more-link">Continue reading <span class="screen-reader-text">Episode 132: Ring&#8217;s new security system and scaling sensors</span></a>]]></description>
+				<content:encoded><![CDATA[<p>This show is awesome, but we don&#8217;t discuss the Google or Sonos news, because it happened after we recorded. I just want to let y&#8217;all know going in. Instead we cover <a href="https://techcrunch.com/2017/10/02/ring-launches-protect-its-own-199-connected-home-security-system/">Ring&#8217;s new security system</a>, <a href="https://www.theverge.com/circuitbreaker/2017/10/2/16400198/samsung-adt-smartthings-diy-security-system-professional-monitoring-smarthome">ADT&#8217;s pair up with SmartThings</a> and why home security is so hot right now. We also talk about a <a href="https://www.kickstarter.com/projects/1134625468/heelight-a-smart-bulb-that-can-hear-the-environmen">new lighting startup</a>, a new <a href="http://www.iotjournal.com/articles/view?16679">car data and security startup</a> and some wicked cool <a href="http://goklue.com/">software for watching what you eat</a>. We also answer a HomeKit question from Charles and talk about <a href="https://www.theinformation.com/waymos-foes-left-turns-and-the-mean-streets-of-phoenix">self-driving taxis.</a></p>
+<figure id="attachment_964" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/10/lifestyle_protect_keypad_0750-e1507167694581.jpg"><img class="size-large wp-image-964" src="http://iotpodcast.com/wp-content/uploads/2017/10/lifestyle_protect_keypad_0750-1024x745.jpg" alt="" width="660" height="480" /></a><figcaption class="wp-caption-text">The new Ring security system.</figcaption></figure>
+<p>Our guest this week offers a practical perspective on building out large-scale sensor networks. Yodit Stanton, founder and CEO of <a href="https://opensensors.com/">OpenSensors</a>, has deployed thousands of sensors in buildings and shares how companies should think about security, deployment and maintenance. She also talks about how LoRa networks are gaining ground for private IoT networks. It&#8217;s a packed show!</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guests</strong>: Yodit Stanton, <a href="https://opensensors.com/">OpenSensors</a><br />
+<strong>Sponsors</strong>: <a href="http://www.qualcomm.com/iot">Qualcomm</a> and <a href="http://www.fsgi.com">FSG</a></p>
+<ul>
+<li>The &#8220;SimpliSafe effect&#8221; in the home security market</li>
+<li>Passive information gathering is easy. Too easy?</li>
+<li>How to control HomeKit light switches remotely</li>
+<li>Sensor deployments have a lot in common with VoIP systems</li>
+<li>Your sensors should take 30 seconds to install and cost less than $10</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/10/episode-132-rings-new-security-system-and-scaling-sensors/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT132.mp3" length="43046902" type="audio/mpeg" />
+		<itunes:subtitle>This show is awesome, but we don’t discuss the Google or Sonos news, because it happened after we recorded. I just want to let y’all know going in. Instead we cover Ring’s new security system, ADT’s pair up with SmartThings and why home security is so ...</itunes:subtitle>
+		<itunes:summary>This show is awesome, but we don’t discuss the Google or Sonos news, because it happened after we recorded. I just want to let y’all know going in. Instead we cover Ring’s new security system, ADT’s pair up with SmartThings and why home security is so hot right now. We also talk about a new … Continue reading Episode 132: Ring’s new security system and scaling sensors</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>51:03</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 131: Amazon&#8217;s new gear and Nest&#8217;s Matt Rogers</title>
+		<link>http://iotpodcast.com/2017/09/episode-131-amazons-new-gear-and-nests-matt-rogers/</link>
+		<comments>http://iotpodcast.com/2017/09/episode-131-amazons-new-gear-and-nests-matt-rogers/#respond</comments>
+		<pubDate>Thu, 28 Sep 2017 09:00:34 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[connected car]]></category>
+		<category><![CDATA[digital health]]></category>
+		<category><![CDATA[lighting]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[Alexa]]></category>
+		<category><![CDATA[Amazon]]></category>
+		<category><![CDATA[Apple Watch]]></category>
+		<category><![CDATA[FDA]]></category>
+		<category><![CDATA[fitbit]]></category>
+		<category><![CDATA[Ford]]></category>
+		<category><![CDATA[Google]]></category>
+		<category><![CDATA[HomeKit]]></category>
+		<category><![CDATA[Matt Rogers]]></category>
+		<category><![CDATA[Nest]]></category>
+		<category><![CDATA[Noon]]></category>
+		<category><![CDATA[Qualcomm]]></category>
+		<category><![CDATA[Raj Talluri]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=955</guid>
+		<description><![CDATA[This week&#8217;s show features a quick rundown of Amazon&#8217;s new devices. It also has a lot of exciting news on the wearable front. Kevin Tofel reviews his Apple Watch with LTE and we also discuss a new program from the Food and Drug Administration that will allow nine companies to get pre-certifications for their devices. &#8230; <a href="http://iotpodcast.com/2017/09/episode-131-amazons-new-gear-and-nests-matt-rogers/" class="more-link">Continue reading <span class="screen-reader-text">Episode 131: Amazon&#8217;s new gear and Nest&#8217;s Matt Rogers</span></a>]]></description>
+				<content:encoded><![CDATA[<p>This week&#8217;s show features a quick rundown of <a href="https://techcrunch.com/2017/09/27/amazon-just-launched-6-new-gadgets-and-none-was-over-150/">Amazon&#8217;s new devices</a>. It also has a lot of exciting news on the wearable front. Kevin Tofel reviews his Apple Watch with LTE and we also discuss a <a href="https://www.bloomberg.com/news/articles/2017-09-26/apple-fitbit-will-join-fda-program-meant-to-speed-health-tech">new program</a> from the Food and Drug Administration that will allow nine companies to get pre-certifications for their devices. I&#8217;m optimistic that consumers will get more innovation and better data. We also hit on a <a href="https://staceyoniot.com/meet-noon-a-stealth-lighting-startup-by-a-former-nest-executive/">stealthy new lighting startup</a> from a former Nest co-founder, a <a href="https://medium.com/self-driven/how-ford-and-lyft-are-teaming-up-to-take-self-driving-cars-mainstream-9bf2974a912a">partnership around autonomous vehicles</a> and a <a href="https://www.theverge.com/2017/9/26/16371292/google-youtube-amazon-echo-show">fight between Google and Amazon</a>.</p>
+<figure id="attachment_958" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/09/Echo_Spot_highres-e1506567813618.jpg"><img class="size-large wp-image-958" src="http://iotpodcast.com/wp-content/uploads/2017/09/Echo_Spot_highres-e1506567802714-1024x689.jpg" alt="" width="660" height="444" /></a><figcaption class="wp-caption-text">The Echo spot has a camera, a screen and costs $129.99.</figcaption></figure>
+<p>My guest is Matt Rogers, co-founder and VP of Engineering at Nest, who discusses the rationale behind the new Nest Security system and where Nest is heading. We also talk about efforts to build a closer relationship between the Google Home and Nest teams. Plus, he offers hope for an eventual HomeKit integration, although I am not going to hold my breath. Enjoy the show.</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Matt Rogers, <a href="https://nest.com/">Nest</a><br />
+<strong>Sponsors</strong>: <a href="http://www.qualcomm.com/iot">Qualcomm</a> and <a href="https://eero.com/">Eero</a></p>
+<ul>
+<li>Which new Amazon device will you buy?</li>
+<li>The FDA gets into wearables</li>
+<li>Advice for a listener on creating audio-activated scenes</li>
+<li>Why Nest is aiming at the high end for security</li>
+<li>Will Nest gear ever get HomeKit support?</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/09/episode-131-amazons-new-gear-and-nests-matt-rogers/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT131.mp3" length="40732302" type="audio/mpeg" />
+		<itunes:subtitle>This week’s show features a quick rundown of Amazon’s new devices. It also has a lot of exciting news on the wearable front. Kevin Tofel reviews his Apple Watch with LTE and we also discuss a new program from the Food and Drug Administration that will ...</itunes:subtitle>
+		<itunes:summary>This week’s show features a quick rundown of Amazon’s new devices. It also has a lot of exciting news on the wearable front. Kevin Tofel reviews his Apple Watch with LTE and we also discuss a new program from the Food and Drug Administration that will allow nine companies to get pre-certifications for their devices. … Continue reading Episode 131: Amazon’s new gear and Nest’s Matt Rogers</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>48:17</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 130: Nest&#8217;s a security company now and Hitachi&#8217;s new industrial IoT explained</title>
+		<link>http://iotpodcast.com/2017/09/episode-130-nests-a-security-company-now-and-hitachis-new-industrial-iot-explained/</link>
+		<comments>http://iotpodcast.com/2017/09/episode-130-nests-a-security-company-now-and-hitachis-new-industrial-iot-explained/#comments</comments>
+		<pubDate>Thu, 21 Sep 2017 09:00:43 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[industrial internet]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart cities]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Alexa]]></category>
+		<category><![CDATA[Amazon Echo]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[August]]></category>
+		<category><![CDATA[Comcast]]></category>
+		<category><![CDATA[Forgerock]]></category>
+		<category><![CDATA[Hitachi]]></category>
+		<category><![CDATA[Nest]]></category>
+		<category><![CDATA[Rob Tiffany]]></category>
+		<category><![CDATA[Silver Springs Network]]></category>
+		<category><![CDATA[Stringify]]></category>
+		<category><![CDATA[Vantara]]></category>
+		<category><![CDATA[Xively]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=949</guid>
+		<description><![CDATA[Wow. This week saw some big news from Nest as it announced a new security system plus other devices. August also updated its line of locks and promised a better doorbell. Meanwhile, rumors of an Amazon Alexa security system or even glasses emerged. And Google leaked some news. We also talked about smart grid M&#38;A &#8230; <a href="http://iotpodcast.com/2017/09/episode-130-nests-a-security-company-now-and-hitachis-new-industrial-iot-explained/" class="more-link">Continue reading <span class="screen-reader-text">Episode 130: Nest&#8217;s a security company now and Hitachi&#8217;s new industrial IoT explained</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Wow. This week saw some big news from <a href="https://staceyoniot.com/nest-debuts-nest-secure-home-system-and-has-a-thread-router-called-nest-connect/">Nest as it announced a new security system</a> plus other devices. August also <a href="https://www.cnet.com/products/august-smart-lock-2017/overview/">updated its line of locks</a> and promised a better doorbell. Meanwhile, <a href="https://www.theverge.com/2017/9/20/16337854/amazon-alexa-glasses-security-camera-rumor">rumors</a> of an Amazon Alexa security system or even glasses emerged. And Google <a href="http://www.droid-life.com/2017/09/19/google-home-mini-exclusive/">leaked</a> some news. We also talked about <a href="https://www.silverspringnet.com/article/press-release/itron-acquire-silver-spring-networks-accelerate-smart-grid-smart-city-innovation-growth/">smart grid M&amp;A</a> and Comcast buying Stringify, a company that links together myriad devices and lets you create scenes. Kevin also shared his thoughts on the Apple Watch with LTE and we answer a reader question about garage doors.</p>
+<figure id="attachment_950" style="width: 800px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/09/nestsecure.jpg"><img class="size-full wp-image-950" src="http://iotpodcast.com/wp-content/uploads/2017/09/nestsecure.jpg" alt="" width="800" height="534" srcset="http://iotpodcast.com/wp-content/uploads/2017/09/nestsecure.jpg 800w, http://iotpodcast.com/wp-content/uploads/2017/09/nestsecure-300x200.jpg 300w, http://iotpodcast.com/wp-content/uploads/2017/09/nestsecure-768x513.jpg 768w" sizes="(max-width: 800px) 100vw, 800px" /></a><figcaption class="wp-caption-text">A Nest Detect sensor in action.</figcaption></figure>
+<p>On the guest front, we speak with Rob Tiffany, the CTO of Lumada, about <a href="http://fortune.com/2017/09/19/hitachi-vantara-data-systems-pentaho/">Hitachi&#8217;s new industrial IoT play</a> Vantara. He discusses the existential threat that faced Hitachi and why it needed to make a move as well as shared how Hitachi is offering trains as a service. There&#8217;s a lot to digest in this show, but it&#8217;s a solid overview of the big news this week.</p>
+<p><strong>Host</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Rob Tiffany of Hitachi Vantara<br />
+<strong>Sponsors</strong>: <a href="https://www.forgerock.com/?utm_source=email&amp;utm_medium=stacys-blog&amp;utm_campaign=brand&amp;utm_content=logo">ForgeRock</a> and <a href="http://www.xively.com/">Xively</a></p>
+<ul>
+<li>The Nest Connect and Security is the return of Weave</li>
+<li>So much hardware getting released and leaked</li>
+<li>On the Apple Watch with LTE, manage your networks or manage your expectations</li>
+<li>IoT posed an existential threat to Hitachi&#8217;s business</li>
+<li>How to turn a train into a service</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/09/episode-130-nests-a-security-company-now-and-hitachis-new-industrial-iot-explained/feed/</wfw:commentRss>
+		<slash:comments>1</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT130.mp3" length="38293034" type="audio/mpeg" />
+		<itunes:subtitle>Wow. This week saw some big news from Nest as it announced a new security system plus other devices. August also updated its line of locks and promised a better doorbell. Meanwhile, rumors of an Amazon Alexa security system or even glasses emerged.</itunes:subtitle>
+		<itunes:summary>Wow. This week saw some big news from Nest as it announced a new security system plus other devices. August also updated its line of locks and promised a better doorbell. Meanwhile, rumors of an Amazon Alexa security system or even glasses emerged. And Google leaked some news. We also talked about smart grid M&amp;A … Continue reading Episode 130: Nest’s a security company now and Hitachi’s new industrial IoT explained</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>45:23</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 129: Apple&#8217;s missing IoT news and adding blockchain to the energy grid</title>
+		<link>http://iotpodcast.com/2017/09/episode-129-apples-missing-iot-news-and-adding-blockchain-to-the-energy-grid/</link>
+		<comments>http://iotpodcast.com/2017/09/episode-129-apples-missing-iot-news-and-adding-blockchain-to-the-energy-grid/#comments</comments>
+		<pubDate>Thu, 14 Sep 2017 09:00:26 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[industrial internet]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart cities]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Apple]]></category>
+		<category><![CDATA[Apple Watch]]></category>
+		<category><![CDATA[Ashley Stevenson]]></category>
+		<category><![CDATA[blockchain]]></category>
+		<category><![CDATA[Bluetooth]]></category>
+		<category><![CDATA[Chamberlain]]></category>
+		<category><![CDATA[David Martin]]></category>
+		<category><![CDATA[EdgeX Foundry]]></category>
+		<category><![CDATA[Forgerock]]></category>
+		<category><![CDATA[Glow]]></category>
+		<category><![CDATA[HomeKit]]></category>
+		<category><![CDATA[IFTTT]]></category>
+		<category><![CDATA[Power Ledger]]></category>
+		<category><![CDATA[Samsung]]></category>
+		<category><![CDATA[Xively]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=935</guid>
+		<description><![CDATA[This week&#8217;s Apple announcement didn&#8217;t offer much for the IoT fans in the audience, although Kevin is deciding if he want&#8217;s the LTE-capable Apple Watch. We also talk about a big Bluetooth security vulnerability and Chamberlain&#8217;s decision to charge customers who want to create IFTTT integrations. We cover some news about EdgeX Foundry, a new &#8230; <a href="http://iotpodcast.com/2017/09/episode-129-apples-missing-iot-news-and-adding-blockchain-to-the-energy-grid/" class="more-link">Continue reading <span class="screen-reader-text">Episode 129: Apple&#8217;s missing IoT news and adding blockchain to the energy grid</span></a>]]></description>
+				<content:encoded><![CDATA[<p>This week&#8217;s Apple announcement didn&#8217;t offer much for the IoT fans in the audience, although Kevin is deciding if he want&#8217;s the <a href="http://www.zdnet.com/article/apple-watch-3-only-offers-about-an-hour-of-talk-time-over-lte/" target="_blank" rel="noopener">LTE-capable Apple Watch</a>. We also talk about a <a href="https://www.armis.com/blueborne/#/devices" target="_blank" rel="noopener">big Bluetooth security vulnerability</a> and Chamberlain&#8217;s decision to charge customers who want to create IFTTT integrations. We cover some news about <a href="https://www.edgexfoundry.org/blog/2017/09/11/edgex-foundry-member-spotlight-samsung-electronics/" target="_blank" rel="noopener">EdgeX Foundry</a>, a new <a href="https://www.kickstarter.com/projects/1178650747/glow-the-smart-energy-tracker-for-your-home" target="_blank" rel="noopener">energy monitoring product</a> and an <a href="https://medium.com/orionlabs-developer-blog/announcing-orion-translator-wearable-voice-translation-for-teams-1a8f25d7d9fc" target="_blank" rel="noopener">enterprise translation service</a> that requires a &#8220;thing.&#8221; Finally, we answer a reader&#8217;s question about upgrading an old alarm system.</p>
+<figure id="attachment_939" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods.jpg"><img class="size-large wp-image-939" src="http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods-902x1024.jpg" alt="" width="660" height="749" srcset="http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods-902x1024.jpg 902w, http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods-264x300.jpg 264w, http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods-768x872.jpg 768w, http://iotpodcast.com/wp-content/uploads/2017/09/watch_series_3_music_airpods.jpg 1142w" sizes="(max-width: 660px) 100vw, 660px" /></a><figcaption class="wp-caption-text">The Apple Watch with LTE and a set of Air Pods might be the future of computing.</figcaption></figure>
+<p>Our guest this week talks about a particularly relevant topic given the recent hurricanes. David Martin, co-founder and managing director of <a href="https://powerledger.io/" target="_blank" rel="noopener">Power Ledger,</a> is building an energy trading market using blockchain, connected meters and a network of residential solar. He discusses the bifurcation of the energy market, the trend towards resiliency and how the blockchain can help generate revenue for consumers and the larger energy grid. But, as you&#8217;ll hear in this interview, it&#8217;s a disruptive concept.</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: David Martin of Power Ledger<br />
+<strong>Sponsors</strong>: <a href="https://www.forgerock.com/?utm_source=email&amp;utm_medium=stacys-blog&amp;utm_campaign=brand&amp;utm_content=logo" target="_blank" rel="noopener">ForgeRock</a> and <a href="http://www.xively.com/">Xively</a></p>
+<ul>
+<li>Hey Apple, show me the HomeKit!</li>
+<li>In which we shame Samsung on Blueborne missteps</li>
+<li>What to do with an ancient security system? Rip it out.</li>
+<li>How to use blockchain to make money on renewables</li>
+<li>Building a more resilient grid starts with IoT (and the blockchain)</li>
+</ul>
+<p>Have a question? Call the IoT Podcast hotline at 512.623.7424 and get an answer!</p>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/09/episode-129-apples-missing-iot-news-and-adding-blockchain-to-the-energy-grid/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT129.mp3" length="44853568" type="audio/mpeg" />
+		<itunes:subtitle>This week’s Apple announcement didn’t offer much for the IoT fans in the audience, although Kevin is deciding if he want’s the LTE-capable Apple Watch. We also talk about a big Bluetooth security vulnerability and Chamberlain’s decision to charge custo...</itunes:subtitle>
+		<itunes:summary>This week’s Apple announcement didn’t offer much for the IoT fans in the audience, although Kevin is deciding if he want’s the LTE-capable Apple Watch. We also talk about a big Bluetooth security vulnerability and Chamberlain’s decision to charge customers who want to create IFTTT integrations. We cover some news about EdgeX Foundry, a new … Continue reading Episode 129: Apple’s missing IoT news and adding blockchain to the energy grid</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>53:12</itunes:duration>
+	</item>
+		<item>
+		<title>Everything you need to know from CEDIA</title>
+		<link>http://iotpodcast.com/2017/09/everything-you-need-to-know-from-cedia/</link>
+		<comments>http://iotpodcast.com/2017/09/everything-you-need-to-know-from-cedia/#comments</comments>
+		<pubDate>Mon, 11 Sep 2017 18:23:27 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[lighting]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Amazon Echo]]></category>
+		<category><![CDATA[AudioZeal]]></category>
+		<category><![CDATA[CEDIA 2017]]></category>
+		<category><![CDATA[CEPro]]></category>
+		<category><![CDATA[Digital Media Zone]]></category>
+		<category><![CDATA[Jamie Siminoff]]></category>
+		<category><![CDATA[Josh.ai]]></category>
+		<category><![CDATA[Julie Jacobson]]></category>
+		<category><![CDATA[LG]]></category>
+		<category><![CDATA[Lutron]]></category>
+		<category><![CDATA[Ring]]></category>
+		<category><![CDATA[Savant]]></category>
+		<category><![CDATA[SmartThings]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=924</guid>
+		<description><![CDATA[Grab your headset for a special bonus edition of the Internet of Things Podcast from the CEDIA show floor in San Diego. Last week I attended the show, which is aimed at the professional AV installer market to understand what&#8217;s hot, what&#8217;s not and how the business of home automation will evolve. I saw some &#8230; <a href="http://iotpodcast.com/2017/09/everything-you-need-to-know-from-cedia/" class="more-link">Continue reading <span class="screen-reader-text">Everything you need to know from CEDIA</span></a>]]></description>
+				<content:encoded><![CDATA[<p>Grab your headset for a special bonus edition of the Internet of Things Podcast from the CEDIA show floor in San Diego. Last week I attended the show, which is aimed at the professional AV installer market to understand what&#8217;s hot, what&#8217;s not and how the business of home automation will evolve. I saw some beautiful televisions and more light switches than I even knew existed, while I walked away despairing of ever getting the smart home experience right.</p>
+<figure id="attachment_925" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/09/IMG_20170908_112244.jpg"><img class="size-large wp-image-925" src="http://iotpodcast.com/wp-content/uploads/2017/09/IMG_20170908_112244-768x1024.jpg" alt="" width="660" height="880" srcset="http://iotpodcast.com/wp-content/uploads/2017/09/IMG_20170908_112244-768x1024.jpg 768w, http://iotpodcast.com/wp-content/uploads/2017/09/IMG_20170908_112244-225x300.jpg 225w" sizes="(max-width: 660px) 100vw, 660px" /></a><figcaption class="wp-caption-text">This OLED screen is actually two OLED screens mounted back-to-back in a sheet of glass. It costs $20,000 and is designed for high-end retail.</figcaption></figure>
+<p>I spoke with Julie Jacobson, the founding editor of <a href="http://www.cepro.com/" target="_blank" rel="noopener">CEPro</a> to find out what she thought was cool, met with Tim McInery of <a href="http://www.savant.com" target="_blank" rel="noopener">Savant</a> to talk about the benefits consumer tech has on the installer business and asked Richard Gunther of the <a href="http://www.thedigitalmediazone.com/" target="_blank" rel="noopener">Digital Media Zone</a> to explain the changes in business models. I also interviewed the CEO of <a href="https://www.josh.ai/" target="_blank" rel="noopener">Josh.ai</a> to understand why the smart home industry has progressed so slowly, and talked to Ragan Mena, the president of <a href="http://www.audiozeal.net" target="_blank" rel="noopener">Audio Zeal</a>, a custom installer to see what toys he was excited about. He did like the Josh Micro, which enables voice access for older custom systems.</p>
+<p>This entire episode was sponsored by <a href="https://ring.com/stacey" target="_blank" rel="noopener">Ring</a>, which is offering discounts on bundles of home security items to both consumers and pro installers. Visit <a href="https://ring.com/stacey" target="_blank" rel="noopener">www.ring.com/stacey</a> to learn more.</p>
+<ul>
+<li>Stacey&#8217;s highlights and news (0:45)</li>
+<li>Julie Jacobson of <a href="http://www.cepro.com/" target="_blank" rel="noopener">CEPro</a> on trends and cool stuff (10:25)</li>
+<li>Tim McInerney of <a href="http://www.savant.com" target="_blank" rel="noopener">Savant</a> on the benefit consumer tech has for installers (14:40)</li>
+<li>Richard Gunther of <a href="http://www.thedigitalmediazone.com/" target="_blank" rel="noopener">The Digital Media Zone</a> discussing the custom installer business model (16:20)</li>
+<li>Ragan Mena, president of <a href="http://www.audiozeal.net" target="_blank" rel="noopener">Audio Zeal</a> explain how he decides what consumer tech to use (22:00)</li>
+<li>Alex Capecelatro, of <a href="https://www.josh.ai/" target="_blank" rel="noopener">Josh.ai </a>on why Crestron, Control4 and others have a hard time competing against consumer tech (25:10)</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/09/everything-you-need-to-know-from-cedia/feed/</wfw:commentRss>
+		<slash:comments>2</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/cediaspecialreal.mp3" length="38608142" type="audio/mpeg" />
+		<itunes:subtitle>Grab your headset for a special bonus edition of the Internet of Things Podcast from the CEDIA show floor in San Diego. Last week I attended the show, which is aimed at the professional AV installer market to understand what’s hot,</itunes:subtitle>
+		<itunes:summary>Grab your headset for a special bonus edition of the Internet of Things Podcast from the CEDIA show floor in San Diego. Last week I attended the show, which is aimed at the professional AV installer market to understand what’s hot, what’s not and how the business of home automation will evolve. I saw some … Continue reading Everything you need to know from CEDIA</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>26:49</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 128: The coolest fridges at IFA and how to build a connected product</title>
+		<link>http://iotpodcast.com/2017/09/episode-128-the-coolest-fridges-at-ifa-and-how-to-build-a-connected-product/</link>
+		<comments>http://iotpodcast.com/2017/09/episode-128-the-coolest-fridges-at-ifa-and-how-to-build-a-connected-product/#comments</comments>
+		<pubDate>Thu, 07 Sep 2017 09:00:08 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[lighting]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[standards]]></category>
+		<category><![CDATA[Alexa]]></category>
+		<category><![CDATA[Forgerock]]></category>
+		<category><![CDATA[Google Home]]></category>
+		<category><![CDATA[Haier]]></category>
+		<category><![CDATA[HomeKit]]></category>
+		<category><![CDATA[IFA]]></category>
+		<category><![CDATA[Panasonic]]></category>
+		<category><![CDATA[Thread]]></category>
+		<category><![CDATA[WeMo]]></category>
+		<category><![CDATA[Xively]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=910</guid>
+		<description><![CDATA[This week launched our new hotline feature with a comment and question from you guys. Keep them coming! Before we got to the Q&#38;A, Kevin and I discussed news from IFA, Europe&#8217;s largest appliance show. There are smart fridges, roaming fridges, washing machines and yes, speakers. We also discussed a Cat-M1 network in Africa, noting &#8230; <a href="http://iotpodcast.com/2017/09/episode-128-the-coolest-fridges-at-ifa-and-how-to-build-a-connected-product/" class="more-link">Continue reading <span class="screen-reader-text">Episode 128: The coolest fridges at IFA and how to build a connected product</span></a>]]></description>
+				<content:encoded><![CDATA[<p>This week launched our new hotline feature with a comment and question from you guys. Keep them coming! Before we got to the Q&amp;A, Kevin and I discussed news from IFA, Europe&#8217;s largest appliance show. There are <a href="https://www.cnet.com/products/haier-link-cook-series/preview/" target="_blank" rel="noopener">smart fridges</a>, <a href="https://www.engadget.com/2017/09/01/panasonic-prototype-fridge-first-look-ifa-2017/" target="_blank" rel="noopener">roaming fridges</a>, <a href="https://www.cnet.com/products/aeg-9000-series-okokombi-washing-machine-and-dryer/preview/" target="_blank" rel="noopener">washing machines</a> and yes, <a href="https://recombu.com/digital/article/best-smart-speakers-for-home" target="_blank" rel="noopener">speakers</a>. We also discussed a <a href="https://www.ericsson.com/en/press-releases/2017/9/first-cat-m1-test-in-africa-for-internet-of-things" target="_blank" rel="noopener">Cat-M1 network in Africa</a>, noting that it has an unusual property. Because it&#8217;s a day ending in Y we also had a <a href="https://threatpost.com/bugs-in-arris-modems-distributed-by-att-vulnerable-to-trivial-attacks/127753/" target="_blank" rel="noopener">security breach to discuss</a>. We ended with a user experience adventure I had with my WeMo dimmer switch.</p>
+<figure id="attachment_911" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/09/47549_preview-e1504701215212.jpg"><img class="size-large wp-image-911" src="http://iotpodcast.com/wp-content/uploads/2017/09/47549_preview-1024x683.jpg" alt="" width="660" height="440" /></a><figcaption class="wp-caption-text">It&#8217;s a Big A** Fan!</figcaption></figure>
+<p>Want to build a connected product? Then listen to Landon Borders of Big A** Fans talk about his company&#8217;s experience building a high-end connected ceiling fan. It&#8217;s a look at the beginnings of the internet of things and also shows off lessons every product manager should heed when thinking about building a connected product portfolio. He offers thoughts about working with HomeKit, Alexa and Google as well as his thoughts on manufacturing and customer service. He also drops a few surprising stats. Enjoy!</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Landon Borders, VP of connected products at Big A** Fans<br />
+<strong>Sponsors</strong>: <a href="https://www.forgerock.com/?utm_source=email&amp;utm_medium=stacys-blog&amp;utm_campaign=brand&amp;utm_content=logo" target="_blank" rel="noopener">ForgeRock</a> and <a href="http://www.xively.com/" target="_blank" rel="noopener">Xively</a></p>
+<ul>
+<li>Roaming fridges and what makes a smart speaker?</li>
+<li>Greg has a question about <a href="https://homeseer.com/homeseer-plug-ins/" target="_blank" rel="noopener">Homeseer</a></li>
+<li>Only half of Big A** Fans customers use the connected features</li>
+<li>Thoughts on Thread</li>
+<li>There are the platforms that matter in the smart home</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/09/episode-128-the-coolest-fridges-at-ifa-and-how-to-build-a-connected-product/feed/</wfw:commentRss>
+		<slash:comments>3</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT128.mp3" length="46251690" type="audio/mpeg" />
+		<itunes:subtitle>This week launched our new hotline feature with a comment and question from you guys. Keep them coming! Before we got to the Q&amp;A, Kevin and I discussed news from IFA, Europe’s largest appliance show. There are smart fridges, roaming fridges,</itunes:subtitle>
+		<itunes:summary>This week launched our new hotline feature with a comment and question from you guys. Keep them coming! Before we got to the Q&amp;A, Kevin and I discussed news from IFA, Europe’s largest appliance show. There are smart fridges, roaming fridges, washing machines and yes, speakers. We also discussed a Cat-M1 network in Africa, noting … Continue reading Episode 128: The coolest fridges at IFA and how to build a connected product</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>54:52</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 127: Alexa gets multi-room audio and teaching devices to lie to one another</title>
+		<link>http://iotpodcast.com/2017/08/episode-127-alexa-gets-multi-room-audio-and-teaching-devices-to-lie-to-one-another/</link>
+		<comments>http://iotpodcast.com/2017/08/episode-127-alexa-gets-multi-room-audio-and-teaching-devices-to-lie-to-one-another/#respond</comments>
+		<pubDate>Thu, 31 Aug 2017 09:00:06 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[industrial internet]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart cities]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Alasdair Allan]]></category>
+		<category><![CDATA[Amazon Echo]]></category>
+		<category><![CDATA[Cortana]]></category>
+		<category><![CDATA[Elgato]]></category>
+		<category><![CDATA[Forgerock]]></category>
+		<category><![CDATA[GE]]></category>
+		<category><![CDATA[Google Assistant]]></category>
+		<category><![CDATA[Predix]]></category>
+		<category><![CDATA[SmartThings]]></category>
+		<category><![CDATA[Xively]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=900</guid>
+		<description><![CDATA[GE is not giving up on its industrial IoT dreams, but it is scaling back a bit. We discuss what that means before diving into an array of assistant news. Kevin and I give some tips for using the Amazon Echo&#8217;s multi-room audio feature before discussing what the partnership between Amazon and Microsoft&#8217;s Cortana means. &#8230; <a href="http://iotpodcast.com/2017/08/episode-127-alexa-gets-multi-room-audio-and-teaching-devices-to-lie-to-one-another/" class="more-link">Continue reading <span class="screen-reader-text">Episode 127: Alexa gets multi-room audio and teaching devices to lie to one another</span></a>]]></description>
+				<content:encoded><![CDATA[<p>GE is not giving up on its industrial IoT dreams, but it is <a href="http://mobile.reuters.com/article/amp/idUSKCN1B80CB" target="_blank" rel="noopener">scaling back a bit</a>. We discuss what that means before diving into an array of assistant news. Kevin and I give some tips for using the <a href="http://phx.corporate-ir.net/phoenix.zhtml?c=176060&amp;p=irol-newsArticle&amp;ID=2297100" target="_blank" rel="noopener">Amazon Echo&#8217;s multi-room audio feature</a> before discussing what the partnership between <a href="https://blogs.microsoft.com/blog/2017/08/30/hey-cortana-open-alexa-microsoft-amazons-first-kind-collaboration/" target="_blank" rel="noopener">Amazon and Microsoft&#8217;s Cortana means</a>. We also download some news about <a href="https://www.blog.google/products/assistant/your-google-assistant-is-coming-to-new-speakers-and-more/" target="_blank" rel="noopener">Google Assistant from IFA</a>, where we also learned of new <a href="https://www.elgato.com/eve/coming-soon" target="_blank" rel="noopener">Elgato sensors</a>. They are pretty.  Finally, Kevin built us all a present!</p>
+<figure id="attachment_901" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/08/Eve_Window_Guard_Lifestyle_01.jpg"><img class="size-large wp-image-901" src="http://iotpodcast.com/wp-content/uploads/2017/08/Eve_Window_Guard_Lifestyle_01-1024x691.jpg" alt="" width="660" height="445" srcset="http://iotpodcast.com/wp-content/uploads/2017/08/Eve_Window_Guard_Lifestyle_01-1024x691.jpg 1024w, http://iotpodcast.com/wp-content/uploads/2017/08/Eve_Window_Guard_Lifestyle_01-300x203.jpg 300w, http://iotpodcast.com/wp-content/uploads/2017/08/Eve_Window_Guard_Lifestyle_01-768x519.jpg 768w" sizes="(max-width: 660px) 100vw, 660px" /></a><figcaption class="wp-caption-text">The upcoming Elgato window guard sensor.</figcaption></figure>
+<p>This week&#8217;s guest, Alasdair Allan, is a tinkerer and researcher who is thinking about the way we secure highly distributed systems. His concern is malicious data inserted into a system that can report false information to bring about a destructive action. In his example, someone created an imaginary moisture sensor that told a vineyard sprinkler system the ground was dry. It wasn&#8217;t. The resulting overwatering was a problem for the vines and resulted in a large fine. If you&#8217;re a blockchain fan, you&#8217;ll want to hear this one too.</p>
+<p><strong>Host</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guests</strong>: <a href="http://alasdairallan.com/" target="_blank" rel="noopener">Alasdair Allan</a><br />
+<strong>Sponsors</strong>: <a href="https://www.forgerock.com?utm_source=email&amp;utm_medium=stacys-blog&amp;utm_campaign=brand&amp;utm_content=logo" target="_blank" rel="noopener">Forgerock</a> and <a href="http://www.xively.com" target="_blank" rel="noopener">Xively</a></p>
+<ul>
+<li>Even GE can&#8217;t build a scalable industrial internet platform</li>
+<li>Alexa, why is multi-room audio so limited?</li>
+<li>There&#8217;s a new speaker in town with the Josh Micro</li>
+<li>Have a question for us? Call the IoT Podcast Listener Hotline at 512-623-7424</li>
+<li>Should we teach our devices how to lie?</li>
+<li>Blockchain may help secure the distributed IoT</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/08/episode-127-alexa-gets-multi-room-audio-and-teaching-devices-to-lie-to-one-another/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT127.mp3" length="40906424" type="audio/mpeg" />
+		<itunes:subtitle>GE is not giving up on its industrial IoT dreams, but it is scaling back a bit. We discuss what that means before diving into an array of assistant news. Kevin and I give some tips for using the Amazon Echo’s multi-room audio feature before discussing ...</itunes:subtitle>
+		<itunes:summary>GE is not giving up on its industrial IoT dreams, but it is scaling back a bit. We discuss what that means before diving into an array of assistant news. Kevin and I give some tips for using the Amazon Echo’s multi-room audio feature before discussing what the partnership between Amazon and Microsoft’s Cortana means. … Continue reading Episode 127: Alexa gets multi-room audio and teaching devices to lie to one another</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>48:30</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 126: Sonos wants to brick your speakers</title>
+		<link>http://iotpodcast.com/2017/08/episode-126-sonos-wants-to-brick-your-speakers/</link>
+		<comments>http://iotpodcast.com/2017/08/episode-126-sonos-wants-to-brick-your-speakers/#comments</comments>
+		<pubDate>Thu, 24 Aug 2017 09:00:33 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[digital health]]></category>
+		<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[makers]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Alarm.com]]></category>
+		<category><![CDATA[Amazon Dash]]></category>
+		<category><![CDATA[Amazon Echo]]></category>
+		<category><![CDATA[AT&T Digital Life]]></category>
+		<category><![CDATA[Blue Iris]]></category>
+		<category><![CDATA[Comcast]]></category>
+		<category><![CDATA[Google Assistant]]></category>
+		<category><![CDATA[Johns Hopkins]]></category>
+		<category><![CDATA[Nvidia]]></category>
+		<category><![CDATA[Plex]]></category>
+		<category><![CDATA[Sonos]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=889</guid>
+		<description><![CDATA[The breaking story as we recorded this show was Sonos updating its Terms of Service to prepare for the Amazon Echo integration. As part of this update, the connected speaker maker confirmed that customers who did not accede to the new terms of service would see their devices stop working in the future. This didn&#8217;t &#8230; <a href="http://iotpodcast.com/2017/08/episode-126-sonos-wants-to-brick-your-speakers/" class="more-link">Continue reading <span class="screen-reader-text">Episode 126: Sonos wants to brick your speakers</span></a>]]></description>
+				<content:encoded><![CDATA[<p>The breaking story as we recorded this show was <a href="http://www.zdnet.com/article/sonos-accept-new-privacy-policy-speakers-cease-to-function/">Sonos updating its Terms of Service</a> to prepare for the Amazon Echo integration. As part of this update, the connected speaker maker confirmed that customers who did not accede to the new terms of service would see their devices stop working in the future. This didn&#8217;t go over well, but this is a complicated issue. Kevin and I break many of <a href="http://thehill.com/policy/technology/346984-uber-wins-court-ruling-allowing-it-to-keep-customers-from-suing-in-court">these issues</a> down. We also talk about Google&#8217;s Assistant <a href="https://9to5google.com/2017/08/21/google-app-7-10-reveals-that-bisto-are-headphones-that-run-google-assistant-apk-teardown/">plans</a>, <a href="https://www.wired.com/story/watch-robot-hacks-spy-sabotage/">hacked robots</a>, what has happened to the <a href="https://www.engadget.com/2017/01/04/nvidia-spot/">Nvidia Spot</a>, the <a href="https://enterpriseiotinsights.com/20170822/news/att-said-to-explore-sale-of-digital-life-tag4?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed%3A+IndustrialIot5g+%28Industrial+IoT+5G%29">potential sale</a> of AT&amp;T&#8217;s Digital Life service, and answer a reader question.</p>
+<figure id="attachment_506" style="width: 660px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos.jpg"><img class="size-large wp-image-506" src="http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos-1024x576.jpg" alt="" width="660" height="371" srcset="http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos-1024x576.jpg 1024w, http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos-300x169.jpg 300w, http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos-768x432.jpg 768w, http://iotpodcast.com/wp-content/uploads/2016/09/Savant_03_Sonos.jpg 1600w" sizes="(max-width: 660px) 100vw, 660px" /></a><figcaption class="wp-caption-text">Accept Sonos&#8217; new terms of service or else.</figcaption></figure>
+<p>Our guest this week is Nick Dawson, executive director of the Johns Hopkins Sibley innovation hub. If you want to hear about applying some DIY tech to healthcare, Dawson has stories for you. He describes how his team built a separate network to experiment with Amazon Dash buttons, Amazon Echoes, Sonoses, Philips Hue lights and even using Slack as a way to track patient calls. He&#8217;s looking for feedback, so if you have ideas, want to talk security or even hospital IT, you can find him at <a href="https://www.debughealthcare.com">www.debughealthcare.com</a> or <a href="https://twitter.com/nickdawson?lang=en">@nickdawson</a> on Twitter.</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Nick Dawson, executive director, Johns Hopkins Sibley Innovation Hub<br />
+<strong>Sponsors</strong>: <a href="https://www.hiqo-solutions.com">HiQo Solutions</a> and <a href="http://www.eero.com">Eero</a></p>
+<ul>
+<li>Are companies selling services or devices?</li>
+<li>What ever happened to the Nvidia Spot?</li>
+<li>We advise a reader to check out Blue Iris camera software for <a href="http://forum.livingwithiris.com/topic/3789-blue-iris-now-has-alexa-integration/">Alexa</a> and <a href="https://community.smartthings.com/t/release-blue-iris-fusion-integrate-smartthings-and-blue-iris/54226">SmartThings</a> integrations</li>
+<li>This hospital built a rogue network for IoT experimentation</li>
+<li>How to use Slack and Amazon Dash Buttons to get quick data</li>
+</ul>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/08/episode-126-sonos-wants-to-brick-your-speakers/feed/</wfw:commentRss>
+		<slash:comments>4</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT126.mp3" length="43023472" type="audio/mpeg" />
+		<itunes:subtitle>The breaking story as we recorded this show was Sonos updating its Terms of Service to prepare for the Amazon Echo integration. As part of this update, the connected speaker maker confirmed that customers who did not accede to the new terms of service ...</itunes:subtitle>
+		<itunes:summary>The breaking story as we recorded this show was Sonos updating its Terms of Service to prepare for the Amazon Echo integration. As part of this update, the connected speaker maker confirmed that customers who did not accede to the new terms of service would see their devices stop working in the future. This didn’t … Continue reading Episode 126: Sonos wants to brick your speakers</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>51:01</itunes:duration>
+	</item>
+		<item>
+		<title>Episode 125: Lockstate&#8217;s big goof and a super sensor from CMU</title>
+		<link>http://iotpodcast.com/2017/08/episode-125-lockstates-big-goof-and-a-super-sensor-from-mit/</link>
+		<comments>http://iotpodcast.com/2017/08/episode-125-lockstates-big-goof-and-a-super-sensor-from-mit/#respond</comments>
+		<pubDate>Thu, 17 Aug 2017 09:00:42 +0000</pubDate>
+		<dc:creator><![CDATA[Stacey Higginbotham]]></dc:creator>
+				<category><![CDATA[enterprise]]></category>
+		<category><![CDATA[industrial internet]]></category>
+		<category><![CDATA[lighting]]></category>
+		<category><![CDATA[security]]></category>
+		<category><![CDATA[smart home]]></category>
+		<category><![CDATA[Anker]]></category>
+		<category><![CDATA[Daniel Cooley]]></category>
+		<category><![CDATA[Eero]]></category>
+		<category><![CDATA[HiQo Solutions]]></category>
+		<category><![CDATA[June]]></category>
+		<category><![CDATA[Lockstate]]></category>
+		<category><![CDATA[MIT]]></category>
+		<category><![CDATA[Roomba]]></category>
+		<category><![CDATA[Silicon Labs]]></category>
+		<category><![CDATA[Snoo]]></category>
+		<category><![CDATA[Sound Caddy]]></category>
+		<category><![CDATA[Super sensor]]></category>
+
+		<guid isPermaLink="false">http://iotpodcast.com/?p=881</guid>
+		<description><![CDATA[How do you turn a deadbolt into a brick? Update its software! That&#8217;s not funny, especially if you&#8217;re Lockstate, which rendered 500 connected door locks useless with a software update last week. Kevin and I add a bit of context to the event and then jump right into discussions about Anker&#8217;s Eufy Genie, a connected &#8230; <a href="http://iotpodcast.com/2017/08/episode-125-lockstates-big-goof-and-a-super-sensor-from-mit/" class="more-link">Continue reading <span class="screen-reader-text">Episode 125: Lockstate&#8217;s big goof and a super sensor from CMU</span></a>]]></description>
+				<content:encoded><![CDATA[<p>How do you turn a deadbolt into a brick? Update its software! That&#8217;s not funny, especially if you&#8217;re Lockstate, which <a href="http://www.businessinsider.com/smart-lock-maker-lockstate-bricks-customers-locks-software-update-2017-8" target="_blank" rel="noopener">rendered 500 connected door locks useless</a> with a software update last week. Kevin and I add a bit of context to the event and then jump right into discussions about Anker&#8217;s<a href="http://www.zdnet.com/article/anker-unveils-35-alexa-powered-eufy-genie-smart-speaker/" target="_blank" rel="noopener"> Eufy Genie</a>, a <a href="http://money.cnn.com/2017/08/10/technology/gadgets/snoo-review/index.html" target="_blank" rel="noopener">connected bassinet</a> and a <a href="http://www.npr.org/sections/alltechconsidered/2017/08/14/541699733/our-homes-may-get-smarter-but-have-we-thought-it-through" target="_blank" rel="noopener">story</a> that portrays <a href="http://www.gierad.com/projects/supersensor/" target="_blank" rel="noopener">Carnegie Melon&#8217;s super sensor</a> in a scary light. We end with <a href="http://spectrum.ieee.org/cars-that-think/transportation/sensors/ezpass-could-kickstart-smart-cities">Caraoke</a>, June&#8217;s new <a href="http://thespoon.tech/beyond-the-countertop-june-introduces-intelligent-wall-oven-for-1995/" target="_blank" rel="noopener">wall-mounted oven</a> and a plan to use <a href="https://www.sciencedaily.com/releases/2017/08/170815095836.htm" target="_blank" rel="noopener">Outlook to schedule your Roomba</a>.</p>
+<figure id="attachment_883" style="width: 738px" class="wp-caption aligncenter"><a href="http://iotpodcast.com/wp-content/uploads/2017/08/robotic-crib-for-happiest-baby-yves-behar-designs-childrens-furniture_dezeen_2364_col_4.jpg"><img class="size-full wp-image-883" src="http://iotpodcast.com/wp-content/uploads/2017/08/robotic-crib-for-happiest-baby-yves-behar-designs-childrens-furniture_dezeen_2364_col_4.jpg" alt="" width="738" height="554" srcset="http://iotpodcast.com/wp-content/uploads/2017/08/robotic-crib-for-happiest-baby-yves-behar-designs-childrens-furniture_dezeen_2364_col_4.jpg 738w, http://iotpodcast.com/wp-content/uploads/2017/08/robotic-crib-for-happiest-baby-yves-behar-designs-childrens-furniture_dezeen_2364_col_4-300x225.jpg 300w" sizes="(max-width: 738px) 100vw, 738px" /></a><figcaption class="wp-caption-text">The Snoo bassinet costs $1,160.</figcaption></figure>
+<p>Our guest this week covers what we need to do to continue building out the internet of things. As SVP and General Manager of Silicon Labs&#8217; IoT division, Daniel Cooley has the unenviable task of predicting what features chips will need three to five years before he thinks we&#8217;ll need them. In this segment he talks about pushing more math to sensors, how important it is to get security right, the future of human-to-machine interfaces and the types of business models we&#8217;ll need. He also dives into the concept of unified data models for the internet of things&#8211; essentially defining in software what a physical product can do. You&#8217;ll learn a lot.</p>
+<p><strong>Hosts</strong>: Stacey Higginbotham and Kevin Tofel<br />
+<strong>Guest</strong>: Daniel Cooley of <a href="https://www.silabs.com/about-us/management" target="_blank" rel="noopener">Silicon Labs</a><br />
+<strong>Sponsors</strong>: <a href="https://hiqo-solutions.com" target="_blank" rel="noopener">HiQo Solutions</a> and <a href="http://www.eero.com" target="_blank" rel="noopener">Eero</a></p>
+<ul>
+<li>Lockstate has something in common with Wink</li>
+<li>Someone put a baby in a Snoo!</li>
+<li>Another <a href="https://soundcaddygolf.com">gadget</a> for the hall of shame</li>
+<li>How silicon companies are thinking about the edge</li>
+<li>The internet of things needs data models stat!</li>
+</ul>
+<p style="text-align: left;"><em><strong>Correction</strong>: This episode credited the super sensor to MIT, but it was built by researchers from Carnegie Melon. The post has been changed on Aug. 29, 2017 to reflect the correction.</em></p>
+]]></content:encoded>
+			<wfw:commentRss>http://iotpodcast.com/2017/08/episode-125-lockstates-big-goof-and-a-super-sensor-from-mit/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+<enclosure url="http://traffic.libsyn.com/iotpodcast/IOT125.mp3" length="46339066" type="audio/mpeg" />
+		<itunes:subtitle>How do you turn a deadbolt into a brick? Update its software! That’s not funny, especially if you’re Lockstate, which rendered 500 connected door locks useless with a software update last week. Kevin and I add a bit of context to the event and then jum...</itunes:subtitle>
+		<itunes:summary>How do you turn a deadbolt into a brick? Update its software! That’s not funny, especially if you’re Lockstate, which rendered 500 connected door locks useless with a software update last week. Kevin and I add a bit of context to the event and then jump right into discussions about Anker’s Eufy Genie, a connected … Continue reading Episode 125: Lockstate’s big goof and a super sensor from CMU</itunes:summary>
+		<itunes:author>Stacey Higginbotham, tech journalist</itunes:author>
+		<itunes:image href="http://iotpodcast.com/wp-content/uploads/2015/07/IOT-podcast-12.png" />
+		<itunes:duration>54:58</itunes:duration>
+	</item>
+	</channel>
+</rss>

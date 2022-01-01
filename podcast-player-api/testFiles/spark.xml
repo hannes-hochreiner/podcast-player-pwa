@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <language>en-ca</language>
+    <title>Spark from CBC Radio</title>
+    <image>
+      <url>https://www.cbc.ca/radio/podcasts/images/promo-spark.jpg</url>
+      <title>Spark from CBC Radio</title>
+      <link>http://www.cbc.ca/podcasting</link>
+    </image>
+    <link>http://www.cbc.ca/podcasting</link>
+    <description>Spark on CBC Radio One Nora Young helps you navigate your digital life by connecting you to fresh ideas in surprising ways.</description>
+    <itunes:owner>
+      <itunes:name>CBC</itunes:name>
+      <itunes:email>podcasting@cbc.ca</itunes:email>
+    </itunes:owner>
+    <copyright>Copyright © CBC 2017</copyright>
+    <managingEditor>podcasting@cbc.ca</managingEditor>
+    <itunes:category text="Technology" />
+    <itunes:category text="Public Radio" />
+    <itunes:author>CBC Radio</itunes:author>
+    <itunes:keywords>CBC,CBC Radio</itunes:keywords>
+    <itunes:summary>Spark on CBC Radio One Nora Young helps you navigate your digital life by connecting you to fresh ideas in surprising ways.</itunes:summary>
+    <itunes:image href="https://www.cbc.ca/radio/podcasts/images/promo-spark.jpg" />
+    <itunes:explicit>No</itunes:explicit>
+
+
+    <item>
+      <title>367: Loneliness, Algorithms, War and Peace</title>
+      <guid>https://podcast-a.akamaihd.net/mp3/podcasts/spark_20171015_47655.mp3</guid>
+      <description>The trouble with advertising algorithms. The Loneliness Project. Why you should read War and Peace on your phone.</description>
+      <link>http://www.cbc.ca/podcasting</link>
+      <author>podcasting@cbc.ca</author>
+      <pubDate>Fri, 13 Oct 2017 04:00:00 GMT</pubDate>
+      <itunes:subtitle>The trouble with advertising algorithms. The Loneliness Project. Why you should read War and Peace on your phone.</itunes:subtitle>
+      <itunes:summary>The trouble with advertising algorithms. The Loneliness Project. Why you should read War and Peace on your phone.</itunes:summary>
+      <itunes:duration>54:40</itunes:duration>
+      <enclosure url="https://podcast-a.akamaihd.net/mp3/podcasts/spark_20171015_47655.mp3" length="52655151"
+        type="audio/mpeg" />
+      <itunes:explicit>No</itunes:explicit>
+      <itunes:order>1</itunes:order>
+    </item>
+
+
+  </channel>
+</rss>

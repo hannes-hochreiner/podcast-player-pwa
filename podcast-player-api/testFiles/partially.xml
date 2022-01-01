@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+xmlns:content="http://purl.org/rss/1.0/modules/content/"
+xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:atom="http://www.w3.org/2005/Atom"
+xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/"
+>
+
+<channel>
+<title>Partially Derivative</title>
+<atom:link href="http://partiallyderivative.com/feed/podcast" rel="self" type="application/rss+xml" />
+<link>http://partiallyderivative.com</link>
+<description>The data of the world around us, hosted by data science super geeks. For the nerdy and nerd curious.</description>
+<lastBuildDate>Tue, 05 Sep 2017 22:11:14 +0000</lastBuildDate>
+<language>en-US</language>
+<sy:updatePeriod>hourly</sy:updatePeriod>
+<sy:updateFrequency>1</sy:updateFrequency>
+<generator>http://jekyllrb.com</generator>
+<itunes:summary>Partially Derivative is a weekly podcast from the founders of Popily. We geek out about silly data stories, interview fun people doing interesting work, and drink beer.</itunes:summary>
+<itunes:author>Partially Derivative</itunes:author>
+<itunes:explicit>yes</itunes:explicit>
+<itunes:image href="http://partiallyderivative.com/assets/img/partiallyd_title.png" />
+<itunes:owner>
+<itunes:name>Partially Derivative</itunes:name>
+<itunes:email>jonathonmorgan@gmail.com</itunes:email>
+</itunes:owner>
+<managingEditor>jonathonmorgan@gmail.com (Partially Derivative)</managingEditor>
+<itunes:subtitle>A podcast about the data of everything.</itunes:subtitle>
+<image>
+<title>Partially Derivative</title>
+<url>http://partiallyderivative.com/assets/img/partiallyd_title.png</url>
+<link>http://partiallyderivative.com</link>
+</image>
+<itunes:category text="Technology">
+<itunes:category text="IT News" />
+<itunes:category text="Software How-To" />
+</itunes:category>
+
+  <item>
+    <title>End Of Era</title>
+    <link>http://partiallyderivative.com/podcast/2017/09/05/end-of-an-era</link>
+    <!--<comments>http://partiallyderivative.com/podcast/2017/09/05/end-of-an-era#comments</comments>-->
+    <pubDate>Tue, 05 Sep 2017 00:00:00 +0000</pubDate>
+    <dc:creator>Jonathon Morgan></dc:creator>
+
+    <category><![CDATA[podcast]]></category>
+
+
+    <category><![CDATA[data science]]></category>
+
+    <category><![CDATA[data]]></category>
+
+    <category><![CDATA[technology]]></category>
+
+    <category><![CDATA[machine learning]]></category>
+
+    <guid isPermaLink="false">
+
+            https://backtracks.fm/partiallyderivative/pr/15d4c9ea-9286-11e7-8fd1-0e5a4884b288/end_of_an_era.mp3?s=1
+        </guid>
+    <description>
+        <![CDATA[The last episode of Partially Derivative for now.
+
+]]>
+    </description>
+    <content:encoded>
+        <![CDATA[<p>The last episode of Partially Derivative for now.</p>
+
+<div id="backtracks-player" data-bt-embed="https://player.backtracks.fm/partiallyderivative/partially-derivative/m/the-end-of-an-era" data-bt-show-comments="false" data-bt-theme="light" data-bt-show-art-cover="true"></div>
+<script>(function(p,l,a,y,e,r,s){if(p[y]) return;if(p[e]) return p[e]();s=l.createElement(a);l.head.appendChild((s.async=p[y]=true,s.src=r,s))}(window,document,"script","__btL","__btR","https://player.backtracks.fm/embedder.js"))</script>
+
+]]>
+    </content:encoded>
+
+    <enclosure url="https://backtracks.fm/partiallyderivative/pr/15d4c9ea-9286-11e7-8fd1-0e5a4884b288/end_of_an_era.mp3?s=1" length="660000" type="audio/mpeg" />
+    <itunes:subtitle>
+
+            The last episode of Partially Derivative for now.
+
+    </itunes:subtitle>
+    <itunes:summary>The last episode of Partially Derivative for now.</itunes:summary>
+    <itunes:author>Partially Derivative</itunes:author>
+    <itunes:image href="http://partiallyderivative.com/assets/img/partiallyd_title.png" />
+    <itunes:explicit>yes</itunes:explicit>
+    <itunes:duration>00:11:06</itunes:duration>
+    <itunes:keywords>data,technology, artificial intelligence, data science,machine learning</itunes:keywords>
+  </item>
+
+  <item>
+    <title>Art-ificial Intelligence</title>
+    <link>http://partiallyderivative.com/podcast/2017/08/15/art-ificial_intelligence</link>
+    <!--<comments>http://partiallyderivative.com/podcast/2017/08/15/art-ificial_intelligence#comments</comments>-->
+    <pubDate>Tue, 15 Aug 2017 00:00:00 +0000</pubDate>
+    <dc:creator>Jonathon Morgan></dc:creator>
+
+    <category><![CDATA[podcast]]></category>
+
+
+    <category><![CDATA[data science]]></category>
+
+    <category><![CDATA[data]]></category>
+
+    <category><![CDATA[technology]]></category>
+
+    <category><![CDATA[machine learning]]></category>
+
+    <guid isPermaLink="false">
+
+            https://backtracks.fm/partiallyderivative/pr/0fac344a-8453-11e7-86c7-0e84392478bc/art-ificial_intelligence.mp3?s=1
+        </guid>
+    <description>
+        <![CDATA[This week Chris and Vidya discuss how artificial intelligence is affecting the world of artists.
+
+]]>
+    </description>
+    <content:encoded>
+        <![CDATA[<p>This week Chris and Vidya discuss how artificial intelligence is affecting the world of artists.</p>
+
+<div id="backtracks-player" data-bt-embed="https://player.backtracks.fm/partiallyderivative/partially-derivative/m/art-ificial-intelligence" data-bt-theme="light" data-bt-show-art-cover="true" data-bt-show-comments="false"></div>
+<script>(function(p,l,a,y,e,r,s){if(p[y]) return;if(p[e]) return p[e]();s=l.createElement(a);l.head.appendChild((s.async=p[y]=true,s.src=r,s))}(window,document,"script","__btL","__btR","https://player.backtracks.fm/embedder.js"))</script>
+
+]]>
+    </content:encoded>
+
+    <enclosure url="https://backtracks.fm/partiallyderivative/pr/0fac344a-8453-11e7-86c7-0e84392478bc/art-ificial_intelligence.mp3?s=1" length="2100000" type="audio/mpeg" />
+    <itunes:subtitle>
+
+            This week Chris and Vidya discuss how artificial intelligence is affecting the world of artists.
+
+    </itunes:subtitle>
+    <itunes:summary>This week Chris and Vidya discuss how artificial intelligence is affecting the world of artists.</itunes:summary>
+    <itunes:author>Partially Derivative</itunes:author>
+    <itunes:image href="http://partiallyderivative.com/assets/img/partiallyd_title.png" />
+    <itunes:explicit>yes</itunes:explicit>
+    <itunes:duration>00:34:20</itunes:duration>
+    <itunes:keywords>data,technology, artificial intelligence, data science,machine learning</itunes:keywords>
+  </item>
+
+</channel>
+</rss>

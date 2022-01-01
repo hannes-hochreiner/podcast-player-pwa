@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~files/feed-premium.xsl"?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:feedpress="https://feed.press/xmlns" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:media="http://www.rssboard.org/media-rss" version="2.0">
+  <channel>
+    <feedpress:locale>en</feedpress:locale>
+    <atom:link rel="hub" href="http://feedpress.superfeedr.com/"/>
+    <media:rating>nonadult</media:rating>
+    <media:description type="plain"/>
+    <media:credit role="author"/>
+    <feedpress:podcastId>1319947289</feedpress:podcastId>
+    <googleplay:explicit>no</googleplay:explicit>
+    <atom:link rel="self" type="application/atom+xml" href="https://feeds.pacific-content.com/commandlineheroes" title="MP3 Audio"/>
+    <title>Command Line Heroes</title>
+    <generator>https://simplecast.com</generator>
+    <description>Stories about the people transforming technology from the command line up.</description>
+    <language>en</language>
+    <pubDate>Mon, 15 Jan 2018 22:01:00 -0800</pubDate>
+    <lastBuildDate>Wed, 24 Jan 2018 13:07:13 -0800</lastBuildDate>
+    <link>https://redhat.com/CommandLineHeroes</link>
+    <image>
+      <url>https://media.simplecast.com/podcast/image/3909/1512098978-artwork.jpg</url>
+      <title>Command Line Heroes</title>
+      <link>https://redhat.com/CommandLineHeroes</link>
+    </image>
+    <itunes:new-feed-url>https://feeds.pacific-content.com/commandlineheroes</itunes:new-feed-url>
+    <itunes:author>Red Hat</itunes:author>
+    <itunes:image href="https://media.simplecast.com/podcast/image/3909/1512098978-artwork.jpg"/>
+    <itunes:summary>Hear the epic true tales of how developers, programmers, hackers, geeks, and open source rebels are revolutionizing the technology landscape. Command Line Heroes is a new podcast hosted by Saron Yitbarek and produced by Red Hat. Get root access to show notes, transcripts, and other associated content at https://redhat.com/commandlineheroes</itunes:summary>
+    <itunes:subtitle>Hear the epic true tales of how developers, programmers, hackers, geeks, and open source rebels are revolutionizing the technology landscape.</itunes:subtitle>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:keywords>Technology, coding, programming, Linux, agile, DevOps, Kubernetes, Microsoft, cloud, Saron, Red Hat, containers, Windows, command line, computers, Saron Yitbarek</itunes:keywords>
+    <itunes:type>serial</itunes:type>
+    <itunes:owner>
+      <itunes:name>Red Hat</itunes:name>
+      <itunes:email>info@pacific-content.com</itunes:email>
+    </itunes:owner>
+    <itunes:category text="Technology">
+      <itunes:category text="Software How-To"/>
+    </itunes:category>
+    <itunes:category text="Society &amp; Culture"/>
+    <itunes:category text="Business"/>
+    <item>
+      <title>OS Wars_part 1</title>
+      <guid isPermaLink="false">36fda030-1e17-4f0c-8c74-8dae35e95daa</guid>
+      <link>http://commandlineheroes.simplecast.fm/dc49d64b</link>
+      <description>The O.S. Wars. The 1980s is a period of mounting tensions. The empires of Bill Gates and Steve Jobs careen toward an inevitable battle over proprietary software—only one empire can emerge as the purveyor of a standard operating system for millions of users. Gates has formed a powerful alliance with IBM while Jobs tries to maintain the purity of his brand. Their struggle for dominance threatens to engulf the galaxy. Meanwhile, in distant lands, and unbeknownst to the Emperors, open source rebels have begun to gather…
+
+Veterans from computer history, including Andy Hertzfeld, from the original Macintosh team, and acclaimed tech journalist Steven Levy, recount the moments of genius, and tragic flaws, that shaped our technology for decades to come.
+</description>
+      <content:encoded><![CDATA[<p>The O.S. Wars. The 1980s is a period of mounting tensions. The empires of <a href="https://twitter.com/billgates">Bill Gates</a> and Steve Jobs careen toward an inevitable battle over proprietary software—only one empire can emerge as the purveyor of a standard operating system for millions of users. Gates has formed a powerful alliance with <a href="https://twitter.com/IBM?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">IBM</a> while Jobs tries to maintain the purity of his brand. Their struggle for dominance threatens to engulf the galaxy. Meanwhile, in distant lands, and unbeknownst to the Emperors, open source rebels have begun to gather…</p>
+
+<p>Veterans from computer history, including <a href="https://twitter.com/andyhertzfeld?lang=en">Andy Hertzfeld</a>, from the original Macintosh team, and acclaimed tech journalist <a href="https://twitter.com/StevenLevy?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Steven Levy</a>, recount the moments of genius, and tragic flaws, that shaped our technology for decades to come.</p>
+
+<p>Please let us know what you think of the show by providing a rating or review in <a href="http://getpodcast.reviews/id/1319947289">Apple Podcasts</a>.</p>
+
+<p>Drop us a line at <a href="https://www.redhat.com/CommandLineHeroes">redhat.com/commandlineheroes</a>, we're listening...</p>
+]]></content:encoded>
+      <pubDate>Mon, 15 Jan 2018 22:01:00 -0800</pubDate>
+      <author>info@pacific-content.com (Red Hat)</author>
+      <enclosure url="https://tracking.feedpress.it/link/18442/8049593/f7670e99.mp3" length="27945929" type="audio/mpeg"/>
+      <itunes:author>Red Hat</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/98971/1516048476-artwork.jpg"/>
+      <itunes:duration>00:28:57</itunes:duration>
+      <itunes:summary>The O.S. Wars. The 1980s is a period of mounting tensions. The empires of Bill Gates and Steve Jobs careen toward an inevitable battle over proprietary software—only one empire can emerge as the purveyor of a standard operating system for millions of users. Gates has formed a powerful alliance with IBM while Jobs tries to maintain the purity of his brand. Their struggle for dominance threatens to engulf the galaxy. Meanwhile, in distant lands, and unbeknownst to the Emperors, open source rebels have begun to gather…
+
+Veterans from computer history, including Andy Hertzfeld, from the original Macintosh team, and acclaimed tech journalist Steven Levy, recount the moments of genius, and tragic flaws, that shaped our technology for decades to come.
+</itunes:summary>
+      <itunes:subtitle>The O.S. Wars. The 1980s is a period of mounting tensions. The empires of Bill Gates and Steve Jobs careen toward an inevitable battle over proprietary software—only one empire can emerge as the purveyor of a standard operating system for millions of user</itunes:subtitle>
+      <itunes:keywords>Technology, coding, programming, Linux, agile, DevOps, Kubernetes, Microsoft, cloud, Saron, Red Hat, containers, Windows, command line, computers</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>1</itunes:episode>
+      <itunes:season>1</itunes:season>
+    </item>
+    <item>
+      <title>OS Wars_part 2: Rise of Linux</title>
+      <guid isPermaLink="false">0e52b0be-4c91-48fe-b8a2-cfad32df28b8</guid>
+      <link>http://commandlineheroes.simplecast.fm/a14ec367</link>
+      <description>It's the 1990s. The empire of Microsoft controls 90% of users. Complete standardization of operating systems seems assured. But an unlikely hero arises from amongst the band of open source rebels. Linus Torvalds—meek, bespectacled—releases his Linux O.S. free of charge. While Microsoft reels and regroups, the battleground shifts from personal computers to the Internet.
+
+Acclaimed tech journalist Steven Vaughan-Nichols is joined by a team of veterans who relive the tech revolution that reimagined our future.
+</description>
+      <content:encoded><![CDATA[<p>It's the 1990s. The empire of <a href="https://twitter.com/Microsoft?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Microsoft</a> controls 90% of users. Complete standardization of operating systems seems assured. But an unlikely hero arises from amongst the band of open source rebels. <a href="https://twitter.com/linus__torvalds?lang=en">Linus Torvalds</a>—meek, bespectacled—releases his <a href="https://twitter.com/linuxfoundation?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor">Linux</a> O.S. free of charge. While Microsoft reels and regroups, the battleground shifts from personal computers to the Internet.</p>
+
+<p>Acclaimed tech journalist <a href="https://twitter.com/sjvn">Steven Vaughan-Nichols</a> is joined by a team of veterans who relive the tech revolution that reimagined our future. Editor's Note: A previous version of this episode featured a short clip with Jon “maddog” Hall. It has been removed at his request.</p>
+
+<p>Please let us know what you think of the show by providing a rating or review in <a href="http://getpodcast.reviews/id/1319947289">Apple Podcasts</a>.</p>
+
+<p>Drop us a line at <a href="https://www.redhat.com/CommandLineHeroes">redhat.com/commandlineheroes</a>, we're listening...</p>
+]]></content:encoded>
+      <pubDate>Mon, 15 Jan 2018 22:00:00 -0800</pubDate>
+      <author>info@pacific-content.com (Red Hat)</author>
+      <enclosure url="https://tracking.feedpress.it/link/18442/8049594/2199861a.mp3" length="27057507" type="audio/mpeg"/>
+      <itunes:author>Red Hat</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/98972/1516048504-artwork.jpg"/>
+      <itunes:duration>00:27:38</itunes:duration>
+      <itunes:summary>It's the 1990s. The empire of Microsoft controls 90% of users. Complete standardization of operating systems seems assured. But an unlikely hero arises from amongst the band of open source rebels. Linus Torvalds—meek, bespectacled—releases his Linux O.S. free of charge. While Microsoft reels and regroups, the battleground shifts from personal computers to the Internet.
+
+Acclaimed tech journalist Steven Vaughan-Nichols is joined by a team of veterans who relive the tech revolution that reimagined our future.
+</itunes:summary>
+      <itunes:subtitle>It's the 1990s. The empire of Microsoft controls 90% of users. Complete standardization of operating systems seems assured. But an unlikely hero arises from amongst the band of open source rebels. Linus Torvalds—meek, bespectacled—releases his Linux O.S. </itunes:subtitle>
+      <itunes:keywords>Technology, coding, programming, Linux, agile, DevOps, Kubernetes, Microsoft, cloud, Saron, Red Hat, containers, Windows, command line, computers</itunes:keywords>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:episode>2</itunes:episode>
+      <itunes:season>1</itunes:season>
+    </item>
+    <item>
+      <title>Preview_CLH</title>
+      <guid isPermaLink="false">2945a8ce-3d3e-47d5-b45b-2bcb7c0c73c9</guid>
+      <link>http://commandlineheroes.simplecast.fm/preview</link>
+      <description>Introducing a show about the developers, programmers, hackers, geeks, and open source rebels who are shaping our digital future.
+</description>
+      <content:encoded><![CDATA[<p>Introducing a show about the developers, programmers, hackers, geeks, and open source rebels who are shaping our digital future.</p>
+]]></content:encoded>
+      <pubDate>Fri, 01 Dec 2017 06:00:00 -0800</pubDate>
+      <author>info@pacific-content.com (Red Hat)</author>
+      <enclosure url="https://tracking.feedpress.it/link/18442/7582651/3def9db9.mp3" length="1653516" type="audio/mpeg"/>
+      <itunes:author>Red Hat</itunes:author>
+      <itunes:image href="https://media.simplecast.com/episode/image/98304/1512142382-artwork.jpg"/>
+      <itunes:duration>00:01:34</itunes:duration>
+      <itunes:summary>Introducing a show about the developers, programmers, hackers, geeks, and open source rebels who are shaping our digital future.
+</itunes:summary>
+      <itunes:subtitle>Introducing a show about the developers, programmers, hackers, geeks, and open source rebels who are shaping our digital future.
+</itunes:subtitle>
+      <itunes:keywords/>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:episodeType>trailer</itunes:episodeType>
+      <itunes:episode>0</itunes:episode>
+      <itunes:season>1</itunes:season>
+    </item>
+  </channel>
+</rss>
