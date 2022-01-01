@@ -1,0 +1,28 @@
+@startuml
+!theme plain
+
+node "Cloud Server" {
+  () HTTP
+  [reverse proxy]
+  [pwa] #grey
+  [authenticator]
+  [api] #grey
+  [updater] #grey
+  
+  database "Postgres" {
+    [postgres] <-down-> api
+    [postgres] <-down-> updater
+  }
+}
+
+cloud "Auth0" {
+  [tenant]
+}
+
+[tenant] <-> [authenticator]
+[reverse proxy] <-up-> HTTP
+[reverse proxy] <-down-> [authenticator]
+[authenticator] <-down-> [api]
+[reverse proxy] <-down-> [pwa]
+
+@enduml
