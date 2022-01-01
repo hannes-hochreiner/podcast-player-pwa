@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+   <channel>
+      <ttl>60</ttl>
+      <title>Listen to The Lancet Oncology</title>
+      <link>http://www.thelancet.com/lanonc/audio</link>
+      <description>The Lancet Oncology is a monthly journal, renowned for the publication of high-quality peer reviewed research, reviews and analysis in cancer from around the world. In the monthly podcasts, editors of the journal discuss highlights of the current issue.</description>
+      <language>en-uk</language>
+      <copyright>© 2017 Elsevier Ltd.</copyright>
+      <category>Science &amp; Medicine</category>
+      <category>Health</category>
+      <category>Education</category>
+      <image>
+         <url>http://www.thelancet.com/pb/assets/raw/lancet/podcast/lanonc.jpg</url>
+         <title>Listen to The Lancet Oncology</title>
+         <link>http://www.thelancet.com/lanonc/audio</link>
+         <width>125</width>
+         <height>125</height>
+      </image>
+      <itunes:author>The Lancet Oncology</itunes:author>
+      <itunes:subtitle>Monthly discussion on the latest articles, reviews and comments published by The Lancet Oncology.</itunes:subtitle>
+      <itunes:summary>The Lancet Oncology is a monthly journal, renowned for the publication of high-quality peer reviewed research, reviews and analysis in cancer from around the world. In the monthly podcasts, editors of the journal discuss highlights of the current issue.</itunes:summary>
+      <itunes:owner>
+         <itunes:name>The Lancet</itunes:name>
+         <itunes:email>podcast@lancet.com</itunes:email>
+      </itunes:owner>
+      <itunes:category text="Science &amp; Medicine"/>
+      <itunes:category text="Health"/>
+      <itunes:category text="Education"/>
+      <itunes:explicit>clean</itunes:explicit>
+      <itunes:keywords>cancer, oncology, tumour, chemotherapy, radiotherapy, surgery, research, trial, study, drug, metastatic, palliative</itunes:keywords>
+      <itunes:image href="http://www.thelancet.com/pb/assets/raw/lancet/podcast/lanonc.jpg"/>
+      <item>
+         <title>Future cancer research priorities in the USA: The Lancet Oncology Commission: October 31, 2017</title>
+         <link>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_171031_moonshot.mp3</link>
+         <description>&lt;p&gt;Commission co-chairs Chi Van Dang and Elizabeth M. Jaffee discuss a new &lt;em&gt;Lancet Oncology&lt;/em&gt; Commission on cancer treatment and care in the USA.&lt;/p&gt;</description>
+         <guid>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_171031_moonshot.mp3</guid>
+         <enclosure length="0"
+                    type="audio/mpeg"
+                    url="http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_171031_moonshot.mp3"/>
+         <pubDate>Tue, 31 Oct 2017 23:30:00 -0700</pubDate>
+         <itunes:author>The Lancet</itunes:author>
+         <itunes:subtitle>&lt;p&gt;Commission co-chairs Chi Van Dang and Elizabeth M. Jaffee discuss a new &lt;em&gt;Lancet Oncology&lt;/em&gt; Commission on cancer treatment and care in the USA.&lt;/p&gt;</itunes:subtitle>
+         <itunes:duration>10:45</itunes:duration>
+         <itunes:explicit>clean</itunes:explicit>
+         <itunes:keywords>USA; oncology; cancer; moonshot; commission</itunes:keywords>
+      </item>
+      <item>
+         <title>Cancer in Peru: The Lancet Oncology</title>
+         <link>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170927_peru.mp3</link>
+         <description>&lt;p&gt;Ben Anderson talks about cancer care and cancer trends in Peru.&lt;/p&gt;</description>
+         <guid>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170927_peru.mp3</guid>
+         <enclosure length="0"
+                    type="audio/mpeg"
+                    url="http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170927_peru.mp3"/>
+         <pubDate>Thu, 28 Sep 2017 07:30:00 -0700</pubDate>
+         <itunes:author>The Lancet</itunes:author>
+         <itunes:subtitle>&lt;p&gt;Ben Anderson talks about cancer care and cancer trends in Peru.&lt;/p&gt;</itunes:subtitle>
+         <itunes:duration>19:09</itunes:duration>
+         <itunes:explicit>clean</itunes:explicit>
+      </item>
+      <item>
+         <title>Indel derived tumour-specific neoantigens: The Lancet Oncology: Aug 2017</title>
+         <link>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170726_indels.mp3</link>
+         <description>&lt;p&gt;Samra Turajlic discusses the contribution of small insertions and deletions to&amp;nbsp;tumour-specific antigen analyses.&lt;/p&gt;</description>
+         <guid>http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170726_indels.mp3</guid>
+         <enclosure length="0"
+                    type="audio/mpeg"
+                    url="http://www.thelancet.com/pb-assets/Lancet/stories/audio/lanonc/2017/lanonc_170726_indels.mp3"/>
+         <itunes:author>The Lancet</itunes:author>
+         <itunes:subtitle>&lt;p&gt;Samra Turajlic discusses the contribution of small insertions and deletions to&amp;nbsp;tumour-specific antigen analyses.&lt;/p&gt;</itunes:subtitle>
+         <itunes:duration>08:01</itunes:duration>
+         <itunes:explicit>clean</itunes:explicit>
+         <itunes:keywords>neoantigen, mutations, insertions, deletions, indels,  immunogenicity, check-point inhibitors, immunotherapy, renal cell cancer,  melanoma</itunes:keywords>
+      </item>
+   </channel>
+</rss>

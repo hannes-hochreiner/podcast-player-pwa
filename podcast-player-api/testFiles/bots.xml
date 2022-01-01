@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>O'Reilly Bots Podcast - O'Reilly Media Podcast</title>
+    <itunes:subtitle>Exploring bots, conversational interfaces, AI, and messaging.</itunes:subtitle>
+    <description>Exploring bots, conversational interfaces, AI, and messaging.</description>
+    <itunes:summary>The O'Reilly Bots Podcast covers advances in conversational user interfaces, artificial intelligence, and messaging that are revolutionizing the way we interact with software.</itunes:summary>
+    <image>
+      <url>http://cdn.oreilly.com/radar/bot-podcast/avatar_Bots_1400x1400.png</url>
+      <title>O'Reilly Bots Podcast - O'Reilly Media Podcast</title>
+      <link>https://www.oreilly.com</link>
+    </image>
+    <link>https://www.oreilly.com</link>
+    <itunes:author>O'Reilly Media</itunes:author>
+    <language>en-US</language>
+    <copyright>O'Reilly Media Inc.</copyright>
+    <managingEditor>onlinecap@oreilly.com (O'Reilly Media)</managingEditor>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:owner>
+      <itunes:name>O'Reilly Media</itunes:name>
+      <itunes:email>onlinecap@oreilly.com</itunes:email>
+    </itunes:owner>
+    <itunes:category text="Society &amp;amp; Culture"></itunes:category>
+    <itunes:category text="Business"></itunes:category>
+    <itunes:category text="Technology">
+      <itunes:category text="Tech News"></itunes:category>
+    </itunes:category>
+    <lastBuildDate>Tue, 13 Mar 2018 19:08:36 +0000</lastBuildDate>
+    <item>
+      <title>Jason Laska and Michael Akilian on using AI to schedule meetings</title>
+      <pubDate>Thu, 25 May 2017 10:30:00 +0000</pubDate>
+      <description>&lt;p&gt;&lt;em&gt;The O’Reilly Bots Podcast: The technical and social dynamics of solving scheduling problems.&lt;/em&gt;&lt;/p&gt;&lt;p&gt;In this episode of the &lt;a href="https://www.oreilly.com/topics/oreilly-bots-podcast"&gt;O’Reilly Bots Podcast&lt;/a&gt;, Pete Skomoroch and I talk to &lt;a href="https://www.linkedin.com/in/jasonlaska"&gt;Jason Laska&lt;/a&gt; and &lt;a href="https://twitter.com/akilian"&gt;Michael Akilian&lt;/a&gt; of &lt;a href="https://claralabs.com/"&gt;Clara Labs&lt;/a&gt;, creator of a virtual assistant—Clara—that schedules meetings and interacts in natural language through email.&lt;/p&gt;
+
+&lt;p&gt;E-mail is, to me, a highly promising (and somewhat underrated) venue for bots. Messaging is growing quickly, but e-mail is still the standard way to communicate within businesses and especially between businesses. E-mail conventions are somewhat standardized, and much of it is highly routinized—automatically generated reports, receipts, etc.—so it’s ripe for automation.&lt;/p&gt;
+
+&lt;p&gt;Laska, who leads the machine learning efforts at Clara Labs, and Akilian, the company’s co-founder and CTO, talk about the reality of developing an AI-driven product, and explain Clara’s human-in-the-loop system. “People are still there to do some of the most challenging aspects of this work, and that’s exactly what you want to use people for,” says Laska.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Discussion points:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;How both the Clara bot and its users deal with the often-complex social dynamics of scheduling, which is “fundamentally a negotiation,” says Akilian.&lt;/li&gt;
+
+	&lt;li&gt;How Clara parses and evaluates dates and times&lt;/li&gt;
+
+	&lt;li&gt;Email vs. messaging as a platform for AI bots&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Other Links&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Jerry Chen’s article &lt;em&gt;&lt;a href="https://news.greylock.com/the-new-moats-53f61aeac2d9"&gt;The New Moats: Why Systems of Intelligence are the Next Defensible Business Model&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+
+	&lt;li&gt;&lt;a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2017/01/paper2616.pdf"&gt;Microsoft’s paper&lt;/a&gt; on developing calendar help (PDF)&lt;/li&gt;
+
+	&lt;li&gt;&lt;a href="https://research.googleblog.com/2016/11/zero-shot-translation-with-googles.html"&gt;Google’s multilingual neural machine translation system&lt;/a&gt;&lt;/li&gt;
+
+	&lt;li&gt;Facebook’s &lt;a href="https://poncho.is/"&gt;Poncho bot&lt;/a&gt; for weather forecasts&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <itunes:summary>&lt;p&gt;In this episode of the &lt;a href="https://www.oreilly.com/topics/oreilly-bots-podcast"&gt;O’Reilly Bots Podcast&lt;/a&gt;, Pete Skomoroch and I talk to &lt;a href="https://www.linkedin.com/in/jasonlaska"&gt;Jason Laska&lt;/a&gt; and &lt;a href="https://twitter.com/akilian"&gt;Michael Akilian&lt;/a&gt; of &lt;a href="https://claralabs.com/"&gt;Clara Labs&lt;/a&gt;, creator of a virtual assistant—Clara—that schedules meetings and interacts in natural language through email.&lt;/p&gt;
+
+&lt;p&gt;E-mail is, to me, a highly promising (and somewhat underrated) venue for bots. Messaging is growing quickly, but e-mail is still the standard way to communicate within businesses and especially between businesses. E-mail conventions are somewhat standardized, and much of it is highly routinized—automatically generated reports, receipts, etc.—so it’s ripe for automation.&lt;/p&gt;
+
+&lt;p&gt;Laska, who leads the machine learning efforts at Clara Labs, and Akilian, the company’s co-founder and CTO, talk about the reality of developing an AI-driven product, and explain Clara’s human-in-the-loop system. “People are still there to do some of the most challenging aspects of this work, and that’s exactly what you want to use people for,” says Laska.&lt;/p&gt;</itunes:summary>
+      <itunes:author>O'Reilly Media</itunes:author>
+      <link>https://www.oreilly.com/ideas/jason-laska-and-michael-akilian-on-scheduling-bots</link>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:order>1</itunes:order>
+      <itunes:duration>00:44:40</itunes:duration>
+      <enclosure url="http://dts.podtrac.com/redirect.mp3/cdn.oreillystatic.com/radar/bot-podcast/Jason_Laska_and_Michael_Akilian_on_scheduling_bots.mp3" length="44983910" type="audio/mpeg"></enclosure>
+      <category>ai</category>
+      <category>artificial intelligence</category>
+      <category>bots</category>
+      <category>scheduling bots</category>
+      <category>email disruption</category>
+      <category>email</category>
+    </item>
+    <item>
+      <title>Chris Messina on Facebook as a utility</title>
+      <pubDate>Thu, 11 May 2017 10:45:00 +0000</pubDate>
+      <description>&lt;p&gt;&lt;em&gt;The O’Reilly Bots Podcast: The social impact of Facebook.&lt;/em&gt;&lt;/p&gt;&lt;p&gt;In this episode of the &lt;a href="https://www.oreilly.com/topics/oreilly-bots-podcast"&gt;Bots Podcast&lt;/a&gt;, &lt;a href="https://twitter.com/chrismessina"&gt;Chris Messina&lt;/a&gt; and I reflect on what Facebook has become, the role that it now plays in our lives, and what it all means for developers. We recorded this discussion shortly after attending &lt;a href="https://www.fbf8.com/"&gt;Facebook’s F8&lt;/a&gt; Developer Conference in San Jose.&lt;/p&gt;&lt;p&gt;When it opened to users in 2004, Facebook’s essential value was exclusion—it was available at first only to Harvard students, then to students at a handful of top-tier universities. Since then, it has grown to host two billion monthly active users, and along the way has come to feel like a utility—a simple reality of digital existence.&lt;/p&gt;
+
+&lt;p&gt;Messina, an independent bot enthusiast and social media observer (and &lt;a href="http://www.businessinsider.com/chris-messina-talks-about-inventing-the-hashtag-on-twitter-2013-11"&gt;creator of the hashtag&lt;/a&gt;) calls Facebook “a state of mind, a belief system. It is a way of participating in the common discourse that reinforces your own perceptions.”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Discussion points:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+	&lt;li&gt;Augmented Reality (AR) and Virtual Reality (VR) dominated the discussion (especially the keynotes) at F8. &amp;nbsp;In addition to reviewing the &lt;a href="https://medium.com/@amitt/what-facebooks-announcements-at-f8-2017-mean-for-vr-ar-startups-356d74ad3ec0"&gt;new product/project announcements&lt;/a&gt;, we talk about what is being done to cultivate the skills that the next generation of AR/VR content creators will need.&lt;/li&gt;
+
+	&lt;li&gt;In an age of fake news, we discuss Facebook’s responsibilities. Despite some calls for Facebook to become a gatekeeper, the company seems to recognize that doing so could alienate a large portion of its user base—and interfere with the &lt;a href="https://www.eff.org/issues/dmca"&gt;safe-harbor protection&lt;/a&gt; that it enjoys as an unedited platform.&lt;/li&gt;
+
+	&lt;li&gt;We compare Facebook and &lt;a href="https://www.snapchat.com/"&gt;Snapchat&lt;/a&gt;, and note that Snapchat will face mounting pressure to open its platform to developers.&lt;/li&gt;
+
+	&lt;li&gt;The&lt;a href="https://techcrunch.com/2017/04/18/facebook-bot-discovery/"&gt; new features announced for Facebook Messenger&lt;/a&gt;, including the Discover tab and parametric QR codes, provide some interesting avenues for bot discovery, one of the most formidable challenges that bot developers face.&lt;/li&gt;
+
+	&lt;li&gt;How much natural language understanding do bots really need? There are plenty of existing processes that can be valuably brought to messaging platforms without really engaging with NLU at all. As Messina says, “the best NLU is still done by humans.”&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <itunes:summary>&lt;p&gt;In this episode of the &lt;a href="https://www.oreilly.com/topics/oreilly-bots-podcast"&gt;Bots Podcast&lt;/a&gt;, &lt;a href="https://twitter.com/chrismessina"&gt;Chris Messina&lt;/a&gt; and I reflect on what Facebook has become, the role that it now plays in our lives, and what it all means for developers. We recorded this discussion shortly after attending &lt;a href="https://www.fbf8.com/"&gt;Facebook’s F8&lt;/a&gt; Developer Conference in San Jose.&lt;/p&gt;</itunes:summary>
+      <itunes:author>O'Reilly Media</itunes:author>
+      <link>https://www.oreilly.com/ideas/chris-messina-on-facebook-as-a-utility</link>
+      <itunes:explicit>no</itunes:explicit>
+      <itunes:order>1</itunes:order>
+      <itunes:duration>01:07:40</itunes:duration>
+      <enclosure url="http://dts.podtrac.com/redirect.mp3/cdn.oreillystatic.com/radar/bot-podcast/Chris_Messina_on_Facebook_as_a_utility.mp3" length="68157440" type="audio/mpeg"></enclosure>
+      <category>ai</category>
+      <category>artificial intelligence</category>
+      <category>Facebook</category>
+      <category>bots</category>
+    </item>
+  </channel>
+</rss>

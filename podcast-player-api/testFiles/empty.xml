@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+xmlns:rawvoice="http://www.rawvoice.com/rawvoiceRssModule/"
+xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+>
+
+<channel>
+	<title>C-RadaR</title>
+	<atom:link href="https://www.c-radar.de/feed/" rel="self" type="application/rss+xml" />
+	<link>https://www.c-radar.de</link>
+	<description>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</description>
+	<lastBuildDate>Fri, 22 Sep 2017 16:35:57 +0000</lastBuildDate>
+	<language>de-DE</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=4.8.2</generator>
+
+<!-- podcast_generator="Blubrry PowerPress/7.1.1" mode="advanced" feedslug="feed" -->
+	<itunes:summary>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</itunes:summary>
+	<itunes:author>C-RadaR</itunes:author>
+	<itunes:explicit>clean</itunes:explicit>
+	<itunes:type>serial</itunes:type>
+	<itunes:owner>
+		<itunes:name>C-RadaR</itunes:name>
+		<itunes:email>info@c-radar.de</itunes:email>
+	</itunes:owner>
+	<managingEditor>info@c-radar.de (C-RadaR)</managingEditor>
+	<itunes:subtitle>Monatliche Radiosendung des Chaos Computer Clubs auf Radio Darmstadt. Jeden 2ten Donnerstag im Monat, 21-23 Uhr. 103,4 MHz / 99,85 MHz im Kabel / Stream. Tune In!</itunes:subtitle>
+	<itunes:category text="Technology">
+		<itunes:category text="Tech News"></itunes:category>
+	</itunes:category>
+	</channel>
+</rss>

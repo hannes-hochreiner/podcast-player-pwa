@@ -2,3 +2,9 @@
 # Podcast Player
 
 A simple offline-first app for listening to podcasts.
+
+## License
+
+This work is licensed under the MIT license.
+
+`SPDX-License-Identifier: MIT`

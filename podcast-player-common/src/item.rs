@@ -1,4 +1,11 @@
+pub mod item_keys;
+pub mod item_meta;
+pub mod item_val;
+
 use chrono::{DateTime, FixedOffset};
+use item_keys::ItemKeys;
+use item_meta::{DownloadStatus, ItemMeta};
+use item_val::ItemVal;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -105,64 +112,6 @@ impl From<&ItemVal> for Item {
             val: val.clone(),
             meta,
             keys,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct ItemVal {
-    pub id: Uuid,
-    pub title: String,
-    pub date: DateTime<FixedOffset>,
-    pub enclosure_type: String,
-    pub enclosure_url: String,
-    pub channel_id: Uuid,
-    pub update_ts: DateTime<FixedOffset>,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct ItemMeta {
-    id: Uuid,
-    new: bool,
-    download: bool,
-    download_status: DownloadStatus,
-    current_time: Option<f64>,
-    play_count: u32,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub enum DownloadStatus {
-    NotRequested,
-    Pending,
-    InProgress,
-    Ok(u32),
-    Error,
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct ItemKeys {
-    pub id: Uuid,
-    pub year_month: String,
-    pub download_required: String,
-    pub download_ok: String,
-}
-
-impl ItemKeys {
-    pub fn new_from_val_meta(val: &ItemVal, meta: &ItemMeta) -> Self {
-        let download_required = match (&meta.download, &meta.download_status) {
-            (true, DownloadStatus::Pending) => String::from("true"),
-            _ => String::from("false"),
-        };
-        let download_ok = match &meta.download_status {
-            &DownloadStatus::Ok(_) => String::from("true"),
-            _ => String::from("false"),
-        };
-
-        Self {
-            id: val.id,
-            year_month: val.date.to_rfc3339()[0..7].to_string(),
-            download_required,
-            download_ok,
         }
     }
 }
