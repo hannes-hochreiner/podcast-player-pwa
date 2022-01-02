@@ -27,6 +27,7 @@ pub enum Request {
     UpdateChannel(Channel),
     UpdateItem(Item),
     GetFetcherConf(Option<FetcherConfig>),
+    GetUpdaterConf(Option<UpdaterConfig>),
     AddFeed(String),
 }
 
@@ -44,6 +45,7 @@ pub enum Response {
     UpdateItem(Item),
     DownloadEnclosure(Item),
     FetcherConfig(Option<FetcherConfig>),
+    UpdaterConfig(Option<UpdaterConfig>),
 }
 
 pub struct Repo {
@@ -366,6 +368,22 @@ impl Agent for Repo {
 
     fn handle_input(&mut self, msg: Self::Input, handler_id: HandlerId) {
         match msg {
+            Request::GetUpdaterConf(conf) => self.pending_tasks.push((
+                handler_id,
+                Box::new(put_get_with_key::PutGetWithKeyTask::new(
+                    put_get_with_key::Kind::ConfigurationUpdater,
+                    conf.map(|c| serde_wasm_bindgen::to_value(&c).unwrap()),
+                    serde_wasm_bindgen::to_value("updater").unwrap(),
+                )),
+            )),
+            Request::GetFetcherConf(conf) => self.pending_tasks.push((
+                handler_id,
+                Box::new(put_get_with_key::PutGetWithKeyTask::new(
+                    put_get_with_key::Kind::ConfigurationFetcher,
+                    conf.map(|c| serde_wasm_bindgen::to_value(&c).unwrap()),
+                    serde_wasm_bindgen::to_value("fetcher").unwrap(),
+                )),
+            )),
             Request::AddFeed(url) => {
                 let task_id = Uuid::new_v4();
 
@@ -380,10 +398,6 @@ impl Agent for Repo {
             Request::GetFeeds => self
                 .pending_tasks
                 .push((handler_id, Box::new(GetAllTask::new(Kind::Feeds, None)))),
-            Request::GetFetcherConf(fct) => self.pending_tasks.push((
-                handler_id,
-                Box::new(GetFetcherConfTask::new_with_option(fct)),
-            )),
             Request::AddFeedVals(feeds) => self.pending_tasks.push((
                 handler_id,
                 Box::new(AddFeedValsTask::new_with_feed_vals(feeds)),

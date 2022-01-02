@@ -1,6 +1,8 @@
 // use anyhow::Result;
-use crate::objects::{ChannelVal, DownloadStatus, FeedVal, ItemVal, JsError};
+use crate::objects::{ChannelVal, DownloadStatus, FeedVal, ItemVal, JsError, UpdaterConfig};
+use chrono::Utc;
 use std::collections::{HashMap, HashSet};
+use url::Url;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
@@ -31,12 +33,13 @@ pub struct Updater {
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
     pending_tasks: HashMap<Uuid, Task>,
     notifier: Dispatcher<notifier::Notifier>,
+    config: Option<UpdaterConfig>,
 }
 
 enum Task {
     GetFeeds,
     GetChannels,
-    GetItems(Uuid),
+    GetItems,
 }
 
 impl Updater {
@@ -48,23 +51,64 @@ impl Updater {
                     .navigator()
                     .connection()?
                     .type_();
-                match conn_type {
-                    ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Unknown => {
+                match (&self.config, conn_type) {
+                    (
+                        Some(config),
+                        ConnectionType::Ethernet | ConnectionType::Wifi | ConnectionType::Unknown,
+                    ) => {
                         let task_id_feeds = Uuid::new_v4();
+                        let url_feeds = String::from("/api/feeds");
 
                         self.pending_tasks.insert(task_id_feeds, Task::GetFeeds);
                         self.fetcher.send(fetcher::Request::FetchText(
                             task_id_feeds,
-                            "/api/feeds".into(),
+                            match config.last_fetch_feeds {
+                                Some(date) => {
+                                    let encoded: String =
+                                        url::form_urlencoded::Serializer::new(String::new())
+                                            .append_pair("since", &date.to_rfc3339())
+                                            .finish();
+                                    format!("{}?{}", url_feeds, encoded)
+                                }
+                                None => url_feeds,
+                            },
                         ));
 
                         let task_id_channels = Uuid::new_v4();
+                        let url_channels = String::from("/api/channels");
 
                         self.pending_tasks
                             .insert(task_id_channels, Task::GetChannels);
                         self.fetcher.send(fetcher::Request::FetchText(
                             task_id_channels,
-                            "/api/channels".into(),
+                            match config.last_fetch_channels {
+                                Some(date) => {
+                                    let encoded: String =
+                                        url::form_urlencoded::Serializer::new(String::new())
+                                            .append_pair("since", &date.to_rfc3339())
+                                            .finish();
+                                    format!("{}?{}", url_channels, encoded)
+                                }
+                                None => url_channels,
+                            },
+                        ));
+
+                        let task_id_items = Uuid::new_v4();
+                        let url_items = String::from("/api/items");
+
+                        self.pending_tasks.insert(task_id_items, Task::GetItems);
+                        self.fetcher.send(fetcher::Request::FetchText(
+                            task_id_items,
+                            match config.last_fetch_items {
+                                Some(date) => {
+                                    let encoded: String =
+                                        url::form_urlencoded::Serializer::new(String::new())
+                                            .append_pair("since", &date.to_rfc3339())
+                                            .finish();
+                                    format!("{}?{}", url_items, encoded)
+                                }
+                                None => url_items,
+                            },
                         ));
                     }
                     _ => {}
@@ -85,6 +129,20 @@ impl Updater {
                         self.repo.send(repo::Request::UpdateItem(item));
                     }
                 }
+                repo::Response::UpdaterConfig(config) => match config {
+                    Some(config) => {
+                        if self.config.is_none() {
+                            self.config = Some(config);
+                        }
+                    }
+                    None => self
+                        .repo
+                        .send(repo::Request::GetUpdaterConf(Some(UpdaterConfig {
+                            last_fetch_feeds: None,
+                            last_fetch_channels: None,
+                            last_fetch_items: None,
+                        }))),
+                },
                 _ => {}
             },
             Message::FetcherMessage(fm) => match fm {
@@ -99,29 +157,35 @@ impl Updater {
                             Task::GetFeeds => {
                                 let feeds: Vec<FeedVal> = serde_json::from_str(&s)?;
 
+                                if let Some(config) = &mut self.config {
+                                    config.last_fetch_feeds = Some(Utc::now().into());
+                                    self.repo
+                                        .send(repo::Request::GetUpdaterConf(Some(config.clone())))
+                                }
                                 self.repo.send(repo::Request::AddFeedVals(feeds));
                             }
                             Task::GetChannels => {
                                 let channels: Vec<ChannelVal> = serde_json::from_str(&s)?;
 
-                                for channel in &channels {
-                                    let task_id = Uuid::new_v4();
-
-                                    self.pending_tasks
-                                        .insert(task_id, Task::GetItems(channel.id.clone()));
-                                    self.fetcher.send(fetcher::Request::FetchText(
-                                        task_id,
-                                        format!("/api/channels/{}/items", channel.id).into(),
-                                    ));
+                                if let Some(config) = &mut self.config {
+                                    config.last_fetch_channels = Some(Utc::now().into());
+                                    self.repo
+                                        .send(repo::Request::GetUpdaterConf(Some(config.clone())))
                                 }
                                 self.repo.send(repo::Request::AddChannelVals(channels));
                             }
-                            Task::GetItems(_) => {
+                            Task::GetItems => {
                                 let items: Vec<ItemVal> = serde_json::from_str(&s)?;
+
+                                if let Some(config) = &mut self.config {
+                                    config.last_fetch_items = Some(Utc::now().into());
+                                    self.repo
+                                        .send(repo::Request::GetUpdaterConf(Some(config.clone())))
+                                }
                                 self.repo.send(repo::Request::AddItemVals(items));
                             }
                         },
-                        Err(_) => todo!("implement error handling"),
+                        Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
                     }
                 }
                 fetcher::Response::Binary(task_id, res) => {
@@ -134,7 +198,7 @@ impl Updater {
                         Ok(_ab) => match task {
                             _ => {}
                         },
-                        Err(_) => todo!("implement error handling"),
+                        Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
                     }
                 }
             },
@@ -173,14 +237,19 @@ impl Agent for Updater {
             Err(e) => notifier.send(notifier::Request::NotifyError(e)),
         }
 
+        let mut repo = repo::Repo::bridge(callback_repo);
+
+        repo.send(repo::Request::GetUpdaterConf(None));
+
         Self {
             _link: link,
             subscribers: HashSet::new(),
             _closure_interval: closure_interval,
-            repo: repo::Repo::bridge(callback_repo),
+            repo,
             fetcher: fetcher::Fetcher::bridge(callback_fetcher),
             pending_tasks: HashMap::new(),
             notifier: notifier,
+            config: None,
         }
     }
 
