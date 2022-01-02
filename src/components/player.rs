@@ -89,6 +89,14 @@ impl Player {
                                         <span class="tag is-primary">{"played"}</span>
                                     </div>
                                 </div>
+                                <div class="control">{match &i.get_download_status() {
+                                    DownloadStatus::Pending => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_queue" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download pending"}</span></div>},
+                                    DownloadStatus::Ok(_) => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_done" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download ok"}</span></div>},
+                                    DownloadStatus::InProgress => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_sync" style={IconStyle::Filled}/></span><span class="tag is-primary">{"downloading"}</span></div>},
+                                    DownloadStatus::Error => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_off" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download error"}</span></div>},
+                                    _ => html!{<div class="tags"><span class="tag">{"download"}</span></div>}
+                                }}
+                                </div>
                             </div>
                         </div>
                     </div> }}).collect::<Html>() }
