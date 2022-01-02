@@ -242,7 +242,10 @@ impl Player {
                                 DownloadStatus::Ok(_) => true,
                                 _ => false,
                             })
-                            .for_each(|i| self_items.push(i.clone()));
+                            .for_each(|i| {
+                                res = true;
+                                self_items.push(i.clone());
+                            });
                         self_items.sort_by(|a, b| a.get_date().cmp(&b.get_date()));
                     }
 
