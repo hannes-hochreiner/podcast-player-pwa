@@ -2,6 +2,7 @@
 # Podcast Player
 
 A simple offline-first app for listening to podcasts.
+This web application was created as part of the [Podcast Player](https://github.com/hannes-hochreiner/podcast-player) project.
 
 ## License
 
