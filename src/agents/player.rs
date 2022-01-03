@@ -6,12 +6,10 @@ use std::collections::HashSet;
 use task::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::{closure::Closure, JsValue};
-use wasm_bindgen_futures::JsFuture;
-use web_sys::{self, Event, MediaSource, Url};
+use web_sys::{self, Event, MediaSource};
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 // TODO: check play events
-// TODO: check whether any of the updated items need to be added to or removed from the item list
 
 #[derive(Debug, Clone)]
 pub enum Request {
@@ -78,135 +76,11 @@ impl Player {
 
     fn process_task(&mut self, task: &mut Task) -> Result<bool, JsError> {
         match task {
-            Task::End(task) => match task.get_stage() {
-                EndStage::Finalize => {
-                    if let Some(item) = &mut self.source {
-                        item.increment_play_count();
-                        item.set_current_time(None);
-                        self.repo.send(repo::Request::UpdateItem(item.clone()));
-                        self.send_response(Response::End);
-                    }
-
-                    Ok(true)
-                }
-            },
-            Task::SetCurrentTime(task) => match task.get_stage() {
-                SetCurrentTimeStage::Init => {
-                    self.audio_element
-                        .set_current_time(task.get_current_time().clone());
-                    Ok(false)
-                }
-                SetCurrentTimeStage::Finalize => {
-                    if let Some(item) = &mut self.source {
-                        item.set_current_time(Some(self.audio_element.current_time()));
-                        self.repo.send(repo::Request::UpdateItem(item.clone()));
-                    }
-                    Ok(true)
-                }
-            },
-            Task::Pause(task) => match task.get_stage() {
-                PauseStage::Init => {
-                    if self.audio_element.paused() {
-                        Ok(true)
-                    } else {
-                        self.audio_element.pause()?;
-                        task.pause_triggered();
-                        Ok(false)
-                    }
-                }
-                PauseStage::WaitingForPause => Ok(false),
-                PauseStage::Finalize => {
-                    if let Some(curr_item) = &mut self.source {
-                        self.audio_element.remove_event_listener_with_callback(
-                            "timeupdate",
-                            self.on_timeupdate_closure.as_ref().unchecked_ref(),
-                        )?;
-                        curr_item.set_current_time(Some(self.audio_element.current_time()));
-                        self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
-                        self.send_response(Response::Paused);
-                    }
-                    Ok(true)
-                }
-            },
-            Task::Play(task) => match task.get_stage() {
-                PlayStage::Init => {
-                    self.audio_element.add_event_listener_with_callback(
-                        "timeupdate",
-                        self.on_timeupdate_closure.as_ref().unchecked_ref(),
-                    )?;
-
-                    let prom = self.audio_element.play()?;
-
-                    self.link.send_future(async move {
-                        Message::StartedPlaying(JsFuture::from(prom).await)
-                    });
-                    task.play_triggered();
-                    Ok(false)
-                }
-                PlayStage::WaitingForPlay => Ok(false),
-                PlayStage::Finalize => {
-                    self.send_response(Response::Playing);
-                    Ok(true)
-                }
-            },
-            Task::SetSource(task) => {
-                match task.get_stage() {
-                    SetSourceStage::Init => {
-                        // remove source
-                        self.source = None;
-                        // set new media source
-                        self.media_source = MediaSource::new()?;
-                        self.audio_element
-                            .set_src(&Url::create_object_url_with_source(&self.media_source)?);
-                        self.media_source.set_onsourceopen(Some(
-                            self.mediasource_opened_closure.as_ref().unchecked_ref(),
-                        ));
-                        // request data
-                        self.repo
-                            .send(repo::Request::GetEnclosure(task.get_item_ref().get_id()));
-                        task.source_open_data_triggered();
-                        Ok(false)
-                    }
-                    SetSourceStage::WaitingForSourceOpenData => Ok(false),
-                    SetSourceStage::SourceOpenData => {
-                        // clear existing source buffers
-                        let sbl = self.media_source.source_buffers();
-
-                        while let Some(sb) = sbl.get(0) {
-                            self.media_source.remove_source_buffer(&sb)?
-                        }
-                        // create new source buffer
-                        let sb = self.media_source.add_source_buffer("audio/mpeg")?;
-                        self.audio_element.set_preload("metadata");
-                        // load data
-                        sb.append_buffer_with_array_buffer(
-                            task.get_data_ref().ok_or("could not get data")?,
-                        )?;
-                        sb.set_onupdate(Some(
-                            self.sourcebuffer_update_closure.as_ref().unchecked_ref(),
-                        ));
-                        task.data_buffer_update_triggered();
-                        Ok(false)
-                    }
-                    SetSourceStage::WaitingForBufferUpdate => Ok(false),
-                    SetSourceStage::Finalize => {
-                        self.audio_element.set_playback_rate(1.5);
-                        self.audio_element.set_volume(1.0);
-                        self.audio_element.set_current_time(
-                            match task.get_item_ref().get_current_time() {
-                                Some(current_time) => current_time,
-                                None => 0.0,
-                            },
-                        );
-                        self.source = Some(task.get_item_ref().clone());
-                        self.send_response(Response::SourceSet(
-                            task.get_item_ref().clone(),
-                            self.audio_element.duration(),
-                        ));
-                        Ok(true)
-                    }
-                }
-            }
+            Task::End(task) => self.process(task),
+            Task::SetCurrentTime(task) => self.process(task),
+            Task::Pause(task) => self.process(task),
+            Task::Play(task) => self.process(task),
+            Task::SetSource(task) => self.process(task),
         }
     }
 

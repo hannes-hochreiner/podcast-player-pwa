@@ -1,3 +1,8 @@
+use crate::{
+    agents::{player::Response, repo},
+    objects::JsError,
+};
+
 /// # End Task
 ///
 /// It is assumed that this task will only be created in the on_end event handler.
@@ -24,5 +29,22 @@ impl EndTask {
 
     pub fn get_stage(&self) -> &EndStage {
         &self.stage
+    }
+}
+
+impl super::TaskProcessor<EndTask> for super::super::Player {
+    fn process(&mut self, task: &mut EndTask) -> Result<bool, JsError> {
+        match task.get_stage() {
+            EndStage::Finalize => {
+                if let Some(item) = &mut self.source {
+                    item.increment_play_count();
+                    item.set_current_time(None);
+                    self.repo.send(repo::Request::UpdateItem(item.clone()));
+                    self.send_response(Response::End);
+                }
+
+                Ok(true)
+            }
+        }
     }
 }

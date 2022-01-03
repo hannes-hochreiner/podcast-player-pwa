@@ -1,3 +1,7 @@
+use wasm_bindgen::JsCast;
+
+use crate::agents::{player::Response, repo};
+
 #[derive(Debug)]
 pub struct PauseTask {
     stage: PauseStage,
@@ -27,5 +31,34 @@ impl PauseTask {
 
     pub fn get_stage(&self) -> &PauseStage {
         &self.stage
+    }
+}
+
+impl super::TaskProcessor<PauseTask> for super::super::Player {
+    fn process(&mut self, task: &mut PauseTask) -> Result<bool, crate::objects::JsError> {
+        match task.get_stage() {
+            PauseStage::Init => {
+                if self.audio_element.paused() {
+                    Ok(true)
+                } else {
+                    self.audio_element.pause()?;
+                    task.pause_triggered();
+                    Ok(false)
+                }
+            }
+            PauseStage::WaitingForPause => Ok(false),
+            PauseStage::Finalize => {
+                if let Some(curr_item) = &mut self.source {
+                    self.audio_element.remove_event_listener_with_callback(
+                        "timeupdate",
+                        self.on_timeupdate_closure.as_ref().unchecked_ref(),
+                    )?;
+                    curr_item.set_current_time(Some(self.audio_element.current_time()));
+                    self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
+                    self.send_response(Response::Paused);
+                }
+                Ok(true)
+            }
+        }
     }
 }

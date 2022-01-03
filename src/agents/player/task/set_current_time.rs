@@ -1,15 +1,17 @@
-/// # Task to set the current time
-///
-/// ## Stages and Transitions
-/// * Init (S)
-/// * time_set (T)
-/// * Finalize (S)
+use crate::agents::repo;
+
 #[derive(Debug)]
 pub enum SetCurrentTimeStage {
     Init,
     Finalize,
 }
 
+/// # Task to set the current time
+///
+/// ## Stages and Transitions
+/// * Init (S)
+/// * time_set (T)
+/// * Finalize (S)
 #[derive(Debug)]
 pub struct SetCurrentTimeTask {
     stage: SetCurrentTimeStage,
@@ -34,5 +36,24 @@ impl SetCurrentTimeTask {
 
     pub fn get_current_time(&self) -> &f64 {
         &self.time
+    }
+}
+
+impl super::TaskProcessor<SetCurrentTimeTask> for super::super::Player {
+    fn process(&mut self, task: &mut SetCurrentTimeTask) -> Result<bool, crate::objects::JsError> {
+        match task.get_stage() {
+            SetCurrentTimeStage::Init => {
+                self.audio_element
+                    .set_current_time(task.get_current_time().clone());
+                Ok(false)
+            }
+            SetCurrentTimeStage::Finalize => {
+                if let Some(item) = &mut self.source {
+                    item.set_current_time(Some(self.audio_element.current_time()));
+                    self.repo.send(repo::Request::UpdateItem(item.clone()));
+                }
+                Ok(true)
+            }
+        }
     }
 }
