@@ -1,6 +1,9 @@
 use crate::{
     agents::{notifier, player, repo},
-    components::icon::{Icon, IconStyle},
+    components::{
+        icon::{Icon, IconStyle},
+        item_list_compact::ItemListCompact,
+    },
     objects::{DownloadStatus, Item, JsError},
 };
 use std::cmp::Ordering;
@@ -67,41 +70,17 @@ impl Player {
 
     fn view_item_list(&self, ctx: &Context<Self>) -> Html {
         match &self.items {
-            Some(items) => html! {
-                <div class="columns"><div class="column">
-                    { items.iter().filter(|i| match self.tab {
+            Some(items) => {
+                let filtered_items: Vec<Item> = items
+                    .iter()
+                    .filter(|i| match self.tab {
                         Tab::Downloaded => true,
-                        Tab::Unplayed => i.get_play_count() == 0
-                    }).map(|i| {
-                        let new_source = i.clone();
-                        html! { <div class="card" onclick={ctx.link().callback(move |_| Message::SetSource(Some(new_source.clone())))}>
-                        <div class="card-content">
-                            <p class="has-text-weight-bold">{&i.get_title()}</p>
-                            <div class="field is-grouped is-grouped-multiline">
-                                <div class="control">
-                                    <div class="tags">
-                                        <span class="tag">{&i.get_date().format("%Y-%m-%d").to_string()}</span>
-                                    </div>
-                                </div>
-                                <div class="control">
-                                    <div class="tags has-addons">
-                                        <span class="tag">{format!("{}x", &i.get_play_count())}</span>
-                                        <span class="tag is-primary">{"played"}</span>
-                                    </div>
-                                </div>
-                                <div class="control">{match &i.get_download_status() {
-                                    DownloadStatus::Pending => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_queue" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download pending"}</span></div>},
-                                    DownloadStatus::Ok(_) => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_done" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download ok"}</span></div>},
-                                    DownloadStatus::InProgress => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_sync" style={IconStyle::Filled}/></span><span class="tag is-primary">{"downloading"}</span></div>},
-                                    DownloadStatus::Error => html!{<div class="tags has-addons"><span class="tag"><Icon name="cloud_off" style={IconStyle::Filled}/></span><span class="tag is-primary">{"download error"}</span></div>},
-                                    _ => html!{<div class="tags"><span class="tag">{"download"}</span></div>}
-                                }}
-                                </div>
-                            </div>
-                        </div>
-                    </div> }}).collect::<Html>() }
-                </div></div>
-            },
+                        Tab::Unplayed => i.get_play_count() == 0,
+                    })
+                    .map(|i| i.clone())
+                    .collect();
+                html! {<ItemListCompact items={filtered_items} on_selected={ctx.link().callback(|i| Message::SetSource(Some(i)))} />}
+            }
             None => html!(),
         }
     }

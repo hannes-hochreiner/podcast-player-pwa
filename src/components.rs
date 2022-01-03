@@ -3,6 +3,7 @@ mod feed_list;
 mod feed_new;
 mod icon;
 mod item_list;
+pub mod item_list_compact;
 mod nav_bar;
 mod notification;
 mod player;
