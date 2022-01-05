@@ -81,10 +81,6 @@ impl Component for FeedList {
                     self.feeds = Some(res);
                     true
                 }
-                RepoResponse::Error(e) => {
-                    log::info!("feed list error: {}", e);
-                    false
-                }
                 _ => false,
             },
         }

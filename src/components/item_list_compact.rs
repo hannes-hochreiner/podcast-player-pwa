@@ -1,8 +1,12 @@
 use super::{Icon, IconStyle};
+use crate::agents::repo::Repo;
 use podcast_player_common::{item_meta::DownloadStatus, Item};
 use yew::{prelude::*, Component, Properties};
+use yew_agent::{Dispatched, Dispatcher};
 
-pub struct ItemListCompact {}
+pub struct ItemListCompact {
+    repo: Dispatcher<Repo>,
+}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {
@@ -10,24 +14,36 @@ pub struct Props {
     pub on_selected: Callback<Item>,
 }
 
-pub enum Message {}
+pub enum Message {
+    RemoveDownload(Item),
+}
 
 impl Component for ItemListCompact {
     type Message = Message;
     type Properties = Props;
 
     fn create(_ctx: &yew::Context<Self>) -> Self {
-        Self {}
+        Self {
+            repo: Repo::dispatcher(),
+        }
+    }
+
+    fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            Message::RemoveDownload(item) => {}
+        }
+
+        false
     }
 
     fn view(&self, ctx: &yew::Context<Self>) -> Html {
         html! {
-            <div class="columns"><div class="column">
+            <div class="columns is-multiline">
                 { ctx.props().items.iter().map(|i| {
                     let new_source = i.clone();
                     let on_selected = ctx.props().on_selected.clone();
-                    html! { <div class="card" onclick={move |_| on_selected.emit(new_source.clone())}>
-                    <div class="card-content">
+                    html! { <div class="column is-one-quarter"><div class="card">
+                    <div class="card-content" onclick={move |_| on_selected.emit(new_source.clone())}>
                         <p class="has-text-weight-bold">{&i.get_title()}</p>
                         <div class="field is-grouped is-grouped-multiline">
                             <div class="control">
@@ -51,8 +67,16 @@ impl Component for ItemListCompact {
                             </div>
                         </div>
                     </div>
-                </div> }}).collect::<Html>() }
-            </div></div>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">{"mark as new"}</a>
+                        <a href="#" class="card-footer-item">{"remove download"}</a>
+                    </footer>
+                </div></div> }}).collect::<Html>() }
+            </div>
         }
+    }
+
+    fn changed(&mut self, _ctx: &Context<Self>) -> bool {
+        true
     }
 }

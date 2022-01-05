@@ -110,10 +110,10 @@ impl Player {
                         }
                     }
                 }
-                repo::Response::ModifiedItems(items) => {
+                repo::Response::UpdatedItem(item) => {
                     if let Some(source) = &self.source {
-                        if let Some(item) = items.iter().find(|&i| i.get_id() == source.get_id()) {
-                            self.source = Some((*item).clone())
+                        if source.get_id() == item.get_id() {
+                            self.source = Some(item)
                         }
                     }
                 }

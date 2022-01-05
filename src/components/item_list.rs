@@ -231,11 +231,7 @@ impl ItemList {
                     self.items = Some(res);
                     Ok(true)
                 }
-                RepoResponse::Error(e) => {
-                    self.error = Some(e);
-                    Ok(true)
-                }
-                RepoResponse::UpdateItem(item) => match &mut self.items {
+                RepoResponse::UpdatedItem(item) => match &mut self.items {
                     Some(items) => {
                         let index = items
                             .iter()

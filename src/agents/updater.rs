@@ -201,6 +201,7 @@ impl Updater {
                         Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
                     }
                 }
+                _ => {}
             },
         };
         Ok(())

@@ -3,8 +3,9 @@ use crate::objects::{
 };
 
 use super::{notifier, repo};
-use chrono::{Duration, Utc};
+use chrono::{DateTime, Duration, FixedOffset, Utc};
 use js_sys::ArrayBuffer;
+use podcast_player_common::feed_val::FeedVal;
 use serde::de::DeserializeOwned;
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
@@ -12,17 +13,24 @@ use url::Url;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
+use web_sys::ConnectionType;
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 pub enum Request {
     FetchText(Uuid, String),
     FetchBinary(Uuid, String),
     PostString(Uuid, String, String),
+    PullFeedVals(Option<DateTime<FixedOffset>>),
+    PullDownload(Uuid),
 }
 
+#[derive(Debug)]
 pub enum Response {
     Binary(Uuid, Result<ArrayBuffer, JsError>),
     Text(Uuid, Result<String, JsError>),
+    PullFeedVals(Vec<FeedVal>),
+    PullDownload(Uuid, ArrayBuffer),
+    PullDownloadStarted(Uuid),
 }
 
 pub enum Message {
@@ -31,6 +39,8 @@ pub enum Message {
     GetToken(Result<Auth0Token, JsError>),
     RepoMessage(repo::Response),
     GetConfig(Result<AuthorizationConfig, JsError>),
+    PullFeedVals(HandlerId, Result<Vec<FeedVal>, JsError>),
+    PullDownload(HandlerId, Uuid, Result<ArrayBuffer, JsError>),
 }
 
 pub struct Fetcher {
@@ -46,57 +56,40 @@ enum HttpMethod {
     Post,
 }
 
-impl Agent for Fetcher {
-    type Reach = Context<Self>;
-    type Message = Message;
-    type Input = Request;
-    type Output = Response;
-
-    fn create(link: AgentLink<Self>) -> Self {
-        let repo_callback = link.callback(Message::RepoMessage);
-        let mut repo = repo::Repo::bridge(repo_callback);
-
-        repo.send(repo::Request::GetFetcherConf(None));
-
-        Self {
-            link,
-            subscribers: HashSet::<HandlerId>::new(),
-            repo,
-            config: None,
-            notifier: notifier::Notifier::dispatcher(),
-        }
-    }
-
-    fn update(&mut self, msg: Self::Message) {
+impl Fetcher {
+    fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
+            Message::PullFeedVals(handler_id, res) => {
+                self.link.respond(handler_id, Response::PullFeedVals(res?));
+            }
+            Message::PullDownload(handler_id, item_id, res) => self
+                .link
+                .respond(handler_id, Response::PullDownload(item_id, res?)),
             Message::ReceiveBinary(handler_id, uuid, res) => {
-                self.link.respond(handler_id, Response::Binary(uuid, res))
+                self.link.respond(handler_id, Response::Binary(uuid, res));
             }
             Message::ReceiveText(handler_id, uuid, res) => {
-                self.link.respond(handler_id, Response::Text(uuid, res))
+                self.link.respond(handler_id, Response::Text(uuid, res));
             }
-            Message::GetToken(res) => match (&mut self.config, res) {
-                (Some(config), Ok(response)) => {
-                    let mut config = config.clone();
-                    config.authorization_task = None;
-                    config.authorization = Some(Authorization {
-                        access_token: response.access_token,
-                        token_type: response.token_type,
-                        expires_at: (Utc::now() + Duration::seconds(response.expires_in - 10))
-                            .into(),
-                    });
-                    self.repo.send(repo::Request::GetFetcherConf(Some(config)))
-                }
-                (_, _) => {}
-            },
-            Message::GetConfig(res) => match res {
-                Ok(conf) => {
-                    self.repo.send(repo::Request::GetFetcherConf(Some(
-                        FetcherConfig::new_with_config(conf),
-                    )));
-                }
-                Err(e) => log::error!("{}", e),
-            },
+            Message::GetToken(res) => {
+                let mut config = self.config.as_ref().ok_or("configuration not set")?.clone();
+                let token = res?;
+
+                config.authorization_task = None;
+                config.authorization = Some(Authorization {
+                    access_token: token.access_token,
+                    token_type: token.token_type,
+                    expires_at: (Utc::now() + Duration::seconds(token.expires_in - 10)).into(),
+                });
+                self.repo.send(repo::Request::GetFetcherConf(Some(config)));
+            }
+            Message::GetConfig(res) => {
+                let conf = res?;
+
+                self.repo.send(repo::Request::GetFetcherConf(Some(
+                    FetcherConfig::new_with_config(conf),
+                )));
+            }
             Message::RepoMessage(repo_msg) => match repo_msg {
                 repo::Response::FetcherConfig(fetcher_config) => match fetcher_config {
                     Some(fc) => {
@@ -105,39 +98,39 @@ impl Agent for Fetcher {
                         match fc.authorization {
                             // unwrap is safe, as we set the configuration two lines earlier
                             None => match &self.config.as_mut().unwrap().authorization_task {
-                                Some(at) => match get_url() {
-                                    Ok(url) => {
-                                        match url.query_pairs().find(|(key, _)| key == "code") {
-                                            Some((_, val)) => {
-                                                let token_url =
-                                                    format!("{}/oauth/token", fc.config.domain);
-                                                let body = format!("grant_type=authorization_code&client_id={}&code_verifier={}&code={}&redirect_uri={}", fc.config.client_id, at.verifier, val, at.redirect);
-                                                let mut headers: HashMap<String, String> =
-                                                    HashMap::new();
-                                                headers.insert(
-                                                    "Content-Type".into(),
-                                                    "application/x-www-form-urlencoded".into(),
-                                                );
+                                Some(at) => {
+                                    let url = get_url()?;
 
-                                                self.link.send_future(async move {
-                                                    Message::GetToken(
-                                                        fetch_deserializable(
-                                                            &token_url,
-                                                            HttpMethod::Post,
-                                                            Some(headers),
-                                                            Some(body),
-                                                        )
-                                                        .await,
+                                    match url.query_pairs().find(|(key, _)| key == "code") {
+                                        Some((_, val)) => {
+                                            let token_url =
+                                                format!("{}/oauth/token", fc.config.domain);
+                                            let body = format!("grant_type=authorization_code&client_id={}&code_verifier={}&code={}&redirect_uri={}", fc.config.client_id, at.verifier, val, at.redirect);
+                                            let mut headers: HashMap<String, String> =
+                                                HashMap::new();
+                                            headers.insert(
+                                                "Content-Type".into(),
+                                                "application/x-www-form-urlencoded".into(),
+                                            );
+
+                                            self.link.send_future(async move {
+                                                Message::GetToken(
+                                                    fetch_deserializable(
+                                                        &token_url,
+                                                        HttpMethod::Post,
+                                                        Some(headers),
+                                                        Some(body),
                                                     )
-                                                });
-                                            }
-                                            None => {
-                                                match Url::parse(&format!(
-                                                    "{}/authorize",
-                                                    fc.config.domain
-                                                )) {
-                                                    Ok(mut url) => {
-                                                        url.query_pairs_mut()
+                                                    .await,
+                                                )
+                                            });
+                                        }
+                                        None => {
+                                            let mut url = Url::parse(&format!(
+                                                "{}/authorize",
+                                                fc.config.domain
+                                            ))?;
+                                            url.query_pairs_mut()
                                                             .append_pair("audience", &fc.config.audience)
                                                             .append_pair(
                                                                 "scope",
@@ -149,103 +142,74 @@ impl Agent for Fetcher {
                                                             .append_pair("code_challenge", &at.challenge)
                                                             .append_pair("code_challenge_method", "S256");
 
-                                                        match web_sys::window()
-                                                            .ok_or(JsError {
-                                                                description: "could not get window"
-                                                                    .into(),
-                                                            })
-                                                            .and_then(|w| {
-                                                                w.location()
-                                                                    .set_href(url.as_str())
-                                                                    .map_err(Into::into)
-                                                            }) {
-                                                            Ok(()) => {}
-                                                            Err(e) => self.notifier.send(
-                                                                notifier::Request::NotifyError(e),
-                                                            ),
-                                                        }
-                                                    }
-                                                    Err(e) => self.notifier.send(
-                                                        notifier::Request::NotifyError(e.into()),
-                                                    ),
-                                                }
-                                            }
+                                            web_sys::window()
+                                                .ok_or("could not get window")?
+                                                .location()
+                                                .set_href(url.as_str())?;
                                         }
                                     }
-                                    Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
-                                },
-                                None => match (get_authorization_task(), self.config.as_mut()) {
-                                    (Ok(auth_task), Some(config)) => {
-                                        config.authorization_task = Some(auth_task);
-                                        self.repo.send(repo::Request::GetFetcherConf(Some(
-                                            config.clone(),
-                                        )));
-                                    }
-                                    (_, None) => self.notifier.send(notifier::Request::Notify(
-                                        notifier::Notification {
-                                            severity: notifier::NotificationSeverity::Error,
-                                            text: String::from(
-                                                "could not obtain fetcher configuration",
-                                            ),
-                                        },
-                                    )),
-                                    (Err(e), _) => {
-                                        self.notifier.send(notifier::Request::NotifyError(e))
-                                    }
-                                },
+                                }
+                                None => {
+                                    let auth_task = get_authorization_task()?;
+                                    let config =
+                                        self.config.as_mut().ok_or("configuration not set")?;
+
+                                    config.authorization_task = Some(auth_task);
+                                    self.repo
+                                        .send(repo::Request::GetFetcherConf(Some(config.clone())));
+                                }
                             },
                             Some(auth) => {
                                 if auth.expires_at < Utc::now() {
-                                    match (get_authorization_task(), self.config.as_mut()) {
-                                        (Ok(auth_task), Some(config)) => {
-                                            config.authorization = None;
-                                            config.authorization_task = Some(auth_task);
-                                            self.repo.send(repo::Request::GetFetcherConf(
-                                                self.config.clone(),
-                                            ));
-                                        }
-                                        (_, None) => self.notifier.send(notifier::Request::Notify(
-                                            notifier::Notification {
-                                                severity: notifier::NotificationSeverity::Error,
-                                                text: String::from(
-                                                    "could not obtain fetcher configuration",
-                                                ),
-                                            },
-                                        )),
-                                        (Err(e), _) => {
-                                            self.notifier.send(notifier::Request::NotifyError(e))
-                                        }
-                                    }
+                                    let auth_task = get_authorization_task()?;
+                                    let config =
+                                        self.config.as_mut().ok_or("configuration not set")?;
+
+                                    config.authorization = None;
+                                    config.authorization_task = Some(auth_task);
+                                    self.repo
+                                        .send(repo::Request::GetFetcherConf(self.config.clone()));
                                 }
                             }
                         }
                     }
                     None => {
-                        match get_base_url() {
-                            Ok(url) => self.link.send_future(async move {
-                                Message::GetConfig(
-                                    fetch_deserializable(
-                                        &format!("{}/config/auth_config.json", url),
-                                        HttpMethod::Get,
-                                        None,
-                                        None,
-                                    )
-                                    .await,
+                        let url = get_base_url()?;
+
+                        self.link.send_future(async move {
+                            Message::GetConfig(
+                                fetch_deserializable(
+                                    &format!("{}/config/auth_config.json", url),
+                                    HttpMethod::Get,
+                                    None,
+                                    None,
                                 )
-                            }),
-                            Err(e) => self.link.send_message(Message::GetConfig(Err(e))),
-                        };
+                                .await,
+                            )
+                        });
                     }
                 },
-                repo::Response::Error(err) => {
-                    log::error!("{:?}", err);
-                }
                 _ => {}
             },
         }
+
+        Ok(())
     }
 
-    fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
+    fn process_handle_input(&mut self, msg: Request, id: HandlerId) -> Result<(), JsError> {
+        let conn_type = web_sys::window()
+            .ok_or("could not obtain window")?
+            .navigator()
+            .connection()?
+            .type_();
+
+        if (conn_type != ConnectionType::Ethernet)
+            & (conn_type != ConnectionType::Wifi)
+            & (conn_type != ConnectionType::Unknown)
+        {
+            return Ok(());
+        }
+
         if let Some(config) = &self.config {
             if let Some(auth) = &config.authorization {
                 let mut headers = HashMap::new();
@@ -256,6 +220,38 @@ impl Agent for Fetcher {
                 );
 
                 match msg {
+                    Request::PullFeedVals(since) => {
+                        let base_url = "/api/feeds".to_string();
+                        let url = match since {
+                            Some(date) => format!(
+                                "{}?{}",
+                                base_url,
+                                encode_query_pairs(&vec![("since", &date.to_rfc3339())])
+                            ),
+                            None => base_url,
+                        };
+
+                        self.link.send_future(async move {
+                            Message::PullFeedVals(
+                                id,
+                                fetch_deserializable(&url, HttpMethod::Get, Some(headers), None)
+                                    .await,
+                            )
+                        });
+                    }
+                    Request::PullDownload(item_id) => {
+                        let url = format!("/api/items/{}/stream", item_id);
+
+                        self.link.send_future(async move {
+                            Message::PullDownload(
+                                id,
+                                item_id,
+                                fetch_binary(&url, Some(headers)).await,
+                            )
+                        });
+                        self.link
+                            .respond(id, Response::PullDownloadStarted(item_id));
+                    }
                     Request::FetchBinary(uuid, url) => {
                         self.link.send_future(async move {
                             Message::ReceiveBinary(
@@ -286,6 +282,44 @@ impl Agent for Fetcher {
                 }
             }
         }
+
+        Ok(())
+    }
+}
+
+impl Agent for Fetcher {
+    type Reach = Context<Self>;
+    type Message = Message;
+    type Input = Request;
+    type Output = Response;
+
+    fn create(link: AgentLink<Self>) -> Self {
+        let repo_callback = link.callback(Message::RepoMessage);
+        let mut repo = repo::Repo::bridge(repo_callback);
+
+        repo.send(repo::Request::GetFetcherConf(None));
+
+        Self {
+            link,
+            subscribers: HashSet::<HandlerId>::new(),
+            repo,
+            config: None,
+            notifier: notifier::Notifier::dispatcher(),
+        }
+    }
+
+    fn update(&mut self, msg: Self::Message) {
+        match self.process_update(msg) {
+            Ok(_) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
+        }
+    }
+
+    fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
+        match self.process_handle_input(msg, id) {
+            Ok(_) => {}
+            Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
+        }
     }
 
     fn connected(&mut self, id: HandlerId) {
@@ -295,6 +329,16 @@ impl Agent for Fetcher {
     fn disconnected(&mut self, id: HandlerId) {
         self.subscribers.remove(&id);
     }
+}
+
+fn encode_query_pairs(pairs: &Vec<(&str, &str)>) -> String {
+    let mut tmp = url::form_urlencoded::Serializer::new(String::new());
+
+    for (key, value) in pairs {
+        tmp.append_pair(key, value);
+    }
+
+    tmp.finish()
 }
 
 async fn fetch(

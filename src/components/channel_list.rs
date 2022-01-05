@@ -123,10 +123,6 @@ impl ChannelList {
                     self.channels = Some(res);
                     Ok(true)
                 }
-                RepoResponse::Error(e) => {
-                    log::info!("channel list error: {}", e);
-                    Ok(false)
-                }
                 _ => Ok(false),
             },
             Message::SetShowAll(show_all) => {

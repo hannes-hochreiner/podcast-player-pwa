@@ -203,36 +203,26 @@ impl Player {
 
                     Ok(true)
                 }
-                repo::Response::UpdateItem(_item) => {
-                    // self.items.as_mut().unwrap().insert(item.get_id(), item);
-                    Ok(false)
-                }
-                repo::Response::ModifiedItems(items) => {
+                repo::Response::UpdatedItem(item) => {
                     let mut res = false;
 
                     if let Some(source) = &mut self.source {
-                        if let Some(updated_item) =
-                            items.iter().find(|i| i.get_id() == source.get_id())
-                        {
-                            self.source = Some((*updated_item).clone());
+                        if source.get_id() == item.get_id() {
+                            self.source = Some(item.clone());
                             res = true;
                         }
                     }
 
                     if let Some(self_items) = &mut self.items {
-                        let modified_ids: Vec<Uuid> = items.iter().map(|i| i.get_id()).collect();
+                        self_items.retain(|i| i.get_id() != item.get_id());
 
-                        self_items.retain(|i| !modified_ids.contains(&i.get_id()));
-                        items
-                            .iter()
-                            .filter(|i| match i.get_download_status() {
-                                DownloadStatus::Ok(_) => true,
-                                _ => false,
-                            })
-                            .for_each(|i| {
+                        match item.get_download_status() {
+                            DownloadStatus::Ok(_) => {
+                                self_items.push(item.clone());
                                 res = true;
-                                self_items.push(i.clone());
-                            });
+                            }
+                            _ => {}
+                        }
                         self_items.sort_by(|a, b| a.get_date().cmp(&b.get_date()));
                     }
 

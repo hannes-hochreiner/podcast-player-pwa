@@ -30,6 +30,14 @@ impl From<wasm_bindgen::JsValue> for JsError {
     }
 }
 
+impl From<web_sys::DomException> for JsError {
+    fn from(val: web_sys::DomException) -> Self {
+        Self {
+            description: format!("{:?}", val),
+        }
+    }
+}
+
 impl From<serde_wasm_bindgen::Error> for JsError {
     fn from(err: serde_wasm_bindgen::Error) -> Self {
         Self {

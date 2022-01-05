@@ -45,10 +45,6 @@ impl FeedNew {
                     self.feeds = Some(res);
                     Ok(true)
                 }
-                RepoResponse::Error(e) => {
-                    log::info!("feed list error: {}", e);
-                    Ok(false)
-                }
                 _ => Ok(false),
             },
             Message::Submit => {
