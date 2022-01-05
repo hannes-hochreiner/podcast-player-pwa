@@ -1,5 +1,6 @@
 use crate::{agents::repo, objects::JsError};
 use wasm_bindgen::{JsCast, JsValue};
+use yew_agent::HandlerId;
 
 #[derive(Debug)]
 pub struct Task {
@@ -9,6 +10,7 @@ pub struct Task {
     value: Option<JsValue>,
     request: Option<web_sys::IdbRequest>,
     transaction: Option<web_sys::IdbTransaction>,
+    handler_id: Option<HandlerId>,
 }
 
 #[derive(Debug)]
@@ -26,6 +28,7 @@ pub enum Kind {
     Channel,
     Item,
     Configuration,
+    Enclosure,
 }
 
 impl Kind {
@@ -35,12 +38,18 @@ impl Kind {
             Self::Item => "items",
             Self::Feed => "feeds",
             Self::Channel => "channels",
+            Self::Enclosure => "enclosures",
         }
     }
 }
 
 impl Task {
-    pub fn new(kind: Kind, key: JsValue, value: Option<JsValue>) -> Self {
+    pub fn new(
+        handler_id: Option<HandlerId>,
+        kind: Kind,
+        key: JsValue,
+        value: Option<JsValue>,
+    ) -> Self {
         Self {
             stage: Stage::Init,
             key,
@@ -48,6 +57,7 @@ impl Task {
             value,
             request: None,
             transaction: None,
+            handler_id: None,
         }
     }
 
@@ -170,10 +180,18 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                             _ => Err(JsError::from_str("unknown configuration requested")),
                         }
                     }
+                    Kind::Enclosure => Ok(repo::Response::Enclosure(result.dyn_into()?)),
                 }?;
 
-                for subscriber in &self.subscribers {
-                    self.link.respond(*subscriber, response.clone());
+                match task.handler_id {
+                    Some(handler_id) => {
+                        self.link.respond(handler_id, response);
+                    }
+                    None => {
+                        for subscriber in &self.subscribers {
+                            self.link.respond(*subscriber, response.clone());
+                        }
+                    }
                 }
 
                 Ok(true)

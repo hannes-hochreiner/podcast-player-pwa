@@ -3,7 +3,7 @@ use super::{fetcher, notifier};
 use crate::objects::*;
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use task::*;
 use uuid::Uuid;
 use wasm_bindgen::{closure::Closure, JsCast};
@@ -20,10 +20,11 @@ pub enum Request {
     AddChannelVals(Vec<ChannelVal>),
     AddItemVals(Vec<ItemVal>),
     AddFeedVals(Vec<FeedVal>),
-    DownloadEnclosure(Uuid), // done
-    GetEnclosure(Uuid),
-    UpdateChannel(Channel), // done; returns UpdatedChannel to all subscribers
-    UpdateItem(Item),       // done; returns UpdatedItem to all subscribers
+    DownloadEnclosure(Uuid),               // done
+    GetEnclosure(Uuid),                    // done; returns Enclosure only to the requester
+    DeleteEnclosure(Item),                 // done; returns UpdatedItem to all subscribers
+    UpdateChannel(Channel),                // done; returns UpdatedChannel to all subscribers
+    UpdateItem(Item),                      // done; returns UpdatedItem to all subscribers
     GetFetcherConf(Option<FetcherConfig>), // done; returns FetcherConfig only to requester
     GetUpdaterConf(Option<UpdaterConfig>), // done; returns UpdaterConfig only to requester
     AddFeed(String),
@@ -41,7 +42,6 @@ pub enum Response {
     AddChannelVals(Result<(), JsError>),
     AddItemVals(Result<(), JsError>),
     AddFeedVals(Result<(), JsError>),
-    DownloadEnclosure(Item),
     FetcherConfig(Option<FetcherConfig>),
     UpdaterConfig(Option<UpdaterConfig>),
 }
@@ -69,13 +69,6 @@ pub enum Message {
     IdbTransaction(Result<web_sys::Event, web_sys::Event>),
     FetcherMessage(fetcher::Response),
     Interval(web_sys::Event),
-}
-
-pub struct IdbResponse {
-    request: web_sys::IdbRequest,
-    _closure_error: Closure<dyn Fn(web_sys::Event)>,
-    _closure_success: Closure<dyn Fn(web_sys::Event)>,
-    task_id: Uuid,
 }
 
 trait RepositoryTask {
@@ -122,6 +115,7 @@ impl Repo {
             Task::PutGetWithKey(task) => self.process(task),
             Task::StoreEnclosure(task) => self.process(task),
             Task::DownloadStarted(task) => self.process(task),
+            Task::DeleteEnclosure(task) => self.process(task),
         }
     }
 
@@ -183,6 +177,7 @@ impl Repo {
                         Task::PutGetWithKey(task) => task.transaction_complete(),
                         Task::StoreEnclosure(task) => task.transaction_complete(),
                         Task::DownloadStarted(task) => task.transaction_complete(),
+                        Task::DeleteEnclosure(task) => task.transaction_complete(),
                         Task::OpenDb(_) => {}
                     }
                 }
@@ -328,6 +323,19 @@ impl Repo {
 
     fn process_handle_input(&mut self, msg: Request, handler_id: HandlerId) -> Result<(), JsError> {
         match msg {
+            Request::GetEnclosure(id) => self.tasks.insert(
+                0,
+                Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    Some(handler_id),
+                    task::put_get_with_key::Kind::Enclosure,
+                    serde_wasm_bindgen::to_value(&id)?,
+                    None,
+                )),
+            ),
+            Request::DeleteEnclosure(item) => self.tasks.insert(
+                0,
+                Task::DeleteEnclosure(task::delete_enclosure::Task::new(item)),
+            ),
             Request::GetItemsByDownloadOk => self.tasks.insert(
                 0,
                 Task::GetAll(task::get_all::Task::new(
@@ -340,6 +348,7 @@ impl Repo {
             Request::GetFetcherConf(value) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    None,
                     task::put_get_with_key::Kind::Configuration,
                     serde_wasm_bindgen::to_value("fetcher")?,
                     match &value {
@@ -351,6 +360,7 @@ impl Repo {
             Request::GetUpdaterConf(value) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    None,
                     task::put_get_with_key::Kind::Configuration,
                     serde_wasm_bindgen::to_value("updater")?,
                     match &value {
@@ -362,6 +372,7 @@ impl Repo {
             Request::UpdateItem(value) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    None,
                     task::put_get_with_key::Kind::Item,
                     serde_wasm_bindgen::to_value(&value.get_id())?,
                     Some(serde_wasm_bindgen::to_value(&value)?),
@@ -370,6 +381,7 @@ impl Repo {
             Request::UpdateChannel(value) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    None,
                     task::put_get_with_key::Kind::Channel,
                     serde_wasm_bindgen::to_value(&value.val.id)?,
                     Some(serde_wasm_bindgen::to_value(&value)?),

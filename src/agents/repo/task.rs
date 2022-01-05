@@ -1,13 +1,10 @@
 use crate::objects::JsError;
+pub mod delete_enclosure;
 pub mod download_started;
 pub mod get_all;
 pub mod open_db;
 pub mod put_get_with_key;
 pub mod store_enclosure;
-// pub use get_all;
-// pub use open_db;
-// pub use put_get_with_key;
-// pub use store_enclosure;
 use web_sys::{IdbRequest, IdbTransaction};
 
 #[derive(Debug)]
@@ -17,6 +14,7 @@ pub enum Task {
     PutGetWithKey(put_get_with_key::Task),
     StoreEnclosure(store_enclosure::Task),
     DownloadStarted(download_started::Task),
+    DeleteEnclosure(delete_enclosure::Task),
 }
 
 pub trait TaskProcessor<T> {

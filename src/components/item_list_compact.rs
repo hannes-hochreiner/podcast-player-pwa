@@ -1,11 +1,11 @@
 use super::{Icon, IconStyle};
-use crate::agents::repo::Repo;
+use crate::agents::repo;
 use podcast_player_common::{item_meta::DownloadStatus, Item};
 use yew::{prelude::*, Component, Properties};
 use yew_agent::{Dispatched, Dispatcher};
 
 pub struct ItemListCompact {
-    repo: Dispatcher<Repo>,
+    repo: Dispatcher<repo::Repo>,
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -24,13 +24,13 @@ impl Component for ItemListCompact {
 
     fn create(_ctx: &yew::Context<Self>) -> Self {
         Self {
-            repo: Repo::dispatcher(),
+            repo: repo::Repo::dispatcher(),
         }
     }
 
     fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Message::RemoveDownload(item) => {}
+            Message::RemoveDownload(item) => self.repo.send(repo::Request::DeleteEnclosure(item)),
         }
 
         false
@@ -40,10 +40,11 @@ impl Component for ItemListCompact {
         html! {
             <div class="columns is-multiline">
                 { ctx.props().items.iter().map(|i| {
-                    let new_source = i.clone();
+                    let onselect_item = i.clone();
+                    let delete_item = i.clone();
                     let on_selected = ctx.props().on_selected.clone();
                     html! { <div class="column is-one-quarter"><div class="card">
-                    <div class="card-content" onclick={move |_| on_selected.emit(new_source.clone())}>
+                    <div class="card-content" onclick={move |_| on_selected.emit(onselect_item.clone())}>
                         <p class="has-text-weight-bold">{&i.get_title()}</p>
                         <div class="field is-grouped is-grouped-multiline">
                             <div class="control">
@@ -69,7 +70,7 @@ impl Component for ItemListCompact {
                     </div>
                     <footer class="card-footer">
                         <a href="#" class="card-footer-item">{"mark as new"}</a>
-                        <a href="#" class="card-footer-item">{"remove download"}</a>
+                        <a class="card-footer-item" onclick={ctx.link().callback(move |_| Message::RemoveDownload(delete_item.clone()))}>{"remove download"}</a>
                     </footer>
                 </div></div> }}).collect::<Html>() }
             </div>
