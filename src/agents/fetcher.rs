@@ -311,7 +311,7 @@ impl Agent for Fetcher {
     }
 
     fn update(&mut self, msg: Self::Message) {
-        log::debug!("fetcher: update: {:?}", msg);
+        // log::debug!("fetcher: update: {:?}", msg);
         match self.process_update(msg) {
             Ok(_) => {}
             Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
@@ -319,7 +319,7 @@ impl Agent for Fetcher {
     }
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
-        log::debug!("fetcher: handle_input: {:?}", msg);
+        // log::debug!("fetcher: handle_input: {:?}", msg);
         match self.process_handle_input(msg, id) {
             Ok(_) => {}
             Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
