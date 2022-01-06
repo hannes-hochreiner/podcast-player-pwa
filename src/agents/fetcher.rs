@@ -16,6 +16,7 @@ use wasm_bindgen_futures::JsFuture;
 use web_sys::ConnectionType;
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
+#[derive(Debug)]
 pub enum Request {
     FetchText(Uuid, String),
     FetchBinary(Uuid, String),
@@ -33,6 +34,7 @@ pub enum Response {
     PullDownloadStarted(Uuid),
 }
 
+#[derive(Debug)]
 pub enum Message {
     ReceiveText(HandlerId, Uuid, Result<String, JsError>),
     ReceiveBinary(HandlerId, Uuid, Result<ArrayBuffer, JsError>),
@@ -309,6 +311,7 @@ impl Agent for Fetcher {
     }
 
     fn update(&mut self, msg: Self::Message) {
+        log::debug!("fetcher: update: {:?}", msg);
         match self.process_update(msg) {
             Ok(_) => {}
             Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
@@ -316,6 +319,7 @@ impl Agent for Fetcher {
     }
 
     fn handle_input(&mut self, msg: Self::Input, id: HandlerId) {
+        log::debug!("fetcher: handle_input: {:?}", msg);
         match self.process_handle_input(msg, id) {
             Ok(_) => {}
             Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),
@@ -369,13 +373,17 @@ async fn fetch(
     }
 
     let request = web_sys::Request::new_with_str_and_init(url, &opts)?;
-    let window = web_sys::window().ok_or(JsError {
-        description: String::from("error getting window"),
-    })?;
-    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
-    let resp: web_sys::Response = resp_value.dyn_into()?;
+    let window = web_sys::window().ok_or("error getting window")?;
+    let resp: web_sys::Response = JsFuture::from(window.fetch_with_request(&request))
+        .await?
+        .dyn_into()?;
 
-    Ok(resp)
+    match resp.ok() {
+        true => Ok(resp),
+        false => {
+            Err((&*format!("fetcher error: {}: {}", resp.status(), resp.status_text())).into())
+        }
+    }
 }
 
 // https://github.com/yewstack/yew/blob/v0.18/examples/futures/src/main.rs
