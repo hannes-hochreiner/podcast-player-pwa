@@ -189,7 +189,9 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                     }
                     None => {
                         for subscriber in &self.subscribers {
-                            self.link.respond(*subscriber, response.clone());
+                            if subscriber.is_respondable() {
+                                self.link.respond(*subscriber, response.clone());
+                            }
                         }
                     }
                 }

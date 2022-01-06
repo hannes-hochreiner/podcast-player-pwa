@@ -100,8 +100,10 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                 let item = task.item.clone();
 
                 for subscriber in &self.subscribers {
-                    self.link
-                        .respond(*subscriber, Response::UpdatedItem(item.clone()));
+                    if subscriber.is_respondable() {
+                        self.link
+                            .respond(*subscriber, Response::UpdatedItem(item.clone()));
+                    }
                 }
 
                 Ok(true)

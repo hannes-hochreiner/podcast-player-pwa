@@ -113,7 +113,9 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                     repo::Response::UpdatedItem(task.item.as_ref().ok_or("item not set")?.clone());
 
                 for subscriber in &self.subscribers {
-                    self.link.respond(*subscriber, response.clone());
+                    if subscriber.is_respondable() {
+                        self.link.respond(*subscriber, response.clone());
+                    }
                 }
 
                 Ok(true)
