@@ -214,7 +214,10 @@ impl Player {
                     }
 
                     if let Some(self_items) = &mut self.items {
+                        let len_before = self_items.len();
+
                         self_items.retain(|i| i.get_id() != item.get_id());
+                        res = len_before != self_items.len();
 
                         match item.get_download_status() {
                             DownloadStatus::Ok(_) => {
