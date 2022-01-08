@@ -115,6 +115,22 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                         ),
                         ("download_required", vec!["keys.download_required"]),
                         ("download_ok", vec!["keys.download_ok"]),
+                        ("val_update_ts", vec!["val.update_ts"]),
+                        ("meta_synced", vec!["meta.synced"]),
+                    ],
+                );
+                indices.insert(
+                    "channels",
+                    vec![
+                        ("val_update_ts", vec!["val.update_ts"]),
+                        ("meta_synced", vec!["meta.synced"]),
+                    ],
+                );
+                indices.insert(
+                    "feeds",
+                    vec![
+                        ("val_update_ts", vec!["val.update_ts"]),
+                        ("meta_synced", vec!["meta.synced"]),
                     ],
                 );
 

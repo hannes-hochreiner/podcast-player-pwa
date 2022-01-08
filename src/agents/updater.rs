@@ -115,17 +115,17 @@ impl Updater {
                 }
             }
             Message::RepoMessage(msg) => match msg {
-                repo::Response::AddChannelVals(_) => {
-                    self.repo.send(repo::Request::GetItemsByDownloadRequired);
-                }
+                // repo::Response::AddChannelVals(_) => {
+                //     self.repo.send(repo::Request::GetItemsByDownloadRequired);
+                // }
                 repo::Response::Items(items) => {
                     if items.len() > 0 {
                         let mut item = items[0].clone();
 
                         item.set_download_status(DownloadStatus::InProgress);
 
-                        self.repo
-                            .send(repo::Request::DownloadEnclosure(item.get_id()));
+                        // self.repo
+                        //     .send(repo::Request::DownloadEnclosure(item.get_id()));
                         self.repo.send(repo::Request::UpdateItem(item));
                     }
                 }
@@ -162,7 +162,7 @@ impl Updater {
                                     self.repo
                                         .send(repo::Request::GetUpdaterConf(Some(config.clone())))
                                 }
-                                self.repo.send(repo::Request::AddFeedVals(feeds));
+                                // self.repo.send(repo::Request::AddFeedVals(feeds));
                             }
                             Task::GetChannels => {
                                 let channels: Vec<ChannelVal> = serde_json::from_str(&s)?;
@@ -172,7 +172,7 @@ impl Updater {
                                     self.repo
                                         .send(repo::Request::GetUpdaterConf(Some(config.clone())))
                                 }
-                                self.repo.send(repo::Request::AddChannelVals(channels));
+                                // self.repo.send(repo::Request::AddChannelVals(channels));
                             }
                             Task::GetItems => {
                                 let items: Vec<ItemVal> = serde_json::from_str(&s)?;
@@ -182,7 +182,7 @@ impl Updater {
                                     self.repo
                                         .send(repo::Request::GetUpdaterConf(Some(config.clone())))
                                 }
-                                self.repo.send(repo::Request::AddItemVals(items));
+                                // self.repo.send(repo::Request::AddItemVals(items));
                             }
                         },
                         Err(e) => self.notifier.send(notifier::Request::NotifyError(e)),

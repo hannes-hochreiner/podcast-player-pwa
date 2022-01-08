@@ -119,9 +119,20 @@ impl ChannelList {
     fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
         match msg {
             Message::RepoMessage(response) => match response {
-                RepoResponse::Channels(res) => {
+                RepoResponse::Channels(mut res) => {
+                    res.sort_by(|a, b| a.val.title.cmp(&b.val.title));
                     self.channels = Some(res);
                     Ok(true)
+                }
+                RepoResponse::UpdatedChannel(channel) => {
+                    if let Some(channels) = &mut self.channels {
+                        channels.retain(|c| c.val.id != channel.val.id);
+                        channels.push(channel);
+                        channels.sort_by(|a, b| a.val.title.cmp(&b.val.title));
+                        Ok(true)
+                    } else {
+                        Ok(false)
+                    }
                 }
                 _ => Ok(false),
             },

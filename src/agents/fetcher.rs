@@ -5,7 +5,7 @@ use crate::objects::{
 use super::{notifier, repo};
 use chrono::{DateTime, Duration, FixedOffset, Utc};
 use js_sys::ArrayBuffer;
-use podcast_player_common::feed_val::FeedVal;
+use podcast_player_common::{channel_val::ChannelVal, feed_val::FeedVal, item_val::ItemVal};
 use serde::de::DeserializeOwned;
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};
@@ -22,6 +22,8 @@ pub enum Request {
     FetchBinary(Uuid, String),
     PostString(Uuid, String, String),
     PullFeedVals(Option<DateTime<FixedOffset>>),
+    PullChannelVals(Option<DateTime<FixedOffset>>),
+    PullItemVals(Option<DateTime<FixedOffset>>),
     PullDownload(Uuid),
 }
 
@@ -30,6 +32,8 @@ pub enum Response {
     Binary(Uuid, Result<ArrayBuffer, JsError>),
     Text(Uuid, Result<String, JsError>),
     PullFeedVals(Vec<FeedVal>),
+    PullChannelVals(Vec<ChannelVal>),
+    PullItemVals(Vec<ItemVal>),
     PullDownload(Uuid, ArrayBuffer),
     PullDownloadStarted(Uuid),
 }
@@ -42,6 +46,8 @@ pub enum Message {
     RepoMessage(repo::Response),
     GetConfig(Result<AuthorizationConfig, JsError>),
     PullFeedVals(HandlerId, Result<Vec<FeedVal>, JsError>),
+    PullChannelVals(HandlerId, Result<Vec<ChannelVal>, JsError>),
+    PullItemVals(HandlerId, Result<Vec<ItemVal>, JsError>),
     PullDownload(HandlerId, Uuid, Result<ArrayBuffer, JsError>),
 }
 
@@ -63,6 +69,13 @@ impl Fetcher {
         match msg {
             Message::PullFeedVals(handler_id, res) => {
                 self.link.respond(handler_id, Response::PullFeedVals(res?));
+            }
+            Message::PullChannelVals(handler_id, res) => {
+                self.link
+                    .respond(handler_id, Response::PullChannelVals(res?));
+            }
+            Message::PullItemVals(handler_id, res) => {
+                self.link.respond(handler_id, Response::PullItemVals(res?));
             }
             Message::PullDownload(handler_id, item_id, res) => self
                 .link
@@ -171,6 +184,19 @@ impl Fetcher {
                                     config.authorization_task = Some(auth_task);
                                     self.repo
                                         .send(repo::Request::GetFetcherConf(self.config.clone()));
+                                } else {
+                                    let mut url = get_url()?;
+
+                                    match url.query_pairs().find(|(key, _)| key == "code") {
+                                        Some(_) => {
+                                            url.set_query(None);
+                                            web_sys::window()
+                                                .ok_or("could not get window")?
+                                                .location()
+                                                .set_href(url.as_str())?;
+                                        }
+                                        None => {}
+                                    }
                                 }
                             }
                         }
@@ -235,6 +261,44 @@ impl Fetcher {
 
                         self.link.send_future(async move {
                             Message::PullFeedVals(
+                                id,
+                                fetch_deserializable(&url, HttpMethod::Get, Some(headers), None)
+                                    .await,
+                            )
+                        });
+                    }
+                    Request::PullChannelVals(since) => {
+                        let base_url = "/api/channels".to_string();
+                        let url = match since {
+                            Some(date) => format!(
+                                "{}?{}",
+                                base_url,
+                                encode_query_pairs(&vec![("since", &date.to_rfc3339())])
+                            ),
+                            None => base_url,
+                        };
+
+                        self.link.send_future(async move {
+                            Message::PullChannelVals(
+                                id,
+                                fetch_deserializable(&url, HttpMethod::Get, Some(headers), None)
+                                    .await,
+                            )
+                        });
+                    }
+                    Request::PullItemVals(since) => {
+                        let base_url = "/api/items".to_string();
+                        let url = match since {
+                            Some(date) => format!(
+                                "{}?{}",
+                                base_url,
+                                encode_query_pairs(&vec![("since", &date.to_rfc3339())])
+                            ),
+                            None => base_url,
+                        };
+
+                        self.link.send_future(async move {
+                            Message::PullItemVals(
                                 id,
                                 fetch_deserializable(&url, HttpMethod::Get, Some(headers), None)
                                     .await,

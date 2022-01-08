@@ -12,21 +12,19 @@ use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatch
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
-    GetFeeds,                                   // done; returns Feeds only to requester
-    GetChannels,                                // done; returns Channels only to requester
-    GetItemsByChannelIdYearMonth(Uuid, String), // done; returns Items only to requester
-    GetItemsByDownloadRequired,                 // done; returns Items only to requester
-    GetItemsByDownloadOk,                       // done; returns Items only to requester
-    AddChannelVals(Vec<ChannelVal>),
-    AddItemVals(Vec<ItemVal>),
-    AddFeedVals(Vec<FeedVal>),
-    DownloadEnclosure(Uuid),               // done
-    GetEnclosure(Uuid),                    // done; returns Enclosure only to the requester
-    DeleteEnclosure(Item),                 // done; returns UpdatedItem to all subscribers
-    UpdateChannel(Channel),                // done; returns UpdatedChannel to all subscribers
-    UpdateItem(Item),                      // done; returns UpdatedItem to all subscribers
-    GetFetcherConf(Option<FetcherConfig>), // done; returns FetcherConfig only to requester
-    GetUpdaterConf(Option<UpdaterConfig>), // done; returns UpdaterConfig only to requester
+    GetFeeds,    // returns Feeds only to requester
+    GetChannels, // returns Channels only to requester
+    GetYearMonthKeysByChannelId(Uuid),
+    GetItemsByChannelIdYearMonth(Uuid, String), // returns Items only to requester
+    GetItemsByDownloadRequired,                 // returns Items only to requester
+    GetItemsByDownloadOk,                       // returns Items only to requester
+    // DownloadEnclosure(Uuid),                    //
+    GetEnclosure(Uuid),     // returns Enclosure only to the requester
+    DeleteEnclosure(Item),  // returns UpdatedItem to all subscribers
+    UpdateChannel(Channel), // returns UpdatedChannel to all subscribers
+    UpdateItem(Item),       // returns UpdatedItem to all subscribers
+    GetFetcherConf(Option<FetcherConfig>), // returns FetcherConfig only to requester
+    GetUpdaterConf(Option<UpdaterConfig>), // returns UpdaterConfig only to requester
     AddFeed(String),
 }
 
@@ -34,14 +32,12 @@ pub enum Request {
 pub enum Response {
     Feeds(Vec<Feed>),
     Channels(Vec<Channel>),
+    YearMonthKeys(Vec<String>),
     Items(Vec<Item>),
     Enclosure(ArrayBuffer),
     UpdatedFeed(Feed),
     UpdatedChannel(Channel),
     UpdatedItem(Item),
-    AddChannelVals(Result<(), JsError>),
-    AddItemVals(Result<(), JsError>),
-    AddFeedVals(Result<(), JsError>),
     FetcherConfig(Option<FetcherConfig>),
     UpdaterConfig(Option<UpdaterConfig>),
 }
@@ -116,6 +112,8 @@ impl Repo {
             Task::StoreEnclosure(task) => self.process(task),
             Task::DownloadStarted(task) => self.process(task),
             Task::DeleteEnclosure(task) => self.process(task),
+            Task::SyncVal(task) => self.process(task),
+            Task::GetKeys(task) => self.process(task),
         }
     }
 
@@ -141,9 +139,34 @@ impl Repo {
             }
             Message::FetcherMessage(resp) => match resp {
                 fetcher::Response::PullFeedVals(feed_vals) => {
-                    log::debug!("feed_vals: {:?}", feed_vals);
-                    // create a task for each feed val to update
-                    // compare update_ts and replace if newer
+                    for feed_val in feed_vals {
+                        self.tasks.insert(
+                            0,
+                            Task::SyncVal(task::sync_val::Task::new(task::sync_val::Value::Feed(
+                                feed_val,
+                            ))),
+                        );
+                    }
+                }
+                fetcher::Response::PullChannelVals(channel_vals) => {
+                    for channel_val in channel_vals {
+                        self.tasks.insert(
+                            0,
+                            Task::SyncVal(task::sync_val::Task::new(
+                                task::sync_val::Value::Channel(channel_val),
+                            )),
+                        );
+                    }
+                }
+                fetcher::Response::PullItemVals(item_vals) => {
+                    for item_val in item_vals {
+                        self.tasks.insert(
+                            0,
+                            Task::SyncVal(task::sync_val::Task::new(task::sync_val::Value::Item(
+                                item_val,
+                            ))),
+                        );
+                    }
                 }
                 fetcher::Response::PullDownload(item_id, data) => self.tasks.insert(
                     0,
@@ -159,7 +182,15 @@ impl Repo {
                 fetcher::Response::Text(task_id, res) => {}
             },
             Message::Interval(_) => {
-                // self.fetcher.send(fetcher::Request::PullFeedVals(None));
+                // self.tasks.insert(
+                //     0,
+                //     Task::GetUniqueKeys(task::get_unique_keys::Task::new(
+                //         task::get_unique_keys::Kind::Item,
+                //     )),
+                // );
+                self.fetcher.send(fetcher::Request::PullFeedVals(None));
+                self.fetcher.send(fetcher::Request::PullChannelVals(None));
+                self.fetcher.send(fetcher::Request::PullItemVals(None));
                 self.tasks.insert(
                     0,
                     Task::GetAll(task::get_all::Task::new(
@@ -171,18 +202,11 @@ impl Repo {
                 )
             }
             Message::IdbTransaction(_) => {
-                if let Some(mut task) = self.tasks.last_mut() {
-                    match &mut task {
-                        Task::GetAll(task) => task.transaction_complete(),
-                        Task::PutGetWithKey(task) => task.transaction_complete(),
-                        Task::StoreEnclosure(task) => task.transaction_complete(),
-                        Task::DownloadStarted(task) => task.transaction_complete(),
-                        Task::DeleteEnclosure(task) => task.transaction_complete(),
-                        Task::OpenDb(_) => {}
-                    }
+                if let Some(task) = self.tasks.last_mut() {
+                    task.transaction_complete();
                 }
             }
-            _ => {}
+            Message::IdbRequest(_) => {}
         }
         // match msg {
         //     Message::FetcherMessage(resp) => match resp {
@@ -323,6 +347,16 @@ impl Repo {
 
     fn process_handle_input(&mut self, msg: Request, handler_id: HandlerId) -> Result<(), JsError> {
         match msg {
+            Request::AddFeed(_) => {
+                todo!()
+            }
+            Request::GetYearMonthKeysByChannelId(channel_id) => self.tasks.insert(
+                0,
+                Task::GetKeys(task::get_keys::Task::new(
+                    handler_id,
+                    task::get_keys::Kind::ItemYearMonth(channel_id),
+                )),
+            ),
             Request::GetEnclosure(id) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
@@ -426,7 +460,6 @@ impl Repo {
                     Some("download_required".into()),
                 )),
             ),
-            _ => {}
         }
 
         Ok(())

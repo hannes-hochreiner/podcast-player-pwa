@@ -5,7 +5,7 @@ use crate::agents::{
     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
 };
 use crate::components::icon::{Icon, IconStyle};
-use crate::objects::{Channel, DownloadStatus, Item, JsError};
+use crate::objects::{DownloadStatus, Item, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
@@ -14,9 +14,8 @@ pub struct ItemList {
     items: Option<Vec<Item>>,
     error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
-    channel: Option<Channel>,
     keys: Option<Vec<String>>,
-    current_index: Option<usize>,
+    current_index: usize,
     notifier: Dispatcher<notifier::Notifier>,
 }
 
@@ -72,22 +71,22 @@ impl ItemList {
     }
 
     fn view_pagination(&self, ctx: &Context<Self>) -> Html {
-        match (&self.keys, &self.current_index) {
-            (Some(keys), Some(current_index)) => {
+        match &self.keys {
+            Some(keys) => {
                 let mut ellopsis_drawn = false;
 
                 html!(<nav class="pagination is-centered" role="navigation" aria-label="pagination">
                 {
-                    if *current_index != 0 {
-                        let new_index = current_index - 1;
+                    if self.current_index != 0 {
+                        let new_index = self.current_index - 1;
                         html!(<a class="pagination-previous" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(new_index))}>{"<"}</a>)
                     } else {
                         html!()
                     }
                 }
                 {
-                    if *current_index != keys.len()-1 {
-                        let new_index = current_index + 1;
+                    if self.current_index != keys.len()-1 {
+                        let new_index = self.current_index + 1;
                         html!(<a class="pagination-next" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(new_index))}>{">"}</a>)
                     } else {
                         html!()
@@ -97,14 +96,14 @@ impl ItemList {
                 { keys.iter().enumerate().map(|(idx, key)| {
                     if idx == 0 {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(ctx,key, &keys[*current_index], idx)
+                        self.view_pagination_element(ctx,key, &keys[self.current_index], idx)
                     }
                     else if idx == keys.len() -1 {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(ctx, key, &keys[*current_index], idx)
-                    } else if idx == *current_index {
+                        self.view_pagination_element(ctx, key, &keys[self.current_index], idx)
+                    } else if idx == self.current_index {
                         ellopsis_drawn = false;
-                        self.view_pagination_element(ctx,key, &keys[*current_index], idx)
+                        self.view_pagination_element(ctx,key, &keys[self.current_index], idx)
                     } else {
                         match ellopsis_drawn {
                             true =>  html!(),
@@ -154,12 +153,12 @@ impl ItemList {
     fn process_update(&mut self, ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
         match msg {
             Message::UpdateCurrentIndex(idx) => {
-                if let Some(channel) = &self.channel {
-                    self.current_index = Some(idx);
+                if let Some(keys) = &self.keys {
+                    self.current_index = idx;
                     self.items = None;
                     self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        channel.val.id,
-                        self.keys.as_ref().ok_or("could not get reference")?[idx].clone(),
+                        ctx.props().channel_id,
+                        keys[idx].clone(),
                     ));
                 }
                 Ok(false)
@@ -193,31 +192,10 @@ impl ItemList {
                 None => Ok(false),
             },
             Message::RepoMessage(resp) => match resp {
-                RepoResponse::Channels(res) => {
-                    // let channel_id = channel.val.id.clone();
-                    let channel = res
-                        .iter()
-                        .find(|e| e.val.id == ctx.props().channel_id)
-                        .ok_or("could not find channel")?
-                        .clone();
-                    let mut keys: Vec<String> = channel
-                        .keys
-                        .year_month_keys
-                        .iter()
-                        .map(|e| e.clone())
-                        .collect();
-                    // unwrap is safe, as a default is provided
-                    keys.sort_by(|a, b| b.partial_cmp(a).or(Some(Ordering::Equal)).unwrap());
-
-                    self.current_index = Some(0);
+                RepoResponse::YearMonthKeys(keys) => {
                     self.keys = Some(keys);
-
-                    self.channel = Some(channel);
-                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        ctx.props().channel_id,
-                        self.keys.as_ref().ok_or("could not get reference")?[0].clone(),
-                    ));
-                    Ok(false)
+                    ctx.link().send_message(Message::UpdateCurrentIndex(0));
+                    Ok(true)
                 }
                 RepoResponse::Items(mut res) => {
                     // unwrap is safe, as a default is provided
@@ -259,13 +237,15 @@ impl Component for ItemList {
         let mut repo = Repo::bridge(cb);
 
         repo.send(RepoRequest::GetChannels);
+        repo.send(RepoRequest::GetYearMonthKeysByChannelId(
+            ctx.props().channel_id,
+        ));
 
         Self {
             items: None,
             error: None,
-            channel: None,
             repo,
-            current_index: None,
+            current_index: 0,
             keys: None,
             notifier: notifier::Notifier::dispatcher(),
         }

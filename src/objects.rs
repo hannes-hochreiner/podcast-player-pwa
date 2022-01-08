@@ -5,8 +5,8 @@ pub use fetcher_config::*;
 mod js_error;
 pub use js_error::*;
 pub use podcast_player_common::{
-    channel_keys::ChannelKeys, channel_meta::ChannelMeta, channel_val::ChannelVal,
-    feed_val::FeedVal, item_meta::DownloadStatus, item_val::ItemVal, Channel, Feed, Item,
+    channel_meta::ChannelMeta, channel_val::ChannelVal, feed_val::FeedVal,
+    item_meta::DownloadStatus, item_val::ItemVal, Channel, Feed, Item,
 };
 mod updater_config;
 pub use updater_config::*;
