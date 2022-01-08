@@ -100,8 +100,11 @@ impl Player {
                                 <>
                                     <input type="range" min="0" step="any" value={current_time.to_string()} max={duration.to_string()} style="width: 100%" onfocus={ctx.link().callback(|e| Message::OnFocus(e))} onchange={ctx.link().callback(|e| Message::TimeChange(e))}/>
                                     <div class="columns is-mobile">
-                                        <div class="column is-one-third has-text-left">{""}</div>
-                                        <div class="column is-one-third has-text-centered">{self.format_time(current_time)}</div>
+                                        <div class="column is-one-third has-text-left">{self.format_time(current_time)}</div>
+                                        <div class="column is-one-third has-text-centered">{match self.playback_rate {
+                                            Some(playback_rate) => format!("{}@{}", self.format_time(duration / playback_rate), playback_rate),
+                                            None => "".to_string()
+                                        }}</div>
                                         <div class="column is-one-third has-text-right">{self.format_time(duration)}</div>
                                     </div>
                                 </>
