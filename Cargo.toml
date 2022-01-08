@@ -28,8 +28,5 @@ base64-url = "1.4"
 url = "2.2"
 podcast-player-common = { git = "https://github.com/hannes-hochreiner/podcast-player-common" }
 
-[patch."https://github.com/hannes-hochreiner/podcast-player-common"]
-podcast-player-common = { path ="../podcast-player-common" }
-
 [package.metadata.release]
 publish = false
