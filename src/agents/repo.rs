@@ -1,6 +1,7 @@
 mod task;
 use super::{fetcher, notifier};
 use crate::objects::*;
+use chrono::{DateTime, FixedOffset};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -188,9 +189,27 @@ impl Repo {
                 //         task::get_unique_keys::Kind::Item,
                 //     )),
                 // );
-                self.fetcher.send(fetcher::Request::PullFeedVals(None));
-                self.fetcher.send(fetcher::Request::PullChannelVals(None));
-                self.fetcher.send(fetcher::Request::PullItemVals(None));
+                self.tasks.insert(
+                    0,
+                    Task::GetKeys(task::get_keys::Task::new(task::get_keys::Kind::LastUpdate(
+                        task::get_keys::ObjectKind::Feed,
+                    ))),
+                );
+                self.tasks.insert(
+                    0,
+                    Task::GetKeys(task::get_keys::Task::new(task::get_keys::Kind::LastUpdate(
+                        task::get_keys::ObjectKind::Channel,
+                    ))),
+                );
+                self.tasks.insert(
+                    0,
+                    Task::GetKeys(task::get_keys::Task::new(task::get_keys::Kind::LastUpdate(
+                        task::get_keys::ObjectKind::Item,
+                    ))),
+                );
+                // self.fetcher.send(fetcher::Request::PullFeedVals(None));
+                // self.fetcher.send(fetcher::Request::PullChannelVals(None));
+                // self.fetcher.send(fetcher::Request::PullItemVals(None));
                 self.tasks.insert(
                     0,
                     Task::GetAll(task::get_all::Task::new(
@@ -353,8 +372,10 @@ impl Repo {
             Request::GetYearMonthKeysByChannelId(channel_id) => self.tasks.insert(
                 0,
                 Task::GetKeys(task::get_keys::Task::new(
-                    handler_id,
-                    task::get_keys::Kind::ItemYearMonth(channel_id),
+                    task::get_keys::Kind::ItemYearMonth {
+                        handler_id,
+                        channel_id,
+                    },
                 )),
             ),
             Request::GetEnclosure(id) => self.tasks.insert(

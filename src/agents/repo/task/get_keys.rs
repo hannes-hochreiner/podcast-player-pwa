@@ -1,4 +1,8 @@
-use crate::{agents::repo, objects::JsError};
+use crate::{
+    agents::{fetcher, repo},
+    objects::JsError,
+};
+use chrono::{DateTime, FixedOffset};
 use uuid::Uuid;
 use wasm_bindgen::{JsCast, JsValue};
 use web_sys::IdbCursor;
@@ -7,7 +11,6 @@ use yew_agent::HandlerId;
 #[derive(Debug)]
 pub struct Task {
     stage: Stage,
-    handler_id: HandlerId,
     kind: Kind,
     request: Option<web_sys::IdbRequest>,
     transaction: Option<web_sys::IdbTransaction>,
@@ -24,45 +27,76 @@ enum Stage {
 
 #[derive(Debug)]
 pub enum Kind {
-    ItemYearMonth(Uuid),
+    ItemYearMonth {
+        handler_id: HandlerId,
+        channel_id: Uuid,
+    },
+    LastUpdate(ObjectKind),
+}
+
+#[derive(Debug)]
+pub enum ObjectKind {
+    Feed,
+    Channel,
+    Item,
 }
 
 impl Kind {
     fn table_name(&self) -> &str {
         match &self {
-            Self::ItemYearMonth(_) => "items",
+            Self::ItemYearMonth {
+                handler_id: _,
+                channel_id: _,
+            } => "items",
+            Self::LastUpdate(object_kind) => match &object_kind {
+                ObjectKind::Feed => "feeds",
+                ObjectKind::Channel => "channels",
+                ObjectKind::Item => "items",
+            },
         }
     }
 
     fn index_name(&self) -> Option<&str> {
         match &self {
-            Self::ItemYearMonth(_) => Some("channel_id_year_month"),
+            Self::ItemYearMonth {
+                handler_id: _,
+                channel_id: _,
+            } => Some("channel_id_year_month"),
+            Self::LastUpdate(_) => Some("val_update_ts"),
         }
     }
 
-    fn key_range(&self) -> Result<web_sys::IdbKeyRange, JsError> {
+    fn key_range(&self) -> Result<JsValue, JsError> {
         match &self {
-            Kind::ItemYearMonth(channel_id) => web_sys::IdbKeyRange::bound(
+            Kind::ItemYearMonth {
+                handler_id: _,
+                channel_id,
+            } => web_sys::IdbKeyRange::bound(
                 &serde_wasm_bindgen::to_value(&vec![&*channel_id.to_string(), ""])?,
                 &serde_wasm_bindgen::to_value(&vec![&*channel_id.to_string(), "9999-99"])?,
             )
+            .map(Into::into)
             .map_err(Into::into),
+            Kind::LastUpdate(_) => Ok(wasm_bindgen::JsValue::UNDEFINED),
         }
     }
 
     fn cursor_direction(&self) -> web_sys::IdbCursorDirection {
         match &self {
-            Kind::ItemYearMonth(_) => web_sys::IdbCursorDirection::Prevunique,
+            Kind::ItemYearMonth {
+                handler_id: _,
+                channel_id: _,
+            } => web_sys::IdbCursorDirection::Prevunique,
+            Kind::LastUpdate(_) => web_sys::IdbCursorDirection::Prev,
         }
     }
 }
 
 impl Task {
-    pub fn new(handler_id: HandlerId, kind: Kind) -> Self {
+    pub fn new(kind: Kind) -> Self {
         Self {
             stage: Stage::Init,
             kind,
-            handler_id,
             request: None,
             transaction: None,
             keys: Vec::new(),
@@ -127,8 +161,19 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                             let cursor: IdbCursor = request.result()?.dyn_into()?;
 
                             task.keys.push(cursor.key()?);
-                            cursor.continue_()?;
-                            task.stage = Stage::WaitingForReadRequest;
+
+                            match task.kind {
+                                Kind::ItemYearMonth {
+                                    handler_id: _,
+                                    channel_id: _,
+                                } => {
+                                    cursor.continue_()?;
+                                    task.stage = Stage::WaitingForReadRequest;
+                                }
+                                Kind::LastUpdate(_) => {
+                                    task.stage = Stage::WaitingForTransaction;
+                                }
+                            }
                         }
 
                         Ok(false)
@@ -139,8 +184,11 @@ impl super::TaskProcessor<Task> for super::super::Repo {
             Stage::WaitingForTransaction => Ok(false),
             Stage::TransactionCompleted => {
                 match &task.kind {
-                    Kind::ItemYearMonth(_) => self.link.respond(
-                        task.handler_id,
+                    Kind::ItemYearMonth {
+                        handler_id,
+                        channel_id: _,
+                    } => self.link.respond(
+                        *handler_id,
                         repo::Response::YearMonthKeys(
                             task.keys
                                 .iter()
@@ -158,6 +206,36 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                                 .collect(),
                         ),
                     ),
+                    Kind::LastUpdate(object_kind) => {
+                        let key = task
+                            .keys
+                            .first()
+                            .map(|i| {
+                                serde_wasm_bindgen::from_value::<Vec<DateTime<FixedOffset>>>(
+                                    i.clone(),
+                                )
+                                .map_err(|e| {
+                                    JsError::from_str(&*format!("error converting JsValue: {}", e))
+                                })
+                                .map(|v| {
+                                    v.first().map(|v| v.clone()).ok_or("unexpected key format")
+                                })
+                            })
+                            .transpose()?
+                            .transpose()?;
+
+                        match object_kind {
+                            ObjectKind::Feed => {
+                                self.fetcher.send(fetcher::Request::PullFeedVals(key))
+                            }
+                            ObjectKind::Channel => {
+                                self.fetcher.send(fetcher::Request::PullChannelVals(key))
+                            }
+                            ObjectKind::Item => {
+                                self.fetcher.send(fetcher::Request::PullItemVals(key))
+                            }
+                        }
+                    }
                 }
 
                 Ok(true)
