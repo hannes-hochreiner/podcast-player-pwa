@@ -1,5 +1,5 @@
-[![CI](https://github.com/hannes-hochreiner/podcast-player/actions/workflows/main.yml/badge.svg)](https://github.com/hannes-hochreiner/podcast-player/actions/workflows/main.yml)
-# Podcast Player
+[![CI](https://github.com/hannes-hochreiner/podcast-player-pwa/actions/workflows/main.yml/badge.svg)](https://github.com/hannes-hochreiner/podcast-player-pwa/actions/workflows/main.yml)
+# Podcast Player PWA
 
 A simple offline-first app for listening to podcasts.
 This web application was created as part of the [Podcast Player](https://github.com/hannes-hochreiner/podcast-player) project.
