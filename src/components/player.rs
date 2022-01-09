@@ -8,7 +8,6 @@ use crate::{
 };
 use podcast_player_common::Channel;
 use std::cmp::Ordering;
-use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
@@ -233,14 +232,6 @@ impl Player {
                 Ok(false)
             }
             Message::SetSource(source) => {
-                // self.source = source;
-
-                // let volume = 1.0;
-                // let playback_rate = 1.5;
-
-                // self.volume = Some(volume);
-                // self.playback_rate = Some(playback_rate);
-
                 if let Some(item) = source {
                     self.player.send(player::Request::SetSource(item.clone()));
                 }
