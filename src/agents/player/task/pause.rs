@@ -48,7 +48,7 @@ impl super::TaskProcessor<PauseTask> for super::super::Player {
             }
             PauseStage::WaitingForPause => Ok(false),
             PauseStage::Finalize => {
-                if let Some(curr_item) = &mut self.source {
+                if let Some(curr_item) = &mut self.source_item {
                     self.audio_element.remove_event_listener_with_callback(
                         "timeupdate",
                         self.on_timeupdate_closure.as_ref().unchecked_ref(),

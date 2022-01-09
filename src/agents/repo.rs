@@ -19,8 +19,8 @@ pub enum Request {
     GetItemsByChannelIdYearMonth(Uuid, String), // returns Items only to requester
     GetItemsByDownloadRequired,                 // returns Items only to requester
     GetItemsByDownloadOk,                       // returns Items only to requester
-    // DownloadEnclosure(Uuid),                    //
-    GetEnclosure(Uuid),     // returns Enclosure only to the requester
+    GetEnclosure(Uuid),                         // returns Enclosure only to the requester
+    GetChannel(Uuid),
     DeleteEnclosure(Item),  // returns UpdatedItem to all subscribers
     UpdateChannel(Channel), // returns UpdatedChannel to all subscribers
     UpdateItem(Item),       // returns UpdatedItem to all subscribers
@@ -369,6 +369,15 @@ impl Repo {
             Request::AddFeed(_) => {
                 todo!()
             }
+            Request::GetChannel(channel_id) => self.tasks.insert(
+                0,
+                Task::PutGetWithKey(task::put_get_with_key::Task::new(
+                    Some(handler_id),
+                    task::put_get_with_key::Kind::Channel,
+                    serde_wasm_bindgen::to_value(&channel_id)?,
+                    None,
+                )),
+            ),
             Request::GetYearMonthKeysByChannelId(channel_id) => self.tasks.insert(
                 0,
                 Task::GetKeys(task::get_keys::Task::new(

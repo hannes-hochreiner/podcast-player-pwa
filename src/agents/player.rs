@@ -2,6 +2,7 @@ mod task;
 
 use super::{notifier, repo};
 use crate::objects::{Item, JsError};
+use podcast_player_common::Channel;
 use std::collections::HashSet;
 use task::*;
 use wasm_bindgen::JsCast;
@@ -25,7 +26,7 @@ pub enum Request {
 pub enum Response {
     Playing,
     Paused,
-    SourceSet(Item, f64),
+    SourceSet(Item, Channel, f64),
     End,
 }
 
@@ -53,7 +54,8 @@ pub struct Player {
     _on_pause_closure: Closure<dyn Fn(web_sys::Event)>,
     _on_end_closure: Closure<dyn Fn(web_sys::Event)>,
     on_timeupdate_closure: Closure<dyn Fn(web_sys::Event)>,
-    source: Option<Item>,
+    source_item: Option<Item>,
+    source_channel: Option<Channel>,
     notifier: Dispatcher<notifier::Notifier>,
     tasks: Vec<Task>,
 }
@@ -111,12 +113,30 @@ impl Player {
                     }
                 }
                 repo::Response::UpdatedItem(item) => {
-                    if let Some(source) = &self.source {
+                    if let Some(source) = &self.source_item {
                         if source.get_id() == item.get_id() {
-                            self.source = Some(item)
+                            self.source_item = Some(item)
                         }
                     }
                 }
+                repo::Response::UpdatedChannel(updated_channel) => match &self.source_channel {
+                    Some(channel) => {
+                        if channel.val.id == updated_channel.val.id {
+                            self.audio_element
+                                .set_playback_rate(updated_channel.meta.playback_rate);
+                            self.audio_element.set_volume(updated_channel.meta.volume);
+                            self.source_channel = Some(updated_channel);
+                        }
+                    }
+                    None => {
+                        if let Some(mut task) = self.tasks.last_mut() {
+                            match &mut task {
+                                Task::SetSource(task) => task.set_channel(updated_channel),
+                                _ => {}
+                            }
+                        }
+                    }
+                },
                 _ => {}
             },
             Message::SourceOpened(_e) => {
@@ -273,7 +293,8 @@ impl Agent for Player {
             mediasource_opened_closure,
             sourcebuffer_update_closure,
             notifier: notifier::Notifier::dispatcher(),
-            source: None,
+            source_item: None,
+            source_channel: None,
             tasks: Vec::new(),
             _on_pause_closure: on_pause_closure,
             _on_play_closure: on_play_closure,
@@ -303,7 +324,22 @@ impl Agent for Player {
             Request::SetCurrentTime(time) => self
                 .tasks
                 .insert(0, Task::SetCurrentTime(SetCurrentTimeTask::new(time))),
-            _ => {}
+            Request::SetPlaybackRate(val) => {
+                if let Some(channel) = &self.source_channel {
+                    let mut channel = channel.clone();
+
+                    channel.meta.playback_rate = val;
+                    self.repo.send(repo::Request::UpdateChannel(channel));
+                }
+            }
+            Request::SetVolume(val) => {
+                if let Some(channel) = &self.source_channel {
+                    let mut channel = channel.clone();
+
+                    channel.meta.volume = val;
+                    self.repo.send(repo::Request::UpdateChannel(channel));
+                }
+            }
         }
         self.process_tasks();
     }

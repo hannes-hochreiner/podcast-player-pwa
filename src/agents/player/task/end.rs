@@ -36,7 +36,7 @@ impl super::TaskProcessor<EndTask> for super::super::Player {
     fn process(&mut self, task: &mut EndTask) -> Result<bool, JsError> {
         match task.get_stage() {
             EndStage::Finalize => {
-                if let Some(item) = &mut self.source {
+                if let Some(item) = &mut self.source_item {
                     item.increment_play_count();
                     item.set_current_time(None);
                     self.repo.send(repo::Request::UpdateItem(item.clone()));

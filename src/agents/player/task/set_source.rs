@@ -3,6 +3,7 @@ use crate::{
     objects::Item,
 };
 use js_sys::ArrayBuffer;
+use podcast_player_common::Channel;
 use wasm_bindgen::JsCast;
 use web_sys::{MediaSource, Url};
 
@@ -25,8 +26,10 @@ use super::TaskProcessor;
 pub struct SetSourceTask {
     item: Item,
     data: Option<ArrayBuffer>,
+    channel: Option<Channel>,
     source_open: bool,
     stage: SetSourceStage,
+    buffer_updated: bool,
 }
 
 #[derive(Debug)]
@@ -35,6 +38,7 @@ pub enum SetSourceStage {
     WaitingForSourceOpenData,
     SourceOpenData,
     WaitingForBufferUpdate,
+    WaitingForChannel,
     Finalize,
 }
 
@@ -43,8 +47,10 @@ impl SetSourceTask {
         Self {
             item,
             data: None,
+            channel: None,
             source_open: false,
             stage: SetSourceStage::Init,
+            buffer_updated: false,
         }
     }
 
@@ -54,6 +60,14 @@ impl SetSourceTask {
         match (self.source_open, &self.data) {
             (true, Some(_)) => self.stage = SetSourceStage::SourceOpenData,
             (_, _) => self.stage = SetSourceStage::WaitingForSourceOpenData,
+        }
+    }
+
+    pub fn set_channel(&mut self, channel: Channel) {
+        self.channel = Some(channel);
+
+        if self.buffer_updated {
+            self.stage = SetSourceStage::Finalize;
         }
     }
 
@@ -67,7 +81,12 @@ impl SetSourceTask {
     }
 
     pub fn buffer_updated(&mut self) {
-        self.stage = SetSourceStage::Finalize
+        self.buffer_updated = true;
+
+        match &self.channel.is_some() {
+            true => self.stage = SetSourceStage::Finalize,
+            false => self.stage = SetSourceStage::WaitingForChannel,
+        }
     }
 }
 
@@ -76,7 +95,8 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
         match &task.stage {
             SetSourceStage::Init => {
                 // remove source
-                self.source = None;
+                self.source_item = None;
+                self.source_channel = None;
                 // set new media source
                 self.media_source = MediaSource::new()?;
                 self.audio_element
@@ -87,6 +107,8 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
                 // request data
                 self.repo
                     .send(repo::Request::GetEnclosure(task.item.get_id()));
+                self.repo
+                    .send(repo::Request::GetChannel(*task.item.get_channel_id()));
                 task.stage = SetSourceStage::WaitingForSourceOpenData;
                 Ok(false)
             }
@@ -112,17 +134,22 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
                 Ok(false)
             }
             SetSourceStage::WaitingForBufferUpdate => Ok(false),
+            SetSourceStage::WaitingForChannel => Ok(false),
             SetSourceStage::Finalize => {
-                self.audio_element.set_playback_rate(1.5);
-                self.audio_element.set_volume(1.0);
+                let channel = task.channel.as_ref().ok_or("channel not set")?;
+                self.audio_element
+                    .set_playback_rate(channel.meta.playback_rate);
+                self.audio_element.set_volume(channel.meta.volume);
                 self.audio_element
                     .set_current_time(match task.item.get_current_time() {
                         Some(current_time) => current_time,
                         None => 0.0,
                     });
-                self.source = Some(task.item.clone());
+                self.source_item = Some(task.item.clone());
+                self.source_channel = Some(channel.clone());
                 self.send_response(Response::SourceSet(
                     task.item.clone(),
+                    channel.clone(),
                     self.audio_element.duration(),
                 ));
                 Ok(true)

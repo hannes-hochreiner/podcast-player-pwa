@@ -6,6 +6,7 @@ use crate::{
     },
     objects::{DownloadStatus, Item, JsError},
 };
+use podcast_player_common::Channel;
 use std::cmp::Ordering;
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
@@ -22,9 +23,7 @@ pub struct Player {
     _repo: Box<dyn Bridge<repo::Repo>>,
     player: Box<dyn Bridge<player::Player>>,
     items: Option<Vec<Item>>,
-    source: Option<Item>,
-    volume: Option<f64>,
-    playback_rate: Option<f64>,
+    source: Option<(Item, Channel)>,
     duration: Option<f64>,
     notifier: Dispatcher<notifier::Notifier>,
     is_playing: bool,
@@ -92,7 +91,7 @@ impl Player {
                     <div class="card-content">
                         {match (&self.source, self.duration) {
                             (Some(source), Some(duration)) => {
-                                let current_time = match source.get_current_time() {
+                                let current_time = match source.0.get_current_time() {
                                     Some(curr_time) => curr_time,
                                     None => 0.0
                                 };
@@ -101,11 +100,20 @@ impl Player {
                                     <input type="range" min="0" step="any" value={current_time.to_string()} max={duration.to_string()} style="width: 100%" onfocus={ctx.link().callback(|e| Message::OnFocus(e))} onchange={ctx.link().callback(|e| Message::TimeChange(e))}/>
                                     <div class="columns is-mobile">
                                         <div class="column is-one-third has-text-left">{self.format_time(current_time)}</div>
-                                        <div class="column is-one-third has-text-centered">{match self.playback_rate {
-                                            Some(playback_rate) => format!("{}@{}", self.format_time(duration / playback_rate), playback_rate),
-                                            None => "".to_string()
-                                        }}</div>
+                                        <div class="column is-one-third has-text-centered">{format!("{}@{}", self.format_time(duration / source.1.meta.playback_rate), source.1.meta.playback_rate)}</div>
                                         <div class="column is-one-third has-text-right">{self.format_time(duration)}</div>
+                                    </div>
+                                    <input type="range" min="0" step="0.1" value={source.1.meta.volume.to_string()} max="1.0" style="width: 100%" onchange={ctx.link().callback(|e| Message::VolumeChange(e))}/>
+                                    <div class="columns is-mobile">
+                                        <div class="column is-one-third has-text-left"><Icon name="volume_down" style={IconStyle::Outlined}/></div>
+                                        <div class="column is-one-third has-text-centered">{format!("{:.1}", source.1.meta.volume)}</div>
+                                        <div class="column is-one-third has-text-right"><Icon name="volume_up" style={IconStyle::Outlined}/></div>
+                                    </div>
+                                    <input type="range" min="0.5" step="0.1" value={source.1.meta.playback_rate.to_string()} max="2.5" style="width: 100%" onchange={ctx.link().callback(|e| Message::PlaybackRateChange(e))}/>
+                                    <div class="columns is-mobile">
+                                        <div class="column is-one-third has-text-left"><Icon name="play_arrow" style={IconStyle::Outlined}/></div>
+                                        <div class="column is-one-third has-text-centered">{format!("{:.1}", source.1.meta.playback_rate)}</div>
+                                        <div class="column is-one-third has-text-right"><Icon name="fast_forward" style={IconStyle::Outlined}/></div>
                                     </div>
                                 </>
                             }
@@ -118,44 +126,12 @@ impl Player {
                                         <div class="column is-one-third has-text-centered">{"?"}</div>
                                         <div class="column is-one-third has-text-right">{"?"}</div>
                                     </div>
-                                </>
-                            }
-                        }}
-                        {match self.volume {
-                            Some(volume) => html! {
-                                <>
-                                    <input type="range" min="0" step="0.1" value={volume.to_string()} max="1.0" style="width: 100%" onchange={ctx.link().callback(|e| Message::VolumeChange(e))}/>
-                                    <div class="columns is-mobile">
-                                        <div class="column is-one-third has-text-left"><Icon name="volume_down" style={IconStyle::Outlined}/></div>
-                                        <div class="column is-one-third has-text-centered">{format!("{:.1}", volume)}</div>
-                                        <div class="column is-one-third has-text-right"><Icon name="volume_up" style={IconStyle::Outlined}/></div>
-                                    </div>
-                                </>
-                            },
-                            _ => html! {
-                                <>
                                     <input type="range" disabled={true} min="0" step="0.1" value="0.5" max="1.0" style="width: 100%"/>
                                     <div class="columns is-mobile">
                                         <div class="column is-one-third has-text-left"><Icon name="volume_down" style={IconStyle::Outlined}/></div>
                                         <div class="column is-one-third has-text-centered">{"?"}</div>
                                         <div class="column is-one-third has-text-right"><Icon name="volume_up" style={IconStyle::Outlined}/></div>
                                     </div>
-                                </>
-                            }
-                        }}
-                        {match self.playback_rate {
-                            Some(playback_rate) => html! {
-                                <>
-                                    <input type="range" min="0.5" step="0.1" value={playback_rate.to_string()} max="2.5" style="width: 100%" onchange={ctx.link().callback(|e| Message::PlaybackRateChange(e))}/>
-                                    <div class="columns is-mobile">
-                                        <div class="column is-one-third has-text-left"><Icon name="play_arrow" style={IconStyle::Outlined}/></div>
-                                        <div class="column is-one-third has-text-centered">{format!("{:.1}", playback_rate)}</div>
-                                        <div class="column is-one-third has-text-right"><Icon name="fast_forward" style={IconStyle::Outlined}/></div>
-                                    </div>
-                                </>
-                            },
-                            _ => html! {
-                                <>
                                     <input type="range" disabled={true} min="0.5" step="0.1" value="1.5" max="2.5" style="width: 100%"/>
                                     <div class="columns is-mobile">
                                         <div class="column is-one-third has-text-left"><Icon name="play_arrow" style={IconStyle::Outlined}/></div>
@@ -210,8 +186,8 @@ impl Player {
                     let mut res = false;
 
                     if let Some(source) = &mut self.source {
-                        if source.get_id() == item.get_id() {
-                            self.source = Some(item.clone());
+                        if source.0.get_id() == item.get_id() {
+                            self.source = Some((item.clone(), source.1.clone()));
                             res = true;
                         }
                     }
@@ -234,6 +210,18 @@ impl Player {
 
                     Ok(res)
                 }
+                repo::Response::UpdatedChannel(channel) => {
+                    let mut res = false;
+
+                    if let Some(source) = &mut self.source {
+                        if source.1.val.id == channel.val.id {
+                            self.source = Some((source.0.clone(), channel));
+                            res = true;
+                        }
+                    }
+
+                    Ok(res)
+                }
                 _ => Ok(false),
             },
             Message::Pause => {
@@ -245,23 +233,23 @@ impl Player {
                 Ok(false)
             }
             Message::SetSource(source) => {
-                self.source = source;
+                // self.source = source;
 
-                let volume = 1.0;
-                let playback_rate = 1.5;
+                // let volume = 1.0;
+                // let playback_rate = 1.5;
 
-                self.volume = Some(volume);
-                self.playback_rate = Some(playback_rate);
+                // self.volume = Some(volume);
+                // self.playback_rate = Some(playback_rate);
 
-                if let Some(item) = &mut self.source {
+                if let Some(item) = source {
                     self.player.send(player::Request::SetSource(item.clone()));
                 }
 
                 Ok(true)
             }
             Message::PlayerMessage(player_message) => match player_message {
-                player::Response::SourceSet(item, duration) => {
-                    self.source = Some(item);
+                player::Response::SourceSet(item, channel, duration) => {
+                    self.source = Some((item, channel));
                     self.duration = Some(duration);
                     Ok(true)
                 }
@@ -278,7 +266,7 @@ impl Player {
                     match (&self.source, &self.items) {
                         (Some(curr_item), Some(items)) => {
                             if let Some(new_item) = items.iter().find(|i| {
-                                i.get_id() != curr_item.get_id() && i.get_play_count() == 0
+                                i.get_id() != curr_item.0.get_id() && i.get_play_count() == 0
                             }) {
                                 self.player
                                     .send(player::Request::SetSource(new_item.clone()));
@@ -332,7 +320,7 @@ impl Component for Player {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         let item_title = match &self.source {
-            Some(source) => source.get_title(),
+            Some(source) => source.0.get_title(),
             _ => String::from("..."),
         };
 
@@ -379,8 +367,6 @@ impl Component for Player {
             items: None,
             source: None,
             player,
-            playback_rate: None,
-            volume: None,
             duration: None,
             notifier: notifier::Notifier::dispatcher(),
             is_playing: false,
