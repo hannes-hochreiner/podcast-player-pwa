@@ -195,7 +195,7 @@ impl Player {
                         res = len_before != self_items.len();
 
                         match item.get_download_status() {
-                            DownloadStatus::Ok(_) => {
+                            DownloadStatus::Ok => {
                                 self_items.push(item.clone());
                                 res = true;
                             }

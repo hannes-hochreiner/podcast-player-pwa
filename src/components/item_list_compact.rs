@@ -96,7 +96,7 @@ impl ItemListCompact {
                 {match item.get_download() {
                     true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match item.get_download_status() {
                         DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
-                        DownloadStatus::Ok(_) => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
+                        DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
                         DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
                         DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
                         _ => html!{<span>{"download"}</span>}

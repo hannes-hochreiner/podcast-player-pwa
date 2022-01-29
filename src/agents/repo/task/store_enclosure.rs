@@ -84,12 +84,12 @@ impl super::TaskProcessor<Task> for super::super::Repo {
 
                 match request.ready_state() {
                     IdbRequestReadyState::Done => {
-                        // TODO: check download size
+                        // TODO: check download size: task.data.byte_length()
                         let trans = request.transaction().ok_or("transaction not set")?;
 
                         let mut item: Item = serde_wasm_bindgen::from_value(request.result()?)?;
 
-                        item.set_download_status(DownloadStatus::Ok(task.data.byte_length()));
+                        item.set_download_status(DownloadStatus::Ok);
 
                         let item_os = trans.object_store("items")?;
                         let item_write_request = item_os.put_with_key(

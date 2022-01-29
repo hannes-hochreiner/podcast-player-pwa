@@ -31,12 +31,12 @@ pub enum Request {
 
 #[derive(Debug, Clone)]
 pub enum Response {
-    Feeds(Vec<Feed>),
+    Feeds(Vec<FeedVal>),
     Channels(Vec<Channel>),
     YearMonthKeys(Vec<String>),
     Items(Vec<Item>),
     Enclosure(ArrayBuffer),
-    UpdatedFeed(Feed),
+    UpdatedFeed(FeedVal),
     UpdatedChannel(Channel),
     UpdatedItem(Item),
     FetcherConfig(Option<FetcherConfig>),

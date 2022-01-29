@@ -1,10 +1,10 @@
 use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
-use crate::objects::{Feed, JsError};
+use crate::objects::{FeedVal, JsError};
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
 
 pub struct FeedList {
-    feeds: Option<Vec<Feed>>,
+    feeds: Option<Vec<FeedVal>>,
     error: Option<JsError>,
     _repo: Box<dyn Bridge<Repo>>,
 }
@@ -29,12 +29,12 @@ impl FeedList {
         }
     }
 
-    fn view_show_feed(&self, feed: &Feed) -> Html {
+    fn view_show_feed(&self, feed: &FeedVal) -> Html {
         html! {
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
-                        <p class="title">{&feed.val.url}</p>
+                        <p class="title">{&feed.title}</p>
                     </div>
                 </div>
             </div>

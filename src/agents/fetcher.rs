@@ -5,7 +5,7 @@ use crate::objects::{
 use super::{notifier, repo};
 use chrono::{DateTime, Duration, FixedOffset, Utc};
 use js_sys::ArrayBuffer;
-use podcast_player_common::{channel_val::ChannelVal, feed_val::FeedVal, item_val::ItemVal};
+use podcast_player_common::{channel_val::ChannelVal, item_val::ItemVal, FeedVal};
 use serde::de::DeserializeOwned;
 use sha2::{Digest, Sha256};
 use std::collections::{HashMap, HashSet};

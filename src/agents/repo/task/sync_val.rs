@@ -1,8 +1,6 @@
 use crate::{agents::repo, objects::JsError};
 use chrono::{DateTime, FixedOffset};
-use podcast_player_common::{
-    channel_val::ChannelVal, feed_val::FeedVal, item_val::ItemVal, Channel, Feed, Item,
-};
+use podcast_player_common::{channel_val::ChannelVal, item_val::ItemVal, Channel, FeedVal, Item};
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 
@@ -64,7 +62,7 @@ impl Value {
 impl Into<Object> for &Value {
     fn into(self) -> Object {
         match self {
-            Value::Feed(feed_val) => Object::Feed(Feed::from(feed_val)),
+            Value::Feed(feed_val) => Object::Feed(feed_val.clone()),
             Value::Channel(channel_val) => Object::Channel(Channel::from(channel_val)),
             Value::Item(item_val) => Object::Item(Item::from(item_val)),
         }
@@ -87,7 +85,7 @@ impl TryInto<wasm_bindgen::JsValue> for &Object {
 enum Object {
     Item(Item),
     Channel(Channel),
-    Feed(Feed),
+    Feed(FeedVal),
 }
 
 impl Object {
@@ -95,7 +93,7 @@ impl Object {
         match &self {
             Self::Item(item) => item.get_val_update(),
             Self::Channel(channel) => channel.get_val_update(),
-            Self::Feed(feed) => feed.get_val_update(),
+            Self::Feed(feed) => &feed.update_ts,
         }
     }
 
@@ -159,10 +157,10 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                                 request.result()?,
                             )?
                             .map(|channel| Object::Channel(channel)),
-                            Value::Feed(_) => {
-                                serde_wasm_bindgen::from_value::<Option<Feed>>(request.result()?)?
-                                    .map(|feed| Object::Feed(feed))
-                            }
+                            Value::Feed(_) => serde_wasm_bindgen::from_value::<Option<FeedVal>>(
+                                request.result()?,
+                            )?
+                            .map(|feed| Object::Feed(feed)),
                             Value::Item(_) => {
                                 serde_wasm_bindgen::from_value::<Option<Item>>(request.result()?)?
                                     .map(|item| Object::Item(item))

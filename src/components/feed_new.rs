@@ -2,12 +2,12 @@ use crate::agents::{
     notifier,
     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
 };
-use crate::objects::{Feed, JsError};
+use crate::objects::{FeedVal, JsError};
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 
 pub struct FeedNew {
-    feeds: Option<Vec<Feed>>,
+    feeds: Option<Vec<FeedVal>>,
     error: Option<JsError>,
     repo: Box<dyn Bridge<Repo>>,
     input_ref: yew::NodeRef,
