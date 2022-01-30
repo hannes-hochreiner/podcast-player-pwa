@@ -26,7 +26,7 @@ yewtil = { version = "0.4", features = ["future"] }
 sha2 = "0.10"
 base64-url = "1.4"
 url = "2.2"
-podcast-player-common = { git = "https://github.com/hannes-hochreiner/podcast-player-common" }
+podcast-player-common = { git = "https://github.com/hannes-hochreiner/podcast-player-common", default-features = false }
 
 [package.metadata.release]
 publish = false
