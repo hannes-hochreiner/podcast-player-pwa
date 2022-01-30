@@ -49,7 +49,7 @@ impl super::TaskProcessor<SetCurrentTimeTask> for super::super::Player {
             }
             SetCurrentTimeStage::Finalize => {
                 if let Some(item) = &mut self.source_item {
-                    item.set_current_time(Some(self.audio_element.current_time()));
+                    item.set_playback_time(Some(self.audio_element.current_time()));
                     self.repo.send(repo::Request::UpdateItem(item.clone()));
                 }
                 Ok(true)

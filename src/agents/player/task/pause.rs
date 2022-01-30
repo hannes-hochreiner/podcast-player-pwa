@@ -53,7 +53,7 @@ impl super::TaskProcessor<PauseTask> for super::super::Player {
                         "timeupdate",
                         self.on_timeupdate_closure.as_ref().unchecked_ref(),
                     )?;
-                    curr_item.set_current_time(Some(self.audio_element.current_time()));
+                    curr_item.set_playback_time(Some(self.audio_element.current_time()));
                     self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
                     self.send_response(Response::Paused);
                 }

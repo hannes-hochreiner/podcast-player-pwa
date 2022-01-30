@@ -87,7 +87,7 @@ impl Player {
                     <div class="card-content">
                         {match (&self.source, self.duration) {
                             (Some(source), Some(duration)) => {
-                                let current_time = match source.0.get_current_time() {
+                                let current_time = match source.0.get_playback_time() {
                                     Some(curr_time) => curr_time,
                                     None => 0.0
                                 };

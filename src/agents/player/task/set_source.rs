@@ -141,7 +141,7 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
                     .set_playback_rate(channel.meta.playback_rate);
                 self.audio_element.set_volume(channel.meta.volume);
                 self.audio_element
-                    .set_current_time(match task.item.get_current_time() {
+                    .set_current_time(match task.item.get_playback_time() {
                         Some(current_time) => current_time,
                         None => 0.0,
                     });

@@ -38,7 +38,7 @@ impl super::TaskProcessor<EndTask> for super::super::Player {
             EndStage::Finalize => {
                 if let Some(item) = &mut self.source_item {
                     item.increment_play_count();
-                    item.set_current_time(None);
+                    item.set_playback_time(None);
                     self.repo.send(repo::Request::UpdateItem(item.clone()));
                     self.send_response(Response::End);
                 }
