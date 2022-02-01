@@ -211,14 +211,17 @@ impl ItemList {
                 }
                 RepoResponse::UpdatedItem(item) => match &mut self.items {
                     Some(items) => {
-                        let index = items
+                        match items
                             .iter()
                             .enumerate()
                             .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
-                            .ok_or("could not find item")?
-                            .0;
-                        items[index] = item;
-                        Ok(true)
+                        {
+                            Some((index, _)) => {
+                                items[index] = item;
+                                Ok(true)
+                            }
+                            None => Ok(false),
+                        }
                     }
                     None => Ok(false),
                 },
