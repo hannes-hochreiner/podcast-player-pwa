@@ -19,7 +19,7 @@ impl FeedList {
             Some(feeds) => {
                 html! {
                     <section class="section">
-                        <div class="columns"><div class="column">
+                        <div class="columns is-multiline"><div class="column is-one-quarter">
                             { feeds.iter().map(|feed| self.view_show_feed(feed)).collect::<Html>() }
                         </div></div>
                     </section>
@@ -31,12 +31,10 @@ impl FeedList {
 
     fn view_show_feed(&self, feed: &FeedVal) -> Html {
         html! {
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-content">
-                        <p class="title">{&feed.title}</p>
-                    </div>
-                </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">{&feed.title}</p>
+                </header>
             </div>
         }
     }
