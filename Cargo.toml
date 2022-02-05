@@ -1,6 +1,6 @@
 [package]
 name = "podcast-player-pwa"
-version = "1.3.0"
+version = "1.4.0"
 authors = ["Hannes Hochreiner <hannes@hochreiner.net>"]
 edition = "2021"
 
