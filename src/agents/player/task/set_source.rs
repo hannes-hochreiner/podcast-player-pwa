@@ -95,8 +95,7 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
         match &task.stage {
             SetSourceStage::Init => {
                 // remove source
-                self.source_item = None;
-                self.source_channel = None;
+                self.source = None;
                 // set new media source
                 self.media_source = MediaSource::new()?;
                 self.audio_element
@@ -145,8 +144,7 @@ impl TaskProcessor<SetSourceTask> for super::super::Player {
                         Some(current_time) => current_time,
                         None => 0.0,
                     });
-                self.source_item = Some(task.item.clone());
-                self.source_channel = Some(channel.clone());
+                self.source = Some((task.item.clone(), channel.clone()));
                 self.send_response(Response::SourceSet(
                     task.item.clone(),
                     channel.clone(),

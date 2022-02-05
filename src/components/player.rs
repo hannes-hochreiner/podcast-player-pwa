@@ -27,6 +27,7 @@ pub struct Player {
     is_playing: bool,
     show_sliders: bool,
     tab: Tab,
+    status_obtained: bool,
 }
 pub enum Message {
     RepoMessage(repo::Response),
@@ -166,15 +167,8 @@ impl Player {
                             .unwrap_or(Ordering::Equal)
                     });
 
-                    if let None = &mut self.source {
-                        let new_source = items
-                            .iter()
-                            .find(|i| i.get_play_count() == 0)
-                            .map(|i| i.clone());
-                        ctx.link().send_message(Message::SetSource(new_source))
-                    }
-
                     self.items = Some(items);
+                    self.set_item_from_playlist(ctx);
 
                     Ok(true)
                 }
@@ -265,6 +259,22 @@ impl Player {
                     };
                     Ok(false)
                 }
+                player::Response::Status(status) => {
+                    self.status_obtained = true;
+
+                    match status {
+                        Some(status) => {
+                            self.source = Some((status.0, status.1));
+                            self.duration = Some(status.2);
+                            self.is_playing = status.3;
+                        }
+                        None => {
+                            self.set_item_from_playlist(ctx);
+                        }
+                    }
+
+                    Ok(true)
+                }
             },
             Message::TimeChange(value) => {
                 self.player
@@ -280,6 +290,19 @@ impl Player {
                     .send(player::Request::SetPlaybackRate(value.parse()?));
                 Ok(false)
             }
+        }
+    }
+
+    fn set_item_from_playlist(&mut self, ctx: &Context<Self>) {
+        match (&self.items, self.status_obtained, &self.source) {
+            (Some(items), true, None) => {
+                let new_source = items
+                    .iter()
+                    .find(|i| i.get_play_count() == 0)
+                    .map(|i| i.clone());
+                ctx.link().send_message(Message::SetSource(new_source))
+            }
+            (_, _, _) => {}
         }
     }
 }
@@ -330,7 +353,9 @@ impl Component for Player {
 
         repo.send(repo::Request::GetItemsByDownloadOk);
 
-        let player = player::Player::bridge(ctx.link().callback(Message::PlayerMessage));
+        let mut player = player::Player::bridge(ctx.link().callback(Message::PlayerMessage));
+
+        player.send(player::Request::GetStatus);
 
         Self {
             _repo: repo,
@@ -342,6 +367,7 @@ impl Component for Player {
             is_playing: false,
             show_sliders: false,
             tab: Tab::Unplayed,
+            status_obtained: false,
         }
     }
 

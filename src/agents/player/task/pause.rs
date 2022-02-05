@@ -48,13 +48,15 @@ impl super::TaskProcessor<PauseTask> for super::super::Player {
             }
             PauseStage::WaitingForPause => Ok(false),
             PauseStage::Finalize => {
-                if let Some(curr_item) = &mut self.source_item {
+                if let Some(source) = &mut self.source {
                     self.audio_element.remove_event_listener_with_callback(
                         "timeupdate",
                         self.on_timeupdate_closure.as_ref().unchecked_ref(),
                     )?;
-                    curr_item.set_playback_time(Some(self.audio_element.current_time()));
-                    self.repo.send(repo::Request::UpdateItem(curr_item.clone()));
+                    source
+                        .0
+                        .set_playback_time(Some(self.audio_element.current_time()));
+                    self.repo.send(repo::Request::UpdateItem(source.0.clone()));
                     self.send_response(Response::Paused);
                 }
                 Ok(true)

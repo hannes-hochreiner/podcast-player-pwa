@@ -20,6 +20,7 @@ pub enum Request {
     SetPlaybackRate(f64),
     Play,
     Pause,
+    GetStatus,
 }
 
 #[derive(Debug, Clone)]
@@ -28,6 +29,7 @@ pub enum Response {
     Paused,
     SourceSet(Item, Channel, f64),
     End,
+    Status(Option<(Item, Channel, f64, bool)>),
 }
 
 #[derive(Debug)]
@@ -54,8 +56,7 @@ pub struct Player {
     _on_pause_closure: Closure<dyn Fn(web_sys::Event)>,
     _on_end_closure: Closure<dyn Fn(web_sys::Event)>,
     on_timeupdate_closure: Closure<dyn Fn(web_sys::Event)>,
-    source_item: Option<Item>,
-    source_channel: Option<Channel>,
+    source: Option<(Item, Channel)>,
     notifier: Dispatcher<notifier::Notifier>,
     tasks: Vec<Task>,
 }
@@ -83,6 +84,7 @@ impl Player {
             Task::Pause(task) => self.process(task),
             Task::Play(task) => self.process(task),
             Task::SetSource(task) => self.process(task),
+            Task::Status(task) => self.process(task),
         }
     }
 
@@ -113,25 +115,25 @@ impl Player {
                     }
                 }
                 repo::Response::UpdatedItem(item) => {
-                    if let Some(source) = &self.source_item {
-                        if source.get_id() == item.get_id() {
-                            self.source_item = Some(item)
+                    if let Some(source) = &self.source {
+                        if source.0.get_id() == item.get_id() {
+                            self.source = Some((item, source.1.clone()));
                         }
                     }
                 }
-                repo::Response::UpdatedChannel(updated_channel) => match &self.source_channel {
-                    Some(channel) => {
-                        if channel.val.id == updated_channel.val.id {
+                repo::Response::UpdatedChannel(channel) => match &self.source {
+                    Some(source) => {
+                        if source.1.val.id == channel.val.id {
                             self.audio_element
-                                .set_playback_rate(updated_channel.meta.playback_rate);
-                            self.audio_element.set_volume(updated_channel.meta.volume);
-                            self.source_channel = Some(updated_channel);
+                                .set_playback_rate(channel.meta.playback_rate);
+                            self.audio_element.set_volume(channel.meta.volume);
+                            self.source = Some((source.0.clone(), channel));
                         }
                     }
                     None => {
                         if let Some(mut task) = self.tasks.last_mut() {
                             match &mut task {
-                                Task::SetSource(task) => task.set_channel(updated_channel),
+                                Task::SetSource(task) => task.set_channel(channel),
                                 _ => {}
                             }
                         }
@@ -293,8 +295,7 @@ impl Agent for Player {
             mediasource_opened_closure,
             sourcebuffer_update_closure,
             notifier: notifier::Notifier::dispatcher(),
-            source_item: None,
-            source_channel: None,
+            source: None,
             tasks: Vec::new(),
             _on_pause_closure: on_pause_closure,
             _on_play_closure: on_play_closure,
@@ -325,21 +326,22 @@ impl Agent for Player {
                 .tasks
                 .insert(0, Task::SetCurrentTime(SetCurrentTimeTask::new(time))),
             Request::SetPlaybackRate(val) => {
-                if let Some(channel) = &self.source_channel {
-                    let mut channel = channel.clone();
+                if let Some(source) = &self.source {
+                    let mut channel = source.1.clone();
 
                     channel.meta.playback_rate = val;
                     self.repo.send(repo::Request::UpdateChannel(channel));
                 }
             }
             Request::SetVolume(val) => {
-                if let Some(channel) = &self.source_channel {
-                    let mut channel = channel.clone();
+                if let Some(source) = &self.source {
+                    let mut channel = source.1.clone();
 
                     channel.meta.volume = val;
                     self.repo.send(repo::Request::UpdateChannel(channel));
                 }
             }
+            Request::GetStatus => self.tasks.insert(0, Task::Status(StatusTask::new())),
         }
         self.process_tasks();
     }

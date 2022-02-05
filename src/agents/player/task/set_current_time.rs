@@ -48,9 +48,11 @@ impl super::TaskProcessor<SetCurrentTimeTask> for super::super::Player {
                 Ok(false)
             }
             SetCurrentTimeStage::Finalize => {
-                if let Some(item) = &mut self.source_item {
-                    item.set_playback_time(Some(self.audio_element.current_time()));
-                    self.repo.send(repo::Request::UpdateItem(item.clone()));
+                if let Some(source) = &mut self.source {
+                    source
+                        .0
+                        .set_playback_time(Some(self.audio_element.current_time()));
+                    self.repo.send(repo::Request::UpdateItem(source.0.clone()));
                 }
                 Ok(true)
             }
