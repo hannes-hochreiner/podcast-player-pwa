@@ -2,6 +2,7 @@ mod agents;
 mod components;
 mod objects;
 mod pages;
+mod utils;
 
 use components::Top;
 #[allow(unused_imports)]

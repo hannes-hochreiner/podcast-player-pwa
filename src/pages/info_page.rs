@@ -2,6 +2,7 @@ use crate::{
     agents::notifier,
     components::{NavBar, Notification},
     objects::JsError,
+    utils,
 };
 use serde::Deserialize;
 use wasm_bindgen::JsValue;
@@ -149,7 +150,7 @@ impl Component for InfoPage {
 
         Self {
             estimate: None,
-            connection_type: match obtain_connection_type() {
+            connection_type: match utils::get_connection_type() {
                 Ok(ct) => Some(ct),
                 Err(e) => {
                     notifier.send(notifier::Request::Notify(notifier::Notification {
@@ -182,14 +183,6 @@ impl Component for InfoPage {
             },
         }
     }
-}
-
-fn obtain_connection_type() -> Result<ConnectionType, JsError> {
-    Ok(web_sys::window()
-        .ok_or("error getting window")?
-        .navigator()
-        .connection()?
-        .type_())
 }
 
 fn obtain_estimate_future() -> Result<JsFuture, JsError> {

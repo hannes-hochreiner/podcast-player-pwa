@@ -1,5 +1,8 @@
-use crate::objects::{
-    Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig, JsError,
+use crate::{
+    objects::{
+        Auth0Token, Authorization, AuthorizationConfig, AuthorizationTask, FetcherConfig, JsError,
+    },
+    utils,
 };
 
 use super::{notifier, repo};
@@ -225,11 +228,7 @@ impl Fetcher {
     }
 
     fn process_handle_input(&mut self, msg: Request, id: HandlerId) -> Result<(), JsError> {
-        let conn_type = web_sys::window()
-            .ok_or("could not obtain window")?
-            .navigator()
-            .connection()?
-            .type_();
+        let conn_type = utils::get_connection_type()?;
 
         if (conn_type != ConnectionType::Ethernet)
             & (conn_type != ConnectionType::Wifi)

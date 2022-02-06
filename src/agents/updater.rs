@@ -1,8 +1,7 @@
-// use anyhow::Result;
 use crate::objects::{ChannelVal, DownloadStatus, FeedVal, ItemVal, JsError, UpdaterConfig};
+use crate::utils;
 use chrono::Utc;
 use std::collections::{HashMap, HashSet};
-use url::Url;
 use uuid::Uuid;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
@@ -46,11 +45,8 @@ impl Updater {
     fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
             Message::Interval(_ev) => {
-                let conn_type = web_sys::window()
-                    .ok_or("could not obtain window")?
-                    .navigator()
-                    .connection()?
-                    .type_();
+                let conn_type = utils::get_connection_type()?;
+
                 match (&self.config, conn_type) {
                     (
                         Some(config),
