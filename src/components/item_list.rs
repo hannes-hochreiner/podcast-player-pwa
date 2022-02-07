@@ -49,16 +49,13 @@ impl ItemList {
                                             true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
                                             false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
                                         }}
-                                        {match i.get_download() {
-                                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
-                                                DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
-                                                DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
-                                                DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
-                                                DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
-                                                _ => html!{<span>{"download"}</span>}
-                                            }}</button>),
-                                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}><Icon name="cloud_download" style={IconStyle::Outlined}/><span>{"download"}</span></button>)
-                                        }}
+                                        <button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
+                                            DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
+                                            DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
+                                            DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
+                                            DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
+                                            _ => html!{<span>{"download"}</span>}
+                                        }}</button>
                                     </p>
                                 </div>
                             </div> }}).collect::<Html>() }
@@ -178,17 +175,7 @@ impl ItemList {
                 None => Ok(false),
             },
             Message::ToggleDownload(id) => match &self.items {
-                Some(items) => {
-                    let mut item = items
-                        .iter()
-                        .find(|i| i.get_id() == id)
-                        .ok_or("could not find item")?
-                        .clone();
-
-                    item.set_download(!item.get_download());
-                    self.repo.send(RepoRequest::UpdateItem(item));
-                    Ok(false)
-                }
+                Some(items) => Ok(false),
                 None => Ok(false),
             },
             Message::RepoMessage(resp) => match resp {

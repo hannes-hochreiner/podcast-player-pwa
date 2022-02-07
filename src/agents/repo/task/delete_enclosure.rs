@@ -48,7 +48,6 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                 let enclosure_request = trans
                     .object_store("enclosures")?
                     .delete(&serde_wasm_bindgen::to_value(&task.item.get_id())?)?;
-                task.item.set_download(false);
                 task.item.set_download_status(DownloadStatus::NotRequested);
                 let item_request = trans.object_store("items")?.put_with_key(
                     &serde_wasm_bindgen::to_value(&task.item)?,
