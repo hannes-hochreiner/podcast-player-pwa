@@ -17,6 +17,7 @@ pub struct ItemListCompact {
 #[derive(Properties, Clone, PartialEq)]
 pub struct Props {
     pub items: Vec<Item>,
+    pub show_details: bool,
     pub on_selected: Callback<Item>,
 }
 
@@ -113,10 +114,10 @@ impl Component for ItemListCompact {
     type Message = Message;
     type Properties = Props;
 
-    fn create(_ctx: &yew::Context<Self>) -> Self {
+    fn create(ctx: &yew::Context<Self>) -> Self {
         Self {
             repo: repo::Repo::dispatcher(),
-            show_content: false,
+            show_content: ctx.props().show_details,
             notifier: notifier::Notifier::dispatcher(),
         }
     }
@@ -150,5 +151,11 @@ impl Component for ItemListCompact {
                 </div></div> }}).collect::<Html>() }
             </div>
         }
+    }
+
+    fn changed(&mut self, ctx: &Context<Self>) -> bool {
+        self.show_content = ctx.props().show_details;
+
+        true
     }
 }

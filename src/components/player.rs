@@ -75,7 +75,10 @@ impl Player {
                     })
                     .map(|i| i.clone())
                     .collect();
-                html! {<ItemListCompact items={filtered_items} on_selected={ctx.link().callback(|i| Message::SetSource(Some(i)))} />}
+                html! {<ItemListCompact items={filtered_items} show_details={match self.tab {
+                    Tab::Downloaded => true,
+                    Tab::Unplayed => false
+                }} on_selected={ctx.link().callback(|i| Message::SetSource(Some(i)))} />}
             }
             None => html!(),
         }
