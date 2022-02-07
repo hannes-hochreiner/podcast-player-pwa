@@ -21,9 +21,7 @@ pub struct ItemList {
 
 pub enum Message {
     RepoMessage(RepoResponse),
-    ToggleDownload(Uuid),
     UpdateCurrentIndex(usize),
-    ToggleNew(Uuid),
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -32,7 +30,7 @@ pub struct Props {
 }
 
 impl ItemList {
-    fn view_item_list(&self, ctx: &Context<Self>) -> Html {
+    fn view_item_list(&self, _ctx: &Context<Self>) -> Html {
         match &self.items {
             Some(items) => {
                 html!(<ItemListCompact items={items.clone()} show_details={true} />)
@@ -134,24 +132,6 @@ impl ItemList {
                 }
                 Ok(false)
             }
-            Message::ToggleNew(id) => match &self.items {
-                Some(items) => {
-                    let mut item = items
-                        .iter()
-                        .find(|i| i.get_id() == id)
-                        .ok_or("could not find item")?
-                        .clone();
-
-                    item.set_new(!item.get_new());
-                    self.repo.send(RepoRequest::UpdateItem(item));
-                    Ok(false)
-                }
-                None => Ok(false),
-            },
-            Message::ToggleDownload(id) => match &self.items {
-                Some(items) => Ok(false),
-                None => Ok(false),
-            },
             Message::RepoMessage(resp) => match resp {
                 RepoResponse::YearMonthKeys(keys) => {
                     self.keys = Some(keys);
@@ -231,6 +211,7 @@ impl Component for ItemList {
                 { self.view_pagination(ctx) }
                 { self.view_fetching() }
                 { self.view_item_list(ctx) }
+                { self.view_pagination(ctx) }
                 { self.view_error() }
             </>
         }
