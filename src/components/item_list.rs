@@ -4,8 +4,8 @@ use crate::agents::{
     notifier,
     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
 };
-use crate::components::icon::{Icon, IconStyle};
-use crate::objects::{DownloadStatus, Item, JsError};
+use crate::components::item_list_compact::ItemListCompact;
+use crate::objects::{Item, JsError};
 use uuid::Uuid;
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
@@ -35,35 +35,9 @@ impl ItemList {
     fn view_item_list(&self, ctx: &Context<Self>) -> Html {
         match &self.items {
             Some(items) => {
-                html! {
-                    <section class="section">
-                        <div class="columns"><div class="column">
-                            { items.iter().map(|i| {
-                                let id = i.get_id();
-                                html! { <div class="card">
-                                <div class="card-content">
-                                    <p class="title">{&i.get_title()}</p>
-                                    <p class="subtitle">{&i.get_date().format("%Y-%m-%d")}{&i.get_id()}</p>
-                                    <p class="buttons">
-                                        {match i.get_new() {
-                                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
-                                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
-                                        }}
-                                        <button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match &i.get_download_status() {
-                                            DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
-                                            DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
-                                            DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
-                                            DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
-                                            _ => html!{<span>{"download"}</span>}
-                                        }}</button>
-                                    </p>
-                                </div>
-                            </div> }}).collect::<Html>() }
-                        </div></div>
-                    </section>
-                }
+                html!(<ItemListCompact items={items.clone()} show_details={true} />)
             }
-            None => html! { <p> {"no items available"} </p> },
+            None => html!(),
         }
     }
 

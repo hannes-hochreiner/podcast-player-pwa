@@ -18,7 +18,7 @@ pub struct ItemListCompact {
 pub struct Props {
     pub items: Vec<Item>,
     pub show_details: bool,
-    pub on_selected: Callback<Item>,
+    pub on_selected: Option<Callback<Item>>,
 }
 
 pub enum Message {
@@ -60,11 +60,10 @@ impl ItemListCompact {
                     DownloadStatus::Error | DownloadStatus::Ok => {
                         self.repo.send(repo::Request::DeleteEnclosure(item));
                     }
-                    DownloadStatus::Pending => {
+                    DownloadStatus::Pending | DownloadStatus::InProgress => {
                         item.set_download_status(DownloadStatus::NotRequested);
                         self.repo.send(repo::Request::UpdateItem(item));
                     }
-                    DownloadStatus::InProgress => {}
                     DownloadStatus::NotRequested => {
                         item.set_download_status(DownloadStatus::Pending);
                         self.repo.send(repo::Request::UpdateItem(item));
@@ -140,7 +139,10 @@ impl Component for ItemListCompact {
                     let on_selected = ctx.props().on_selected.clone();
                     html! { <div class="column is-one-quarter"><div class="card">
                     <header class="card-header">
-                        <p class="card-header-title" onclick={move |_| on_selected.emit(onselect_item.clone())}>{&i.get_title()}</p>
+                        <p class="card-header-title" onclick={move |_| match &on_selected {
+                            Some(callback) => callback.emit(onselect_item.clone()),
+                            None => {}
+                        }}>{&i.get_title()}</p>
                         <button class="card-header-icon" onclick={ctx.link().callback(|_| Message::ToggleShowContent)}><Icon name={match self.show_content { true => "expand_less", false => "expand_more"}} style={IconStyle::Outlined}/></button>
                     </header>
                     {if self.show_content {
