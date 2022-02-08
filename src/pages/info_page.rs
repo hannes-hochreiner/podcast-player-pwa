@@ -28,8 +28,8 @@ pub struct Props {}
 
 #[derive(Debug, Deserialize, Clone)]
 struct Estimate {
-    quota: u32,
-    usage: u32,
+    quota: u64,
+    usage: u64,
 }
 
 impl InfoPage {
@@ -43,7 +43,7 @@ impl InfoPage {
                             <p class="heading">{"connection type"}</p>
                             <p class="title">{match &self.connection_type {
                                 Some(connection_type) => match connection_type {
-                                    ConnectionType::Wifi=>"Wifi",
+                                    ConnectionType::Wifi => "Wifi",
                                     ConnectionType::Cellular => "Cellular",
                                     ConnectionType::Bluetooth => "Bluetooth",
                                     ConnectionType::Ethernet => "Ethernet",
