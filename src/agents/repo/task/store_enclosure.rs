@@ -22,6 +22,7 @@ enum Stage {
     Init,
     WaitingForIdbReadRequest,
     WaitingForIdbWriteRequests,
+    WaitingForIdbItemWriteRequest,
     WaitingForTransaction,
     TransactionCompleted,
 }
@@ -84,12 +85,33 @@ impl super::TaskProcessor<Task> for super::super::Repo {
 
                 match request.ready_state() {
                     IdbRequestReadyState::Done => {
-                        // TODO: check download size: task.data.byte_length()
                         let trans = request.transaction().ok_or("transaction not set")?;
 
                         let mut item: Item = serde_wasm_bindgen::from_value(request.result()?)?;
 
-                        item.set_download_status(DownloadStatus::Ok);
+                        match item.get_size() == task.data.byte_length() as i64 {
+                            true => {
+                                item.set_download_status(DownloadStatus::Ok);
+                                let enclosure_os = trans.object_store("enclosures")?;
+                                let data_write_request = enclosure_os.put_with_key(
+                                    &task.data,
+                                    &serde_wasm_bindgen::to_value(&item.get_id())?,
+                                )?;
+
+                                data_write_request.set_onsuccess(Some(
+                                    self.idb_closure_success.as_ref().unchecked_ref(),
+                                ));
+                                data_write_request.set_onerror(Some(
+                                    self.idb_closure_error.as_ref().unchecked_ref(),
+                                ));
+                                task.data_write_request = Some(data_write_request);
+                                task.stage = Stage::WaitingForIdbWriteRequests;
+                            }
+                            false => {
+                                item.set_download_status(DownloadStatus::Error);
+                                task.stage = Stage::WaitingForIdbItemWriteRequest;
+                            }
+                        }
 
                         let item_os = trans.object_store("items")?;
                         let item_write_request = item_os.put_with_key(
@@ -97,31 +119,34 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                             &serde_wasm_bindgen::to_value(&item.get_id())?,
                         )?;
 
-                        let enclosure_os = trans.object_store("enclosures")?;
-                        let data_write_request = enclosure_os.put_with_key(
-                            &task.data,
-                            &serde_wasm_bindgen::to_value(&item.get_id())?,
-                        )?;
-
                         item_write_request
                             .set_onsuccess(Some(self.idb_closure_success.as_ref().unchecked_ref()));
                         item_write_request
-                            .set_onerror(Some(self.idb_closure_error.as_ref().unchecked_ref()));
-
-                        data_write_request
-                            .set_onsuccess(Some(self.idb_closure_success.as_ref().unchecked_ref()));
-                        data_write_request
                             .set_onerror(Some(self.idb_closure_error.as_ref().unchecked_ref()));
 
                         task.item_write_request = Some(item_write_request);
-                        task.data_write_request = Some(data_write_request);
                         task.item = Some(item);
-                        task.stage = Stage::WaitingForIdbWriteRequests;
 
                         Ok(false)
                     }
                     _ => Ok(false),
                 }
+            }
+            Stage::WaitingForIdbItemWriteRequest => {
+                let item_request = task
+                    .item_write_request
+                    .as_ref()
+                    .ok_or("item write request not set")?;
+
+                match item_request.ready_state() {
+                    IdbRequestReadyState::Done => {
+                        super::request_ok(item_request)?;
+                        task.stage = Stage::WaitingForTransaction;
+                    }
+                    _ => {}
+                }
+
+                Ok(false)
             }
             Stage::WaitingForIdbWriteRequests => {
                 let item_request = task
