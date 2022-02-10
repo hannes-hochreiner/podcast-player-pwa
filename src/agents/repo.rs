@@ -1,6 +1,6 @@
 mod task;
 use super::{fetcher, notifier};
-use crate::objects::*;
+use crate::{objects::*, utils};
 use chrono::{DateTime, FixedOffset};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
@@ -8,7 +8,7 @@ use std::collections::HashSet;
 use task::*;
 use uuid::Uuid;
 use wasm_bindgen::{closure::Closure, JsCast};
-use web_sys::{IdbDatabase, IdbRequest, IdbTransaction, IdbTransactionMode};
+use web_sys::{ConnectionType, IdbDatabase, IdbRequest, IdbTransaction, IdbTransactionMode};
 use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -129,6 +129,8 @@ impl Repo {
                         _ => {}
                     }
                 }
+
+                Ok(())
             }
             Message::OpenDbResult(_) => {
                 if let Some(mut task) = self.tasks.last_mut() {
@@ -137,58 +139,90 @@ impl Repo {
                         _ => {}
                     }
                 }
+
+                Ok(())
             }
             Message::FetcherMessage(resp) => match resp {
-                fetcher::Response::PullFeedVals(feed_vals) => {
-                    for feed_val in feed_vals {
+                fetcher::Response::PullFeedVals(feed_vals) => match feed_vals {
+                    Ok(feed_vals) => {
+                        for feed_val in feed_vals {
+                            self.tasks.insert(
+                                0,
+                                Task::SyncVal(task::sync_val::Task::new(
+                                    task::sync_val::Value::Feed(feed_val),
+                                )),
+                            );
+                        }
+
+                        Ok(())
+                    }
+                    Err(e) => match utils::get_connection_type()? {
+                        ConnectionType::None => Ok(()),
+                        _ => Err(e),
+                    },
+                },
+                fetcher::Response::PullChannelVals(channel_vals) => match channel_vals {
+                    Ok(channel_vals) => {
+                        for channel_val in channel_vals {
+                            self.tasks.insert(
+                                0,
+                                Task::SyncVal(task::sync_val::Task::new(
+                                    task::sync_val::Value::Channel(channel_val),
+                                )),
+                            );
+                        }
+
+                        Ok(())
+                    }
+                    Err(e) => match utils::get_connection_type()? {
+                        ConnectionType::None => Ok(()),
+                        _ => Err(e),
+                    },
+                },
+                fetcher::Response::PullItemVals(item_vals) => match item_vals {
+                    Ok(item_vals) => {
+                        for item_val in item_vals {
+                            self.tasks.insert(
+                                0,
+                                Task::SyncVal(task::sync_val::Task::new(
+                                    task::sync_val::Value::Item(item_val),
+                                )),
+                            );
+                        }
+
+                        Ok(())
+                    }
+                    Err(e) => match utils::get_connection_type()? {
+                        ConnectionType::None => Ok(()),
+                        _ => Err(e),
+                    },
+                },
+                fetcher::Response::PullDownload(item_id, data) => match data {
+                    Ok(data) => {
                         self.tasks.insert(
                             0,
-                            Task::SyncVal(task::sync_val::Task::new(task::sync_val::Value::Feed(
-                                feed_val,
-                            ))),
+                            Task::StoreEnclosure(task::store_enclosure::Task::new(item_id, data)),
                         );
+
+                        Ok(())
                     }
-                }
-                fetcher::Response::PullChannelVals(channel_vals) => {
-                    for channel_val in channel_vals {
-                        self.tasks.insert(
-                            0,
-                            Task::SyncVal(task::sync_val::Task::new(
-                                task::sync_val::Value::Channel(channel_val),
-                            )),
-                        );
-                    }
-                }
-                fetcher::Response::PullItemVals(item_vals) => {
-                    for item_val in item_vals {
-                        self.tasks.insert(
-                            0,
-                            Task::SyncVal(task::sync_val::Task::new(task::sync_val::Value::Item(
-                                item_val,
-                            ))),
-                        );
-                    }
-                }
-                fetcher::Response::PullDownload(item_id, data) => self.tasks.insert(
-                    0,
-                    Task::StoreEnclosure(task::store_enclosure::Task::new(item_id, data)),
-                ),
+                    Err(e) => match utils::get_connection_type()? {
+                        ConnectionType::None => Ok(()),
+                        _ => Err(e),
+                    },
+                },
                 fetcher::Response::PullDownloadStarted(item_id) => {
                     self.tasks.insert(
                         0,
                         Task::DownloadStarted(task::download_started::Task::new(item_id)),
                     );
+
+                    Ok(())
                 }
-                fetcher::Response::Binary(task_id, res) => {}
-                fetcher::Response::Text(task_id, res) => {}
+                fetcher::Response::Binary(_task_id, _res) => Ok(()),
+                fetcher::Response::Text(_task_id, _res) => Ok(()),
             },
             Message::Interval(_) => {
-                // self.tasks.insert(
-                //     0,
-                //     Task::GetUniqueKeys(task::get_unique_keys::Task::new(
-                //         task::get_unique_keys::Kind::Item,
-                //     )),
-                // );
                 self.tasks.insert(
                     0,
                     Task::GetKeys(task::get_keys::Task::new(task::get_keys::Kind::LastUpdate(
@@ -207,9 +241,7 @@ impl Repo {
                         task::get_keys::ObjectKind::Item,
                     ))),
                 );
-                // self.fetcher.send(fetcher::Request::PullFeedVals(None));
-                // self.fetcher.send(fetcher::Request::PullChannelVals(None));
-                // self.fetcher.send(fetcher::Request::PullItemVals(None));
+
                 self.tasks.insert(
                     0,
                     Task::GetAll(task::get_all::Task::new(
@@ -218,150 +250,19 @@ impl Repo {
                         Some(serde_wasm_bindgen::to_value(&vec!["true"])?),
                         Some("download_required".into()),
                     )),
-                )
+                );
+
+                Ok(())
             }
             Message::IdbTransaction(_) => {
                 if let Some(task) = self.tasks.last_mut() {
                     task.transaction_complete();
                 }
+
+                Ok(())
             }
-            Message::IdbRequest(_) => {}
+            Message::IdbRequest(_) => Ok(()),
         }
-        // match msg {
-        //     Message::FetcherMessage(resp) => match resp {
-        //         fetcher::Response::Binary(uuid, res) => {
-        //             let task = self.fetcher_tasks.remove(&uuid).ok_or("task not found")?;
-
-        //             match task {
-        //                 FetcherTask::DownloadEnclosure(item_id, handler_id) => {
-        //                     match (&self.db, res) {
-        //                         (Some(_db), Ok(data)) => {
-        //                             self.pending_tasks.push((
-        //                                 handler_id,
-        //                                 Box::new(AddEnclosureTask::new_with_item_id_data(
-        //                                     item_id, data,
-        //                                 )),
-        //                             ));
-        //                             self.process_tasks()?;
-        //                         }
-        //                         (None, _) => log::error!("could not find database"),
-        //                         (_, Err(e)) => log::error!("error downloading enclosure: {}", e),
-        //                     }
-        //                 }
-        //                 _ => {}
-        //             }
-        //         }
-        //         fetcher::Response::Text(uuid, _res) => {
-        //             let task = self.fetcher_tasks.remove(&uuid).ok_or("task not found")?;
-
-        //             match task {
-        //                 _ => {}
-        //             }
-        //         }
-        //     },
-        //     Message::OpenDbUpdate(_e) => {
-        //         let idb_db = IdbDatabase::from(
-        //             self.open_request
-        //                 .as_ref()
-        //                 .ok_or("could not get reference")?
-        //                 .request
-        //                 .result()?,
-        //         );
-        //         let object_stores = vec![
-        //             "channels",
-        //             "feeds",
-        //             "items",
-        //             "enclosures",
-        //             "images",
-        //             "images-meta",
-        //             "configuration",
-        //         ];
-        //         let mut indices = HashMap::new();
-        //         indices.insert(
-        //             "items",
-        //             vec![
-        //                 (
-        //                     "channel_id_year_month",
-        //                     vec!["val.channel_id", "keys.year_month"],
-        //                 ),
-        //                 ("download_required", vec!["keys.download_required"]),
-        //                 ("download_ok", vec!["keys.download_ok"]),
-        //             ],
-        //         );
-
-        //         for object_store in object_stores {
-        //             match idb_db.create_object_store(object_store) {
-        //                 Ok(os) => {
-        //                     if indices.contains_key(object_store) {
-        //                         for (name, key_paths) in &indices[object_store] {
-        //                             match os.create_index_with_str_sequence_and_optional_parameters(
-        //                                 name,
-        //                                 &serde_wasm_bindgen::to_value(key_paths)?,
-        //                                 &IdbIndexParameters::new(),
-        //                             ) {
-        //                                 Ok(_) => log::info!("created index {}", name),
-        //                                 Err(e) => log::error!("failed to create index: {:?}", e),
-        //                             };
-        //                         }
-        //                     }
-        //                 }
-        //                 Err(e) => {
-        //                     log::error!(
-        //                         "failed to create object store \"{}\": {:?}",
-        //                         object_store,
-        //                         e
-        //                     );
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     Message::OpenDbSuccess(_e) => {
-        //         self.db = Some(
-        //             self.open_request
-        //                 .as_ref()
-        //                 .ok_or("could not get reference")?
-        //                 .request
-        //                 .result()?
-        //                 .into(),
-        //         );
-        //         self.open_request = None;
-        //         log::info!("open db");
-        //         self.process_tasks()?;
-        //     }
-        //     Message::IdbRequest(res) => {
-        //         let req = self.idb_tasks.remove(&res.0).ok_or("task not found")?;
-        //         let (handler_id, mut task) = self
-        //             .in_progress_tasks
-        //             .remove(&req.task_id)
-        //             .ok_or("task not found")?;
-
-        //         match task.set_response(req.request.result()) {
-        //             Ok(Some(resp)) => {
-        //                 self.link.respond(handler_id.clone(), resp.clone());
-        //                 match resp {
-        //                     Response::UpdateItem(item) | Response::DownloadEnclosure(item) => {
-        //                         for sub in &self.subscribers {
-        //                             if sub.is_respondable() && *sub != handler_id {
-        //                                 self.link.respond(
-        //                                     *sub,
-        //                                     Response::ModifiedItems(vec![item.clone()]),
-        //                                 );
-        //                             }
-        //                         }
-        //                     }
-        //                     _ => {}
-        //                 }
-        //             }
-        //             Ok(None) => {
-        //                 self.in_progress_tasks
-        //                     .insert(req.task_id, (handler_id, task));
-        //             }
-        //             Err(e) => self.link.respond(handler_id, Response::Error(e)),
-        //         }
-        //     }
-        // }
-
-        Ok(())
     }
 
     fn process_handle_input(&mut self, msg: Request, handler_id: HandlerId) -> Result<(), JsError> {

@@ -34,10 +34,10 @@ pub enum Request {
 pub enum Response {
     Binary(Uuid, Result<ArrayBuffer, JsError>),
     Text(Uuid, Result<String, JsError>),
-    PullFeedVals(Vec<FeedVal>),
-    PullChannelVals(Vec<ChannelVal>),
-    PullItemVals(Vec<ItemVal>),
-    PullDownload(Uuid, ArrayBuffer),
+    PullFeedVals(Result<Vec<FeedVal>, JsError>),
+    PullChannelVals(Result<Vec<ChannelVal>, JsError>),
+    PullItemVals(Result<Vec<ItemVal>, JsError>),
+    PullDownload(Uuid, Result<ArrayBuffer, JsError>),
     PullDownloadStarted(Uuid),
 }
 
@@ -71,18 +71,18 @@ impl Fetcher {
     fn process_update(&mut self, msg: Message) -> Result<(), JsError> {
         match msg {
             Message::PullFeedVals(handler_id, res) => {
-                self.link.respond(handler_id, Response::PullFeedVals(res?));
+                self.link.respond(handler_id, Response::PullFeedVals(res));
             }
             Message::PullChannelVals(handler_id, res) => {
                 self.link
-                    .respond(handler_id, Response::PullChannelVals(res?));
+                    .respond(handler_id, Response::PullChannelVals(res));
             }
             Message::PullItemVals(handler_id, res) => {
-                self.link.respond(handler_id, Response::PullItemVals(res?));
+                self.link.respond(handler_id, Response::PullItemVals(res));
             }
             Message::PullDownload(handler_id, item_id, res) => self
                 .link
-                .respond(handler_id, Response::PullDownload(item_id, res?)),
+                .respond(handler_id, Response::PullDownload(item_id, res)),
             Message::ReceiveBinary(handler_id, uuid, res) => {
                 self.link.respond(handler_id, Response::Binary(uuid, res));
             }
