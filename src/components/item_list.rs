@@ -42,6 +42,10 @@ impl ItemList {
     fn view_pagination(&self, ctx: &Context<Self>) -> Html {
         match &self.keys {
             Some(keys) => {
+                if keys.len() == 0 {
+                    return html!();
+                }
+
                 let mut ellopsis_drawn = false;
 
                 html!(<nav class="pagination is-centered" role="navigation" aria-label="pagination">
@@ -54,7 +58,7 @@ impl ItemList {
                     }
                 }
                 {
-                    if self.current_index != keys.len()-1 {
+                    if self.current_index != keys.len() - 1 {
                         let new_index = self.current_index + 1;
                         html!(<a class="pagination-next" onclick={ctx.link().callback(move |_| Message::UpdateCurrentIndex(new_index))}>{">"}</a>)
                     } else {
@@ -123,6 +127,10 @@ impl ItemList {
         match msg {
             Message::UpdateCurrentIndex(idx) => {
                 if let Some(keys) = &self.keys {
+                    if keys.len() == 0 {
+                        return Ok(false);
+                    }
+
                     self.current_index = idx;
                     self.items = None;
                     self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
