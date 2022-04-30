@@ -12,7 +12,7 @@ impl Component for ChannelsPage {
         html! {
             <>
                 <NavBar/>
-                <Notification/>
+                // <Notification/>
                 <ChannelList/>
             </>
         }

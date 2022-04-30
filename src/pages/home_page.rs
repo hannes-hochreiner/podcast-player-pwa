@@ -12,7 +12,7 @@ impl Component for HomePage {
         html! {
             <>
                 <NavBar/>
-                <Notification/>
+                // <Notification/>
                 <Player/>
             </>
         }

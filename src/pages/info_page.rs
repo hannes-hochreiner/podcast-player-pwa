@@ -121,7 +121,7 @@ impl Component for InfoPage {
         html! {
             <>
                 <NavBar/>
-                <Notification/>
+                // <Notification/>
                 { self.view_network_info(ctx) }
                 { self.view_storage_info(ctx) }
             </>

@@ -17,7 +17,7 @@ impl Component for ItemsPage {
         html! {
             <>
                 <NavBar/>
-                <Notification/>
+                // <Notification/>
                 <ItemList channel_id={ctx.props().channel_id}/>
             </>
         }

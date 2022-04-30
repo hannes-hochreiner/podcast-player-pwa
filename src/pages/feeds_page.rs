@@ -12,7 +12,7 @@ impl Component for FeedsPage {
         html! {
             <>
                 <NavBar/>
-                <Notification/>
+                // <Notification/>
                 // <FeedNew/>
                 <FeedList/>
             </>
