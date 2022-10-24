@@ -1,7 +1,6 @@
 mod task;
 use super::{fetcher, notifier};
 use crate::{objects::*, utils};
-use chrono::{DateTime, FixedOffset};
 use js_sys::ArrayBuffer;
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -24,7 +23,6 @@ pub enum Request {
     DeleteEnclosure(Item),  // returns UpdatedItem to all subscribers
     UpdateChannel(Channel), // returns UpdatedChannel to all subscribers
     UpdateItem(Item),       // returns UpdatedItem to all subscribers
-    GetFetcherConf(Option<FetcherConfig>), // returns FetcherConfig only to requester
     GetUpdaterConf(Option<UpdaterConfig>), // returns UpdaterConfig only to requester
     AddFeed(String),
 }
@@ -39,7 +37,6 @@ pub enum Response {
     UpdatedFeed(FeedVal),
     UpdatedChannel(Channel),
     UpdatedItem(Item),
-    FetcherConfig(Option<FetcherConfig>),
     UpdaterConfig(Option<UpdaterConfig>),
 }
 
@@ -310,18 +307,6 @@ impl Repo {
                     Some(String::from("download_ok")),
                 )),
             ),
-            Request::GetFetcherConf(value) => self.tasks.insert(
-                0,
-                Task::PutGetWithKey(task::put_get_with_key::Task::new(
-                    None,
-                    task::put_get_with_key::Kind::Configuration,
-                    serde_wasm_bindgen::to_value("fetcher")?,
-                    match &value {
-                        Some(value) => Some(serde_wasm_bindgen::to_value(value)?),
-                        None => None,
-                    },
-                )),
-            ),
             Request::GetUpdaterConf(value) => self.tasks.insert(
                 0,
                 Task::PutGetWithKey(task::put_get_with_key::Task::new(
@@ -486,89 +471,6 @@ impl Agent for Repo {
         }
 
         self.process_tasks();
-        // match msg {
-        //     Request::GetUpdaterConf(conf) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(put_get_with_key::PutGetWithKeyTask::new(
-        //             put_get_with_key::Kind::ConfigurationUpdater,
-        //             conf.map(|c| serde_wasm_bindgen::to_value(&c).unwrap()),
-        //             serde_wasm_bindgen::to_value("updater").unwrap(),
-        //         )),
-        //     )),
-        //     Request::GetFetcherConf(conf) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(put_get_with_key::PutGetWithKeyTask::new(
-        //             put_get_with_key::Kind::ConfigurationFetcher,
-        //             conf.map(|c| serde_wasm_bindgen::to_value(&c).unwrap()),
-        //             serde_wasm_bindgen::to_value("fetcher").unwrap(),
-        //         )),
-        //     )),
-        //     Request::AddFeed(url) => {
-        //         let task_id = Uuid::new_v4();
-
-        //         self.fetcher_tasks
-        //             .insert(task_id, FetcherTask::AddFeed(url.clone(), handler_id));
-        //         self.fetcher.send(fetcher::Request::PostString(
-        //             task_id,
-        //             format!("/api/feeds"),
-        //             url,
-        //         ));
-        //     }
-        //     Request::GetFeeds => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(GetAllTask::new(Kind::Feeds, None)))),
-        //     Request::AddFeedVals(feeds) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(AddFeedValsTask::new_with_feed_vals(feeds)),
-        //     )),
-        //     Request::AddChannelVals(channels) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(AddChannelValsTask::new_with_channel_vals(channels)),
-        //     )),
-        //     Request::AddItemVals(items) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(AddItemValsTask::new_with_item_vals(items)),
-        //     )),
-        //     Request::GetChannels => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(GetAllTask::new(Kind::Channels, None)))),
-        //     Request::GetEnclosure(id) => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(GetEnclosureTask::new_with_id(id)))),
-        //     Request::UpdateChannel(channel) => self.pending_tasks.push((
-        //         handler_id,
-        //         Box::new(UpdateChannelTask::new_with_channel(channel)),
-        //     )),
-        //     Request::GetItemsByChannelIdYearMonth(channel_id, year_month) => {
-        //         self.pending_tasks.push((
-        //             handler_id,
-        //             Box::new(
-        //                 GetItemsByChannelIdYearMonthTask::new_with_channel_id_year_month(
-        //                     channel_id, year_month,
-        //                 ),
-        //             ),
-        //         ))
-        //     }
-        //     Request::UpdateItem(item) => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(UpdateItemTask::new_with_item(item)))),
-        //     Request::GetItemsByDownloadRequired => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(GetItemsByDownloadRequiredTask::new()))),
-        //     Request::GetItemsByDownloadOk => self
-        //         .pending_tasks
-        //         .push((handler_id, Box::new(GetItemsByDownloadOkTask::new()))),
-        //     Request::DownloadEnclosure(item_id) => {
-        //         let task_id = Uuid::new_v4();
-
-        //         self.fetcher_tasks
-        //             .insert(task_id, FetcherTask::DownloadEnclosure(item_id, handler_id));
-        //         self.fetcher.send(fetcher::Request::FetchBinary(
-        //             task_id,
-        //             format!("/api/items/{}/stream", item_id),
-        //         ));
-        //     }
-        // }
     }
 
     fn connected(&mut self, id: HandlerId) {

@@ -171,9 +171,6 @@ impl super::TaskProcessor<Task> for super::super::Repo {
                         let key: String = serde_wasm_bindgen::from_value(task.key.clone())?;
 
                         match &*key {
-                            "fetcher" => Ok(repo::Response::FetcherConfig(
-                                serde_wasm_bindgen::from_value(result.clone())?,
-                            )),
                             "updater" => Ok(repo::Response::UpdaterConfig(
                                 serde_wasm_bindgen::from_value(result.clone())?,
                             )),
