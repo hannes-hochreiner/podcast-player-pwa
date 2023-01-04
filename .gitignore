@@ -8,3 +8,6 @@
 
 # custom test data
 /test_data
+
+# Cargo.lock should normally be committed, but since this is part of a workspace, it will not be committed.
+Cargo.lock
