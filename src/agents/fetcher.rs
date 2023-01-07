@@ -3,13 +3,13 @@ use crate::{objects::JsError, utils};
 use chrono::{DateTime, FixedOffset};
 use js_sys::ArrayBuffer;
 use podcast_player_common::{channel_val::ChannelVal, item_val::ItemVal, FeedVal};
-use serde::de::DeserializeOwned;
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::JsFuture;
 use web_sys::ConnectionType;
-use yew_agent::{Agent, AgentLink, Context, Dispatched, Dispatcher, HandlerId};
+use yew_agent::{Dispatched, Dispatcher, HandlerId, Public, Worker, WorkerLink};
 
 #[derive(Debug)]
 pub enum Request {
@@ -22,7 +22,7 @@ pub enum Request {
     PullDownload(Uuid),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum Response {
     Binary(Uuid, Result<ArrayBuffer, JsError>),
     Text(Uuid, Result<String, JsError>),
@@ -44,7 +44,7 @@ pub enum Message {
 }
 
 pub struct Fetcher {
-    link: AgentLink<Self>,
+    link: WorkerLink<Self>,
     subscribers: HashSet<HandlerId>,
     notifier: Dispatcher<notifier::Notifier>,
 }
@@ -183,13 +183,13 @@ impl Fetcher {
     }
 }
 
-impl Agent for Fetcher {
-    type Reach = Context<Self>;
+impl Worker for Fetcher {
+    type Reach = Public<Self>;
     type Message = Message;
     type Input = Request;
     type Output = Response;
 
-    fn create(link: AgentLink<Self>) -> Self {
+    fn create(link: WorkerLink<Self>) -> Self {
         Self {
             link,
             subscribers: HashSet::<HandlerId>::new(),

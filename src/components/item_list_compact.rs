@@ -1,17 +1,14 @@
 use super::{Icon, IconStyle};
-use crate::{
-    agents::{notifier, repo},
-    objects::JsError,
-};
+use crate::objects::JsError;
 use podcast_player_common::{item_meta::DownloadStatus, Item};
 use uuid::Uuid;
 use yew::{prelude::*, Component, Properties};
 use yew_agent::{Dispatched, Dispatcher};
 
 pub struct ItemListCompact {
-    repo: Dispatcher<repo::Repo>,
+    // repo: Dispatcher<repo::Repo>,
     show_content: bool,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -35,40 +32,40 @@ impl ItemListCompact {
                 Ok(true)
             }
             Message::ToggleNew(item_id) => {
-                let mut item = ctx
-                    .props()
-                    .items
-                    .iter()
-                    .find(|i| i.get_id() == item_id)
-                    .ok_or("item not found")?
-                    .clone();
+                // let mut item = ctx
+                //     .props()
+                //     .items
+                //     .iter()
+                //     .find(|i| i.get_id() == item_id)
+                //     .ok_or("item not found")?
+                //     .clone();
 
-                item.set_new(!item.get_new());
-                self.repo.send(repo::Request::UpdateItem(item));
+                // item.set_new(!item.get_new());
+                // self.repo.send(repo::Request::UpdateItem(item));
                 Ok(false)
             }
             Message::ToggleDownload(item_id) => {
-                let mut item = ctx
-                    .props()
-                    .items
-                    .iter()
-                    .find(|i| i.get_id() == item_id)
-                    .ok_or("item not found")?
-                    .clone();
+                // let mut item = ctx
+                //     .props()
+                //     .items
+                //     .iter()
+                //     .find(|i| i.get_id() == item_id)
+                //     .ok_or("item not found")?
+                //     .clone();
 
-                match item.get_download_status() {
-                    DownloadStatus::Error | DownloadStatus::Ok => {
-                        self.repo.send(repo::Request::DeleteEnclosure(item));
-                    }
-                    DownloadStatus::Pending | DownloadStatus::InProgress => {
-                        item.set_download_status(DownloadStatus::NotRequested);
-                        self.repo.send(repo::Request::UpdateItem(item));
-                    }
-                    DownloadStatus::NotRequested => {
-                        item.set_download_status(DownloadStatus::Pending);
-                        self.repo.send(repo::Request::UpdateItem(item));
-                    }
-                }
+                // match item.get_download_status() {
+                //     DownloadStatus::Error | DownloadStatus::Ok => {
+                //         self.repo.send(repo::Request::DeleteEnclosure(item));
+                //     }
+                //     DownloadStatus::Pending | DownloadStatus::InProgress => {
+                //         item.set_download_status(DownloadStatus::NotRequested);
+                //         self.repo.send(repo::Request::UpdateItem(item));
+                //     }
+                //     DownloadStatus::NotRequested => {
+                //         item.set_download_status(DownloadStatus::Pending);
+                //         self.repo.send(repo::Request::UpdateItem(item));
+                //     }
+                // }
 
                 Ok(false)
             }
@@ -93,17 +90,17 @@ impl ItemListCompact {
                 </div>
             </div>
             <p class="buttons">
-                {match item.get_new() {
-                    true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
-                    false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
-                }}
-                <button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match item.get_download_status() {
-                    DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
-                    DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
-                    DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
-                    DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
-                    _ => html!{<span>{"download"}</span>}
-                }}</button>
+                // {match item.get_new() {
+                //     true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star" style={IconStyle::Filled}/><span>{"new"}</span></button>),
+                //     false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::ToggleNew(id))}><Icon name="star_outline" style={IconStyle::Filled}/><span>{"new"}</span></button>),
+                // }}
+                // <button class="button is-primary" onclick={ctx.link().callback(move |_| Message::ToggleDownload(id))}>{match item.get_download_status() {
+                //     DownloadStatus::Pending => html!{<><Icon name="cloud_queue" style={IconStyle::Filled}/><span>{"download pending"}</span></>},
+                //     DownloadStatus::Ok => html!{<><Icon name="cloud_done" style={IconStyle::Filled}/><span>{"download ok"}</span></>},
+                //     DownloadStatus::InProgress => html!{<><Icon name="cloud_sync" style={IconStyle::Filled}/><span>{"downloading"}</span></>},
+                //     DownloadStatus::Error => html!{<><Icon name="cloud_off" style={IconStyle::Filled}/><span>{"download error"}</span></>},
+                //     _ => html!{<span>{"download"}</span>}
+                // }}</button>
             </p>
         </div>}
     }
@@ -115,9 +112,9 @@ impl Component for ItemListCompact {
 
     fn create(ctx: &yew::Context<Self>) -> Self {
         Self {
-            repo: repo::Repo::dispatcher(),
+            // repo: repo::Repo::dispatcher(),
             show_content: ctx.props().show_details,
-            notifier: notifier::Notifier::dispatcher(),
+            // notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -125,7 +122,7 @@ impl Component for ItemListCompact {
         match self.process_update(ctx, msg) {
             Ok(update) => update,
             Err(e) => {
-                self.notifier.send(notifier::Request::NotifyError(e));
+                // self.notifier.send(notifier::Request::NotifyError(e));
                 true
             }
         }
@@ -155,9 +152,9 @@ impl Component for ItemListCompact {
         }
     }
 
-    fn changed(&mut self, ctx: &Context<Self>) -> bool {
-        self.show_content = ctx.props().show_details;
+    // fn changed(&mut self, ctx: &Context<Self>) -> bool {
+    //     self.show_content = ctx.props().show_details;
 
-        true
-    }
+    //     true
+    // }
 }

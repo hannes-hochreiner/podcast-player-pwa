@@ -8,7 +8,7 @@ use task::*;
 use uuid::Uuid;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::{ConnectionType, IdbDatabase, IdbRequest, IdbTransaction, IdbTransactionMode};
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher, HandlerId, Public, Worker, WorkerLink};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Request {
@@ -41,7 +41,7 @@ pub enum Response {
 }
 
 pub struct Repo {
-    link: AgentLink<Repo>,
+    link: WorkerLink<Repo>,
     subscribers: HashSet<HandlerId>,
     db: Option<IdbDatabase>,
     fetcher: Box<dyn Bridge<fetcher::Fetcher>>,
@@ -382,13 +382,13 @@ impl Repo {
     }
 }
 
-impl Agent for Repo {
-    type Reach = Context<Self>;
+impl Worker for Repo {
+    type Reach = Public<Self>;
     type Message = Message;
     type Input = Request;
     type Output = Response;
 
-    fn create(link: AgentLink<Self>) -> Self {
+    fn create(link: WorkerLink<Self>) -> Self {
         let fetcher_cb = link.callback(Message::FetcherMessage);
         let mut notifier = notifier::Notifier::dispatcher();
         let idb_callback_success = link.callback(Message::IdbRequest);

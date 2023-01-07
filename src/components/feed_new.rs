@@ -1,7 +1,7 @@
-use crate::agents::{
-    notifier,
-    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
-};
+// use crate::agents::{
+//     notifier,
+//     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+// };
 use crate::objects::{FeedVal, JsError};
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
@@ -9,13 +9,13 @@ use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 pub struct FeedNew {
     feeds: Option<Vec<FeedVal>>,
     error: Option<JsError>,
-    repo: Box<dyn Bridge<Repo>>,
+    // repo: Box<dyn Bridge<Repo>>,
     input_ref: yew::NodeRef,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
-    RepoMessage(RepoResponse),
+    // RepoMessage(RepoResponse),
     Submit,
 }
 
@@ -40,20 +40,20 @@ impl FeedNew {
 
     fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
         match msg {
-            Message::RepoMessage(response) => match response {
-                RepoResponse::Feeds(res) => {
-                    self.feeds = Some(res);
-                    Ok(true)
-                }
-                _ => Ok(false),
-            },
+            // Message::RepoMessage(response) => match response {
+            //     RepoResponse::Feeds(res) => {
+            //         self.feeds = Some(res);
+            //         Ok(true)
+            //     }
+            //     _ => Ok(false),
+            // },
             Message::Submit => {
                 let elem = self
                     .input_ref
                     .cast::<web_sys::HtmlInputElement>()
                     .ok_or("could not get input element")?;
 
-                self.repo.send(RepoRequest::AddFeed(elem.value()));
+                // self.repo.send(RepoRequest::AddFeed(elem.value()));
                 elem.set_value("");
                 Ok(true)
             }
@@ -66,17 +66,17 @@ impl Component for FeedNew {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        let cb = ctx.link().callback(Message::RepoMessage);
-        let mut repo = Repo::bridge(cb);
+        // let cb = ctx.link().callback(Message::RepoMessage);
+        // let mut repo = Repo::bridge(cb);
 
-        repo.send(RepoRequest::GetFeeds);
+        // repo.send(RepoRequest::GetFeeds);
 
         Self {
             feeds: None,
             error: None,
-            repo,
+            // repo,
             input_ref: NodeRef::default(),
-            notifier: notifier::Notifier::dispatcher(),
+            // notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -84,7 +84,7 @@ impl Component for FeedNew {
         match self.process_update(ctx, msg) {
             Ok(res) => res,
             Err(e) => {
-                self.notifier.send(notifier::Request::NotifyError(e));
+                // self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }

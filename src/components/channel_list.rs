@@ -1,8 +1,8 @@
 use super::router::AppRoute;
-use crate::agents::{
-    notifier,
-    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
-};
+// use crate::agents::{
+//     notifier,
+//     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+// };
 use crate::components::icon::{Icon, IconStyle};
 use crate::objects::{Channel, JsError};
 use uuid::Uuid;
@@ -13,13 +13,13 @@ use yew_router::prelude::*;
 pub struct ChannelList {
     channels: Option<Vec<Channel>>,
     error: Option<JsError>,
-    repo: Box<dyn Bridge<Repo>>,
+    // repo: Box<dyn Bridge<Repo>>,
     show_all: bool,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
-    RepoMessage(RepoResponse),
+    // RepoMessage(RepoResponse),
     SetShowAll(bool),
     SetActive(Uuid, bool),
 }
@@ -71,14 +71,15 @@ impl ChannelList {
     }
 
     fn view_show_selected_channel(&self, channel: &Channel) -> Html {
-        html! { <Link<AppRoute> classes={"navbar-item, card"} to={AppRoute::ItemsPage{channel_id: channel.val.id}}>
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
-                    <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
-                </div>
-            </div>
-        </Link<AppRoute>> }
+        // html! { <Link<AppRoute> classes={"navbar-item, card"} to={AppRoute::ItemsPage{channel_id: channel.val.id}}>
+        //     <div class="card-content">
+        //         <div class="media">
+        //             <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
+        //             <div class="media-content"><p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p></div>
+        //         </div>
+        //     </div>
+        // </Link<AppRoute>> }
+        html! {}
     }
 
     fn view_show_all_channel(&self, ctx: &Context<Self>, channel: &Channel) -> Html {
@@ -91,10 +92,10 @@ impl ChannelList {
                     <div class="media-left"><figure class="image is-64x64"><img src={channel.val.image.clone()}/></figure></div>
                     <div class="media-content">
                         <p class="title">{&channel.val.title}</p><p class="subtitle">{&channel.val.description}</p>
-                        {match state {
-                            true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, false))}><Icon name="check" style={IconStyle::Outlined}/></button>),
-                            false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, true))}><Icon name="check" style={IconStyle::Outlined}/></button>)
-                        }}
+                        // {match state {
+                        //     true => html!(<button class="button is-primary" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, false))}><Icon name="check" style={IconStyle::Outlined}/></button>),
+                        //     false => html!(<button class="button" onclick={ctx.link().callback(move |_| Message::SetActive(channel_id, true))}><Icon name="check" style={IconStyle::Outlined}/></button>)
+                        // }}
                     </div>
                 </div>
             </div>
@@ -118,39 +119,39 @@ impl ChannelList {
 
     fn process_update(&mut self, _ctx: &Context<Self>, msg: Message) -> Result<bool, JsError> {
         match msg {
-            Message::RepoMessage(response) => match response {
-                RepoResponse::Channels(mut res) => {
-                    res.sort_by(|a, b| a.val.title.cmp(&b.val.title));
-                    self.channels = Some(res);
-                    Ok(true)
-                }
-                RepoResponse::UpdatedChannel(channel) => {
-                    if let Some(channels) = &mut self.channels {
-                        channels.retain(|c| c.val.id != channel.val.id);
-                        channels.push(channel);
-                        channels.sort_by(|a, b| a.val.title.cmp(&b.val.title));
-                        Ok(true)
-                    } else {
-                        Ok(false)
-                    }
-                }
-                _ => Ok(false),
-            },
+            // Message::RepoMessage(response) => match response {
+            //     RepoResponse::Channels(mut res) => {
+            //         res.sort_by(|a, b| a.val.title.cmp(&b.val.title));
+            //         self.channels = Some(res);
+            //         Ok(true)
+            //     }
+            //     RepoResponse::UpdatedChannel(channel) => {
+            //         if let Some(channels) = &mut self.channels {
+            //             channels.retain(|c| c.val.id != channel.val.id);
+            //             channels.push(channel);
+            //             channels.sort_by(|a, b| a.val.title.cmp(&b.val.title));
+            //             Ok(true)
+            //         } else {
+            //             Ok(false)
+            //         }
+            //     }
+            //     _ => Ok(false),
+            // },
             Message::SetShowAll(show_all) => {
                 self.show_all = show_all;
                 Ok(true)
             }
             Message::SetActive(id, state) => {
-                let mut channel = self
-                    .channels
-                    .as_ref()
-                    .ok_or("could not get channel reference")?
-                    .iter()
-                    .find(|e| e.val.id == id)
-                    .ok_or("could not find channel")?
-                    .clone();
-                channel.meta.active = state;
-                self.repo.send(RepoRequest::UpdateChannel(channel));
+                // let mut channel = self
+                //     .channels
+                //     .as_ref()
+                //     .ok_or("could not get channel reference")?
+                //     .iter()
+                //     .find(|e| e.val.id == id)
+                //     .ok_or("could not find channel")?
+                //     .clone();
+                // channel.meta.active = state;
+                // self.repo.send(RepoRequest::UpdateChannel(channel));
                 Ok(false)
             }
         }
@@ -162,17 +163,17 @@ impl Component for ChannelList {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        let cb = ctx.link().callback(Message::RepoMessage);
-        let mut repo = Repo::bridge(cb);
+        // let cb = ctx.link().callback(Message::RepoMessage);
+        // let mut repo = Repo::bridge(cb);
 
-        repo.send(RepoRequest::GetChannels);
+        // repo.send(RepoRequest::GetChannels);
 
         Self {
             channels: None,
             error: None,
-            repo,
+            // repo,
             show_all: false,
-            notifier: notifier::Notifier::dispatcher(),
+            // notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -180,7 +181,7 @@ impl Component for ChannelList {
         match self.process_update(ctx, msg) {
             Ok(res) => res,
             Err(e) => {
-                self.notifier.send(notifier::Request::NotifyError(e));
+                // self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }

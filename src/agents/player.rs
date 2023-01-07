@@ -3,16 +3,17 @@ mod task;
 use super::{notifier, repo};
 use crate::objects::{Item, JsError};
 use podcast_player_common::Channel;
+use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use task::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::{closure::Closure, JsValue};
 use web_sys::{self, Event, MediaSource};
-use yew_agent::{Agent, AgentLink, Bridge, Bridged, Context, Dispatched, Dispatcher, HandlerId};
+use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher, HandlerId, Public, Worker, WorkerLink};
 
 // TODO: check play events
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Request {
     SetSource(Item),
     SetCurrentTime(f64),
@@ -23,7 +24,7 @@ pub enum Request {
     GetStatus,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum Response {
     Playing,
     Paused,
@@ -45,7 +46,7 @@ pub enum Message {
 }
 
 pub struct Player {
-    link: AgentLink<Self>,
+    link: WorkerLink<Self>,
     subscribers: HashSet<HandlerId>,
     repo: Box<dyn Bridge<repo::Repo>>,
     audio_element: web_sys::HtmlAudioElement,
@@ -230,13 +231,13 @@ impl Player {
     }
 }
 
-impl Agent for Player {
-    type Reach = Context<Self>;
+impl Worker for Player {
+    type Reach = Public<Self>;
     type Message = Message;
     type Input = Request;
     type Output = Response;
 
-    fn create(link: AgentLink<Self>) -> Self {
+    fn create(link: WorkerLink<Self>) -> Self {
         let callback_repo = link.callback(Message::RepoMessage);
         let callback_mediasource_opened = link.callback(move |e| Message::SourceOpened(e));
         let mediasource_opened_closure = Closure::wrap(Box::new(move |event: web_sys::Event| {

@@ -1,7 +1,9 @@
 use std::{error::Error, fmt::Display, num::ParseFloatError};
 
+use serde::{Deserialize, Serialize};
+
 /// TODO: there is a wasm_bindgen::JsError coming up. Once it lands, this class should no longer tbe required.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct JsError {
     pub description: String,
 }

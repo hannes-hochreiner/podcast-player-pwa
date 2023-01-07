@@ -2,12 +2,12 @@ use wasm_bindgen::JsCast;
 use web_sys::{Event, FocusEvent, HtmlInputElement};
 use yew::{html, Callback, Component, Properties};
 use yew_agent::{Dispatched, Dispatcher};
-
-use crate::{agents::notifier, objects::JsError};
+// use crate::{agents::notifier, objects::JsError};
+use crate::objects::JsError;
 
 pub struct Range {
     update_allowed: bool,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 
 #[derive(Properties, Clone, PartialEq)]
@@ -49,7 +49,7 @@ impl Component for Range {
     fn create(_ctx: &yew::Context<Self>) -> Self {
         Self {
             update_allowed: true,
-            notifier: notifier::Notifier::dispatcher(),
+            // notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -63,15 +63,15 @@ impl Component for Range {
         match self.process_update(ctx, msg) {
             Ok(should_render) => should_render,
             Err(e) => {
-                self.notifier.send(notifier::Request::NotifyError(e));
+                // self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }
     }
 
-    fn changed(&mut self, _ctx: &yew::Context<Self>) -> bool {
-        self.update_allowed
-    }
+    // fn changed(&mut self, _ctx: &yew::Context<Self>) -> bool {
+    //     self.update_allowed
+    // }
 }
 
 fn get_input_element_from_event(ev: Event) -> Result<HtmlInputElement, JsError> {

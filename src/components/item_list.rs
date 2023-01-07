@@ -1,9 +1,9 @@
 use std::cmp::Ordering;
 
-use crate::agents::{
-    notifier,
-    repo::{Repo, Request as RepoRequest, Response as RepoResponse},
-};
+// use crate::agents::{
+//     notifier,
+//     repo::{Repo, Request as RepoRequest, Response as RepoResponse},
+// };
 use crate::components::item_list_compact::ItemListCompact;
 use crate::objects::{Item, JsError};
 use uuid::Uuid;
@@ -13,14 +13,14 @@ use yew_agent::{Bridge, Bridged, Dispatched, Dispatcher};
 pub struct ItemList {
     items: Option<Vec<Item>>,
     error: Option<JsError>,
-    repo: Box<dyn Bridge<Repo>>,
+    // repo: Box<dyn Bridge<Repo>>,
     keys: Option<Vec<String>>,
     current_index: usize,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 
 pub enum Message {
-    RepoMessage(RepoResponse),
+    // RepoMessage(RepoResponse),
     UpdateCurrentIndex(usize),
 }
 
@@ -133,49 +133,49 @@ impl ItemList {
 
                     self.current_index = idx;
                     self.items = None;
-                    self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
-                        ctx.props().channel_id,
-                        keys[idx].clone(),
-                    ));
+                    // self.repo.send(RepoRequest::GetItemsByChannelIdYearMonth(
+                    //     ctx.props().channel_id,
+                    //     keys[idx].clone(),
+                    // ));
                 }
                 Ok(false)
             }
-            Message::RepoMessage(resp) => match resp {
-                RepoResponse::YearMonthKeys(keys) => {
-                    self.keys = Some(keys);
-                    ctx.link().send_message(Message::UpdateCurrentIndex(0));
-                    Ok(true)
-                }
-                RepoResponse::Items(mut res) => {
-                    // unwrap is safe, as a default is provided
-                    res.sort_by(|a, b| {
-                        b.get_date()
-                            .partial_cmp(&a.get_date())
-                            .or(Some(Ordering::Equal))
-                            .unwrap()
-                    });
+            // Message::RepoMessage(resp) => match resp {
+            //     RepoResponse::YearMonthKeys(keys) => {
+            //         self.keys = Some(keys);
+            //         ctx.link().send_message(Message::UpdateCurrentIndex(0));
+            //         Ok(true)
+            //     }
+            //     RepoResponse::Items(mut res) => {
+            //         // unwrap is safe, as a default is provided
+            //         res.sort_by(|a, b| {
+            //             b.get_date()
+            //                 .partial_cmp(&a.get_date())
+            //                 .or(Some(Ordering::Equal))
+            //                 .unwrap()
+            //         });
 
-                    self.items = Some(res);
-                    Ok(true)
-                }
-                RepoResponse::UpdatedItem(item) => match &mut self.items {
-                    Some(items) => {
-                        match items
-                            .iter()
-                            .enumerate()
-                            .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
-                        {
-                            Some((index, _)) => {
-                                items[index] = item;
-                                Ok(true)
-                            }
-                            None => Ok(false),
-                        }
-                    }
-                    None => Ok(false),
-                },
-                _ => Ok(false),
-            },
+            //         self.items = Some(res);
+            //         Ok(true)
+            //     }
+            //     RepoResponse::UpdatedItem(item) => match &mut self.items {
+            //         Some(items) => {
+            //             match items
+            //                 .iter()
+            //                 .enumerate()
+            //                 .find(|(_index, iter_item)| iter_item.get_id() == item.get_id())
+            //             {
+            //                 Some((index, _)) => {
+            //                     items[index] = item;
+            //                     Ok(true)
+            //                 }
+            //                 None => Ok(false),
+            //             }
+            //         }
+            //         None => Ok(false),
+            //     },
+            //     _ => Ok(false),
+            // },
         }
     }
 }
@@ -185,21 +185,21 @@ impl Component for ItemList {
     type Properties = Props;
 
     fn create(ctx: &Context<Self>) -> Self {
-        let cb = ctx.link().callback(Message::RepoMessage);
-        let mut repo = Repo::bridge(cb);
+        // let cb = ctx.link().callback(Message::RepoMessage);
+        // let mut repo = Repo::bridge(cb);
 
-        repo.send(RepoRequest::GetChannels);
-        repo.send(RepoRequest::GetYearMonthKeysByChannelId(
-            ctx.props().channel_id,
-        ));
+        // repo.send(RepoRequest::GetChannels);
+        // repo.send(RepoRequest::GetYearMonthKeysByChannelId(
+        //     ctx.props().channel_id,
+        // ));
 
         Self {
             items: None,
             error: None,
-            repo,
+            // repo,
             current_index: 0,
             keys: None,
-            notifier: notifier::Notifier::dispatcher(),
+            // notifier: notifier::Notifier::dispatcher(),
         }
     }
 
@@ -207,7 +207,7 @@ impl Component for ItemList {
         match self.process_update(ctx, msg) {
             Ok(res) => res,
             Err(e) => {
-                self.notifier.send(notifier::Request::NotifyError(e));
+                // self.notifier.send(notifier::Request::NotifyError(e));
                 false
             }
         }

@@ -1,4 +1,4 @@
-use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
+// use crate::agents::repo::{Repo, Request as RepoRequest, Response as RepoResponse};
 use crate::objects::{FeedVal, JsError};
 use yew::prelude::*;
 use yew_agent::{Bridge, Bridged};
@@ -6,11 +6,11 @@ use yew_agent::{Bridge, Bridged};
 pub struct FeedList {
     feeds: Option<Vec<FeedVal>>,
     error: Option<JsError>,
-    _repo: Box<dyn Bridge<Repo>>,
+    // _repo: Box<dyn Bridge<Repo>>,
 }
 
 pub enum Message {
-    RepoMessage(RepoResponse),
+    // RepoMessage(RepoResponse),
 }
 
 impl FeedList {
@@ -60,27 +60,27 @@ impl Component for FeedList {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        let cb = ctx.link().callback(Message::RepoMessage);
-        let mut repo = Repo::bridge(cb);
+        // let cb = ctx.link().callback(Message::RepoMessage);
+        // let mut repo = Repo::bridge(cb);
 
-        repo.send(RepoRequest::GetFeeds);
+        // repo.send(RepoRequest::GetFeeds);
 
         Self {
             feeds: None,
             error: None,
-            _repo: repo,
+            // _repo: repo,
         }
     }
 
     fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
-            Message::RepoMessage(response) => match response {
-                RepoResponse::Feeds(res) => {
-                    self.feeds = Some(res);
-                    true
-                }
-                _ => false,
-            },
+            // Message::RepoMessage(response) => match response {
+            //     RepoResponse::Feeds(res) => {
+            //         self.feeds = Some(res);
+            //         true
+            //     }
+            //     _ => false,
+            // },
         }
     }
 

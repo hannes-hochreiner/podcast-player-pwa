@@ -1,5 +1,5 @@
 use crate::{
-    agents::notifier,
+    // agents::notifier,
     components::{NavBar, Notification},
     objects::JsError,
     utils,
@@ -16,7 +16,7 @@ pub struct InfoPage {
     estimate: Option<Estimate>,
     connection_type: Option<ConnectionType>,
     persisted: Option<bool>,
-    notifier: Dispatcher<notifier::Notifier>,
+    // notifier: Dispatcher<notifier::Notifier>,
 }
 pub enum Message {
     GetEstimate(Result<JsValue, JsValue>),
@@ -129,19 +129,19 @@ impl Component for InfoPage {
     }
 
     fn create(ctx: &Context<Self>) -> Self {
-        let mut notifier = notifier::Notifier::dispatcher();
+        // let mut notifier = notifier::Notifier::dispatcher();
 
         match obtain_estimate_future() {
             Ok(est) => ctx
                 .link()
                 .send_future(async move { Message::GetEstimate(est.await) }),
-            Err(e) => notifier.send(notifier::Request::NotifyError(e)),
+            _ => {} // Err(e) => notifier.send(notifier::Request::NotifyError(e)),
         };
         match obtain_persisted_future() {
             Ok(est) => ctx
                 .link()
                 .send_future(async move { Message::GetPersisted(est.await) }),
-            Err(e) => notifier.send(notifier::Request::NotifyError(e)),
+            _ => {} // Err(e) => notifier.send(notifier::Request::NotifyError(e)),
         };
         // ctx.link().send_future(async move {
         //     let storage_manager = web_sys::window().unwrap().navigator().storage();
@@ -152,15 +152,15 @@ impl Component for InfoPage {
             estimate: None,
             connection_type: match utils::get_connection_type() {
                 Ok(ct) => Some(ct),
-                Err(e) => {
-                    notifier.send(notifier::Request::Notify(notifier::Notification {
-                        severity: notifier::NotificationSeverity::Error,
-                        text: e.description,
-                    }));
-                    None
-                }
+                _ => None, // Err(e) => {
+                           //     notifier.send(notifier::Request::Notify(notifier::Notification {
+                           //         severity: notifier::NotificationSeverity::Error,
+                           //         text: e.description,
+                           //     }));
+                           //     None
+                           // }
             },
-            notifier,
+            // notifier,
             persisted: None,
         }
     }
@@ -170,14 +170,14 @@ impl Component for InfoPage {
             Message::GetEstimate(res) => match self.process_estimate(res) {
                 Ok(()) => true,
                 Err(e) => {
-                    self.notifier.send(notifier::Request::NotifyError(e));
+                    // self.notifier.send(notifier::Request::NotifyError(e));
                     false
                 }
             },
             Message::GetPersisted(res) => match self.process_persisted(res) {
                 Ok(()) => true,
                 Err(e) => {
-                    self.notifier.send(notifier::Request::NotifyError(e));
+                    // self.notifier.send(notifier::Request::NotifyError(e));
                     false
                 }
             },

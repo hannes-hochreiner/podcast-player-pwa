@@ -26,7 +26,7 @@ impl Component for Router {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-            <Switch<AppRoute> render={Switch::render(switch)} />
+            <Switch<AppRoute> render={switch} />
         }
     }
 
@@ -39,7 +39,7 @@ impl Component for Router {
     }
 }
 
-fn switch(routes: &AppRoute) -> Html {
+fn switch(routes: AppRoute) -> Html {
     match routes {
         AppRoute::Home => html! {<HomePage/>},
         AppRoute::ChannelsPage => html! {<ChannelsPage/>},

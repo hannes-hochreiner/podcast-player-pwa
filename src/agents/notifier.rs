@@ -1,32 +1,35 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
-use yew_agent::{Agent, AgentLink, Context, HandlerId};
+use yew_agent::{HandlerId, Public, Worker, WorkerLink};
 
 use crate::objects::JsError;
 
 pub struct Notifier {
     subscribers: HashSet<HandlerId>,
-    link: AgentLink<Self>,
+    link: WorkerLink<Self>,
     notifications: Vec<Notification>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum NotificationSeverity {
     Error,
     Info,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Notification {
     pub text: String,
     pub severity: NotificationSeverity,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum Request {
     Notify(Notification),
     NotifyError(JsError),
     Dismiss,
 }
 
+#[derive(Debug, Serialize, Deserialize)]
 pub enum Response {
     Notification(Option<Notification>),
 }
@@ -47,13 +50,13 @@ impl Notifier {
     }
 }
 
-impl Agent for Notifier {
-    type Reach = Context<Self>;
+impl Worker for Notifier {
+    type Reach = Public<Self>;
     type Message = ();
     type Input = Request;
     type Output = Response;
 
-    fn create(link: AgentLink<Self>) -> Self {
+    fn create(link: WorkerLink<Self>) -> Self {
         Self {
             link,
             subscribers: HashSet::new(),

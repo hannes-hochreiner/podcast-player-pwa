@@ -7,13 +7,13 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-yew = "0.19"
-yew-router = "0.16"
-yew-agent = "0.1"
+yew = { version = "0.20", features = ["csr"] }
+yew-router = "0.17"
+yew-agent = "0.2"
 serde = "1"
 serde_json = "1.0"
 serde-wasm-bindgen = "0.4.1"
-uuid = { version = "0.8", features = ["serde", "v4", "wasm-bindgen"] }
+uuid = { version = "1.2", features = ["serde", "v4", "wasm-bindgen"] }
 getrandom = { version = "0.2", features = ["js"] }
 web-sys = { version = "0.3", features = ["Window", "IdbKeyRange", "IdbCursorDirection", "IdbCursor", "IdbRequestReadyState", "IdbFactory", "SourceBufferList", "IdbOpenDbOptions", "StorageManager", "StorageType", "IdbOpenDbRequest", "IdbDatabase", "IdbObjectStore", "IdbTransaction", "IdbTransactionMode", "IdbRequest", "AudioContext", "AudioBuffer", "AudioBufferSourceNode", "AudioDestinationNode", "AudioParam", "MediaSource", "SourceBuffer", "Url", "HtmlAudioElement", "MediaSourceReadyState", "IdbIndex", "IdbIndexParameters", "HtmlAudioElement", "HtmlMediaElement", "Navigator", "NetworkInformation", "ConnectionType"] }
 wasm-logger = "0.2"
@@ -26,7 +26,10 @@ yewtil = { version = "0.4", features = ["future"] }
 sha2 = "0.10"
 base64-url = "1.4"
 url = "2.2"
-podcast-player-common = { git = "https://github.com/hannes-hochreiner/podcast-player-common", default-features = false }
+podcast-player-common = { git = "https://github.com/hannes-hochreiner/podcast-player-common", default-features = false, tag = "v0.5.0"}
+gloo-console = "0.2"
+gloo-timers = "0.2"
+gloo-net = "0.2"
 
 [package.metadata.release]
 publish = false

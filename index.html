@@ -5,6 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#558B2F" />
+  <link data-trunk rel="rust" href="Cargo.toml" data-bin="main" data-type="main" />
+  <link data-trunk rel="rust" href="Cargo.toml" data-bin="updater" data-type="worker" />
   <link data-trunk rel="icon" href="public/icon.ico" />
   <link data-trunk rel="copy-file" href="public/manifest.json" />
   <link data-trunk rel="copy-file" href="public/icon_96x96.png" />
@@ -15,7 +17,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
   <meta http-equiv="Content-Security-Policy"
-    content="default-src https:; script-src https://*.hochreiner.net 'unsafe-inline' 'unsafe-eval'; media-src blob:; style-src https: 'unsafe-inline'">
+    content="default-src https:; script-src https://*.hochreiner.net 'unsafe-inline' 'unsafe-eval'; media-src blob:; style-src https: 'unsafe-inline'; worker-src blob:">
 </head>
 
 </html>
